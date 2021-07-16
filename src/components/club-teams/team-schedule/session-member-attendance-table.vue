@@ -8,6 +8,8 @@
         v-if="record.schedule && record.schedule.id"
         class="gx-btn-success gx-mb-0"
         icon="check"
+        :loading="select_member === record.member.id && loader"
+        :disabled="select_member === record.member.id && loader"
         @click="removeMemberAttendance(record)"
       >
         Present
@@ -15,6 +17,8 @@
       <a-button
         v-else
         class="gx-btn-danger gx-mb-0"
+        :loading="select_member === record.member.id && loading"
+        :disabled="select_member === record.member.id && loading"
         @click="createNewSchedule(record)"
       >
         Absent
@@ -26,7 +30,7 @@
 <script>
 import nTime from "@/mixins/time";
 import nCurrency from "@/mixins/currency";
-
+import notifications from "@/common/notifications/notification.service";
 const columns = [
   {
     title: "Member",
@@ -64,7 +68,10 @@ export default {
   data() {
     return {
       columns,
-      schedule: []
+      schedule: [],
+      loading: false,
+      loader: false,
+      select_member:""
     };
   },
   watch: {
@@ -73,27 +80,40 @@ export default {
     },
     sessionId: function() {
       this.getTeamSchedule();
+    },
+    getErrorMsg(value){
+      if(value){
+        notifications.warn(value);
+      }
     }
   },
   mounted() {
     this.getTeamSchedule();
   },
   methods: {
-    removeMemberAttendance(row) {
-      this.$store.dispatch(REMOVE_MEMBER_ATTENDANCE, {
+    async removeMemberAttendance(row) {
+      this.select_member = row.member.id
+      this.loader = true
+      await this.$store.dispatch(REMOVE_MEMBER_ATTENDANCE, {
         memberId: row.member.id,
         teamId: this.teamId,
         sessionId: this.sessionId
       });
+      this.loader = false
       this.$store.dispatch(GET_SESSION_INVOICES, this.sessionId);
+      this.getTeamSchedule();
     },
-    createNewSchedule(row) {
-      this.$store.dispatch(NEW_MEMBER_ATTENDANCE, {
+    async createNewSchedule(row) {
+       this.select_member = row.member.id
+      this.loading = true
+      await this.$store.dispatch(NEW_MEMBER_ATTENDANCE, {
         memberId: row.member.id,
         teamId: this.teamId,
         sessionId: this.sessionId
-      });
+      })
+      this.loading = false
       this.$store.dispatch(GET_SESSION_INVOICES, this.sessionId);
+      this.getTeamSchedule();
     },
     getTeamSchedule() {
       if (this.teamId && this.sessionId)
@@ -105,7 +125,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getSessionMembers'
+      'getSessionMembers',
+      'getErrorMsg'
     ])
   }
 };

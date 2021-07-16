@@ -3,8 +3,15 @@
     v-model="isVisible"
     title="Create a new Team"
     @cancel="close"
-    @ok="handleForm"
   >
+    <template slot="footer">
+        <a-button key="back" @click="close">
+          Cancel
+        </a-button>
+        <a-button key="submit" type="primary" :loading="loading" @click="handleForm">
+          Create
+        </a-button>
+      </template>
     <a-form :form="form" layout="vertical">
       <a-form-item label="Team Name">
         <a-input
@@ -41,7 +48,8 @@ export default {
   },
   data() {
     return {
-      form: this.$form.createForm(this)
+      form: this.$form.createForm(this),
+      loading: false
     };
   },
   computed: {
@@ -65,7 +73,9 @@ export default {
       });
     },
     handleFormSubmit(values) {
+      this.loading = true
       teamService.put(values).then(resp => {
+        this.loading = false
         if (resp.data.success) {
           notifications.success("Team Created successfully");
           this.close();
@@ -75,6 +85,8 @@ export default {
         } else {
           notifications.warn("There was a problem creating this team");
         }
+      }).catch(err => {
+        this.loading = false
       });
     },
     close() {

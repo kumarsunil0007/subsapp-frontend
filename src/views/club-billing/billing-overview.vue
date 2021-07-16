@@ -16,8 +16,8 @@
               style="min-width: 100%;margin-bottom: 10px;"
             >
               <a-select-option value="all">Any</a-select-option>
-              <a-select-option value="paid">Paid</a-select-option>
-              <a-select-option value="unpaid">Unpaid</a-select-option>
+              <a-select-option value="complete">Paid</a-select-option>
+              <a-select-option value="refund">Refund</a-select-option>
             </a-select>
           </a-col>
         </a-row>
@@ -58,7 +58,7 @@ export default {
     })
   },
   mounted() {
-    this.$store.dispatch(GET_CLUB_BILLING);
+    //this.$store.dispatch(GET_CLUB_BILLING);
   },
   methods: {
     handleForm() {

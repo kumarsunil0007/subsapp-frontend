@@ -7,7 +7,9 @@ import {
   SET_NEW_MEMBER_ATTENDACE,
   GET_SESSION_MEMBERS,
   GET_SESSION_INVOICES,
-  SET_SESSION_INVOICES
+  SET_SESSION_INVOICES,
+  SET_ERROR_MSG,
+  CLEAR_ERROR
 } from "@/store/modules/session/session-actions";
 
 export default {
@@ -15,6 +17,7 @@ export default {
     invoices: [],
     results: [],
     members: [],
+    error_msg:"",
     status: "OK"
   },
   getters: {
@@ -46,6 +49,9 @@ export default {
         }
       }
       return total;
+    },
+    getErrorMsg: state => {
+      return state.error_msg;
     }
   },
   mutations: {
@@ -63,6 +69,12 @@ export default {
           member.schedule = record;
         }
       }
+    },
+    [SET_ERROR_MSG]: (state,payload) => {
+      state.error_msg = payload
+    },
+    [CLEAR_ERROR]: (state) => {
+      state.error_msg = ""
     }
   },
   actions: {
@@ -80,23 +92,25 @@ export default {
         }
       });
     },
-    [NEW_MEMBER_ATTENDANCE]: ({ commit }, params) => {
-      attendanceService.addAttendance(params).then(res => {
+     [NEW_MEMBER_ATTENDANCE]: async ({ commit }, params) => {
+      commit(CLEAR_ERROR)
+      await attendanceService.addAttendance(params).then(res => {
         if (res.data.success) {
           commit(SET_NEW_MEMBER_ATTENDACE, res.data.record);
+        }else{
+          commit(SET_ERROR_MSG, res.data.message)
         }
       });
     },
-    [REMOVE_MEMBER_ATTENDANCE]: ({ commit }, params) => {
-      attendanceService.removeAttendance(params).then(res => {
+    [REMOVE_MEMBER_ATTENDANCE]: async ({ commit }, params) => {
+      await attendanceService.removeAttendance(params).then(res => {
         if (res.data.success) {
           commit(SET_NEW_MEMBER_ATTENDACE, {
             member_id: params.memberId
           });
         } else {
-          notifications.warn(
-            "We cannot remove the users attendance record as a payment has already gone through"
-          );
+          const msg = res.data.message
+          notifications.warn(msg);
         }
       });
     }

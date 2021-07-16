@@ -10,11 +10,11 @@
     </div>
     <div slot="total" slot-scope="text">€{{ formatMoney(text) }}</div>
     <div slot="transaction" slot-scope="text, row">
-      <template v-if="row.Transaction && row.Transaction.id">
+      <template v-if="row.status === 'complete'">
         <a-tag color="green">Payment Received</a-tag>
       </template>
-      <template v-else>
-        <a-tag color="orange">Payment In Progress</a-tag>
+      <template v-if="row.status === 'refund'">
+        <a-tag color="orange">Payment Refund</a-tag>
       </template>
     </div>
   </a-table>
