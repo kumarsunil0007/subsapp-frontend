@@ -30,7 +30,7 @@
 <script>
 import timeMixing from "@/mixins/time";
 import nCurrency from "@/mixins/currency";
-import { clubAdminsService } from "@/common/api/api.service";
+import { clubManagerService } from "@/common/api/api.service";
 import notifications from "@/common/notifications/notification.service";
 
 const columns = [
@@ -73,7 +73,7 @@ export default {
       this.$emit("edit", user_id);
     },
     removeAdmin(admin_id) {
-      clubAdminsService
+      clubManagerService
         .remove({
           admin_id
         })
@@ -85,7 +85,7 @@ export default {
         });
     },
     getAdmins() {
-      clubAdminsService.query().then(resp => {
+      clubManagerService.query().then(resp => {
         if (resp.data.success) {
           this.teams = resp.data.result;
         }

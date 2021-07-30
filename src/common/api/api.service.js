@@ -232,12 +232,23 @@ export const clubAdminsService = {
   put(params) {
     return ApiService.post("/club-admins/put", params);
   },
+  update(params) {
+    return ApiService.post("/club-admins/update", params);
+  },
   remove(params) {
     return ApiService.post("/club-admins/remove", params);
   },
   update(id, params) {
     return ApiService.update("/club-admins/update", id, params);
-  }
+  },
+};
+export const clubManagerService = {
+  query(params) {
+    return ApiService.query("/club-manager/query", { params: params });
+  },
+  put(params) {
+    return ApiService.post("/club-manager/put", params);
+  },
 };
 
 export const clubService = {
@@ -257,7 +268,7 @@ export const clubService = {
     return ApiService.query("/club/get-my-club");
   },
   getMyClubBilling(params) {
-    return ApiService.query("/club/get-my-club-billing/", params);
+    return ApiService.query("/club/get-my-club-billing", params);
   },
   searchClubs(params) {
     return ApiService.post("/club/search-clubs", params);

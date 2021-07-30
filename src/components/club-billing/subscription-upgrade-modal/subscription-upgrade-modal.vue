@@ -113,7 +113,7 @@
               </li>
               <li>
                 <a-icon type="team" />
-                Unlimited Club Administrators
+                50 Club Administrators
               </li>
               <li>
                 <a-icon type="euro" />

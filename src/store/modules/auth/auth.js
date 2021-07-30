@@ -180,8 +180,8 @@ const mutations = {
   },
   [SET_SUBSCRIPTION]: (state, data) => {
     window.localStorage.setItem("subscription", JSON.stringify(data));
-    state.data = getSubscription();
-    state.hasLoadedOnce = true;
+    state.subscription = getSubscription();
+    //state.hasLoadedOnce = true;
   },
   [AUTH_LOGOUT]: state => {
     destroyToken();

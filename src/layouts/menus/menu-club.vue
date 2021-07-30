@@ -23,6 +23,12 @@
           <span>Members</span>
         </router-link>
       </a-menu-item>
+      <a-menu-item key="admins" @click="hideSidebar">
+        <router-link to="/admin-list">
+          <a-icon type="smile" />
+          <span>Coaches</span>
+        </router-link>
+      </a-menu-item>
       <a-menu-item key="club-billing" @click="hideSidebar">
         <router-link to="/club/billing">
           <a-icon type="file" />

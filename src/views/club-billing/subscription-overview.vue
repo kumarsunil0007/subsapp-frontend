@@ -78,7 +78,7 @@ import NSectionEmpty from "@/components/ui/n-section-empty/n-section-empty";
 import StripeBillingHistoryTable from "@/components/billing/stripe-billing-history-table/stripe-billing-history-table";
 import ClubSubscriptionOverview from "@/components/club-billing/club-subscription-overview/club-subscription-overview";
 import NSectionLoading from "@/components/ui/n-section-loading/n-section-loading";
-
+import notifications from "@/common/notifications/notification.service";
 export default {
   name: "SubscriptionOverview",
   components: {
@@ -164,11 +164,17 @@ export default {
           },
           tk: tk
         })
-        .then(() => {
-          this.listCards();
+        .then((resp) => {
+          if(resp.data.success){
+             notifications.success("Card Removed Successfully");
+             this.listCards();
+          }else{
+            notifications.warn(resp.data.message);
+          }
         });
     },
     setDefault(tk) {
+      console.log(tk,'dd')
       billingService
         .setDefaultCard({
           auth: {

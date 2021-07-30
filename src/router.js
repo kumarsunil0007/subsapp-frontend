@@ -136,6 +136,15 @@ export default new Router({
           },
           beforeEnter: authGuard
         },
+        {
+          path: "admin-list",
+          component: () => import("@/views/club-admins/admin-list"),
+          meta: {
+            permission: "club_admin",
+            billing: true
+          },
+          beforeEnter: authGuard
+        },
         // All Regular User related stuff here
         {
           path: "my-billing/",
@@ -176,7 +185,7 @@ export default new Router({
         },
         {
           path: "club/admins",
-          component: () => import("@/views/club-admins/club-admins"),
+          component: () => import("@/views/club-admins/club-manager"),
           meta: {
             permission: "club_admin"
           },

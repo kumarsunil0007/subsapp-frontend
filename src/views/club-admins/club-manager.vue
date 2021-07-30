@@ -10,11 +10,11 @@
     <a-row type="flex">
       <a-col :span="24">
         <a-card title="Teams" class="gx-card-table-full">
-          <club-admins-list-table @edit="openAdminModal" />
+          <club-manager-list-table @edit="openAdminModal" />
         </a-card>
       </a-col>
     </a-row>
-    <club-admin-edit-modal
+    <club-manager-edit-modal
       :admin-id="currentAdmin"
       :visible="clubAdminModal"
       @close="closeAdminModal"
@@ -24,11 +24,11 @@
 
 <script>
 import NPage from "@/components/ui/n-page/n-page";
-import ClubAdminsListTable from "@/components/club-admins/club-admins-list-table";
-import ClubAdminEditModal from "@/components/club-admins/club-admin-edit-modal";
+import ClubManagerListTable from "@/components/club-admins/club-manager-list-table";
+import ClubManagerEditModal from "@/components/club-admins/club-manager-edit-modal";
 export default {
   name: "ClubAdmins",
-  components: { ClubAdminEditModal, ClubAdminsListTable, NPage },
+  components: { ClubManagerEditModal, NPage , ClubManagerListTable},
   data() {
     return {
       currentAdmin: null,

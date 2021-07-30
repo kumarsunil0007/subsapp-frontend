@@ -101,11 +101,12 @@ export default {
   methods: {
     inviteMember(memberId) {
       memberService.inviteMember(memberId).then(resp => {
+        console.log(resp.data)
         if (resp.data.success) {
           this.searchEmails();
           notifications.success("An invite has been sent");
         } else {
-          notifications.warn("We could not add this member");
+          notifications.warn(resp.data.message);
         }
       });
     },
@@ -119,6 +120,8 @@ export default {
           if (resp.data.success) {
             this.members = resp.data.result;
             this.error_msg = true;
+          }else{
+             notifications.warn(resp.data.message);
           }
         });
     },

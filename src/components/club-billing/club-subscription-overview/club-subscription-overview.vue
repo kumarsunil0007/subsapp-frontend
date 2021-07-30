@@ -23,7 +23,7 @@
             </p>
             <p style="padding:0;">
               Renew date:
-              {{ nUnixTime(sub.current_period_end) }}
+              {{ (sub.current_period_end) }}
             </p>
           </a-col>
           <a-col v-else :span="24">

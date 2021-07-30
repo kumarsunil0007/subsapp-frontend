@@ -1,34 +1,21 @@
 <template>
   <a-modal
     :visible="visible"
-    title="Manage Coach"
+    title="Club Admin Manager"
     @cancel="close"
     @ok="handleForm"
   >
-    <a-form :form="form" layout="vertical" >
-      <div class="info">
-        <a-form-item label="First Name">
-          <a-input v-decorator="fields.first_name" placeholder="First name" />
-        </a-form-item>
-        <a-form-item label="Last Name">
-          <a-input v-decorator="fields.last_name" placeholder="Last name" />
-        </a-form-item>
+    <a-form :form="form" layout="vertical" :class="{ 'gx-hide': dataLoading }">
+     <div class="info">
+      <a-form-item label="First Name">
+        <a-input v-decorator="fields.first_name" />
+      </a-form-item>
+      <a-form-item label="Last Name">
+        <a-input v-decorator="fields.last_name" />
+      </a-form-item>
       </div>
       <a-form-item label="Email">
         <a-input v-decorator="fields.email" placeholder="Email"> </a-input>
-      </a-form-item>
-      <a-form-item label="Phone">
-        <a-input
-          v-decorator="fields.phone"
-          placeholder="Phone"
-          type="number"
-          min="0"
-          addon-before="+353"
-        >
-        </a-input>
-      </a-form-item>
-      <a-form-item label="Address">
-        <a-input v-decorator="fields.address" placeholder="Address"> </a-input>
       </a-form-item>
     </a-form>
   </a-modal>
@@ -44,13 +31,13 @@ export default {
     visible: {
       default: false,
       required: true,
-      type: Boolean,
+      type: Boolean
     },
     adminId: {
-      default: null,
+      default: false,
       required: false,
-      type: [Number, String],
-    },
+      type: Boolean
+    }
   },
   data() {
     return {
@@ -63,10 +50,10 @@ export default {
             rules: [
               {
                 required: true,
-                message: "Your first name is required",
-              },
-            ],
-          },
+                message: "Your first name is required"
+              }
+            ]
+          }
         ],
         last_name: [
           "last_name",
@@ -74,10 +61,10 @@ export default {
             rules: [
               {
                 required: true,
-                message: "Your last name is required",
-              },
-            ],
-          },
+                message: "Your last name is required"
+              }
+            ]
+          }
         ],
         email: [
           "work_email",
@@ -85,20 +72,18 @@ export default {
             rules: [
               {
                 required: true,
-                validator: this.validateEmail,
-              },
-            ],
-          },
-        ],
-        phone: ["phone"],
-        address: ["address"],
-      },
+                validator: this.validateEmail
+              }
+            ]
+          }
+        ]
+      }
     };
   },
   watch: {
-    adminId: function () {
+    adminId: function() {
       this.fetchAdmin();
-    },
+    }
   },
   mounted() {
     this.fetchAdmin();
@@ -107,7 +92,7 @@ export default {
     fetchAdmin() {
       if (this.adminId && this.visible) {
         this.dataLoading = true;
-        clubAdminsService.get(this.adminId).then((resp) => {
+        clubAdminsService.get(this.adminId).then(resp => {
           this.dataLoading = false;
           this.$nextTick(() => {
             this.form.getFieldDecorator("work_email");
@@ -116,9 +101,7 @@ export default {
               this.form.setFieldsValue({
                 work_email: data.work_email,
                 first_name: data.first_name,
-                last_name: data.last_name,
-                address: data.profile.address_1,
-                phone: data.profile.phone,
+                last_name: data.last_name
               });
             } else {
               notifications.warn(
@@ -126,27 +109,15 @@ export default {
               );
             }
           });
-        }).catch(err => {
-           this.dataLoading = false;
-           notifications.warn(
-                "We could not load this user, please try again or contact support."
-              );
-        })
+        });
       }
     },
     handleForm() {
       this.form.validateFields((err, values) => {
         if (!err) {
-          if(!this.adminId){
-            this.handleFormSubmit({
-              ...values,
-            });
-          }else{
-            this.handleFormUpdate({
-              ...values,
-            });
-          }
-          
+          this.handleFormSubmit({
+            ...values
+          });
         }
       });
     },
@@ -154,33 +125,9 @@ export default {
       clubAdminsService
         .put({
           ...values,
-          id: this.adminId,
+          id: this.adminId
         })
-        .then((resp) => {
-          if (resp.data.success) {
-            notifications.success("User Updated Successfully");
-            this.close();
-          } else if (resp.data.code === 404) {
-            notifications.warn("There was a problem loading this user");
-            this.close();
-          } else {
-            if (resp.data.message) {
-              notifications.warn(resp.data.message);
-            } else {
-              notifications.warn(
-                "There was an error updating this user, please contact support"
-              );
-            }
-          }
-        });
-    },
-    handleFormUpdate(values) {
-      clubAdminsService
-        .update({
-          ...values,
-          id: this.adminId,
-        })
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success) {
             notifications.success("User Updated Successfully");
             this.close();
@@ -201,8 +148,7 @@ export default {
     validateEmail(rule, value, callback) {
       const form = this.form;
       // eslint-disable-next-line no-useless-escape
-      const emailRegex =
-        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
+      const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
       if (!emailRegex.test(form.getFieldValue("work_email"))) {
         callback("Please enter a valid email");
       } else {
@@ -212,19 +158,19 @@ export default {
     close() {
       this.form.resetFields();
       this.$emit("close");
-    },
-  },
+    }
+  }
 };
 </script>
 <style>
 .info {
-  display: flex;
+    display: flex;
 }
 .info .ant-row.ant-form-item {
-  width: 100%;
-  margin-right: 6px;
+    width: 100%;
+    margin-right: 6px;
 }
 .ant-modal-footer button.ant-btn {
-  width: 75px !important;
+    width: 75px !important;
 }
 </style>
