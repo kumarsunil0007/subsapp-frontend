@@ -25,10 +25,8 @@
                     'work_email',
                     {
                       rules: [
-                        {
-                          required: true,
-                          message: 'Email is required'
-                        }
+                        { required: true, message: 'Email is required' },
+                        { type: 'email', message: 'Email is invalid' }
                       ]
                     }
                   ]"
@@ -54,7 +52,16 @@
                     'first_name',
                     {
                       rules: [
-                        { required: true, message: 'First name is required' }
+                        { required: true, message: 'First name is required' },
+                        {
+                          min: 3,
+                          message:
+                            'First name should contain at least 3 Characters'
+                        },
+                        {
+                          max: 20,
+                          message: 'Sorry You are Exceeding the Limit'
+                        }
                       ]
                     }
                   ]"
@@ -80,7 +87,16 @@
                     'last_name',
                     {
                       rules: [
-                        { required: true, message: 'Last name is required' }
+                        { required: true, message: 'Last name is required' },
+                        {
+                          min: 3,
+                          message:
+                            'Last name should contain at least 3 Characters '
+                        },
+                        {
+                          max: 20,
+                          message: 'Sorry You are Exceeding the Limit'
+                        }
                       ]
                     }
                   ]"
@@ -105,7 +121,13 @@
                   v-decorator="[
                     'phone_no',
                     {
-                      rules: [{ required: true, message: 'Phone is required' }]
+                      rules: [
+                        { required: true, message: 'Phone is required' },
+                        {
+                          max: 10,
+                          message: 'Please use a 10 digit phone number'
+                        }
+                      ]
                     }
                   ]"
                   type="number"
@@ -189,7 +211,11 @@
               class="gx-text-right"
               style="margin-top:0px;"
             >
-              <a-button inline-block type="primary" html-type="submit"
+              <a-button
+                inline-block
+                type="primary"
+                html-type="submit"
+                :loading="memberLoading"
                 >Add Members</a-button
               >
             </a-row>
@@ -204,6 +230,7 @@
 <script>
 import notifications from "@/common/notifications/notification.service";
 import { memberService } from "@/common/api/api.service";
+import { mapGetters } from "vuex";
 
 export default {
   name: "AddMemberModal",
@@ -217,7 +244,8 @@ export default {
     return {
       keyword: "",
       members: [],
-      form: this.$form.createForm(this)
+      form: this.$form.createForm(this),
+      memberLoading: false
     };
   },
   computed: {
@@ -228,7 +256,8 @@ export default {
       set() {
         return false;
       }
-    }
+    },
+    ...mapGetters(["AUTH_USER"])
   },
   methods: {
     inviteMember(memberId) {
@@ -245,10 +274,13 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          // eslint-disable-next-line no-unused-vars
+          this.memberLoading = true;
+          values.role = this.AUTH_USER.select_role;
+          values.url = window.location.origin + "/#/login";
           memberService
             .addMember(values)
             .then(resp => {
+              this.memberLoading = false;
               if (resp.data.success) {
                 notifications.success("An invite has been sent");
                 this.form.resetFields();
@@ -260,6 +292,7 @@ export default {
               }
             })
             .catch(error => {
+              this.memberLoading = false;
               console.log(error);
             });
         }

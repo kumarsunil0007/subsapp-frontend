@@ -24,12 +24,12 @@
             <a-form-item>
               <a-upload
                 v-decorator="['upload']"
-                accept="image/png,image/jpeg/image/jpg"
+                accept="image/png,image/jpeg,/image/jpg"
                 name="logo"
                 :action="`${action}club/upload-club-logo`"
                 :headers="{ Authorization: 'Bearer ' + userToken }"
                 list-type="picture"
-                :show-upload-list="false"
+                :show-upload-list="true"
                 @change="uploadImage"
               >
                 <a-button> <a-icon type="upload" /> Change your Logo </a-button>
@@ -117,7 +117,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { AUTH_TOKEN } from "@/store/modules/auth/auth-actions";
+import { AUTH_TOKEN, AUTH_USER } from "@/store/modules/auth/auth-actions";
 import { GET_MY_CLUB } from "@/store/modules/club/club-actions";
 import NPage from "@/components/ui/n-page/n-page";
 import { clubService } from "@/common/api/api.service";
@@ -135,6 +135,7 @@ export default {
   computed: {
     ...mapGetters({
       club: "getClub",
+      user: [AUTH_USER],
       userToken: [AUTH_TOKEN],
       clubLoadingStatus: "getClubLoadingStatus"
     }),
@@ -164,15 +165,16 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch(GET_MY_CLUB);
+    this.ClubInfo();
   },
   methods: {
     uploadImage() {
-      this.$store.dispatch(GET_MY_CLUB);
+      this.ClubInfo();
     },
     handleForm() {
       this.form.validateFields((err, values) => {
         if (!err) {
+          values.role = this.user.select_role;
           this.handleFormSubmit(values);
         }
       });
@@ -180,12 +182,18 @@ export default {
     handleFormSubmit(values) {
       clubService.update(this.club.id, values).then(resp => {
         if (resp.data.success) {
-          this.$store.dispatch(GET_MY_CLUB);
+          this.ClubInfo();
           notifications.success("Club updated successfully");
         } else {
           notifications.warn(resp.data.message);
         }
       });
+    },
+    ClubInfo() {
+      const data = {
+        role: this.user.select_role
+      };
+      this.$store.dispatch(GET_MY_CLUB, data);
     }
   }
 };

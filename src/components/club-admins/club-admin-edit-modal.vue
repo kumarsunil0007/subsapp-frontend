@@ -5,7 +5,7 @@
     @cancel="close"
     @ok="handleForm"
   >
-    <a-form :form="form" layout="vertical" >
+    <a-form :form="form" layout="vertical">
       <div class="info">
         <a-form-item label="First Name">
           <a-input v-decorator="fields.first_name" placeholder="First name" />
@@ -28,7 +28,8 @@
         </a-input>
       </a-form-item>
       <a-form-item label="Address">
-        <a-input v-decorator="fields.address" placeholder="Address"> </a-input>
+        <a-input v-decorator="fields.address_1" placeholder="Address">
+        </a-input>
       </a-form-item>
     </a-form>
   </a-modal>
@@ -44,13 +45,13 @@ export default {
     visible: {
       default: false,
       required: true,
-      type: Boolean,
+      type: Boolean
     },
     adminId: {
       default: null,
       required: false,
-      type: [Number, String],
-    },
+      type: [Number, String]
+    }
   },
   data() {
     return {
@@ -63,10 +64,10 @@ export default {
             rules: [
               {
                 required: true,
-                message: "Your first name is required",
-              },
-            ],
-          },
+                message: "Your first name is required"
+              }
+            ]
+          }
         ],
         last_name: [
           "last_name",
@@ -74,10 +75,10 @@ export default {
             rules: [
               {
                 required: true,
-                message: "Your last name is required",
-              },
-            ],
-          },
+                message: "Your last name is required"
+              }
+            ]
+          }
         ],
         email: [
           "work_email",
@@ -85,20 +86,20 @@ export default {
             rules: [
               {
                 required: true,
-                validator: this.validateEmail,
-              },
-            ],
-          },
+                validator: this.validateEmail
+              }
+            ]
+          }
         ],
         phone: ["phone"],
-        address: ["address"],
-      },
+        address_1: ["address_1"]
+      }
     };
   },
   watch: {
-    adminId: function () {
+    adminId: function() {
       this.fetchAdmin();
-    },
+    }
   },
   mounted() {
     this.fetchAdmin();
@@ -107,46 +108,49 @@ export default {
     fetchAdmin() {
       if (this.adminId && this.visible) {
         this.dataLoading = true;
-        clubAdminsService.get(this.adminId).then((resp) => {
-          this.dataLoading = false;
-          this.$nextTick(() => {
-            this.form.getFieldDecorator("work_email");
-            if (resp.data.success) {
-              let data = resp.data.result;
-              this.form.setFieldsValue({
-                work_email: data.work_email,
-                first_name: data.first_name,
-                last_name: data.last_name,
-                address: data.profile.address_1,
-                phone: data.profile.phone,
-              });
-            } else {
-              notifications.warn(
-                "We could not load this user, please try again or contact support."
-              );
-            }
+        clubAdminsService
+          .get(this.adminId)
+          .then(resp => {
+            this.dataLoading = false;
+            this.$nextTick(() => {
+              this.form.getFieldDecorator("work_email");
+              if (resp.data.success) {
+                let data = resp.data.result;
+                this.form.setFieldsValue({
+                  work_email: data.work_email,
+                  first_name: data.first_name,
+                  last_name: data.last_name,
+                  address_1: data.profile.address_1,
+                  phone: data.profile.phone
+                });
+              } else {
+                notifications.warn(
+                  "We could not load this user, please try again or contact support."
+                );
+              }
+            });
+          })
+          .catch(err => {
+            this.dataLoading = false;
+            notifications.warn(
+              "We could not load this user, please try again or contact support."
+            );
           });
-        }).catch(err => {
-           this.dataLoading = false;
-           notifications.warn(
-                "We could not load this user, please try again or contact support."
-              );
-        })
       }
     },
     handleForm() {
       this.form.validateFields((err, values) => {
+        values.url = window.location.origin + "/#/login";
         if (!err) {
-          if(!this.adminId){
+          if (!this.adminId) {
             this.handleFormSubmit({
-              ...values,
+              ...values
             });
-          }else{
+          } else {
             this.handleFormUpdate({
-              ...values,
+              ...values
             });
           }
-          
         }
       });
     },
@@ -154,9 +158,9 @@ export default {
       clubAdminsService
         .put({
           ...values,
-          id: this.adminId,
+          id: this.adminId
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success) {
             notifications.success("User Updated Successfully");
             this.close();
@@ -176,11 +180,10 @@ export default {
     },
     handleFormUpdate(values) {
       clubAdminsService
-        .update({
-          ...values,
-          id: this.adminId,
+        .update(this.adminId, {
+          ...values
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success) {
             notifications.success("User Updated Successfully");
             this.close();
@@ -201,8 +204,7 @@ export default {
     validateEmail(rule, value, callback) {
       const form = this.form;
       // eslint-disable-next-line no-useless-escape
-      const emailRegex =
-        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
+      const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
       if (!emailRegex.test(form.getFieldValue("work_email"))) {
         callback("Please enter a valid email");
       } else {
@@ -212,8 +214,8 @@ export default {
     close() {
       this.form.resetFields();
       this.$emit("close");
-    },
-  },
+    }
+  }
 };
 </script>
 <style>

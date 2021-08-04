@@ -9,11 +9,11 @@ function authGuard(to, from, next) {
     if (
       to.meta &&
       to.meta.permission &&
-      store.state.auth.user.user_type.indexOf(to.meta.permission) === -1
+      to.meta.permission.indexOf(store.state.auth.user.select_role) === -1
     ) {
       next("/404");
     } else {
-      if (to.meta.billing) {
+      if (to.meta.billing && store.state.auth.user.select_role !== "coach") {
         if (
           store.state.auth.subscription &&
           store.state.auth.subscription.active
@@ -68,7 +68,7 @@ export default new Router({
           path: "teams-list",
           component: () => import("@/views/club-teams/club-teams-list"),
           meta: {
-            permission: "club_admin",
+            permission: ["club_admin", "coach"],
             billing: true
           },
           beforeEnter: authGuard
@@ -77,7 +77,7 @@ export default new Router({
           path: "teams/:teamId",
           component: () => import("@/views/club-teams/club-team-overview"),
           meta: {
-            permission: "club_admin",
+            permission: ["club_admin", "coach"],
             billing: true
           },
           beforeEnter: authGuard
@@ -86,7 +86,7 @@ export default new Router({
           path: "teams/:teamId/session/:sessionId",
           component: () => import("@/views/club-teams/team-session"),
           meta: {
-            permission: "club_admin",
+            permission: ["club_admin", "coach"],
             billing: true
           },
           beforeEnter: authGuard
@@ -95,7 +95,7 @@ export default new Router({
           path: "club/member/:userId",
           component: () => import("@/views/club-members/club-member"),
           meta: {
-            permission: "club_admin",
+            permission: ["club_admin", "coach"],
             billing: true
           },
           beforeEnter: authGuard
@@ -114,7 +114,7 @@ export default new Router({
           path: "club/settings/my-club",
           component: () => import("@/views/club-manage/my-club"),
           meta: {
-            permission: "club_admin",
+            permission: ["club_admin", "coach"],
             billing: true
           },
           beforeEnter: authGuard
@@ -123,7 +123,7 @@ export default new Router({
           path: "club/billing",
           component: () => import("@/views/club-billing/billing-overview"),
           meta: {
-            permission: "club_admin"
+            permission: ["club_admin"]
           },
           beforeEnter: authGuard
         },
@@ -131,7 +131,7 @@ export default new Router({
           path: "members/",
           component: () => import("@/views/club-members/club-members-overview"),
           meta: {
-            permission: "club_admin",
+            permission: ["club_admin", "coach"],
             billing: true
           },
           beforeEnter: authGuard
@@ -140,7 +140,7 @@ export default new Router({
           path: "admin-list",
           component: () => import("@/views/club-admins/admin-list"),
           meta: {
-            permission: "club_admin",
+            permission: ["club_admin"],
             billing: true
           },
           beforeEnter: authGuard
@@ -179,7 +179,7 @@ export default new Router({
           path: "subscription",
           component: () => import("@/views/club-billing/subscription-overview"),
           meta: {
-            permission: "club_admin"
+            permission: ["club_admin"]
           },
           beforeEnter: authGuard
         },
@@ -187,7 +187,7 @@ export default new Router({
           path: "club/admins",
           component: () => import("@/views/club-admins/club-manager"),
           meta: {
-            permission: "club_admin"
+            permission: ["club_admin"]
           },
           beforeEnter: authGuard
         }

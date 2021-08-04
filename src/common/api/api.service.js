@@ -157,8 +157,8 @@ export const memberService = {
   searchTeamMembers(params) {
     return ApiService.query("/member/search-team-members", { params: params });
   },
-  inviteMember(memberId) {
-    return ApiService.post("/member/invite-member", { memberId: memberId });
+  inviteMember(params) {
+    return ApiService.post("/member/invite-member", params);
   },
   getSchedule(memberId) {
     return ApiService.post("/member/get-schedule", { memberId: memberId });
@@ -186,7 +186,7 @@ export const adminService = {
   query(params) {
     return ApiService.query("/club-admin/query", { params: params });
   }
-}
+};
 export const memberBillingService = {
   query(params) {
     return ApiService.query("/member-billing/query", { params: params });
@@ -232,15 +232,12 @@ export const clubAdminsService = {
   put(params) {
     return ApiService.post("/club-admins/put", params);
   },
-  update(params) {
-    return ApiService.post("/club-admins/update", params);
-  },
   remove(params) {
     return ApiService.post("/club-admins/remove", params);
   },
   update(id, params) {
     return ApiService.update("/club-admins/update", id, params);
-  },
+  }
 };
 export const clubManagerService = {
   query(params) {
@@ -248,7 +245,7 @@ export const clubManagerService = {
   },
   put(params) {
     return ApiService.post("/club-manager/put", params);
-  },
+  }
 };
 
 export const clubService = {
@@ -264,8 +261,8 @@ export const clubService = {
   update(clubId, params) {
     return ApiService.update("/club/update", clubId, params);
   },
-  getMyClub() {
-    return ApiService.query("/club/get-my-club");
+  getMyClub(params) {
+    return ApiService.query("/club/get-my-club", params);
   },
   getMyClubBilling(params) {
     return ApiService.query("/club/get-my-club-billing", params);

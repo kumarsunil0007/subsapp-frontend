@@ -77,7 +77,7 @@
 <script>
 import nTime from "@/mixins/time";
 import nCurrency from "@/mixins/currency";
-
+import { mapGetters } from "vuex";
 const columns = [
   {
     title: "Full Name",
@@ -139,7 +139,7 @@ export default {
   mixins: [nTime, nCurrency],
   props: {
     clubId: {
-      required: true,
+      default: null,
       type: [Number, String]
     },
     filters: {
@@ -155,6 +155,9 @@ export default {
       columns,
       schedule: []
     };
+  },
+  computed: {
+    ...mapGetters(["AUTH_USER"])
   },
   watch: {
     filters: {
@@ -172,7 +175,7 @@ export default {
       memberService
         .updateClubMember(memberId, {
           status: status,
-          clubId: this.clubId
+          role: this.AUTH_USER.select_role
         })
         .then(resp => {
           if (resp.data.success) {
@@ -181,26 +184,23 @@ export default {
         });
     },
     getClubMembers() {
-      if (this.clubId) {
-        const data = {
-          clubId: this.clubId
-        };
-
-        if (this.filters) {
-          if (this.filters.keyword) {
-            data.keyword = this.filters.keyword;
-          }
-          if (this.filters.type) {
-            data.type = this.filters.type;
-          }
+      let data = {
+        role: this.AUTH_USER.select_role
+      };
+      if (this.filters) {
+        if (this.filters.keyword) {
+          data.keyword = this.filters.keyword;
         }
-
-        memberService.query(data).then(resp => {
-          if (resp.data.success) {
-            this.schedule = resp.data.result;
-          }
-        });
+        if (this.filters.type) {
+          data.type = this.filters.type;
+        }
       }
+
+      memberService.query(data).then(resp => {
+        if (resp.data.success) {
+          this.schedule = resp.data.result;
+        }
+      });
     }
   }
 };

@@ -5,6 +5,7 @@
       <a-col :xxl="8" :lg="12" :md="12" :sm="24" :xs="24">
         <a-card class="gx-card-widget" title="Personal Details">
           <club-member-details :member="member" />
+          <p v-if="pageLoading" style="text-align: center"><a-spin /></p>
         </a-card>
       </a-col>
     </a-row>
@@ -22,7 +23,8 @@ export default {
   components: { ClubMemberDetails, NPage, ClubMemberHeader },
   data() {
     return {
-      member: {}
+      member: {},
+      pageLoading: true
     };
   },
   mounted() {
@@ -31,9 +33,12 @@ export default {
   methods: {
     fetchMembers() {
       memberService.get(this.$route.params.userId).then(resp => {
+        this.pageLoading = false
         if (resp.data.success) {
           this.member = resp.data.result;
         }
+      }).catch(resp => {
+        this.pageLoading = false
       });
     }
   }

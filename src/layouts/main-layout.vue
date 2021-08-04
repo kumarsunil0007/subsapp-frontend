@@ -26,7 +26,9 @@
           />
         </router-link>
       </div>
-      <menu-club v-if="user.select_role === 'club_admin'" />
+      <menu-club
+        v-if="user.select_role === 'club_admin' || user.select_role === 'coach'"
+      />
       <menu-user v-if="user.select_role === 'member'" />
       <menu-admin v-if="user.select_role === 'admin'" />
     </a-layout-sider>
@@ -59,10 +61,7 @@
                 </div>
               </router-link>
               <a-dropdown
-                v-if="
-                  user.user_type.indexOf('club_admin') !== -1 ||
-                    user.user_type.indexOf('admin') !== -1
-                "
+                v-if="user.user_type.length > 1"
                 :trigger="['click']"
                 style="margin-top: 15px"
               >
@@ -80,10 +79,22 @@
                   >
                     <a @click.prevent="setRole('admin')">Admin</a>
                   </a-menu-item>
-                  <a-menu-item key="2">
+                  <a-menu-item
+                    v-if="user.user_type.indexOf('club_admin') !== -1"
+                    key="2"
+                  >
                     <a @click.prevent="setRole('club_admin')">Club Admin</a>
                   </a-menu-item>
-                  <a-menu-item key="3">
+                  <a-menu-item
+                    v-if="user.user_type.indexOf('coach') !== -1"
+                    key="3"
+                  >
+                    <a @click.prevent="setRole('coach')">Coach</a>
+                  </a-menu-item>
+                  <a-menu-item
+                    v-if="user.user_type.indexOf('member') !== -1"
+                    key="4"
+                  >
                     <a @click.prevent="setRole('member')">Member</a>
                   </a-menu-item>
                 </a-menu>
@@ -122,7 +133,11 @@
         :visible="collapsed"
         @close="hideSidebar()"
       >
-        <menu-club v-if="user.select_role === 'club_admin'" />
+        <menu-club
+          v-if="
+            user.select_role === 'club_admin' || user.select_role === 'coach'
+          "
+        />
         <menu-user v-if="user.select_role === 'member'" />
         <menu-admin v-if="user.select_role === 'admin'" />
       </a-drawer>

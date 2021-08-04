@@ -60,7 +60,8 @@
 <script>
 import notifications from "@/common/notifications/notification.service";
 import { memberService } from "@/common/api/api.service";
-
+import { mapGetters } from "vuex";
+import { AUTH_USER } from "@/store/modules/auth/auth-actions";
 export default {
   name: "NewTeamMemberModal",
   props: {
@@ -90,7 +91,10 @@ export default {
       set() {
         return false;
       }
-    }
+    },
+    ...mapGetters({
+      user: AUTH_USER,
+    }),
   },
   methods: {
     updateTeamMember(memberId, action) {
@@ -113,7 +117,8 @@ export default {
       memberService
         .searchTeamMembers({
           keyword: this.keyword,
-          teamId: this.teamId
+          teamId: this.teamId,
+          role: this.user.select_role
         })
         .then(resp => {
           if (resp.data.success) {

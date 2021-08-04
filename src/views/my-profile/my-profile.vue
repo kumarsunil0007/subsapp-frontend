@@ -13,7 +13,7 @@
             <a-form-item>
               <a-upload
                 v-decorator="['upload']"
-                accept="image/png,image/jpeg/image/jpg"
+                accept="image/png,image/jpeg,/image/jpg"
                 name="logo"
                 :action="`${action}member/upload-avatar`"
                 :headers="{ Authorization: `Bearer ${userToken}` }"
@@ -135,7 +135,7 @@
           </a-form>
         </a-card>
       </a-col>
-      <a-col :lg="12" :md="24" :sm="24" :xs="24">
+      <!-- <a-col :lg="12" :md="24" :sm="24" :xs="24">
         <a-card title="Child Account (Under 16)" class="gx-card-widget">
           <div slot="extra">
             <a-button
@@ -151,14 +151,14 @@
             @manage="openSubAccountModal"
           />
         </a-card>
-      </a-col>
+      </a-col> -->
     </a-row>
-    <sub-accounts-manage-modal
+    <!-- <sub-accounts-manage-modal
       v-if="subManagerVisible"
       :user-id="selectedUserId"
       :visible="subManagerVisible"
       @close="closeSubAccountModal"
-    />
+    /> -->
   </n-page>
 </template>
 
@@ -174,13 +174,13 @@ import {
 import { memberService } from "@/common/api/api.service";
 import moment from "moment";
 import notifications from "@/common/notifications/notification.service";
-import SubAccountsTable from "@/components/sub-accounts/sub-accounts-table/sub-accounts-table";
-import SubAccountsManageModal from "@/components/sub-accounts/sub-accounts-manage-modal/sub-accounts-manage-modal";
+//import SubAccountsTable from "@/components/sub-accounts/sub-accounts-table/sub-accounts-table";
+//import SubAccountsManageModal from "@/components/sub-accounts/sub-accounts-manage-modal/sub-accounts-manage-modal";
 export default {
   name: "MyProfile",
   components: {
-    SubAccountsManageModal,
-    SubAccountsTable,
+   // SubAccountsManageModal,
+    //SubAccountsTable,
     NPage
   },
   data() {

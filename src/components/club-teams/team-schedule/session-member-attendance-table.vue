@@ -113,7 +113,7 @@ export default {
       })
       this.loading = false
       this.$store.dispatch(GET_SESSION_INVOICES, this.sessionId);
-      this.getTeamSchedule();
+     // this.getTeamSchedule();
     },
     getTeamSchedule() {
       if (this.teamId && this.sessionId)

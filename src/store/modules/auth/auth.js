@@ -75,6 +75,8 @@ const actions = {
               select_role = roles[roles.indexOf("admin")];
             } else if (roles.indexOf("club_admin") !== -1) {
               select_role = roles[roles.indexOf("club_admin")];
+            } else if (roles.indexOf("coach") !== -1) {
+              select_role = roles[roles.indexOf("coach")];
             } else {
               select_role = roles[roles.indexOf("member")];
             }

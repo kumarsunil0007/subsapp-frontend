@@ -20,7 +20,7 @@
       <span v-if="record.postcode">, {{ record.postcode }}</span>
     </div>
     <div slot="handlers" slot-scope="text, record">
-      <router-link :to="'/club/member/' + record.user_id">
+      <router-link :to="'/club/member/' + record.id">
         <a-button block size="small" style="margin-bottom:0;" type="primary">
           View Profile
         </a-button>

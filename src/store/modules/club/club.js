@@ -1,5 +1,10 @@
 import { clubService } from "@/common/api/api.service";
-import { GET_MY_CLUB, SET_CLUB, GET_CLUB_BILLING, SET_CLUB_BILLING } from "@/store/modules/club/club-actions";
+import {
+  GET_MY_CLUB,
+  SET_CLUB,
+  GET_CLUB_BILLING,
+  SET_CLUB_BILLING
+} from "@/store/modules/club/club-actions";
 
 export default {
   state: {
@@ -15,7 +20,7 @@ export default {
     getClubLoadingStatus: state => state.clubLoading,
     getClubBilling: state => state.billing,
     ClubBillingLoading: state => state.clubBillingLoading,
-    getClubBillingStatus: state => state.billingStatus,
+    getClubBillingStatus: state => state.billingStatus
   },
   mutations: {
     [SET_CLUB]: (state, payload) => {
@@ -28,9 +33,9 @@ export default {
     }
   },
   actions: {
-    [GET_MY_CLUB]: ({ commit, state }) => {
+    [GET_MY_CLUB]: ({ commit, state }, payload) => {
       state.clubLoading = true;
-      clubService.getMyClub().then(res => {
+      clubService.getMyClub({ params: payload }).then(res => {
         if (res.data.success) {
           res.data.result.id = parseInt(res.data.result.id);
           commit(SET_CLUB, res.data.result);

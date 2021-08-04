@@ -78,8 +78,8 @@ export default {
     }
   },
   actions: {
-    [GET_SESSION_MEMBERS]: ({ commit }, params) => {
-      attendanceService.getTeamAttendance(params).then(res => {
+    [GET_SESSION_MEMBERS]: async ({ commit }, params) => {
+      await attendanceService.getTeamAttendance(params).then(res => {
         if (res.data.success) {
           commit(SET_SESSION_MEMBERS, res.data.result);
         }
@@ -92,11 +92,15 @@ export default {
         }
       });
     },
-     [NEW_MEMBER_ATTENDANCE]: async ({ commit }, params) => {
+     [NEW_MEMBER_ATTENDANCE]: async ({ commit,dispatch }, params) => {
       commit(CLEAR_ERROR)
-      await attendanceService.addAttendance(params).then(res => {
+      await attendanceService.addAttendance(params).then(async (res) => {
         if (res.data.success) {
-          commit(SET_NEW_MEMBER_ATTENDACE, res.data.record);
+          await dispatch(GET_SESSION_MEMBERS,{
+            teamId: params.teamId,
+            sessionId: params.sessionId
+          })
+          //commit(SET_NEW_MEMBER_ATTENDACE, res.data.record);
         }else{
           commit(SET_ERROR_MSG, res.data.message)
         }

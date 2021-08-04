@@ -32,11 +32,7 @@
         </a-col>
         <a-col :span="6" class="gx-text-right">
           <a-button
-            v-if="
-              !member.status ||
-                member.status === 'decline' ||
-                member.status === 'archive'
-            "
+            v-if="!member.status || member.status === 'decline'"
             block
             size="small"
             @click="inviteMember(member.id)"
@@ -44,7 +40,11 @@
             Send Invite
           </a-button>
           <a-button
-            v-if="member.status === 'invite' || member.status === 'accept'"
+            v-if="
+              member.status === 'invite' ||
+                member.status === 'accept' ||
+                member.status === 'archive'
+            "
             type="danger"
             block
             size="small"
@@ -70,6 +70,7 @@
 <script>
 import notifications from "@/common/notifications/notification.service";
 import { memberService } from "@/common/api/api.service";
+import { mapGetters } from "vuex";
 
 export default {
   name: "InviteMemberModal",
@@ -96,12 +97,16 @@ export default {
       set() {
         return false;
       }
-    }
+    },
+    ...mapGetters(["AUTH_USER"])
   },
   methods: {
     inviteMember(memberId) {
-      memberService.inviteMember(memberId).then(resp => {
-        console.log(resp.data)
+      const param = {
+        memberId: memberId,
+        role: this.AUTH_USER.select_role
+      };
+      memberService.inviteMember(param).then(resp => {
         if (resp.data.success) {
           this.searchEmails();
           notifications.success("An invite has been sent");
@@ -114,14 +119,15 @@ export default {
       this.error_msg = false;
       memberService
         .searchMembers({
-          keyword: this.keyword
+          keyword: this.keyword,
+          role: this.AUTH_USER.select_role
         })
         .then(resp => {
           if (resp.data.success) {
             this.members = resp.data.result;
             this.error_msg = true;
-          }else{
-             notifications.warn(resp.data.message);
+          } else {
+            notifications.warn(resp.data.message);
           }
         });
     },

@@ -36,7 +36,8 @@
 <script>
 import notifications from "@/common/notifications/notification.service";
 import { teamService } from "@/common/api/api.service";
-
+import { mapGetters } from "vuex";
+import { AUTH_USER } from "@/store/modules/auth/auth-actions";
 export default {
   name: "NewTeamModal",
   props: {
@@ -53,6 +54,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      user: AUTH_USER,
+    }),
     isVisible: {
       get() {
         return this.visible;
@@ -67,6 +71,7 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           this.handleFormSubmit({
+            role: this.user.select_role,
             ...values
           });
         }

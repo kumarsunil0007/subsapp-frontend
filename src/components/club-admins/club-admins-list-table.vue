@@ -80,7 +80,9 @@ export default {
         .then(resp => {
           if (resp.data.success) {
             this.getAdmins();
-            notifications.success("Admin removed successfully");
+            notifications.success("Coach removed successfully");
+          }else{
+            notifications.success(resp.data.message);
           }
         });
     },

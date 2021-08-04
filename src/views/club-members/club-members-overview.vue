@@ -56,7 +56,6 @@
           <club-member-table
             ref="club_member_Listing"
             :filters="filters"
-            :club-id="AUTH_USER.app.club_id"
           ></club-member-table>
         </a-card>
       </a-col>
@@ -77,7 +76,7 @@ import NPage from "@/components/ui/n-page/n-page";
 import ClubMemberTable from "@/components/club-member/club-member-table/club-member-table";
 import InviteMemberModal from "@/components/club-member/invite-member-modal/invite-member-modal";
 import AddMemberModal from "@/components/club-member/add-member-modal/add-member-modal";
-import { mapGetters } from "vuex";
+
 export default {
   name: "ClubMembersOverview",
   components: {
@@ -96,9 +95,6 @@ export default {
         type: "all"
       }
     };
-  },
-  computed: {
-    ...mapGetters(["AUTH_USER"])
   },
   methods: {
     fetchMembers() {},
