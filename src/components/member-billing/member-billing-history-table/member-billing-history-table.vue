@@ -11,16 +11,16 @@
       </div>
       <div slot="total" slot-scope="text">€{{ formatMoney(text) }}</div>
       <div slot="transaction" slot-scope="text, row">
-        <template v-if="row.Transaction && row.Transaction.id">
+        <template v-if="row.status === 'complete'">
           <a-tag color="green">Payment Received</a-tag>
         </template>
-        <template v-else>
-          <a-tag color="orange">Payment In Progress</a-tag>
+        <template v-if="row.status === 'refund'">
+          <a-tag color="orange">Refund</a-tag>
         </template>
       </div>
     </a-table>
 
-    <a-modal v-model="showDialog" width="400px">
+    <a-modal v-model="showDialog" width="400px" @ok="showDialog = false">
       <a-row>
         <a-col :xs="12" :lg="12">
           <h4>{{ selectedInvoice.club_name }}</h4>
@@ -48,24 +48,20 @@
             <strong>Transaction ID:</strong>
             <span> {{ selectedInvoice.Transaction.transaction_id }}</span>
           </p>
-          <p>
+          <!-- <p>
             <strong>Payment Card:</strong> <span> **** **** **** 4731</span>
-          </p>
+          </p> -->
           <p
             v-if="selectedInvoice.Transaction && selectedInvoice.Transaction.id"
           >
             <strong>Payment Received:</strong>
             <span> {{ nTime(selectedInvoice.Transaction.created_at) }}</span>
           </p>
-          <template
-            v-if="selectedInvoice.Transaction && selectedInvoice.Transaction.id"
-          >
+          <template v-if="selectedInvoice.status === 'complete'">
             <a-tag style="margin-right: 0;" color="green">PAID</a-tag>
           </template>
           <template v-else>
-            <a-tag style="margin-right: 0;" color="orange"
-              >PENDING PAYMENT</a-tag
-            >
+            <a-tag style="margin-right: 0;" color="orange">refund</a-tag>
           </template>
         </a-col>
       </a-row>

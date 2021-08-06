@@ -6,41 +6,7 @@
       </a-card>
     </div>
     <div v-else>
-      <a-row type="flex">
-        <a-col :xs="24" :sm="24" :md="6">
-          <n-box to="/teams-list">
-            <div slot="title">
-              Teams
-            </div>
-            <div slot="description">
-              Schedule new training session, add and remove team members and
-              manage anything else related to that team.
-            </div>
-          </n-box>
-        </a-col>
-        <a-col :xs="24" :sm="24" :md="6">
-          <n-box to="/members">
-            <div slot="title">
-              Global Members
-            </div>
-            <div slot="description">
-              Manage your global clubs members, grow your club by inviting new
-              members or just manage your existing members.
-            </div>
-          </n-box>
-        </a-col>
-        <a-col :xs="24" :sm="24" :md="6">
-          <n-box to="/club/billing">
-            <div slot="title">
-              Billing
-            </div>
-            <div slot="description">
-              View a breakdown of your clubs billing history. Track pending
-              payments and view individual transaction invoices.
-            </div>
-          </n-box>
-        </a-col>
-      </a-row>
+      <club-dashboard />
     </div>
   </n-page>
 </template>
@@ -59,14 +25,17 @@
 </style>
 
 <script>
-import NBox from "@/components/ui/n-box/n-box";
+//import NBox from "@/components/ui/n-box/n-box";
 import NPage from "@/components/ui/n-page/n-page";
 import { AUTH_USER } from "@/store/modules/auth/auth-actions";
 import { mapGetters } from "vuex";
 import MemberCalendar from "@/components/member-calendar/member-calendar";
+import ClubDashboard from "@/components/club-admins/dashboard/club-dashboard";
+import { clubService } from "@/common/api/api.service";
+
 export default {
   name: "Dashboard",
-  components: { NPage, NBox, MemberCalendar },
+  components: { NPage, MemberCalendar, ClubDashboard },
   data() {
     return {
       teams: [
@@ -89,6 +58,21 @@ export default {
     ...mapGetters({
       user: AUTH_USER
     })
+  },
+  mounted() {
+    this.fetchRoles();
+  },
+  methods: {
+    fetchRoles() {
+      clubService.fetchRoles().then(resp => {
+        if (resp.data.success) {
+          let userData = JSON.parse(localStorage.getItem("auth-user"));
+          userData.user_type = resp.data.result;
+          window.localStorage.setItem("auth-user", JSON.stringify(userData));
+          this.$store.commit("AUTH_STATE");
+        }
+      });
+    }
   }
 };
 </script>

@@ -30,6 +30,7 @@ import {
   Card,
   Select,
   Dropdown,
+  Statistic,
   Tag
 } from "ant-design-vue";
 import "./styles/wieldy.less";
@@ -70,6 +71,7 @@ Vue.use(Carousel);
 Vue.use(Row);
 Vue.use(Col);
 Vue.use(Spin);
+Vue.use(Statistic);
 
 Vue.config.productionTip = false;
 

@@ -272,6 +272,12 @@ export const clubService = {
   },
   requestToJoin(params) {
     return ApiService.post("/club/request-to-join", params);
+  },
+  fetchRoles() {
+    return ApiService.query("club/get-member-role");
+  },
+  fetchStats(params) {
+    return ApiService.query("club/dashboard-data", params);
   }
 };
 
