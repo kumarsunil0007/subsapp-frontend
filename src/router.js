@@ -31,6 +31,14 @@ function authGuard(to, from, next) {
   }
 }
 
+function authCheck(to, from, next) {
+  if (store.state.auth.token) {
+    next("/");
+  } else {
+    next();
+  }
+}
+
 export default new Router({
   mode: process.env.CORDOVA_PLATFORM ? "hash" : "hash",
   base: process.env.BASE_URL,
@@ -171,6 +179,22 @@ export default new Router({
           beforeEnter: authGuard
         },
         {
+          path: "my-teams/",
+          component: () => import("@/views/members/my-teams"),
+          meta: {
+            permission: "member"
+          },
+          beforeEnter: authGuard
+        },
+        {
+          path: "team/schedules/:id",
+          component: () => import("@/views/members/team-schedules"),
+          meta: {
+            permission: ["member"]
+          },
+          beforeEnter: authGuard
+        },
+        {
           path: "my-profile/",
           component: () => import("@/views/my-profile/my-profile"),
           beforeEnter: authGuard
@@ -280,11 +304,13 @@ export default new Router({
     {
       path: "/register-club",
       name: "club-registration",
+      beforeEnter: authCheck,
       component: () => import("./views/auth/registration/club-register.vue")
     },
     {
       path: "/register-user",
       name: "user-registration",
+      beforeEnter: authCheck,
       component: () => import("./views/auth/registration/user-register.vue")
     },
     {
@@ -293,6 +319,7 @@ export default new Router({
       meta: {
         permission: "member"
       },
+      beforeEnter: authCheck,
       component: () => import("./views/auth/login.vue")
     },
     {

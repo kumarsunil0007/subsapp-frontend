@@ -1,73 +1,105 @@
 <template>
-  <div>
-    <vue-cal
-      xsmall
-      style="height: 600px"
-      :time-from="1 * 60"
-      :time-to="24 * 60"
-      :time-cell-height="40"
-      default-view="week"
-      :events="events"
-      :selected-date="selectedDate"
-      :time-step="20"
-      :on-event-click="onEventClick"
-    >
-      :disable-views="['years', 'year', 'month']" >
-    </vue-cal>
-    <a-modal v-model="showDialog">
-      <h2>{{ selectedEvent.title }}</h2>
-      <a-divider />
-      <strong>{{ nFormat(selectedEvent.startDate) }}</strong>
-      <strong>Event details:</strong>
-      <ul>
-        <li>Location: {{ selectedEvent.location }}</li>
-        <li>Event starts at: {{ selectedEvent.startTime }}</li>
-        <li>Event ends at: {{ selectedEvent.endTime }}</li>
-      </ul>
-    </a-modal>
-  </div>
+  <n-page>
+    <div>
+      <a-card :title="schedules" class="gx-card-full">
+        <vue-cal
+          xsmall
+          style="height: 600px"
+          :time-from="1 * 60"
+          :time-to="24 * 60"
+          :time-cell-height="40"
+          default-view="week"
+          :events="events"
+          :time-step="20"
+          :on-event-click="onEventClick"
+          :disable-views="['years']"
+          :selected-date="selectedDate"
+        >
+        </vue-cal>
+        <a-modal v-model="showDialog">
+          <h2>{{ selectedEvent.title }}</h2>
+          <a-divider />
+          <strong>{{ nFormat(selectedEvent.startDate) }}</strong>
+          <strong>Event details:</strong>
+          <ul>
+            <li>Location: {{ selectedEvent.location }}</li>
+            <li>Event starts at: {{ selectedEvent.startTime }}</li>
+            <li>Event ends at: {{ selectedEvent.endTime }}</li>
+          </ul>
+        </a-modal>
+      </a-card>
+    </div>
+  </n-page>
 </template>
+
+<style lang="scss">
+.teams-box {
+  &--name {
+    font-weight: 100;
+  }
+  &--title {
+    font-size: 22px;
+    color: #f5f5f5;
+    margin-bottom: 2px;
+  }
+}
+</style>
+
 <script>
-// In your VueJS component.
+//import NBox from "@/components/ui/n-box/n-box";
+import NPage from "@/components/ui/n-page/n-page";
 import VueCal from "vue-cal";
 import nTime from "@/mixins/time";
 import "vue-cal/dist/vuecal.css";
-import moment from "moment";
+import { AUTH_USER } from "@/store/modules/auth/auth-actions";
+import { mapGetters } from "vuex";
 import { memberService } from "@/common/api/api.service";
+import moment from "moment";
 
 export default {
-  name: "MemberCalendar",
-  components: { VueCal },
-  mixins: [nTime],
-  data: () => ({
-    showDialog: false,
-    selectedEvent: {},
-    events: [
-      {
-        start: "2019-04-03 14:00",
-        end: "2019-04-03 15:30",
-        title: "Training Session",
-        location: "Kenmare Soccer Pitch",
-        class: "leisure"
-      },
-      {
-        start: "2019-04-03 11:00",
-        end: "2019-04-03 12:45",
-        title: "Indoor Rowing Session",
-        location: "Kenmare Rowing Club",
-        class: "leisure"
-      }
-    ],
-    selectedDate: ""
-  }),
+  name: "Dashboard",
+  components: { NPage, VueCal },
+  data() {
+    return {
+      showDialog: false,
+      selectedEvent: {},
+      schedules: "",
+      events: [
+        {
+          start: "2021-09-14 14:00",
+          end: "2021-09-14 15:30",
+          title: "Training Session",
+          location: "Kenmare Soccer Pitch",
+          class: "leisure"
+        },
+        {
+          start: "2021-09-15 11:00",
+          end: "2021-09-15 11:15",
+          title: "Indoor Rowing Session",
+          location: "Kenmare Rowing Club",
+          class: "leisure"
+        }
+      ],
+      selectedDate: ""
+    };
+  },
+  computed: {
+    ...mapGetters({
+      user: AUTH_USER
+    })
+  },
   mounted() {
     this.fetchSchedule();
   },
   methods: {
     fetchSchedule() {
-      memberService.getSchedule().then(resp => {
+      const id = this.$route.params.id;
+      memberService.getTeamSchedules(id).then(resp => {
         let events = [];
         if (resp.data.success) {
+          this.schedules = resp.data.result.length
+            ? resp.data.result[0].team_name
+            : "Your Schedules";
           for (let event of resp.data.result) {
             if (!this.selectedDate) {
               let now = moment();
@@ -94,14 +126,11 @@ export default {
     onEventClick(event, e) {
       this.selectedEvent = event;
       this.showDialog = true;
-
-      // Prevent navigating to narrower view (default vue-cal behavior).
       e.stopPropagation();
     }
   }
 };
 </script>
-
 <style>
 /* Green-theme. */
 .vuecal__menu,

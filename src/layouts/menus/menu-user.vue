@@ -17,6 +17,12 @@
           <span>My Clubs</span>
         </router-link>
       </a-menu-item>
+      <a-menu-item key="my_teams" @click="hideSidebar">
+        <router-link to="/my-teams">
+          <a-icon type="team" />
+          <span>My Teams</span>
+        </router-link>
+      </a-menu-item>
       <a-menu-item key="my_billing" @click="hideSidebar">
         <router-link to="/my-billing">
           <a-icon type="euro" />

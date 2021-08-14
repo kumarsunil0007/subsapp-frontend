@@ -2,20 +2,13 @@
   <n-page>
     <a-row>
       <a-col :lg="12" :md="24" :sm="24" :xs="24">
-        <a-card
-          title="Club Settings"
-          class=""
-          :class="{ 'gx-card-full': clubLoadingStatus }"
-        >
-          <a-form
-            :class="{ 'gx-hide': clubLoadingStatus }"
-            :form="form"
-            layout="vertical"
-          >
+        <a-card title="Club Settings" class="">
+          <a-form :form="form" layout="vertical">
             <template v-if="club.club_logo">
               <img
                 :src="clubLogo"
                 style="max-height: 120px; max-width: 100%;"
+                @error="defaultImage"
               />
             </template>
             <p class="gx-mt-3">
@@ -26,10 +19,10 @@
                 v-decorator="['upload']"
                 accept="image/png,image/jpeg,/image/jpg"
                 name="logo"
+                :data="enjectRole"
                 :action="`${action}club/upload-club-logo`"
                 :headers="{ Authorization: 'Bearer ' + userToken }"
                 list-type="picture"
-                :show-upload-list="true"
                 @change="uploadImage"
               >
                 <a-button> <a-icon type="upload" /> Change your Logo </a-button>
@@ -100,15 +93,20 @@
               </a-input>
             </a-form-item>
             <a-form-item class="gx-text-right">
-              <a-button type="primary" html-type="submit" @click="handleForm">
+              <a-button
+                type="primary"
+                html-type="submit"
+                :loading="spinning"
+                @click="handleForm"
+              >
                 Save Details
               </a-button>
             </a-form-item>
           </a-form>
-          <n-section-loading
+          <!-- <n-section-loading
             v-if="clubLoadingStatus"
             title="Loading club details..."
-          />
+          /> -->
         </a-card>
       </a-col>
     </a-row>
@@ -123,13 +121,15 @@ import NPage from "@/components/ui/n-page/n-page";
 import { clubService } from "@/common/api/api.service";
 import NSectionLoading from "@/components/ui/n-section-loading/n-section-loading";
 import notifications from "@/common/notifications/notification.service";
+import MissingPng from "@/assets/missing-profile-photo.png";
 export default {
   name: "MyClub",
   components: { NSectionLoading, NPage },
   data() {
     return {
       form: this.$form.createForm(this),
-      action: process.env.VUE_APP_API_HOST
+      action: process.env.VUE_APP_API_HOST,
+      spinning: false
     };
   },
   computed: {
@@ -139,29 +139,31 @@ export default {
       userToken: [AUTH_TOKEN],
       clubLoadingStatus: "getClubLoadingStatus"
     }),
+    enjectRole() {
+      let data = {
+        role: this.user.select_role
+      };
+      return data;
+    },
     clubLogo: function() {
       if (this.club.club_logo) {
         return this.club.club_logo;
       } else {
-        return "https://api.subsapp.com/missing.png";
+        return MissingPng;
       }
     }
   },
   watch: {
     club: function(newData) {
-      if (!this.clubLoadingStatus) {
-        if (newData.id) {
-          this.form.setFieldsValue({
-            club_name: newData.club_name,
-            email: newData.email,
-            address: newData.address,
-            contact_phone: newData.contact_number,
-            facebook: newData.facebook,
-            twitter: newData.twitter,
-            website: newData.website
-          });
-        }
-      }
+      this.form.setFieldsValue({
+        club_name: newData.club_name,
+        email: newData.email,
+        address: newData.address,
+        contact_phone: newData.contact_number,
+        facebook: newData.facebook,
+        twitter: newData.twitter,
+        website: newData.website
+      });
     }
   },
   mounted() {
@@ -180,14 +182,25 @@ export default {
       });
     },
     handleFormSubmit(values) {
-      clubService.update(this.club.id, values).then(resp => {
-        if (resp.data.success) {
-          this.ClubInfo();
-          notifications.success("Club updated successfully");
-        } else {
-          notifications.warn(resp.data.message);
-        }
-      });
+      this.spinning = true;
+      clubService
+        .update(this.club.id, values)
+        .then(resp => {
+          this.spinning = false;
+          if (resp.data.success) {
+            this.ClubInfo();
+            notifications.success("Club updated successfully");
+          } else {
+            notifications.warn(resp.data.message);
+          }
+        })
+        .catch(() => {
+          notifications.warn("Something went wrong, please try again later");
+          this.spinning = false;
+        });
+    },
+    defaultImage(e) {
+      e.target.src = MissingPng;
     },
     ClubInfo() {
       const data = {

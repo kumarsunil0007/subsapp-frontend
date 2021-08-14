@@ -110,7 +110,6 @@ export default {
   mounted() {
     this.listCards();
     this.listInvoices();
-    this.listPlans();
     this.getSubscriptions();
   },
   methods: {
@@ -164,17 +163,16 @@ export default {
           },
           tk: tk
         })
-        .then((resp) => {
-          if(resp.data.success){
-             notifications.success("Card Removed Successfully");
-             this.listCards();
-          }else{
+        .then(resp => {
+          if (resp.data.success) {
+            notifications.success("Card Removed Successfully");
+            this.listCards();
+          } else {
             notifications.warn(resp.data.message);
           }
         });
     },
     setDefault(tk) {
-      console.log(tk,'dd')
       billingService
         .setDefaultCard({
           auth: {

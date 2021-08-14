@@ -133,6 +133,7 @@ const columns = [
 ];
 
 import { memberService } from "@/common/api/api.service";
+import notifications from "@/common/notifications/notification.service";
 
 export default {
   name: "ClubMemberTable",
@@ -180,6 +181,8 @@ export default {
         .then(resp => {
           if (resp.data.success) {
             this.getClubMembers();
+          } else {
+            notifications.warn(resp.data.message);
           }
         });
     },

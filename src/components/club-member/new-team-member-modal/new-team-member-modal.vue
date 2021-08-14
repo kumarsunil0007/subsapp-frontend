@@ -31,20 +31,46 @@
             block
             class="gx-btn-cyan"
             size="small"
-            @click="updateTeamMember(member.id, 'create')"
+            @click="updateTeamMember(member.id, 'invite')"
           >
-            Add to Team
+            Invite to Team
           </a-button>
-          <a-button
-            v-if="member.teams && member.teams.length"
-            type="danger"
-            class="gx-btn-danger"
-            block
-            size="small"
-            @click="updateTeamMember(member.id, 'remove')"
-          >
-            Remove Member
-          </a-button>
+          <div v-if="member.teams && member.teams.length">
+            <a-button
+              v-if="member.teams[0].pivot.status === 'invite'"
+              type="danger"
+              class="gx-btn-danger"
+              block
+              size="small"
+              @click="updateTeamMember(member.id, 'archive')"
+            >
+              Cancel invite
+            </a-button>
+            <a-button
+              v-if="member.teams[0].pivot.status === 'decline'"
+              type="danger"
+              class="gx-btn-danger"
+              block
+              size="small"
+              @click="updateTeamMember(member.id, 'invite')"
+            >
+              Send Invite Again
+            </a-button>
+            <a-button
+              v-if="
+                member.teams &&
+                  member.teams.length &&
+                  member.teams[0].pivot.status === 'accept'
+              "
+              type="danger"
+              class="gx-btn-danger"
+              block
+              size="small"
+              @click="updateTeamMember(member.id, 'archive')"
+            >
+              Remove Member
+            </a-button>
+          </div>
         </a-col>
       </a-row>
       <a-row v-if="members.length < 1 && error_msg"
@@ -93,8 +119,8 @@ export default {
       }
     },
     ...mapGetters({
-      user: AUTH_USER,
-    }),
+      user: AUTH_USER
+    })
   },
   methods: {
     updateTeamMember(memberId, action) {
@@ -102,7 +128,8 @@ export default {
         .updateTeamMember({
           memberId: memberId,
           teamId: this.teamId,
-          action: action
+          action: action,
+          url: window.location.origin + "/#/login"
         })
         .then(resp => {
           if (resp.data.success) {

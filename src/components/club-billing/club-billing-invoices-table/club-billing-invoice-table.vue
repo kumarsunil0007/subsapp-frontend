@@ -43,11 +43,6 @@ const columns = [
     }
   },
   {
-    title: "Description",
-    dataIndex: "description",
-    key: "description"
-  },
-  {
     title: "Payment Status",
     scopedSlots: {
       customRender: "transaction"

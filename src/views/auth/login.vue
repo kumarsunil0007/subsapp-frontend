@@ -120,7 +120,7 @@ export default {
           }
           this.loginLoading = false;
         })
-        .catch(e => {
+        .catch(() => {
           this.loginLoading = false;
         });
     }

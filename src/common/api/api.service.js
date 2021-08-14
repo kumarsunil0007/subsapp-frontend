@@ -163,6 +163,9 @@ export const memberService = {
   getSchedule(memberId) {
     return ApiService.post("/member/get-schedule", { memberId: memberId });
   },
+  getTeamSchedules(id) {
+    return ApiService.get("/member/get-team-schedule", id);
+  },
   updateClubMember(memberId, data) {
     return ApiService.update("/member/update-club-member", memberId, data);
   },
@@ -180,6 +183,12 @@ export const memberService = {
   },
   updateProfile(data) {
     return ApiService.post("/update/user-profile", data);
+  },
+  memberTeams() {
+    return ApiService.query("/member/teams-query");
+  },
+  TeamTablelist(memberId, data) {
+    return ApiService.update("/team/update-team-status", memberId, data);
   }
 };
 export const adminService = {
@@ -305,6 +314,9 @@ export const billingService = {
   },
   attemptUpgrade(params) {
     return ApiService.post("/billing/attempt-upgrade", params);
+  },
+  cancelSubscription() {
+    return ApiService.post("/billing/cancel-subscription");
   }
 };
 

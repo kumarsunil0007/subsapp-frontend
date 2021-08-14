@@ -26,6 +26,7 @@
             <session-member-attendance-table
               :team-id="session.team_id"
               :session-id="session.id"
+              :session-start="session.start"
             />
           </a-card>
         </a-col>

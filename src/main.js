@@ -31,7 +31,9 @@ import {
   Select,
   Dropdown,
   Statistic,
-  Tag
+  Tag,
+  Divider,
+  Popconfirm
 } from "ant-design-vue";
 import "./styles/wieldy.less";
 import "./assets/style";
@@ -72,6 +74,8 @@ Vue.use(Row);
 Vue.use(Col);
 Vue.use(Spin);
 Vue.use(Statistic);
+Vue.use(Divider);
+Vue.use(Popconfirm);
 
 Vue.config.productionTip = false;
 

@@ -1,7 +1,7 @@
 <template>
   <n-page>
     <div v-if="user.select_role === 'member'">
-      <a-card title="Your Schedule" class="gx-card-full">
+      <a-card title="Your Schedules" class="gx-card-full">
         <member-calendar />
       </a-card>
     </div>

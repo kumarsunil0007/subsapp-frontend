@@ -23,7 +23,7 @@
             </p>
             <p style="padding:0;">
               Renew date:
-              {{ (sub.current_period_end) }}
+              {{ sub.current_period_end }}
             </p>
           </a-col>
           <a-col v-else :span="24">
@@ -36,9 +36,18 @@
             <a-button type="primary" @click="openUpgradeModal">
               Select Subscription
             </a-button>
-            <a-button type="danger">
-              Cancel
-            </a-button>
+            <a-popconfirm
+              v-if="sub && sub.active"
+              placement="top"
+              ok-text="Yes"
+              cancel-text="No"
+              @confirm="cancelSubscription"
+            >
+              <template slot="title">
+                <p>Are you sure to cancel the subscription</p>
+              </template>
+              <a-button type="danger">Cancel Subscription</a-button>
+            </a-popconfirm>
           </a-col>
         </a-row>
       </div>
@@ -60,11 +69,12 @@ import {
   FETCH_SUBSCRIPTION
 } from "@/store/modules/auth/auth-actions";
 import SubscriptionUpgradeModal from "@/components/club-billing/subscription-upgrade-modal/subscription-upgrade-modal";
-
+import { billingService } from "@/common/api/api.service";
 export default {
   name: "ClubSubscriptionOverview",
   components: { SubscriptionUpgradeModal },
   mixins: [time],
+  // eslint-disable-next-line vue/require-prop-types
   props: ["cards"],
   data() {
     return {
@@ -89,7 +99,6 @@ export default {
       this.$store.dispatch(FETCH_SUBSCRIPTION);
     },
     openUpgradeModal() {
-      console.log(this.cards);
       if (this.cards.length <= 0) {
         notifications.warn("Please add a card to your account first");
       } else {
@@ -99,6 +108,16 @@ export default {
     closeUpgradeModal() {
       this.$store.dispatch(FETCH_SUBSCRIPTION);
       this.upgradeModal = false;
+    },
+    async cancelSubscription() {
+      await billingService.cancelSubscription().then(resp => {
+        if (resp.data.success) {
+          notifications.success("Your subscription is cancelled");
+        } else {
+          notifications.warn(resp.data.message);
+        }
+      });
+      this.$store.dispatch(FETCH_SUBSCRIPTION);
     }
   }
 };

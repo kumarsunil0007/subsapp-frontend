@@ -1,5 +1,9 @@
 <template>
-  <a-table :columns="columns" :data-source="getSessionMembers" :pagination="false">
+  <a-table
+    :columns="columns"
+    :data-source="getSessionMembers"
+    :pagination="false"
+  >
     <div slot="startTimeRender" slot-scope="text">
       {{ text }}
     </div>
@@ -31,6 +35,7 @@
 import nTime from "@/mixins/time";
 import nCurrency from "@/mixins/currency";
 import notifications from "@/common/notifications/notification.service";
+import moment from "moment";
 const columns = [
   {
     title: "Member",
@@ -49,8 +54,13 @@ const columns = [
   }
 ];
 
-import { GET_SESSION_MEMBERS, REMOVE_MEMBER_ATTENDANCE, NEW_MEMBER_ATTENDANCE, GET_SESSION_INVOICES } from "@/store/modules/session/session-actions";
-import { mapGetters } from 'vuex'
+import {
+  GET_SESSION_MEMBERS,
+  REMOVE_MEMBER_ATTENDANCE,
+  NEW_MEMBER_ATTENDANCE,
+  GET_SESSION_INVOICES
+} from "@/store/modules/session/session-actions";
+import { mapGetters } from "vuex";
 
 export default {
   name: "SessionMemberAttendanceTable",
@@ -63,6 +73,10 @@ export default {
     sessionId: {
       required: true,
       type: Number
+    },
+    sessionStart: {
+      type: String,
+      required: true
     }
   },
   data() {
@@ -71,7 +85,7 @@ export default {
       schedule: [],
       loading: false,
       loader: false,
-      select_member:""
+      select_member: ""
     };
   },
   watch: {
@@ -81,8 +95,8 @@ export default {
     sessionId: function() {
       this.getTeamSchedule();
     },
-    getErrorMsg(value){
-      if(value){
+    getErrorMsg(value) {
+      if (value) {
         notifications.warn(value);
       }
     }
@@ -92,28 +106,40 @@ export default {
   },
   methods: {
     async removeMemberAttendance(row) {
-      this.select_member = row.member.id
-      this.loader = true
+      if (moment(this.sessionStart).isBefore(moment())) {
+        notifications.warn(
+          "Your event has passed.You can't mark absent or present now."
+        );
+        return;
+      }
+      this.select_member = row.member.id;
+      this.loader = true;
       await this.$store.dispatch(REMOVE_MEMBER_ATTENDANCE, {
         memberId: row.member.id,
         teamId: this.teamId,
         sessionId: this.sessionId
       });
-      this.loader = false
+      this.loader = false;
       this.$store.dispatch(GET_SESSION_INVOICES, this.sessionId);
       this.getTeamSchedule();
     },
     async createNewSchedule(row) {
-       this.select_member = row.member.id
-      this.loading = true
+      if (moment(this.sessionStart).isBefore(moment())) {
+        notifications.warn(
+          "Your event has passed.You can't mark absent or present now."
+        );
+        return;
+      }
+      this.select_member = row.member.id;
+      this.loading = true;
       await this.$store.dispatch(NEW_MEMBER_ATTENDANCE, {
         memberId: row.member.id,
         teamId: this.teamId,
         sessionId: this.sessionId
-      })
-      this.loading = false
+      });
+      this.loading = false;
       this.$store.dispatch(GET_SESSION_INVOICES, this.sessionId);
-     // this.getTeamSchedule();
+      // this.getTeamSchedule();
     },
     getTeamSchedule() {
       if (this.teamId && this.sessionId)
@@ -123,11 +149,9 @@ export default {
         });
     }
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
-    ...mapGetters([
-      'getSessionMembers',
-      'getErrorMsg'
-    ])
+    ...mapGetters(["getSessionMembers", "getErrorMsg"])
   }
 };
 </script>

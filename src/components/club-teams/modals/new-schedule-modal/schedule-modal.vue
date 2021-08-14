@@ -9,7 +9,7 @@
       <a-form-item label="Title">
         <a-input
           v-decorator="[
-            'eventTitle',
+            'title',
             {
               rules: [
                 {
@@ -25,7 +25,7 @@
       <a-form-item label="Location">
         <a-input
           v-decorator="[
-            'eventLocation',
+            'location',
             {
               rules: [
                 {
@@ -38,54 +38,61 @@
           placeholder="KFA Soccer Pitch"
         />
       </a-form-item>
-      <a-form-item label="Entry Cost">
-        <a-input
-          v-decorator="[
-            'eventCost',
-            {
-              rules: [
+      <a-row>
+        <a-col>
+          <a-form-item label="Entry Cost">
+            <a-input
+              v-decorator="[
+                'cost',
                 {
-                  required: true,
-                  message:
-                    'Please enter the entry cost to this event, use 0 if none'
+                  rules: [
+                    {
+                      required: true,
+                      message:
+                        'Please enter the entry cost to this event, use 0 if none'
+                    }
+                  ]
                 }
-              ]
-            }
-          ]"
-          min="0"
-          addon-after="Euros"
-          type="number"
-          step="0.1"
-          placeholder="2.50"
-        >
-          <a-icon slot="prefix" type="euro" style="color:rgba(0,0,0,.25)" />
-        </a-input>
-      </a-form-item>
-      <a-form-item label="Session Duration">
-        <a-input
-          v-decorator="[
-            'eventDuration',
-            {
-              rules: [
+              ]"
+              min="0"
+              addon-after="Euros"
+              type="number"
+              step="0.1"
+              placeholder="2.50"
+            >
+              <a-icon slot="prefix" type="euro" style="color:rgba(0,0,0,.25)" />
+            </a-input>
+          </a-form-item>
+        </a-col>
+        <a-col>
+          <a-form-item label="Session Duration">
+            <a-input
+              v-decorator="[
+                'length',
                 {
-                  required: true,
-                  message: 'Please specify the duration of this session'
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Please specify the duration of this session'
+                    }
+                  ]
                 }
-              ]
-            }
-          ]"
-          type="number"
-          min="0"
-          step="1"
-          placeholder="30"
-          addon-after="minutes"
-        >
-        </a-input>
-      </a-form-item>
+              ]"
+              type="number"
+              min="0"
+              step="1"
+              placeholder="30"
+              addon-after="minutes"
+            >
+            </a-input>
+          </a-form-item>
+        </a-col>
+      </a-row>
+
       <a-form-item label="Start Date/Time">
         <a-date-picker
           v-decorator="[
-            'eventSchedule',
+            'start',
             {
               rules: [
                 {
@@ -98,20 +105,66 @@
           ]"
           style="width:100%;"
           :disabled-date="disabledStartDate"
+          locale="DD/MM/YYYY HH:mm"
           :disabled-time="disabledStartDate"
-          show-time
+          :show-time="{ format: 'HH:mm' }"
+          :show-second="false"
           format="DD/MM/YYYY HH:mm"
           placeholder="DD/MM/YYYY HH/MM"
+          @change="changeDate"
         />
       </a-form-item>
       <a-form-item>
-        <a-checkbox v-decorator="['eventRecurring']" @change="toggleRecurring">
+        <a-checkbox
+          v-decorator="[
+            'is_recurring',
+            {
+              valuePropName: 'checked',
+              initialValue: false
+            }
+          ]"
+          @change="toggleRecurring"
+        >
           Recurring Event?
         </a-checkbox>
       </a-form-item>
-      <a-form-item v-if="isRecurring">
-        <a-select v-decorator="['eventRecurringType']" style="width:100%;">
-          <a-select-option value="daily">Daily</a-select-option>
+      <a-form-item v-if="isRecurring" label="Recurring Event End Date">
+        <a-date-picker
+          v-decorator="[
+            'recurring_end_date',
+            {
+              rules: [
+                {
+                  required: true,
+                  message:
+                    'Please select the recurring event vent start  and end date'
+                }
+              ]
+            }
+          ]"
+          style="width:100%;"
+          :disabled-date="disabledStartDate"
+          :disabled-time="disabledStartDate"
+          format="DD/MM/YYYY"
+          placeholder="DD/MM/YYYY"
+        />
+      </a-form-item>
+      <a-form-item v-if="isRecurring" label="Recurring Day">
+        <a-select
+          v-decorator="[
+            'recurring_type',
+            {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please select event recurring type'
+                }
+              ]
+            }
+          ]"
+          style="width:100%;"
+          placeholder="Please select event recurring type"
+        >
           <a-select-option value="monday">Every Monday</a-select-option>
           <a-select-option value="tuesday">Every Tuesday</a-select-option>
           <a-select-option value="wednesday">Every Wednesday</a-select-option>
@@ -119,6 +172,26 @@
           <a-select-option value="friday">Every Friday</a-select-option>
           <a-select-option value="saturday">Every Saturday</a-select-option>
           <a-select-option value="sunday">Every Sunday</a-select-option>
+        </a-select>
+      </a-form-item>
+      <a-form-item v-if="isRecurring" label="Payment Method">
+        <a-select
+          v-decorator="[
+            'payment_recurring',
+            {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please select the payment'
+                }
+              ]
+            }
+          ]"
+          style="width:100%;"
+          placeholder="Please select the payment method"
+        >
+          <a-select-option :value="0">One Time payment</a-select-option>
+          <a-select-option :value="1">Recurring Payment</a-select-option>
         </a-select>
       </a-form-item>
     </a-form>
@@ -149,6 +222,7 @@ export default {
   data() {
     return {
       isRecurring: false,
+      setDate: "",
       form: this.$form.createForm(this)
     };
   },
@@ -163,15 +237,23 @@ export default {
     }
   },
   methods: {
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current < moment().endOf("day");
+    },
+    changeDate(e) {
+      this.setDate = e.format("YYYY-MM-D HH:mm");
+    },
     toggleRecurring() {
       this.isRecurring = !this.isRecurring;
     },
     handleForm() {
       this.form.validateFields((err, values) => {
         if (!err) {
+          values.start = this.setDate;
           this.handleFormSubmit({
             ...values,
-            teamId: this.teamId
+            team_id: this.teamId
           });
         }
       });
@@ -199,6 +281,7 @@ export default {
     moment,
     close() {
       this.form.resetFields();
+      this.isRecurring = false;
       this.$emit("close");
     }
   }

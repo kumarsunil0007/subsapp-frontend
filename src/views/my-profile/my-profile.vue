@@ -7,7 +7,9 @@
             <template v-if="profilePic">
               <img
                 :src="profilePic"
+                class="gx-mb-3"
                 style="max-height: 120px; max-width: 100%;"
+                @error="defaultImage"
               />
             </template>
             <a-form-item>
@@ -128,7 +130,12 @@
               </div>
             </div>
             <a-form-item class="gx-text-right">
-              <a-button type="primary" html-type="submit" @click="handleForm">
+              <a-button
+                type="primary"
+                html-type="submit"
+                :loading="loading"
+                @click="handleForm"
+              >
                 Save Details
               </a-button>
             </a-form-item>
@@ -164,22 +171,19 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { GET_USER } from "@/store/modules/user/user-actions";
 import NPage from "@/components/ui/n-page/n-page";
-import {
-  AUTH_USER,
-  AUTH_TOKEN,
-  FETCH_PROFILE
-} from "@/store/modules/auth/auth-actions";
+import notifications from "@/common/notifications/notification.service";
+import MissingPng from "@/assets/missing-profile-photo.png";
+
+import { AUTH_USER, AUTH_TOKEN } from "@/store/modules/auth/auth-actions";
 import { memberService } from "@/common/api/api.service";
 import moment from "moment";
-import notifications from "@/common/notifications/notification.service";
 //import SubAccountsTable from "@/components/sub-accounts/sub-accounts-table/sub-accounts-table";
 //import SubAccountsManageModal from "@/components/sub-accounts/sub-accounts-manage-modal/sub-accounts-manage-modal";
 export default {
   name: "MyProfile",
   components: {
-   // SubAccountsManageModal,
+    // SubAccountsManageModal,
     //SubAccountsTable,
     NPage
   },
@@ -194,7 +198,8 @@ export default {
       },
       form: this.$form.createForm(this),
       action: process.env.VUE_APP_API_HOST,
-      user_image: ""
+      user_image: "",
+      loading: false
     };
   },
   computed: {
@@ -269,6 +274,9 @@ export default {
     uploadImage() {
       this.fetchProfile();
     },
+    defaultImage(e) {
+      e.target.src = MissingPng;
+    },
     handleForm() {
       this.form.validateFields((err, values) => {
         if (!err) {
@@ -301,12 +309,14 @@ export default {
       });
     },
     handleFormSubmit(values) {
+      this.loading = true;
       memberService
         .updateProfile({
           ...values,
           country: this.fields.country
         })
         .then(resp => {
+          this.loading = false;
           if (resp.data.success) {
             this.fetchProfile();
             notifications.success("Great! Profile updated");
@@ -319,6 +329,12 @@ export default {
               );
             }
           }
+        })
+        .catch(() => {
+          this.loading = false;
+          notifications.warn(
+            "We could not update your personal details, something went wrong."
+          );
         });
     }
   }

@@ -1,23 +1,9 @@
 <template>
   <a-table :columns="columns" :data-source="members" :loading="dataLoading">
-    <div slot="startTimeRender" slot-scope="text">
-      {{ nTime(text) }}
-    </div>
-    <div slot="sessionLength" slot-scope="text">
-      {{ floatToHour(text) }} Hours
-    </div>
-    <div slot="dob" slot-scope="text">
-      {{ nFormat(text) }}
-    </div>
-    <div slot="created_at" slot-scope="text">
-      {{ nFormat(text) }}
-    </div>
-    <div slot="fullAddress" slot-scope="text, record, index">
-      <span v-if="record.address_1">{{ record.address_1 }}</span>
-      <span v-if="record.address_2">, {{ record.address_2 }}</span>
-      <span v-if="record.town">, {{ record.town }}</span>
-      <span v-if="record.region">, {{ record.region }}</span>
-      <span v-if="record.postcode">, {{ record.postcode }}</span>
+    <div slot="status" slot-scope="text">
+      <a-tag v-if="text === 'accept'" color="#27ae60">Active</a-tag>
+      <a-tag v-if="text === 'invite'" color="#f39c12">Invite Pending</a-tag>
+      <a-tag v-if="text === 'decline'" color="#c0392b">Decline Invite</a-tag>
     </div>
     <div slot="handlers" slot-scope="text, record">
       <router-link :to="'/club/member/' + record.id">
@@ -43,14 +29,10 @@ const columns = [
     dataIndex: "work_email"
   },
   {
-    title: "Phone",
-    dataIndex: "phone"
-  },
-  {
-    title: "Date of Birth",
-    dataIndex: "dob",
+    title: "Status",
+    dataIndex: "pivot.status",
     scopedSlots: {
-      customRender: "dob"
+      customRender: "status"
     }
   },
   {
