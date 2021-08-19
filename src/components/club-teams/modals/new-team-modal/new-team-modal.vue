@@ -1,17 +1,18 @@
 <template>
-  <a-modal
-    v-model="isVisible"
-    title="Create a new Team"
-    @cancel="close"
-  >
+  <a-modal v-model="isVisible" title="Create a new Team" @cancel="close">
     <template slot="footer">
-        <a-button key="back" @click="close">
-          Cancel
-        </a-button>
-        <a-button key="submit" type="primary" :loading="loading" @click="handleForm">
-          Create
-        </a-button>
-      </template>
+      <a-button key="back" @click="close">
+        Cancel
+      </a-button>
+      <a-button
+        key="submit"
+        type="primary"
+        :loading="loading"
+        @click="handleForm"
+      >
+        Create
+      </a-button>
+    </template>
     <a-form :form="form" layout="vertical">
       <a-form-item label="Team Name">
         <a-input
@@ -55,7 +56,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: AUTH_USER,
+      user: AUTH_USER
     }),
     isVisible: {
       get() {
@@ -78,21 +79,24 @@ export default {
       });
     },
     handleFormSubmit(values) {
-      this.loading = true
-      teamService.put(values).then(resp => {
-        this.loading = false
-        if (resp.data.success) {
-          notifications.success("Team Created successfully");
-          this.close();
-        } else if (resp.data.code === 404) {
-          notifications.warn("There was a problem creating this team");
-          this.close();
-        } else {
-          notifications.warn("There was a problem creating this team");
-        }
-      }).catch(err => {
-        this.loading = false
-      });
+      this.loading = true;
+      teamService
+        .put(values)
+        .then(resp => {
+          this.loading = false;
+          if (resp.data.success) {
+            notifications.success("Team Created successfully");
+            this.close();
+          } else if (resp.data.code === 404) {
+            notifications.warn("There was a problem creating this team");
+            this.close();
+          } else {
+            notifications.warn("There was a problem creating this team");
+          }
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
     close() {
       this.form.resetFields();

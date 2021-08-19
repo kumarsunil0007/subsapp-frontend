@@ -62,11 +62,12 @@ export default {
   methods: {
     resetPassword: function() {
       this.isLoading = true;
-      this.message = '';
-      this.status = '';
+      this.message = "";
+      this.status = "";
       authService
         .passwordResetRequest({
-          username: this.email
+          username: this.email,
+          url: window.location.origin
         })
         .then(resp => {
           this.isLoading = false;
@@ -76,13 +77,8 @@ export default {
             );
             this.$router.push("/login");
           } else {
-            if (resp.data.status === "error") {
-              this.message = resp.data.message;
-              this.status = 'error';
-            }
-            notifications.warn(
-              "We could not reset your password at this moment in time, please contact support."
-            );
+            this.message = resp.data.message;
+            this.status = "error";
           }
         })
         .catch(e => {

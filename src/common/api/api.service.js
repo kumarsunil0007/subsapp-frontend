@@ -246,6 +246,18 @@ export const clubAdminsService = {
   },
   update(id, params) {
     return ApiService.update("/club-admins/update", id, params);
+  },
+  searchCoach(params) {
+    return ApiService.query("/admin/search-coach", { params: params });
+  },
+  addCoach(params) {
+    return ApiService.post("/admin/add-coach", params);
+  },
+  clubInfo(id) {
+    return ApiService.get("/get/club-info", id);
+  },
+  TeamInfo(id, params) {
+    return ApiService.query("/get/team-info/" + id, { params: params });
   }
 };
 export const clubManagerService = {

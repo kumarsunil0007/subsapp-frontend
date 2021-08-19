@@ -53,11 +53,9 @@
           <span>Club Details</span>
         </router-link>
       </a-menu-item>
-      <a-menu-item key="logout" @click="hideSidebar">
-        <router-link to="/logout">
-          <a-icon type="logout" />
-          <span>Logout</span>
-        </router-link>
+      <a-menu-item key="logout" @click="Logout">
+        <a-icon type="logout" />
+        <span>Logout</span>
       </a-menu-item>
     </a-menu-item-group>
   </a-menu>
@@ -70,6 +68,7 @@ import {
 } from "@/store/modules/auth/auth-actions";
 import { mapGetters } from "vuex";
 import { UITypes } from "@/store/modules/ui/ui-actions";
+import { AUTH_LOGOUT } from "@/store/modules/auth/auth-actions";
 
 export default {
   name: "MenuAdmin",
@@ -94,6 +93,16 @@ export default {
   methods: {
     hideSidebar() {
       this.$store.commit(UITypes.mutations.HIDE_SIDEBAR);
+    },
+    async Logout() {
+      await this.$store
+        .dispatch(AUTH_LOGOUT)
+        .then(() => {
+          this.$router.replace("/login");
+        })
+        .catch(() => {
+          this.$router.replace("/login");
+        });
     }
   }
 };

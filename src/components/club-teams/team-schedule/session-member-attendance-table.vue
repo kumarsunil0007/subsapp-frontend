@@ -8,7 +8,40 @@
       {{ text }}
     </div>
     <div slot="handlers" slot-scope="text, record" class="gx-text-right">
-      <a-button
+      <a-popconfirm
+        v-if="record.schedule && record.schedule.id"
+        placement="top"
+        ok-text="Yes"
+        cancel-text="No"
+        @confirm="removeMemberAttendance(record)"
+      >
+        <template slot="title">
+          <p>Please select the Refund type</p>
+          <a-radio-group v-model="refundType" name="radioGroup">
+            <a-radio value="partial">
+              Partial
+            </a-radio>
+            <a-radio value="full">
+              Full
+            </a-radio>
+          </a-radio-group>
+          <a-input
+            v-if="refundType !== 'full'"
+            v-model="amount"
+            placeholder="Enter value to be refund"
+            type="number"
+            class="gx-mt-3"
+          />
+        </template>
+        <a-button
+          class="gx-btn-success gx-mb-0"
+          icon="check"
+          :loading="select_member === record.member.id && loader"
+          :disabled="select_member === record.member.id && loader"
+          >Present</a-button
+        >
+      </a-popconfirm>
+      <!-- <a-button
         v-if="record.schedule && record.schedule.id"
         class="gx-btn-success gx-mb-0"
         icon="check"
@@ -17,8 +50,25 @@
         @click="removeMemberAttendance(record)"
       >
         Present
-      </a-button>
-      <a-button
+      </a-button> -->
+      <a-popconfirm
+        v-else
+        placement="top"
+        ok-text="Yes"
+        cancel-text="No"
+        @confirm="createNewSchedule(record)"
+      >
+        <template slot="title">
+          <p>Are you sure to mark Present</p>
+        </template>
+        <a-button
+          class="gx-btn-danger gx-mb-0"
+          :loading="select_member === record.member.id && loading"
+          :disabled="select_member === record.member.id && loading"
+          >Absent</a-button
+        >
+      </a-popconfirm>
+      <!-- <a-button
         v-else
         class="gx-btn-danger gx-mb-0"
         :loading="select_member === record.member.id && loading"
@@ -26,7 +76,7 @@
         @click="createNewSchedule(record)"
       >
         Absent
-      </a-button>
+      </a-button> -->
     </div>
   </a-table>
 </template>
@@ -85,7 +135,9 @@ export default {
       schedule: [],
       loading: false,
       loader: false,
-      select_member: ""
+      select_member: "",
+      refundType: "partial",
+      amount: 0
     };
   },
   watch: {
@@ -117,7 +169,9 @@ export default {
       await this.$store.dispatch(REMOVE_MEMBER_ATTENDANCE, {
         memberId: row.member.id,
         teamId: this.teamId,
-        sessionId: this.sessionId
+        sessionId: this.sessionId,
+        refundType: this.refundType,
+        amount: this.amount
       });
       this.loader = false;
       this.$store.dispatch(GET_SESSION_INVOICES, this.sessionId);

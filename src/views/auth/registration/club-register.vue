@@ -51,6 +51,7 @@
                 type="primary"
                 block
                 html-type="submit"
+                :loading="loginLoading"
                 @click="handleForm"
               >
                 Register
@@ -75,6 +76,7 @@ export default {
   name: "ClubRegister",
   data() {
     return {
+      loginLoading: false,
       message: null,
       confirmDirty: false,
       form: this.$form.createForm(this),
@@ -172,31 +174,41 @@ export default {
       });
     },
     handleFormSubmit(values) {
-      authService.clubRegister(values).then(resp => {
-        if (resp.data.success) {
-          notifications.success("Registration complete. Welcome to SubsApp");
-          this.$store
-            .dispatch(AUTH_REQUEST, {
-              username: values.work_email,
-              password: values.password
-            })
-            .then(resp => {
-              if (resp) {
-                this.$router.push("/dashboard");
-              }
-              this.loginLoading = false;
-            })
-            .catch(e => {
-              this.$router.push("/login");
-            });
-        } else {
-          if (resp.data.message) {
-            notifications.warn(resp.data.message);
+      this.loginLoading = true;
+      authService
+        .clubRegister(values)
+        .then(resp => {
+          if (resp.data.success) {
+            notifications.success("Registration complete. Welcome to SubsApp");
+            this.$store
+              .dispatch(AUTH_REQUEST, {
+                username: values.work_email,
+                password: values.password
+              })
+              .then(resp => {
+                if (resp) {
+                  this.$router.push("/dashboard");
+                }
+                this.loginLoading = false;
+              })
+              .catch(() => {
+                this.$router.push("/login");
+                this.loginLoading = false;
+              });
           } else {
-            notifications.warn("Something went wrong, please contact support");
+            this.loginLoading = false;
+            if (resp.data.message) {
+              notifications.warn(resp.data.message);
+            } else {
+              notifications.warn(
+                "Something went wrong, please contact support"
+              );
+            }
           }
-        }
-      });
+        })
+        .catch(() => {
+          this.loginLoading = false;
+        });
     },
     compareToFirstPassword(rule, value, callback) {
       const form = this.form;

@@ -45,6 +45,7 @@
                 type="primary"
                 block
                 html-type="submit"
+                :loading="loginLoading"
                 @click="handleForm"
               >
                 Register
@@ -71,6 +72,7 @@ export default {
     return {
       message: null,
       confirmDirty: false,
+      loginLoading: false,
       form: this.$form.createForm(this),
       fields: {
         first_name: [
@@ -154,31 +156,41 @@ export default {
       });
     },
     handleFormSubmit(values) {
-      authService.userRegister(values).then(resp => {
-        if (resp.data.success) {
-          notifications.success("Registration complete. Welcome to SubsApp.");
-          this.$store
-            .dispatch(AUTH_REQUEST, {
-              username: values.work_email,
-              password: values.password
-            })
-            .then(resp => {
-              if (resp) {
-                this.$router.push("/dashboard");
-              }
-              this.loginLoading = false;
-            })
-            .catch(e => {
-              this.$router.push("/login");
-            });
-        } else {
-          if (resp.data.message) {
-            notifications.warn(resp.data.message);
+      this.loginLoading = true;
+      authService
+        .userRegister(values)
+        .then(resp => {
+          if (resp.data.success) {
+            notifications.success("Registration complete. Welcome to SubsApp.");
+            this.$store
+              .dispatch(AUTH_REQUEST, {
+                username: values.work_email,
+                password: values.password
+              })
+              .then(resp => {
+                if (resp) {
+                  this.$router.push("/dashboard");
+                }
+                this.loginLoading = false;
+              })
+              .catch(() => {
+                this.loginLoading = false;
+                this.$router.push("/login");
+              });
           } else {
-            notifications.warn("Something went wrong, please contact support");
+             this.loginLoading = false;
+            if (resp.data.message) {
+              notifications.warn(resp.data.message);
+            } else {
+              notifications.warn(
+                "Something went wrong, please contact support"
+              );
+            }
           }
-        }
-      });
+        })
+        .catch(() => {
+          this.loginLoading = false;
+        });
     },
     compareToFirstPassword(rule, value, callback) {
       const form = this.form;

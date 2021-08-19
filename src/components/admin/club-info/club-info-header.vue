@@ -9,11 +9,11 @@
           <div class="gx-profile-banner-top-left">
             <div class="gx-profile-banner-avatar-info">
               <h2 class="gx-mb-2 gx-mb-sm-3 gx-fs-xxl gx-font-weight-light">
-                {{ member.first_name }} {{ member.last_name }}
+                {{ member.club_name }}
               </h2>
               <p class="gx-mb-0 gx-fs-lg member-header--has-payment">
                 <img src="@/assets/custom-icons/shield.svg" />
-                <span>Payment Source Verified</span>
+                <span>{{ member.email }}</span>
               </p>
             </div>
           </div>

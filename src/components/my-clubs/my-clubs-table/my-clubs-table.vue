@@ -22,7 +22,7 @@
       <a-tag v-if="text === 'request'" color="#d35400"
         >Pending Club Acceptance</a-tag
       >
-      <a-tag v-if="text === 'archive'" color="#d35400"
+      <a-tag v-if="text === 'archive' || text === 'cancel'" color="#d35400"
         >No Longer a Member</a-tag
       >
       <a-tag v-if="text === 'decline'" color="#c0392b"
@@ -35,7 +35,7 @@
         size="small"
         type="danger"
         style="margin-bottom:0; margin-left:5px;"
-        @click="userTableList(record.id, record.id, 'archive', record.cmId)"
+        @click="userTableList(record.id, record.id, 'cancel', record.cmId)"
       >
         Cancel Join Request
       </a-button>

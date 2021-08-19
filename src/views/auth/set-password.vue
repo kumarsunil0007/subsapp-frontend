@@ -68,10 +68,6 @@ export default {
       status: false
     };
   },
-
-  mounted() {
-    this.checkHash();
-  },
   methods: {
     checkHash: function() {
       axios
@@ -91,23 +87,37 @@ export default {
         });
     },
     resetPassword: function() {
+      this.message = "";
+      this.status = "";
       if (this.password !== this.cpassword || this.password === "") {
-        this.message = "Passwords do not match";
+        this.message = "Passwords do not match.";
+        this.status = "error";
         return false;
       }
-
       let data = new FormData();
-
       data.append("password", this.password);
-
+      this.isLoading = true;
       axios
         .post("/auth/check_password_code/" + this.$route.params.hash, data)
         .then(resp => {
-          if (resp.data.status === "success") {
+          this.isLoading = false;
+          if (resp.data.success) {
             notifications.success(resp.data.message);
             this.$router.push("/login");
           } else {
             notifications.warn(resp.data.message);
+          }
+        })
+        .catch(error => {
+          this.isLoading = false;
+          if (error.response.status === 422) {
+            let errors = Object.values(error.response.data.errors);
+            errors = errors.flat();
+            errors.forEach(opt => {
+              notifications.warn(opt);
+            });
+          } else {
+            notifications.warn("Something went wrong, please try again later");
           }
         });
     }

@@ -230,7 +230,7 @@ export default new Router({
           path: "/admin/dashboard",
           name: "admin-dashboard",
           meta: {
-            permission: "admin"
+            permission: ["admin"]
           },
           beforeEnter: authGuard,
           component: () => import("@/views/admin/dashboard/dashboard.vue")
@@ -239,16 +239,25 @@ export default new Router({
           path: "/admin/users",
           name: "admin-user",
           meta: {
-            permission: "admin"
+            permission: ["admin"]
           },
           beforeEnter: authGuard,
           component: () => import("@/views/admin/users/user")
         },
         {
+          path: "/admin/club-info/:id",
+          name: "club info",
+          meta: {
+            permission: ["admin"]
+          },
+          beforeEnter: authGuard,
+          component: () => import("@/views/admin/club-info/club-info")
+        },
+        {
           path: "/admin/my-profile",
           name: "admin-user",
           meta: {
-            permission: "admin"
+            permission: ["admin"]
           },
           beforeEnter: authGuard,
           component: () => import("@/views/admin/my-profile/my-profile.vue")
@@ -257,7 +266,7 @@ export default new Router({
           path: "/admin/members",
           name: "admin-user",
           meta: {
-            permission: "admin"
+            permission: ["admin"]
           },
           beforeEnter: authGuard,
           component: () => import("@/views/admin/members/members.vue")
@@ -266,7 +275,7 @@ export default new Router({
           path: "/admin/club-billing",
           name: "admin-user",
           meta: {
-            permission: "admin"
+            permission: ["admin"]
           },
           beforeEnter: authGuard,
           component: () => import("@/views/admin/club-billing/club-billing.vue")

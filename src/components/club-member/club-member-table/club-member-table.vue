@@ -16,7 +16,7 @@
       <a-tag v-if="text === 'request'" color="#8e44ad"
         >Has Requested to Join</a-tag
       >
-      <a-tag v-if="text === 'cancel'" color="#8e44ad">Cancel</a-tag>
+      <a-tag v-if="text === 'cancel'" color="#8e44ad">No Longer a Member</a-tag>
       <a-tag v-if="text === 'archive'" color="#d35400">Archived</a-tag>
       <a-tag v-if="text === 'decline'" color="#c0392b"
         >Declined Invitation</a-tag

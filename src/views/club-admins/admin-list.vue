@@ -2,9 +2,17 @@
   <n-page v-if="renderComponent">
     <a-row type="flex">
       <a-col :span="24" class="gx-text-right">
-        <a-button type="primary" @click="openAdminModal(null)">
+        <a-button type="primary" size="small" @click="openAdminModal(null)">
           Create a new Coach
         </a-button>
+        <a-button
+          size="small"
+          type="primary"
+          class="gx-sm-full"
+          style="margin-bottom: 12px;"
+          @click="openCoachModal"
+          >Find & Add Coach</a-button
+        >
       </a-col>
     </a-row>
     <a-row type="flex">
@@ -19,6 +27,7 @@
       :visible="clubAdminModal"
       @close="closeAdminModal"
     />
+    <find-coach-modal :visible="findCoachModal" @close="closeAdminModal" />
   </n-page>
 </template>
 
@@ -26,14 +35,21 @@
 import NPage from "@/components/ui/n-page/n-page";
 import ClubAdminsListTable from "@/components/club-admins/club-admins-list-table";
 import ClubAdminEditModal from "@/components/club-admins/club-admin-edit-modal";
+import FindCoachModal from "@/components/club-admins/find-coach-modal";
 export default {
   name: "ClubAdmins",
-  components: { ClubAdminEditModal, ClubAdminsListTable, NPage },
+  components: {
+    ClubAdminEditModal,
+    ClubAdminsListTable,
+    NPage,
+    FindCoachModal
+  },
   data() {
     return {
       currentAdmin: null,
       renderComponent: true,
-      clubAdminModal: false
+      clubAdminModal: false,
+      findCoachModal: false
     };
   },
   methods: {
@@ -49,9 +65,13 @@ export default {
       this.currentAdmin = id;
       this.clubAdminModal = true;
     },
+    openCoachModal() {
+      this.findCoachModal = true;
+    },
     closeAdminModal() {
       this.currentAdmin = null;
       this.clubAdminModal = false;
+      this.findCoachModal = false;
       this.forceRerender();
     }
   }

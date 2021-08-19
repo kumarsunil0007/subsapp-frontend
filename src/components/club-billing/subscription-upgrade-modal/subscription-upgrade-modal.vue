@@ -28,7 +28,7 @@
                 </li>
                 <li>
                   <a-icon type="team" />
-                  1 Club Administrator
+                  1 Club Coach
                 </li>
                 <li>
                   <a-icon type="euro" />
@@ -74,7 +74,7 @@
                 </li>
                 <li>
                   <a-icon type="team" />
-                  10 Club Administrators
+                  10 Club Coach
                 </li>
                 <li>
                   <a-icon type="euro" />
@@ -114,7 +114,7 @@
                 </li>
                 <li>
                   <a-icon type="team" />
-                  50 Club Administrators
+                  50 Club Coach
                 </li>
                 <li>
                   <a-icon type="euro" />

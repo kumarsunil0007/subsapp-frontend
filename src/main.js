@@ -33,7 +33,8 @@ import {
   Statistic,
   Tag,
   Divider,
-  Popconfirm
+  Popconfirm,
+  Radio
 } from "ant-design-vue";
 import "./styles/wieldy.less";
 import "./assets/style";
@@ -76,6 +77,7 @@ Vue.use(Spin);
 Vue.use(Statistic);
 Vue.use(Divider);
 Vue.use(Popconfirm);
+Vue.use(Radio);
 
 Vue.config.productionTip = false;
 

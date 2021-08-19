@@ -5,6 +5,19 @@
     @cancel="close"
     @ok="handleForm"
   >
+    <template slot="footer">
+      <a-button key="back" @click="close">
+        Cancel
+      </a-button>
+      <a-button
+        key="submit"
+        type="primary"
+        :loading="loading"
+        @click="handleForm"
+      >
+        Ok
+      </a-button>
+    </template>
     <a-form :form="form" layout="vertical">
       <a-form-item label="Title">
         <a-input
@@ -223,7 +236,8 @@ export default {
     return {
       isRecurring: false,
       setDate: "",
-      form: this.$form.createForm(this)
+      form: this.$form.createForm(this),
+      loading: false
     };
   },
   computed: {
@@ -259,17 +273,24 @@ export default {
       });
     },
     handleFormSubmit(values) {
-      scheduleService.put(values).then(resp => {
-        if (resp.data.success) {
-          notifications.success("Event scheduled succesfully");
-          this.close();
-        } else if (resp.data.code === 404) {
-          notifications.warn("There was a problem locating this team");
-          this.close();
-        } else {
-          notifications.warn("There was a problem scheduling this event");
-        }
-      });
+      this.loading = true;
+      scheduleService
+        .put(values)
+        .then(resp => {
+          this.loading = false;
+          if (resp.data.success) {
+            notifications.success("Event scheduled succesfully");
+            this.close();
+          } else if (resp.data.code === 404) {
+            notifications.warn("There was a problem locating this team");
+            this.close();
+          } else {
+            notifications.warn("There was a problem scheduling this event");
+          }
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
     disabledStartDate(startValue) {
       const endValue = moment().subtract(1, "d");

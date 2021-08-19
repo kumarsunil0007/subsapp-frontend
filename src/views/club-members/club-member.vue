@@ -32,14 +32,17 @@ export default {
   },
   methods: {
     fetchMembers() {
-      memberService.get(this.$route.params.userId).then(resp => {
-        this.pageLoading = false
-        if (resp.data.success) {
-          this.member = resp.data.result;
-        }
-      }).catch(resp => {
-        this.pageLoading = false
-      });
+      memberService
+        .get(this.$route.params.userId)
+        .then(resp => {
+          this.pageLoading = false;
+          if (resp.data.success) {
+            this.member = resp.data.result;
+          }
+        })
+        .catch(resp => {
+          this.pageLoading = false;
+        });
     }
   }
 };

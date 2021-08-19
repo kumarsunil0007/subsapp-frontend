@@ -1,103 +1,26 @@
 <template>
-  <a-table :columns="columns" :data-source="schedule">
+  <a-table
+    :columns="columns"
+    :data-source="schedule"
+    :row-key="record => record.id"
+    :pagination="pagination"
+    :loading="loading"
+    @change="handleTableChange"
+  >
     <div slot="startTimeRender" slot-scope="text">{{ nTime(text) }}</div>
     <div slot="sessionLength" slot-scope="text">
       {{ floatToHour(text) }} Hours
     </div>
-    <div slot="dob" slot-scope="text">{{ nFormat(text) }}</div>
+
     <div slot="created_at" slot-scope="text">{{ nFormat(text) }}</div>
     <div slot="phone" slot-scope="text">
       <template v-if="text">+353 {{ text }}</template>
       <template v-else>N/A</template>
     </div>
-    <div slot="status" slot-scope="text" class="status_data">
-      <a-tag
-        v-if="text === 'accepted'"
-        color="#27ae60"
-        style="width: 135px; line-height: 33px;
-    height: 33px; text-align: center;"
-        >Active</a-tag
-      >
-      <a-tag
-        v-if="text === 'invited'"
-        color="#f39c12"
-        style="width: 135px; line-height: 33px;
-    height: 33px; text-align: center;"
-        >Invite Pending</a-tag
-      >
-      <a-tag
-        v-if="text === 'requested'"
-        color="#8e44ad"
-        style="width: 135px; line-height: 33px;
-    height: 33px; text-align: center;"
-        >Has Requested to Join</a-tag
-      >
-      <a-tag v-if="text === 'archived'" color="#d35400">Archived</a-tag>
-      <a-tag v-if="text === 'declined'" color="#c0392b"
-        >Declined Invitation</a-tag
-      >
-    </div>
     <div slot="handlers" slot-scope="text, record" class="gx-text-right">
-      <router-link :to="'/club/member/' + record.user_id">
-        <a-button
-          size="small"
-          style="margin-bottom:0  ;   height: 32px;
-    font-size: 20px;"
-          type="primary"
-          ><a-icon type="user"
-        /></a-button>
-      </router-link>
-      <router-link :to="''">
-        <a-button
-          size="small"
-          class="gx-btn-red"
-          style="margin-bottom:0  ;   height: 32px;
-    font-size: 20px;margin-left:5px;"
-          type="danger"
-          ><a-icon type="delete"
-        /></a-button>
-      </router-link>
-      <a-button
-        v-if="record.status === 'accepted'"
-        size="small"
-        type="danger"
-        style="margin-bottom:0  ;   height: 32px;
-    font-size: 20px; margin-left:5px;"
-        @click="userTableList(record.id, 'archived')"
-        ><a-icon type="download"
-      /></a-button>
-      <a-button
-        v-if="
-          record.status !== 'accepted' &&
-            record.status !== 'invited' &&
-            record.status !== 'declined' &&
-            record.status !== 'requested'
-        "
-        size="small"
-        class="gx-btn-cyan"
-        style="margin-bottom:0  ;   height: 32px;
-    font-size: 20px; margin-left:5px;"
-        @click="userTableList(record.id, 'accepted')"
-        >Make Active</a-button
+      <a-button size="small" type="primary" @click="viewClub(record)"
+        >View</a-button
       >
-      <a-button
-        v-if="record.status === 'requested'"
-        size="small"
-        class="gx-btn-cyan"
-        style="margin-bottom:0  ;   height: 32px;
-    font-size: 20px; margin-left:5px;"
-        @click="userTableList(record.id, 'accepted')"
-        ><a-icon type="check"
-      /></a-button>
-      <a-button
-        v-if="record.status === 'invited'"
-        size="small"
-        class="gx-btn-red"
-        style="margin-bottom:0  ;   height: 32px;
-    font-size: 20px; margin-left:5px;"
-        @click="userTableList(record.id, 'cancelled')"
-        ><a-icon type="close"
-      /></a-button>
     </div>
   </a-table>
 </template>
@@ -147,14 +70,14 @@ const columns = [
     title: "Club Admin",
     dataIndex: "club_admin",
     key: "club_admin"
+  },
+  {
+    dataIndex: "handlers",
+    key: "handlers",
+    scopedSlots: {
+      customRender: "handlers"
+    }
   }
-  // {
-  //   dataIndex: "handlers",
-  //   key: "handlers",
-  //   scopedSlots: {
-  //     customRender: "handlers"
-  //   }
-  // }
 ];
 
 import { memberService } from "@/common/api/api.service";
@@ -175,7 +98,9 @@ export default {
   data() {
     return {
       columns,
-      schedule: []
+      schedule: [],
+      pagination: { pageSize: 10 },
+      loading: false
     };
   },
   watch: {
@@ -190,6 +115,9 @@ export default {
     this.getClubMembers();
   },
   methods: {
+    viewClub({ id }) {
+      this.$router.push(`/admin/club-info/${id}`);
+    },
     userTableList(memberId, status) {
       memberService
         .userTableList(memberId, {
@@ -202,15 +130,25 @@ export default {
           }
         });
     },
-    getClubMembers() {
-      const data = {};
+    handleTableChange(pagination, filters, sorter) {
+      const pager = { ...this.pagination };
+      pager.current = pagination.current;
+      this.pagination = pager;
+      this.getClubMembers({
+        results: pagination.pageSize,
+        page: pagination.current,
+        sortField: sorter.field,
+        sortOrder: sorter.order,
+        ...filters
+      });
+    },
+    getClubMembers(params = {}) {
+      this.loading = true;
+      let data;
 
       if (this.filters) {
         if (this.filters.keyword) {
-          data.keyword = this.filters.keyword;
-        }
-        if (this.filters.type) {
-          data.type = this.filters.type;
+          data = { keyword: this.filters.keyword };
         }
       }
 
@@ -219,11 +157,21 @@ export default {
       //     this.schedule = resp.data.result;
       //   }
       // });
-      adminService.query(data).then(resp => {
-        if (resp.data.success) {
-          this.schedule = resp.data.result;
-        }
-      });
+      adminService
+        .query({
+          results: this.pagination.pageSize,
+          ...params,
+          ...data
+        })
+        .then(resp => {
+          this.loading = false;
+          if (resp.data.success) {
+            const pagination = { ...this.pagination };
+            pagination.total = resp.data.result.total;
+            this.pagination = pagination;
+            this.schedule = resp.data.result.data;
+          }
+        });
     }
   }
 };

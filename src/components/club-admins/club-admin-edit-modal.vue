@@ -1,10 +1,18 @@
 <template>
-  <a-modal
-    :visible="visible"
-    title="Manage Coach"
-    @cancel="close"
-    @ok="handleForm"
-  >
+  <a-modal :visible="visible" title="Manage Coach" @cancel="close">
+    <template slot="footer">
+      <a-button key="back" @click="close">
+        Cancel
+      </a-button>
+      <a-button
+        key="submit"
+        type="primary"
+        :loading="loading"
+        @click="handleForm"
+      >
+        Ok
+      </a-button>
+    </template>
     <a-form :form="form" layout="vertical">
       <div class="info">
         <a-form-item label="First Name">
@@ -57,6 +65,7 @@ export default {
     return {
       form: this.$form.createForm(this),
       dataLoading: false,
+      loading: false,
       fields: {
         first_name: [
           "first_name",
@@ -155,12 +164,14 @@ export default {
       });
     },
     handleFormSubmit(values) {
+      this.loading = true;
       clubAdminsService
         .put({
           ...values,
           id: this.adminId
         })
         .then(resp => {
+          this.loading = false;
           if (resp.data.success) {
             notifications.success("User Updated Successfully");
             this.close();
@@ -176,14 +187,19 @@ export default {
               );
             }
           }
+        })
+        .catch(() => {
+          this.loading = false;
         });
     },
     handleFormUpdate(values) {
+      this.loading = true;
       clubAdminsService
         .update(this.adminId, {
           ...values
         })
         .then(resp => {
+          this.loading = false;
           if (resp.data.success) {
             notifications.success("User Updated Successfully");
             this.close();
@@ -199,6 +215,9 @@ export default {
               );
             }
           }
+        })
+        .catch(() => {
+          this.loading = false;
         });
     },
     validateEmail(rule, value, callback) {
