@@ -17,8 +17,8 @@
         <a-col :span="6">
           {{ club.club_name }}
         </a-col>
-        <a-col :span="12"> {{ club.address }}... </a-col>
-        <a-col :span="6" class="gx-text-right">
+        <a-col :span="10"> {{ club.address }}... </a-col>
+        <a-col :span="8" class="gx-text-right">
           <a-button
             v-if="
               club.members &&

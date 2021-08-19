@@ -248,4 +248,7 @@ export default {
 .ant-modal-footer button.ant-btn {
   width: 75px !important;
 }
+.ant-form-explain{
+  font-size:12px;
+}
 </style>

@@ -22,10 +22,10 @@
         <a-col :span="6">
           {{ member.first_name }} {{ member.last_name }}..
         </a-col>
-        <a-col :span="12">
+        <a-col :span="10">
           {{ member.work_email }}
         </a-col>
-        <a-col :span="6" class="gx-text-right">
+        <a-col :span="8" class="gx-text-right">
           <a-button
             v-if="member.teams && !member.teams.length"
             block

@@ -1,5 +1,5 @@
 <template>
-  <a-table :columns="columns" :data-source="invoices">
+  <a-table class="gx-table-responsive" :columns="columns" :data-source="invoices">
     <div slot="member" slot-scope="text, row">
       <template v-if="row && row.first_name">
         {{ row.first_name }} {{ row.last_name }}

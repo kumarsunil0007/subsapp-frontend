@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-table :columns="columns" :data-source="invoices">
+    <a-table  class="gx-table-responsive" :columns="columns" :data-source="invoices">
       <div slot="operations" slot-scope="text, row">
         <a-button size="small" type="primary" @click="showInvoice(row)">
           View
