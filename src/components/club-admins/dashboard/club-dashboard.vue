@@ -1,6 +1,6 @@
 <template>
   <a-row type="flex">
-    <a-col :xs="24" :sm="24" :md="6">
+    <a-col :xs="24" :sm="24" :md="8">
       <a-card>
         <a-row>
           <a-col :xs="16" :sm="16" :md="16">
@@ -33,7 +33,7 @@
             </div>
           </n-box> -->
     </a-col>
-    <a-col :xs="24" :sm="24" :md="6">
+    <a-col :xs="24" :sm="24" :md="8">
       <a-card>
         <a-row>
           <a-col :xs="16" :sm="16" :md="16">
@@ -57,7 +57,7 @@
         </a-row>
       </a-card>
     </a-col>
-    <a-col :xs="24" :sm="24" :md="6">
+    <a-col :xs="24" :sm="24" :md="8">
       <a-card>
         <a-row>
           <a-col :xs="16" :sm="16" :md="16">
