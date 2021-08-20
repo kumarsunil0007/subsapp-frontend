@@ -44,6 +44,10 @@
             <strong>Subtotal:</strong>
             <span> €{{ formatMoney(selectedInvoice.total) }}</span>
           </p>
+          <p v-if="selectedInvoice.refund_amount > 0">
+            <strong>Refund Amount:</strong>
+            <span> {{ selectedInvoice.refund_amount }}</span>
+          </p>
           <p v-if="selectedInvoice.Transaction">
             <strong>Transaction ID:</strong>
             <span> {{ selectedInvoice.Transaction.transaction_id }}</span>

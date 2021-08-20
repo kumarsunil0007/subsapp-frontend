@@ -27,6 +27,7 @@
               :team-id="session.team_id"
               :session-id="session.id"
               :session-start="session.start"
+              :session-data="session"
             />
           </a-card>
         </a-col>
@@ -128,13 +129,13 @@ export default {
       }
     };
   },
-  mounted() {
+  created() {
     this.getSchedule();
   },
   methods: {
-    getSchedule() {
+    async getSchedule() {
       if (this.$route.params.sessionId) {
-        scheduleService.get(this.$route.params.sessionId).then(resp => {
+        await scheduleService.get(this.$route.params.sessionId).then(resp => {
           if (resp.data.success) {
             resp.data.result.id = parseInt(resp.data.result.id);
             resp.data.result.team_id = parseInt(resp.data.result.team_id);

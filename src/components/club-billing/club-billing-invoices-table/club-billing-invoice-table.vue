@@ -49,6 +49,11 @@ const columns = [
     }
   },
   {
+    title: "Refund Amount",
+    key: "refund_amount",
+    dataIndex: "refund_amount"
+  },
+  {
     title: "Created At",
     key: "created_at",
     scopedSlots: {

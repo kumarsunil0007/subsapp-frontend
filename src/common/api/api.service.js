@@ -215,6 +215,12 @@ export const attendanceService = {
   },
   removeAttendance(params) {
     return ApiService.post("/attendance/remove-member-attendance", params);
+  },
+  refundAmount(params) {
+    return ApiService.post("/attendance/refund-amount", params);
+  },
+  removeTeamMember(params) {
+    return ApiService.post("/attendance/remove-team-member", params);
   }
 };
 export const teamService = {

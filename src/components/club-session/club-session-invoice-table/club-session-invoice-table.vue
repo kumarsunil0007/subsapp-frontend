@@ -32,7 +32,7 @@ const columns = [
     }
   },
   {
-    title: "Amount",
+    title: "Total",
     dataIndex: "total",
     key: "total",
     scopedSlots: {
@@ -51,6 +51,11 @@ const columns = [
     scopedSlots: {
       customRender: "handlers"
     }
+  },
+  {
+    title: "Refund Amount",
+    dataIndex: "refund_amount",
+    key: "refund_amount"
   }
 ];
 

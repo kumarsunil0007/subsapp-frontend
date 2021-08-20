@@ -9,6 +9,8 @@ import {
   GET_SESSION_INVOICES,
   SET_SESSION_INVOICES,
   SET_ERROR_MSG,
+  REFUND_AMOUNT,
+  REMOVE_TEAM_MEMBER,
   CLEAR_ERROR
 } from "@/store/modules/session/session-actions";
 
@@ -17,7 +19,7 @@ export default {
     invoices: [],
     results: [],
     members: [],
-    error_msg:"",
+    error_msg: "",
     status: "OK"
   },
   getters: {
@@ -70,11 +72,11 @@ export default {
         }
       }
     },
-    [SET_ERROR_MSG]: (state,payload) => {
-      state.error_msg = payload
+    [SET_ERROR_MSG]: (state, payload) => {
+      state.error_msg = payload;
     },
-    [CLEAR_ERROR]: (state) => {
-      state.error_msg = ""
+    [CLEAR_ERROR]: state => {
+      state.error_msg = "";
     }
   },
   actions: {
@@ -92,17 +94,17 @@ export default {
         }
       });
     },
-     [NEW_MEMBER_ATTENDANCE]: async ({ commit,dispatch }, params) => {
-      commit(CLEAR_ERROR)
-      await attendanceService.addAttendance(params).then(async (res) => {
+    [NEW_MEMBER_ATTENDANCE]: async ({ commit, dispatch }, params) => {
+      commit(CLEAR_ERROR);
+      await attendanceService.addAttendance(params).then(async res => {
         if (res.data.success) {
-          await dispatch(GET_SESSION_MEMBERS,{
+          await dispatch(GET_SESSION_MEMBERS, {
             teamId: params.teamId,
             sessionId: params.sessionId
-          })
+          });
           //commit(SET_NEW_MEMBER_ATTENDACE, res.data.record);
-        }else{
-          commit(SET_ERROR_MSG, res.data.message)
+        } else {
+          commit(SET_ERROR_MSG, res.data.message);
         }
       });
     },
@@ -113,7 +115,29 @@ export default {
             member_id: params.memberId
           });
         } else {
-          const msg = res.data.message
+          const msg = res.data.message;
+          notifications.warn(msg);
+        }
+      });
+    },
+    // eslint-disable-next-line no-unused-vars
+    [REFUND_AMOUNT]: async ({ commit }, params) => {
+      await attendanceService.refundAmount(params).then(res => {
+        if (res.data.success) {
+          notifications.success("Successfully refund amount");
+        } else {
+          const msg = res.data.message;
+          notifications.warn(msg);
+        }
+      });
+    },
+    // eslint-disable-next-line no-unused-vars
+    [REMOVE_TEAM_MEMBER]: async ({ commit }, params) => {
+      await attendanceService.removeTeamMember(params).then(res => {
+        if (res.data.success) {
+          notifications.success("Member removed successfully");
+        } else {
+          const msg = res.data.message;
           notifications.warn(msg);
         }
       });
