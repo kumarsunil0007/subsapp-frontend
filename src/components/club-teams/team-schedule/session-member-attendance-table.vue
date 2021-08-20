@@ -3,6 +3,7 @@
     :columns="columns"
     :data-source="getSessionMembers"
     :pagination="false"
+    class="gx-table-responsive"
   >
     <div slot="startTimeRender" slot-scope="text">
       {{ text }}

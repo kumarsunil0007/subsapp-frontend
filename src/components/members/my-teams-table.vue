@@ -1,9 +1,9 @@
 <template>
-  <a-table :columns="columns" :data-source="schedule">
+  <a-table :columns="columns"  class="gx-table-responsive" :data-source="schedule">
     <div slot="status" slot-scope="text">
       <a-tag v-if="text === 'accept'" color="#27ae60">Active</a-tag>
       <a-tag v-if="text === 'invite'" color="#f39c12">Invite Pending</a-tag>
-      <a-tag v-if="text === 'request'" color="#d35400"
+      <a-tag v-if="text === 'request'" color="#d35400" 
         >Pending Club Acceptance</a-tag
       >
       <a-tag v-if="text === 'archive'" color="#d35400"
