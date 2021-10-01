@@ -35,6 +35,7 @@
             v-if="!member.status"
             block
             size="small"
+            :loading="loader && selectedId === member.id"
             @click="addCoach(member.id)"
           >
             Add Coach
@@ -71,6 +72,8 @@ export default {
       form: this.$form.createForm(this),
       keyword: "",
       error_msg: false,
+      loader: false,
+      selectedId: "",
       members: []
     };
   },
@@ -87,17 +90,26 @@ export default {
   },
   methods: {
     addCoach(memberId) {
+      this.selectedId = memberId;
+      this.loader = true;
       const param = {
-        memberId: memberId
+        memberId: memberId,
+        url: window.location.origin
       };
-      clubAdminsService.addCoach(param).then(resp => {
-        if (resp.data.success) {
-          this.searchEmails();
-          notifications.success("Coach has been added");
-        } else {
-          notifications.warn(resp.data.message);
-        }
-      });
+      clubAdminsService
+        .addCoach(param)
+        .then(resp => {
+          this.loader = false;
+          if (resp.data.success) {
+            this.searchEmails();
+            notifications.success("Coach has been added");
+          } else {
+            notifications.warn(resp.data.message);
+          }
+        })
+        .catch(() => {
+          this.loader = false;
+        });
     },
     searchEmails() {
       this.error_msg = false;

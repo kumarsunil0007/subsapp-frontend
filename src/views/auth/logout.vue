@@ -8,6 +8,6 @@ export default {
   mounted() {
     this.$store.dispatch(AUTH_LOGOUT);
     this.$router.push("/login");
-  },
+  }
 };
 </script>

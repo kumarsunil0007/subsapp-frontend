@@ -1,102 +1,104 @@
 <template>
   <n-page>
-  <a-row>
+    <a-row>
       <a-col :lg="12" :md="24" :sm="24" :xs="24">
         <a-card title="Create new Account" class="gx-card-widget">
           <a-form :form="form" layout="vertical">
-          <div class="user_info">
-            <a-form-item label="First Name">
-              <a-input
-                v-decorator="[
-                  'first_name',
-                  {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'First name is required'
-                      }
-                    ]
-                  }
-                ]"
-                type="text"
-              >
-              </a-input>
-            </a-form-item>
-           
-            <a-form-item label="Last Name">
-              <a-input
-                v-decorator="[
-                  'last_name',
-                  {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Last name is a required field'
-                      }
-                    ]
-                  }
-                ]"
-                type="text"
-              >
-              </a-input>
-            </a-form-item>
-             </div>
-             <div class="user_info">
-            <a-form-item label="Email">
-              <a-input
-                v-decorator="[
-                  'work_email',
-                  {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Your email is required'
-                      }
-                    ]
-                  }
-                ]"
-                type="text"
-              >
-              </a-input>
-            </a-form-item>
-            
-            <a-form-item v-if="!authUser.app" label="Phone Number">
-              <a-input v-decorator="['phone']" type="text"></a-input>
-            </a-form-item>
-            <a-form-item v-if="!authUser.app" label="Date of Birth">
-              <a-date-picker
-                v-decorator="['dob']"
-                style="width:100%"
-                format="DD/MM/YYYY"
-              />
-            </a-form-item>
+            <div class="user_info">
+              <a-form-item label="First Name">
+                <a-input
+                  v-decorator="[
+                    'first_name',
+                    {
+                      rules: [
+                        {
+                          required: true,
+                          message: 'First name is required'
+                        }
+                      ]
+                    }
+                  ]"
+                  type="text"
+                >
+                </a-input>
+              </a-form-item>
+
+              <a-form-item label="Last Name">
+                <a-input
+                  v-decorator="[
+                    'last_name',
+                    {
+                      rules: [
+                        {
+                          required: true,
+                          message: 'Last name is a required field'
+                        }
+                      ]
+                    }
+                  ]"
+                  type="text"
+                >
+                </a-input>
+              </a-form-item>
             </div>
             <div class="user_info">
-            <a-form-item v-if="!authUser.app" label="Emergency Name">
-              <a-input v-decorator="['emergency_name']" type="text"> </a-input>
-            </a-form-item>
-            <a-form-item v-if="!authUser.app" label="Emergency Phone">
-              <a-input v-decorator="['emergency_phone']" type="text"> </a-input>
-            </a-form-item>
+              <a-form-item label="Email">
+                <a-input
+                  v-decorator="[
+                    'work_email',
+                    {
+                      rules: [
+                        {
+                          required: true,
+                          message: 'Your email is required'
+                        }
+                      ]
+                    }
+                  ]"
+                  type="text"
+                >
+                </a-input>
+              </a-form-item>
+
+              <a-form-item v-if="!authUser.app" label="Phone Number">
+                <a-input v-decorator="['phone']" type="text"></a-input>
+              </a-form-item>
+              <a-form-item v-if="!authUser.app" label="Date of Birth">
+                <a-date-picker
+                  v-decorator="['dob']"
+                  style="width:100%"
+                  format="DD/MM/YYYY"
+                />
+              </a-form-item>
             </div>
             <div class="user_info">
-            <a-form-item v-if="!authUser.app" label="Address 1">
-              <a-input v-decorator="['address_1']" type="text"> </a-input>
-            </a-form-item>
-            <a-form-item v-if="!authUser.app" label="Address 2">
-              <a-input v-decorator="['address_2']" type="text"> </a-input>
-            </a-form-item>
+              <a-form-item v-if="!authUser.app" label="Emergency Name">
+                <a-input v-decorator="['emergency_name']" type="text">
+                </a-input>
+              </a-form-item>
+              <a-form-item v-if="!authUser.app" label="Emergency Phone">
+                <a-input v-decorator="['emergency_phone']" type="text">
+                </a-input>
+              </a-form-item>
             </div>
             <div class="user_info">
-            <a-form-item v-if="!authUser.app" label="Town">
-              <a-input v-decorator="['town']" type="text"> </a-input>
-            </a-form-item>
-            <a-form-item v-if="!authUser.app" label="Region">
-              <a-input v-decorator="['region']" type="text"> </a-input>
-            </a-form-item>
-            <a-form-item v-if="!authUser.app" label="Postcode">
-              <a-input v-decorator="['post_code']" type="text"> </a-input>
-            </a-form-item>
+              <a-form-item v-if="!authUser.app" label="Address 1">
+                <a-input v-decorator="['address_1']" type="text"> </a-input>
+              </a-form-item>
+              <a-form-item v-if="!authUser.app" label="Address 2">
+                <a-input v-decorator="['address_2']" type="text"> </a-input>
+              </a-form-item>
+            </div>
+            <div class="user_info">
+              <a-form-item v-if="!authUser.app" label="Town">
+                <a-input v-decorator="['town']" type="text"> </a-input>
+              </a-form-item>
+              <a-form-item v-if="!authUser.app" label="Region">
+                <a-input v-decorator="['region']" type="text"> </a-input>
+              </a-form-item>
+              <a-form-item v-if="!authUser.app" label="Postcode">
+                <a-input v-decorator="['post_code']" type="text"> </a-input>
+              </a-form-item>
             </div>
             <div class="ant-row ant-form-item">
               <div class="ant-form-item-label">
@@ -118,7 +120,7 @@
             </a-form-item>
           </a-form>
         </a-card>
-  </a-col>
+      </a-col>
     </a-row>
   </n-page>
 </template>
@@ -257,10 +259,10 @@ export default {
 
 <style scoped>
 .user_info {
-    display: flex;
+  display: flex;
 }
 .user_info .ant-row.ant-form-item {
-    width: 100%;
-    margin-right: 6px;
+  width: 100%;
+  margin-right: 6px;
 }
 </style>

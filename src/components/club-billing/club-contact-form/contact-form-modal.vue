@@ -1,5 +1,5 @@
 <template>
-  <a-modal :visible="visible" title="Manage Coach" @cancel="close">
+  <a-modal :visible="isVisible" title="Contact Form" @cancel="close">
     <template slot="footer">
       <a-button key="back" @click="close">
         Cancel
@@ -35,8 +35,13 @@
         >
         </a-input>
       </a-form-item>
-      <a-form-item label="Address">
-        <a-input v-decorator="fields.address_1" placeholder="Address">
+      <a-form-item label="Club Size">
+        <a-input
+          v-decorator="fields.club_size"
+          placeholder="Club Size"
+          type="number"
+          min="0"
+        >
         </a-input>
       </a-form-item>
     </a-form>
@@ -50,15 +55,9 @@ import { clubAdminsService } from "@/common/api/api.service";
 export default {
   name: "ClubAdminEditModal",
   props: {
-    visible: {
+    showContactFormModal: {
       default: false,
-      required: true,
       type: Boolean
-    },
-    adminId: {
-      default: null,
-      required: false,
-      type: [Number, String]
     }
   },
   data() {
@@ -101,55 +100,23 @@ export default {
           }
         ],
         phone: ["phone"],
-        address_1: ["address_1"]
+        club_size: ["club_size"]
       }
     };
   },
-  watch: {
-    adminId: function() {
-      this.fetchAdmin();
+  computed: {
+    isVisible: {
+      get() {
+        return this.showContactFormModal;
+      },
+      set() {
+        return false;
+      }
     }
   },
-  mounted() {
-    this.fetchAdmin();
-  },
   methods: {
-    fetchAdmin() {
-      if (this.adminId && this.visible) {
-        this.dataLoading = true;
-        clubAdminsService
-          .get(this.adminId)
-          .then(resp => {
-            this.dataLoading = false;
-            this.$nextTick(() => {
-              this.form.getFieldDecorator("work_email");
-              if (resp.data.success) {
-                let data = resp.data.result;
-                this.form.setFieldsValue({
-                  work_email: data.work_email,
-                  first_name: data.first_name,
-                  last_name: data.last_name,
-                  address_1: data.profile.address_1,
-                  phone: data.profile.phone
-                });
-              } else {
-                notifications.warn(
-                  "We could not load this user, please try again or contact support."
-                );
-              }
-            });
-          })
-          .catch(err => {
-            this.dataLoading = false;
-            notifications.warn(
-              "We could not load this user, please try again or contact support."
-            );
-          });
-      }
-    },
     handleForm() {
       this.form.validateFields((err, values) => {
-        values.url = window.location.origin + "/#/login";
         if (!err) {
           if (!this.adminId) {
             this.handleFormSubmit({
@@ -166,14 +133,14 @@ export default {
     handleFormSubmit(values) {
       this.loading = true;
       clubAdminsService
-        .put({
+        .contact({
           ...values,
           id: this.adminId
         })
         .then(resp => {
           this.loading = false;
           if (resp.data.success) {
-            notifications.success("User Updated Successfully");
+            notifications.success("Mail send successfully");
             this.close();
           } else if (resp.data.code === 404) {
             notifications.warn("There was a problem loading this user");

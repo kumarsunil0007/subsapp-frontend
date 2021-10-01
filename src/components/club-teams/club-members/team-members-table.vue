@@ -1,5 +1,10 @@
 <template>
-  <a-table  class="gx-table-responsive" :columns="columns" :data-source="members" :loading="dataLoading">
+  <a-table
+    class="gx-table-responsive"
+    :columns="columns"
+    :data-source="members"
+    :loading="dataLoading"
+  >
     <div slot="status" slot-scope="text">
       <a-tag v-if="text === 'accept'" color="#27ae60">Active</a-tag>
       <a-tag v-if="text === 'invite'" color="#f39c12">Invite Pending</a-tag>

@@ -31,6 +31,7 @@
             block
             class="gx-btn-cyan"
             size="small"
+            :loading="loader && selectedId === member.id"
             @click="updateTeamMember(member.id, 'invite')"
           >
             Invite to Team
@@ -42,6 +43,7 @@
               class="gx-btn-danger"
               block
               size="small"
+              :loading="loader && selectedId === member.id"
               @click="updateTeamMember(member.id, 'archive')"
             >
               Cancel invite
@@ -52,6 +54,7 @@
               class="gx-btn-danger"
               block
               size="small"
+              :loading="loader && selectedId === member.id"
               @click="updateTeamMember(member.id, 'invite')"
             >
               Send Invite Again
@@ -66,6 +69,7 @@
               class="gx-btn-danger"
               block
               size="small"
+              :loading="loader && selectedId === member.id"
               @click="updateTeamMember(member.id, 'archive')"
             >
               Remove Member
@@ -106,7 +110,9 @@ export default {
       form: this.$form.createForm(this),
       keyword: "",
       error_msg: false,
-      members: []
+      members: [],
+      loader: false,
+      selectedId: ""
     };
   },
   computed: {
@@ -124,6 +130,8 @@ export default {
   },
   methods: {
     updateTeamMember(memberId, action) {
+      this.loader = true;
+      this.selectedId = memberId;
       memberService
         .updateTeamMember({
           memberId: memberId,
@@ -132,12 +140,16 @@ export default {
           url: window.location.origin + "/#/login"
         })
         .then(resp => {
+          this.loader = false;
           if (resp.data.success) {
             this.searchEmails();
             notifications.success("Member updated successfully");
           } else {
             notifications.warn("We could not add this member");
           }
+        })
+        .catch(() => {
+          this.loader = false;
         });
     },
     searchEmails() {

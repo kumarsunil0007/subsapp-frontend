@@ -8,7 +8,11 @@
           class=""
           :class="{ 'gx-card-full': clubLoadingStatus }"
         >
-          <a-form :class="{'gx-hide': clubLoadingStatus}" :form="form" layout="vertical">
+          <a-form
+            :class="{ 'gx-hide': clubLoadingStatus }"
+            :form="form"
+            layout="vertical"
+          >
             <template v-if="club.club_logo">
               <img
                 :src="clubLogo"

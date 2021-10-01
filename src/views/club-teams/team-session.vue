@@ -45,9 +45,9 @@
                     <h1
                       class="gx-fs-xxl gx-font-weight-semi-bold gx-mb-1 gx-text-white"
                     >
-                      €{{ getTotalInvoiceValue }}
+                      €{{ parseFloat(getTotalInvoiceValue).toFixed(2) }}
                     </h1>
-                    <p class="gx-mb-0">Est. Revenue Today</p>
+                    <p class="gx-mb-0">Est. Revenue</p>
                   </div>
                 </div>
               </a-card>

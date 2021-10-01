@@ -1,18 +1,23 @@
 <template>
   <div>
-    <a-table  class="gx-table-responsive" :columns="columns" :data-source="invoices">
+    <a-table
+      class="gx-table-responsive"
+      :columns="columns"
+      :data-source="invoices"
+    >
       <div slot="operations" slot-scope="text, row">
         <a-button size="small" type="primary" @click="showInvoice(row)">
           View
         </a-button>
       </div>
-      <div slot="created_at" slot-scope="text">
-        {{ nFormat(text) }}
-      </div>
       <div slot="total" slot-scope="text">€{{ formatMoney(text) }}</div>
+      <div slot="refund" slot-scope="text, row">
+        <p v-if="row.refund_amount > 0">{{ row.refund_amount }}</p>
+        <p v-else>-</p>
+      </div>
       <div slot="transaction" slot-scope="text, row">
         <template v-if="row.status === 'complete'">
-          <a-tag color="green">Payment Received</a-tag>
+          <a-tag color="green">Paid</a-tag>
         </template>
         <template v-if="row.status === 'refund'">
           <a-tag color="orange">Refund</a-tag>
@@ -20,7 +25,12 @@
       </div>
     </a-table>
 
-    <a-modal v-model="showDialog" width="400px" @ok="showDialog = false">
+    <a-modal v-model="showDialog" width="400px">
+      <template slot="footer">
+        <a-button key="back" type="primary" @click="showDialog = false">
+          Close
+        </a-button>
+      </template>
       <a-row>
         <a-col :xs="12" :lg="12">
           <h4>{{ selectedInvoice.club_name }}</h4>
@@ -48,6 +58,10 @@
             <strong>Refund Amount:</strong>
             <span> {{ selectedInvoice.refund_amount }}</span>
           </p>
+          <p v-if="selectedInvoice.created_at">
+            <strong>Created At:</strong>
+            <span> {{ nFormat(selectedInvoice.created_at) }}</span>
+          </p>
           <p v-if="selectedInvoice.Transaction">
             <strong>Transaction ID:</strong>
             <span> {{ selectedInvoice.Transaction.transaction_id }}</span>
@@ -62,10 +76,10 @@
             <span> {{ nTime(selectedInvoice.Transaction.created_at) }}</span>
           </p>
           <template v-if="selectedInvoice.status === 'complete'">
-            <a-tag style="margin-right: 0;" color="green">PAID</a-tag>
+            <a-tag style="margin-right: 0;" color="green">Paid</a-tag>
           </template>
           <template v-else>
-            <a-tag style="margin-right: 0;" color="orange">refund</a-tag>
+            <a-tag style="margin-right: 0;" color="orange">Refund</a-tag>
           </template>
         </a-col>
       </a-row>
@@ -104,10 +118,11 @@ const columns = [
     }
   },
   {
-    title: "Created At",
-    key: "created_at",
+    title: "Refund Amount",
+    key: "refund_amount",
+    dataIndex: "refund_amount",
     scopedSlots: {
-      customRender: "created_at"
+      customRender: "refund"
     }
   },
   {

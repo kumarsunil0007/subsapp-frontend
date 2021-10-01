@@ -13,8 +13,8 @@
     </a-col>
     <a-col :xs="24" :sm="24" :md="10" :lg="8" class="gx-text-right">
       <a-button
-        style="margin-top:12px;"
         v-if="!card.default"
+        style="margin-top:12px;"
         size="small"
         block
         type="primary"

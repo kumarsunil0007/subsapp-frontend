@@ -1,5 +1,10 @@
 <template>
-  <a-table class="gx-table-responsive" :columns="columns" :data-source="schedule" :looading="dataLoading">
+  <a-table
+    class="gx-table-responsive"
+    :columns="columns"
+    :data-source="schedule"
+    :looading="dataLoading"
+  >
     <div slot="startTimeRender" slot-scope="text">
       {{ nTime(text) }}
     </div>

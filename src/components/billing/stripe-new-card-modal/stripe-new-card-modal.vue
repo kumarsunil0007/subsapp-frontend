@@ -20,7 +20,7 @@
     <div slot="footer" style="padding-left:8px;padding-right: 8px;">
       <a-row>
         <a-col :xs="10" :sm="6" class="gx-text-left">
-          <img src="@/assets/ssl_rapid_secured.gif">
+          <img src="@/assets/ssl_rapid_secured.gif" />
         </a-col>
         <a-col :xs="14" :sm="18" style="text-align: right;">
           <a-button>Cancel</a-button>

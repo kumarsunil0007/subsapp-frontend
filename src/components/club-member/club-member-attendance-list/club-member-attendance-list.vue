@@ -1,6 +1,5 @@
 <template>
-  <a-row>
-  </a-row>
+  <a-row> </a-row>
 </template>
 
 <script>

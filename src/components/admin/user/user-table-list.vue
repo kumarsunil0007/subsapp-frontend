@@ -1,6 +1,6 @@
 <template>
   <a-table
-   class="gx-table-responsive"
+    class="gx-table-responsive"
     :columns="columns"
     :data-source="schedule"
     :row-key="record => record.id"

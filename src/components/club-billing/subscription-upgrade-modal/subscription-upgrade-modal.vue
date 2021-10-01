@@ -168,11 +168,11 @@
                 </li>
               </ul>
               <div class="gx-package-footer">
-                <a href="mailto:info@subsapp.com">
-                  <a-button type="primary">
-                    Contact Us
-                  </a-button>
-                </a>
+                <!-- href="mailto:info@subsapp.com" -->
+
+                <a-button type="primary" @click="contactForm">
+                  Contact Us
+                </a-button>
               </div>
             </div>
           </div>
@@ -188,7 +188,6 @@ import nTime from "@/mixins/time";
 import nCurrency from "@/mixins/currency";
 import { billingService } from "@/common/api/api.service";
 import notifications from "@/common/notifications/notification.service";
-
 export default {
   name: "SubscriptionUpgradeModal",
   mixins: [nTime, nCurrency],
@@ -201,7 +200,8 @@ export default {
   },
   data() {
     return {
-      spinning: false
+      spinning: false,
+      contactFormModal: false
     };
   },
   computed: {
@@ -236,6 +236,10 @@ export default {
             "We could not upgrade your account, please ensure your account has a valid card or contact support."
           );
         });
+    },
+    contactForm() {
+      console.log('hitt')
+      this.$emit("openModal");
     },
     close() {
       this.$emit("close");

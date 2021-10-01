@@ -63,6 +63,9 @@
                       required: true,
                       message:
                         'Please enter the entry cost to this event, use 0 if none'
+                    },
+                    {
+                      validator: validateCost
                     }
                   ]
                 }
@@ -149,8 +152,10 @@
               rules: [
                 {
                   required: true,
-                  message:
-                    'Please select the recurring event vent start  and end date'
+                  message: 'Please select the recurring event end date'
+                },
+                {
+                  validator: validateRecurringDate
                 }
               ]
             }
@@ -261,10 +266,29 @@ export default {
     toggleRecurring() {
       this.isRecurring = !this.isRecurring;
     },
+    validateCost(rule, value, callback) {
+      if (value < 0) {
+        callback("Please enter the entry cost to this event, use 0 if none");
+      } else {
+        callback();
+      }
+    },
+    validateRecurringDate(rule, value, callback) {
+      if (this.setDate) {
+        if (value.isBefore(moment(this.setDate))) {
+          callback("Recurring end date must greater than event start date");
+        } else {
+          callback();
+        }
+      } else {
+        callback("Recurring end date must greater than event start date");
+      }
+    },
     handleForm() {
       this.form.validateFields((err, values) => {
         if (!err) {
           values.start = this.setDate;
+          values.cost = parseFloat(values.cost).toFixed(2);
           this.handleFormSubmit({
             ...values,
             team_id: this.teamId

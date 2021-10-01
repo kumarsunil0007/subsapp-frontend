@@ -47,7 +47,8 @@ export default {
       let total = 0;
       for (let invoice of state.invoices) {
         if (invoice && invoice.total) {
-          total += parseFloat(invoice.total);
+          total +=
+            parseFloat(invoice.total) - parseFloat(invoice.refund_amount);
         }
       }
       return total;

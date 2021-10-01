@@ -6,7 +6,15 @@
           <div class="gx-login-header gx-text-center">
             <h1 class="gx-login-title">Register with SubsApp</h1>
           </div>
-          <a-alert v-if="message" type="error" :message="message" banner />
+          <div v-if="validationMsg && validationMsg.length">
+            <a-alert
+              v-for="(item, index) in validationMsg"
+              :key="index"
+              type="error"
+              :message="item"
+              banner
+            />
+          </div>
           <a-form :form="form" class="gx-login-form gx-form-row0">
             <a-form-item label="First Name" class="gx-m-0">
               <a-input
@@ -74,6 +82,7 @@ export default {
       confirmDirty: false,
       loginLoading: false,
       form: this.$form.createForm(this),
+      validationMsg: [],
       fields: {
         first_name: [
           "first_name",
@@ -157,6 +166,7 @@ export default {
     },
     handleFormSubmit(values) {
       this.loginLoading = true;
+      this.validationMsg = [];
       authService
         .userRegister(values)
         .then(resp => {
@@ -178,7 +188,7 @@ export default {
                 this.$router.push("/login");
               });
           } else {
-             this.loginLoading = false;
+            this.loginLoading = false;
             if (resp.data.message) {
               notifications.warn(resp.data.message);
             } else {
@@ -188,8 +198,15 @@ export default {
             }
           }
         })
-        .catch(() => {
+        .catch(error => {
           this.loginLoading = false;
+          if (error.response.status === 422) {
+            let errors = Object.values(error.response.data.errors);
+            this.validationMsg = errors.flat();
+            console.log(this.validationMsg);
+          } else {
+            notifications.warn("Something went wrong, please try again later");
+          }
         });
     },
     compareToFirstPassword(rule, value, callback) {

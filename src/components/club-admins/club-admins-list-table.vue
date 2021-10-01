@@ -75,13 +75,14 @@ export default {
     removeAdmin(admin_id) {
       clubAdminsService
         .remove({
-          admin_id
+          admin_id,
+          url: window.location.origin
         })
         .then(resp => {
           if (resp.data.success) {
             this.getAdmins();
             notifications.success("Coach removed successfully");
-          }else{
+          } else {
             notifications.success(resp.data.message);
           }
         });

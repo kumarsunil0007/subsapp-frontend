@@ -10,7 +10,7 @@ import { QUERY_LISTINGS } from "@/store/modules/session/session-actions";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "n-property-listings",
+  name: "NPropertyListings",
   components: { NPropertyListingRow },
   computed: {
     ...mapGetters({

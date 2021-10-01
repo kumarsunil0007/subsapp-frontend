@@ -8,12 +8,15 @@ module.exports = {
   },
 
   configureWebpack: {
-    devtool: "source-map"
+    devtool: "source-map",
+    output: {
+      filename: "[name].[hash].js"
+    }
   },
 
-  publicPath: '',
+  publicPath: "",
 
   pluginOptions: {
-    cordovaPath: 'cordova-src'
+    cordovaPath: "cordova-src"
   }
 };

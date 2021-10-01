@@ -51,7 +51,7 @@ export default {
     },
     closeNewTeamModal() {
       this.newTeamModalVisible = false;
-      this.forceRerender()
+      this.forceRerender();
     }
   }
 };

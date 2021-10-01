@@ -55,7 +55,12 @@
     <subscription-upgrade-modal
       :visible="upgradeModal"
       @close="closeUpgradeModal"
+      @openModal="openModal"
     />
+    <contact-form-modal
+      :show-contact-form-modal="showContactFormModal"
+      @close="showContactFormModal = false"
+    ></contact-form-modal>
   </a-card>
 </template>
 
@@ -63,6 +68,7 @@
 import { mapGetters } from "vuex";
 import notifications from "@/common/notifications/notification.service";
 import time from "@/mixins/time";
+import contactFormModal from "@/components/club-billing/club-contact-form/contact-form-modal.vue";
 import {
   AUTH_USER,
   AUTH_SUBSCRIPTION,
@@ -72,7 +78,7 @@ import SubscriptionUpgradeModal from "@/components/club-billing/subscription-upg
 import { billingService } from "@/common/api/api.service";
 export default {
   name: "ClubSubscriptionOverview",
-  components: { SubscriptionUpgradeModal },
+  components: { SubscriptionUpgradeModal, contactFormModal },
   mixins: [time],
   // eslint-disable-next-line vue/require-prop-types
   props: ["cards"],
@@ -82,7 +88,8 @@ export default {
       billing: [],
       plans: [],
       subscriptions: [],
-      upgradeModal: false
+      upgradeModal: false,
+      showContactFormModal: false
     };
   },
   computed: {
@@ -95,6 +102,10 @@ export default {
     this.fetchSubscription();
   },
   methods: {
+    openModal(){
+      this.upgradeModal = false;
+      this.showContactFormModal = true;
+    },
     fetchSubscription() {
       this.$store.dispatch(FETCH_SUBSCRIPTION);
     },

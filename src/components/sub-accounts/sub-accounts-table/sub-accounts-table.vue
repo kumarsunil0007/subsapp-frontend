@@ -1,5 +1,10 @@
 <template>
-  <a-table class="gx-table-responsive" :columns="columns" :data-source="members" :loading="dataLoading">
+  <a-table
+    class="gx-table-responsive"
+    :columns="columns"
+    :data-source="members"
+    :loading="dataLoading"
+  >
     <div slot="handlers" slot-scope="text, record">
       <a-button
         block

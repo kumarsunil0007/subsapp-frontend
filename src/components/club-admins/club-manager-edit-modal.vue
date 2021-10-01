@@ -6,13 +6,13 @@
     @ok="handleForm"
   >
     <a-form :form="form" layout="vertical" :class="{ 'gx-hide': dataLoading }">
-     <div class="info">
-      <a-form-item label="First Name">
-        <a-input v-decorator="fields.first_name" />
-      </a-form-item>
-      <a-form-item label="Last Name">
-        <a-input v-decorator="fields.last_name" />
-      </a-form-item>
+      <div class="info">
+        <a-form-item label="First Name">
+          <a-input v-decorator="fields.first_name" />
+        </a-form-item>
+        <a-form-item label="Last Name">
+          <a-input v-decorator="fields.last_name" />
+        </a-form-item>
       </div>
       <a-form-item label="Email">
         <a-input v-decorator="fields.email" placeholder="Email"> </a-input>
@@ -164,13 +164,13 @@ export default {
 </script>
 <style>
 .info {
-    display: flex;
+  display: flex;
 }
 .info .ant-row.ant-form-item {
-    width: 100%;
-    margin-right: 6px;
+  width: 100%;
+  margin-right: 6px;
 }
 .ant-modal-footer button.ant-btn {
-    width: 75px !important;
+  width: 75px !important;
 }
 </style>

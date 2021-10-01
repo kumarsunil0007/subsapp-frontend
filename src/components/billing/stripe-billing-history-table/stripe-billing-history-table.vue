@@ -8,6 +8,9 @@
     <template slot="date" slot-scope="text">
       {{ nUnixTime(text) }}
     </template>
+    <template slot="status" slot-scope="text">
+      <span style="text-transform: capitalize">{{ text }}</span>
+    </template>
     <template slot="amount_due" slot-scope="text">
       €{{ formatStripeMoney(text) }}
     </template>
@@ -40,7 +43,8 @@ const columns = [
   },
   {
     title: "Status",
-    dataIndex: "status"
+    dataIndex: "status",
+    scopedSlots: { customRender: "status" }
   },
   {
     title: "Amount Paid",

@@ -1,12 +1,36 @@
 <template>
   <n-page>
     <div v-if="user.select_role === 'member'">
+      <div style="display: flex">
+        <p style=" margin-right: 20px;">
+          <span
+            style="    padding: 6px;
+    height: 10px;
+    display: inline-block;
+    width: 10px;
+    border-radius: 50%;
+    background: #559f3f;"
+          ></span>
+          Joined .
+        </p>
+        <p>
+          <span
+            style="    padding: 6px;
+    height: 10px;
+    display: inline-block;
+    width: 10px;
+    border-radius: 50%;
+    background: #4b7bec;"
+          ></span>
+          Not Joined .
+        </p>
+      </div>
       <a-card title="Your Schedules" class="gx-card-full">
         <member-calendar />
       </a-card>
     </div>
     <div v-else>
-      <club-dashboard />
+      <ClubDashboard />
     </div>
   </n-page>
 </template>
@@ -33,9 +57,14 @@ import MemberCalendar from "@/components/member-calendar/member-calendar";
 import ClubDashboard from "@/components/club-admins/dashboard/club-dashboard";
 import { clubService } from "@/common/api/api.service";
 
+import moment from "moment";
 export default {
   name: "Dashboard",
-  components: { NPage, MemberCalendar, ClubDashboard },
+  components: {
+    NPage,
+    MemberCalendar,
+    ClubDashboard
+  },
   data() {
     return {
       teams: [
@@ -50,6 +79,15 @@ export default {
           teamName: "Terenure College Rugby Football Club U21",
           totalMembers: 22,
           revenueThisWeek: 522
+        }
+      ],
+      showDate: new Date(),
+      items: [
+        {
+          id: 1,
+          startDate: moment(),
+          endDate: moment().add(1, "hours"),
+          title: "heldfsdfsdfslo"
         }
       ]
     };
@@ -72,7 +110,25 @@ export default {
           this.$store.commit("AUTH_STATE");
         }
       });
+    },
+    setShowDate(d) {
+      console.log("hit");
+      this.showDate = d;
+    },
+    getHeader(t) {
+      console.log(t);
+      return {
+        value: "sdsdas"
+      };
     }
   }
 };
 </script>
+<style scoped>
+#show-cal {
+  color: #2c3e50;
+  height: 67vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>

@@ -23,17 +23,17 @@
         <h3 class="gx-mb-2">
           {{ listing.full_address }}
         </h3>
-        <p class="gx-text-grey gx-mb-1" v-if="listing.features">
+        <p v-if="listing.features" class="gx-text-grey gx-mb-1">
           {{ listing.features[0] }}
         </p>
         <div class="ant-row-flex">
-          <p class="gx-mr-3 gx-mb-1" v-if="listing.beds">
+          <p v-if="listing.beds" class="gx-mr-3 gx-mb-1">
             <span class="gx-text-grey">Bedrooms:</span> {{ listing.beds }}
           </p>
-          <p class="gx-mr-3 gx-mb-1" v-if="listing.bathrooms">
+          <p v-if="listing.bathrooms" class="gx-mr-3 gx-mb-1">
             <span class="gx-text-grey">Baths:</span> {{ listing.bathrooms }}
           </p>
-          <p class="gx-mr-3 gx-mb-1" v-if="listing.area">
+          <p v-if="listing.area" class="gx-mr-3 gx-mb-1">
             <span class="gx-text-grey">Area:</span> {{ listing.area }} m<sup
               >2</sup
             >
@@ -59,7 +59,7 @@
           <h2 class="gx-text-primary gx-mb-1 gx-font-weight-medium">
             {{ listing.current_price }}
           </h2>
-          <p class="gx-text-grey gx-fs-sm" v-if="getPricePerArea() > 0">
+          <p v-if="getPricePerArea() > 0" class="gx-text-grey gx-fs-sm">
             €{{ getPricePerArea() }}/m<sup>2</sup>
           </p>
         </div>
@@ -77,7 +77,7 @@
 
 <script>
 export default {
-  name: "n-property-listing-row",
+  name: "NPropertyListingRow",
   props: {
     listing: {
       type: Object,

@@ -1,5 +1,9 @@
 <template>
-  <a-table class="gx-table-responsive"  :columns="columns" :data-source="schedule">
+  <a-table
+    class="gx-table-responsive"
+    :columns="columns"
+    :data-source="schedule"
+  >
     <div slot="startTimeRender" slot-scope="text">{{ nTime(text) }}</div>
     <div slot="sessionLength" slot-scope="text">
       {{ floatToHour(text) }} Hours
@@ -176,7 +180,8 @@ export default {
       memberService
         .updateClubMember(memberId, {
           status: status,
-          role: this.AUTH_USER.select_role
+          role: this.AUTH_USER.select_role,
+          url: window.location.origin
         })
         .then(resp => {
           if (resp.data.success) {

@@ -6,15 +6,15 @@
       </template>
     </div>
     <div slot="created_at" slot-scope="text">
-      {{ nTime(text) }}
+      {{ nTime(text.created_at) }}
     </div>
     <div slot="total" slot-scope="text">€{{ formatMoney(text) }}</div>
     <div slot="transaction" slot-scope="text, row">
       <template v-if="row.status === 'complete'">
-        <a-tag color="green">Payment Received</a-tag>
+        <a-tag color="green">Paid</a-tag>
       </template>
       <template v-if="row.status === 'refund'">
-        <a-tag color="orange">Payment Refund</a-tag>
+        <a-tag color="orange">Refund</a-tag>
       </template>
     </div>
   </a-table>

@@ -4,16 +4,31 @@
       <a-col :xs="24" :sm="24" :md="14" :lg="16">
         <a-row type="flex" :gutter="10">
           <a-col :xs="24" :sm="24" :md="8" :lg="6">
-            <a-input style="width:100%;margin-bottom:10px;" v-model="filters.keyword" placeholder="Keyword Search"></a-input>
+            <a-input
+              v-model="filters.keyword"
+              style="width:100%;margin-bottom:10px;"
+              placeholder="Keyword Search"
+            ></a-input>
           </a-col>
           <a-col :xs="24" :sm="24" :md="8" :lg="6">
-            <a-select v-model="filters.type" style="min-width: 100%;margin-bottom: 10px;">
+            <a-select
+              v-model="filters.type"
+              style="min-width: 100%;margin-bottom: 10px;"
+            >
               <a-select-option value="all">All Members</a-select-option>
               <a-select-option value="accepted">Active Members</a-select-option>
-              <a-select-option value="requested">Requested To Join</a-select-option>
-              <a-select-option value="invited">Pending Invitation Acceptance</a-select-option>
-              <a-select-option value="archived">Archived Members</a-select-option>
-              <a-select-option value="declined">Declined Invitations</a-select-option>
+              <a-select-option value="requested"
+                >Requested To Join</a-select-option
+              >
+              <a-select-option value="invited"
+                >Pending Invitation Acceptance</a-select-option
+              >
+              <a-select-option value="archived"
+                >Archived Members</a-select-option
+              >
+              <a-select-option value="declined"
+                >Declined Invitations</a-select-option
+              >
             </a-select>
           </a-col>
         </a-row>
@@ -22,26 +37,37 @@
         <a-button
           size="small"
           type="primary"
-          @click="addMemberModal"
           class="gx-sm-full"
           style="margin-bottom: 12px; height:35px; background-color: rgb(39, 174, 96) !important;border-color:rgb(39, 174, 96) !important;"
-        >Add Member</a-button>
+          @click="addMemberModal"
+          >Add Member</a-button
+        >
         <a-button
           size="small"
           type="primary"
-          @click="openMemberModal"
           class="gx-sm-full"
           style="margin-bottom: 12px; height:35px;"
-        >Find & Invite Members</a-button>
+          @click="openMemberModal"
+          >Find & Invite Members</a-button
+        >
       </a-col>
       <a-col :span="24">
         <a-card class="gx-card-table-full gx-table-responsive">
-          <club-member-table :filters="filters" :club-id="1"></club-member-table>
+          <club-member-table
+            :filters="filters"
+            :club-id="1"
+          ></club-member-table>
         </a-card>
       </a-col>
     </a-row>
-    <invite-member-modal :visible="inviteMemberVisible" @close="closeMemberModal"></invite-member-modal>
-    <add-member-modal :visible="addMemberVisible" @close="closeMemberModal"></add-member-modal>
+    <invite-member-modal
+      :visible="inviteMemberVisible"
+      @close="closeMemberModal"
+    ></invite-member-modal>
+    <add-member-modal
+      :visible="addMemberVisible"
+      @close="closeMemberModal"
+    ></add-member-modal>
   </n-page>
 </template>
 
@@ -56,7 +82,7 @@ export default {
     InviteMemberModal,
     AddMemberModal,
     ClubMemberTable,
-    NPage,
+    NPage
   },
   data() {
     return {
@@ -65,8 +91,8 @@ export default {
       addMemberVisible: false,
       filters: {
         keyword: "",
-        type: "all",
-      },
+        type: "all"
+      }
     };
   },
   methods: {
@@ -85,7 +111,7 @@ export default {
       if (this.addMemberVisible) {
         this.addMemberVisible = false;
       }
-    },
-  },
+    }
+  }
 };
 </script>

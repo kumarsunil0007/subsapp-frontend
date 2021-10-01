@@ -4,19 +4,28 @@
       <a-row type="flex">
         <a-col :xs="24" :sm="24" :md="6">
           <n-box to="/teams-list">
-            <div slot="title" class="title-heading" style="font-size: 20px;
-      color: #0058c6;">
+            <div
+              slot="title"
+              class="title-heading"
+              style="font-size: 20px;
+      color: #0058c6;"
+            >
               Teams
             </div>
-            <div slot="description"> Schedule new training session, add and remove team members and
+            <div slot="description">
+              Schedule new training session, add and remove team members and
               manage anything else related to that team.
             </div>
           </n-box>
         </a-col>
         <a-col :xs="24" :sm="24" :md="6">
           <n-box to="/members">
-            <div slot="title" class="title-heading" style="font-size: 20px;
-      color:rgb(39, 174, 96);">
+            <div
+              slot="title"
+              class="title-heading"
+              style="font-size: 20px;
+      color:rgb(39, 174, 96);"
+            >
               Global Members
             </div>
             <div slot="description">
@@ -27,8 +36,12 @@
         </a-col>
         <a-col :xs="24" :sm="24" :md="6">
           <n-box to="/club/billing">
-            <div slot="title" class="title-heading" style="font-size: 20px;
-      color: #f18805;">
+            <div
+              slot="title"
+              class="title-heading"
+              style="font-size: 20px;
+      color: #f18805;"
+            >
               Billing
             </div>
             <div slot="description">
@@ -68,5 +81,4 @@ export default {
     margin-bottom: 2px;
   }
 }
-
 </style>

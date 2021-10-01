@@ -24,7 +24,7 @@
       </a-col>
       <a-col :span="24">
         <a-card title="Club Billing" class="gx-card-table-full">
-          <club-billing-invoice-table :filters="filters"/>
+          <club-billing-invoice-table :filters="filters" />
         </a-card>
       </a-col>
     </a-row>

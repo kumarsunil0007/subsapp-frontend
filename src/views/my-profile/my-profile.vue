@@ -13,20 +13,28 @@
               />
             </template>
             <a-form-item>
-              <a-upload
-                v-decorator="['upload']"
-                accept="image/png,image/jpeg,/image/jpg"
-                name="logo"
-                :action="`${action}member/upload-avatar`"
-                :headers="{ Authorization: `Bearer ${userToken}` }"
-                list-type="picture"
-                :show-upload-list="false"
-                @change="uploadImage"
-              >
-                <a-button>
+              <!-- <a-upload :before-upload="beforeUpload" :file-list="fileList" :remove="handleRemove" >
+                <a-button @click="handleUpload">
                   <a-icon type="upload" /> Change your profile picture
                 </a-button>
+              </a-upload> -->
+              <a-upload
+                :file-list="fileList"
+                :remove="handleRemove"
+                :before-upload="beforeUpload"
+                :show-upload-list="true"
+              >
+                <a-button> <a-icon type="upload" /> Select File </a-button>
               </a-upload>
+              <a-button
+                type="primary"
+                :disabled="fileList.length === 0"
+                style="margin-top: 16px"
+                :loading="uploading"
+                @click="handleUpload"
+              >
+                {{ uploading ? "Uploading" : "Start Upload" }}
+              </a-button>
             </a-form-item>
 
             <a-form-item label="First Name">
@@ -199,7 +207,9 @@ export default {
       form: this.$form.createForm(this),
       action: process.env.VUE_APP_API_HOST,
       user_image: "",
-      loading: false
+      loading: false,
+      uploading: false,
+      fileList: []
     };
   },
   computed: {
@@ -271,8 +281,9 @@ export default {
       this.subManagerVisible = false;
       this.selectedUserId = 0;
     },
-    uploadImage() {
-      this.fetchProfile();
+    uploadImage({ file }) {
+      console.log(file);
+      //this.fetchProfile();
     },
     defaultImage(e) {
       e.target.src = MissingPng;
@@ -305,6 +316,15 @@ export default {
           });
           this.fields.country = resp.data.result.profile.country;
           this.user_image = resp.data.result.profile.image;
+
+          let userData = JSON.parse(localStorage.getItem("auth-user"));
+          userData.user.profile.image = resp.data.result.profile.image;
+          userData.user.first_name = resp.data.result.first_name;
+          userData.user.last_name = resp.data.result.last_name;
+          userData.user.work_email = resp.data.result.work_email;
+          userData.user.preferred_name = resp.data.result.preferred_name;
+          window.localStorage.setItem("auth-user", JSON.stringify(userData));
+          this.$store.commit("AUTH_STATE");
         }
       });
     },
@@ -336,6 +356,40 @@ export default {
             "We could not update your personal details, something went wrong."
           );
         });
+    },
+    handleUpload() {
+      const { fileList } = this;
+      const formData = new FormData();
+      fileList.forEach(file => {
+        formData.append("logo", file);
+      });
+      this.uploading = true;
+      memberService
+        .uploadAvatar(formData)
+        .then(resp => {
+          this.uploading = false;
+          if (resp.data.success === true) {
+            notifications.success("upload successfully.");
+            this.fileList = [];
+            this.fetchProfile();
+          } else {
+            notifications.warn(resp.data.message);
+          }
+        })
+        .catch(() => {
+          this.uploading = false;
+          notifications.warn("Server error");
+        });
+    },
+    beforeUpload(file) {
+      this.fileList = [...this.fileList, file];
+      return false;
+    },
+    handleRemove(file) {
+      const index = this.fileList.indexOf(file);
+      const newFileList = this.fileList.slice();
+      newFileList.splice(index, 1);
+      this.fileList = newFileList;
     }
   }
 };

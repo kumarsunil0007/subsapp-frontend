@@ -66,6 +66,11 @@
           </a-button>
         </a-col>
       </a-row>
+      <a-row v-if="clubs.length < 1 && error_msg"
+        ><a-col :xs="18" class="gx-text-center">
+          No result found
+        </a-col>
+      </a-row>
     </div>
     <div slot="footer"></div>
   </a-modal>
@@ -88,7 +93,8 @@ export default {
     return {
       form: this.$form.createForm(this),
       keyword: "",
-      clubs: []
+      clubs: [],
+      error_msg: false
     };
   },
   computed: {
@@ -119,6 +125,7 @@ export default {
         });
     },
     searchClubs() {
+      this.error_msg = false;
       clubService
         .searchClubs({
           keyword: this.keyword
@@ -126,11 +133,13 @@ export default {
         .then(resp => {
           if (resp.data.success) {
             this.clubs = resp.data.result;
+            this.error_msg = true;
           }
         });
     },
     close() {
       (this.clubs = []), (this.keyword = ""), this.form.resetFields();
+      this.error_msg = false;
       this.$emit("close");
     }
   }

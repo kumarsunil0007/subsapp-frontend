@@ -189,6 +189,9 @@ export const memberService = {
   },
   TeamTablelist(memberId, data) {
     return ApiService.update("/team/update-team-status", memberId, data);
+  },
+  uploadAvatar(data) {
+    return ApiService.post("/member/upload-avatar", data);
   }
 };
 export const adminService = {
@@ -246,6 +249,9 @@ export const clubAdminsService = {
   },
   put(params) {
     return ApiService.post("/club-admins/put", params);
+  },
+  contact(params) {
+    return ApiService.post("/club-admin/contact-form", params);
   },
   remove(params) {
     return ApiService.post("/club-admins/remove", params);

@@ -238,7 +238,7 @@ export default {
   //   }
   // },
   mounted() {
-   // this.$store.dispatch(GET_USER, this.authUser.user.user_id);
+    // this.$store.dispatch(GET_USER, this.authUser.user.user_id);
     this.fetchProfile();
   },
   methods: {
@@ -303,7 +303,7 @@ export default {
         })
         .then(resp => {
           if (resp.data.success) {
-            this.fetchProfile
+            this.fetchProfile;
             notifications.success("Great! Profile updated");
           } else {
             if (resp.data.message) {

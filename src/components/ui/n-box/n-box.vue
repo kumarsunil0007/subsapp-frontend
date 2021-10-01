@@ -35,13 +35,13 @@ export default {
   border: 1px solid #d7dadca6;
   border-radius: 5px;
   margin: 6px;
-  padding:12px;
+  padding: 12px;
   cursor: pointer;
   transition: 0.25s ease-in-out all;
-  &:hover{
+  &:hover {
     background: #eff5ff;
   }
-  &--body{
+  &--body {
     padding: 2px 14px;
   }
 }

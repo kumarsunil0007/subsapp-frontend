@@ -28,7 +28,7 @@ import ClubManagerListTable from "@/components/club-admins/club-manager-list-tab
 import ClubManagerEditModal from "@/components/club-admins/club-manager-edit-modal";
 export default {
   name: "ClubAdmins",
-  components: { ClubManagerEditModal, NPage , ClubManagerListTable},
+  components: { ClubManagerEditModal, NPage, ClubManagerListTable },
   data() {
     return {
       currentAdmin: null,

@@ -35,6 +35,7 @@
             v-if="!member.status || member.status === 'decline'"
             block
             size="small"
+            :loading="loader && selectId === member.id"
             @click="inviteMember(member.id)"
           >
             Send Invite
@@ -48,6 +49,7 @@
             type="danger"
             block
             size="small"
+            :loading="loader && selectId === member.id"
           >
             <template v-if="member.status === 'invite'"
               >Invitation Pending</template
@@ -86,7 +88,9 @@ export default {
       form: this.$form.createForm(this),
       keyword: "",
       error_msg: false,
-      members: []
+      members: [],
+      loader: false,
+      selectId: ""
     };
   },
   computed: {
@@ -102,18 +106,27 @@ export default {
   },
   methods: {
     inviteMember(memberId) {
+      this.selectId = memberId;
+      this.loader = true;
       const param = {
         memberId: memberId,
-        role: this.AUTH_USER.select_role
+        role: this.AUTH_USER.select_role,
+        url: window.location.origin
       };
-      memberService.inviteMember(param).then(resp => {
-        if (resp.data.success) {
-          this.searchEmails();
-          notifications.success("An invite has been sent");
-        } else {
-          notifications.warn(resp.data.message);
-        }
-      });
+      memberService
+        .inviteMember(param)
+        .then(resp => {
+          this.loader = false;
+          if (resp.data.success) {
+            this.searchEmails();
+            notifications.success("An invite has been sent");
+          } else {
+            notifications.warn(resp.data.message);
+          }
+        })
+        .catch(() => {
+          this.loader = false;
+        });
     },
     searchEmails() {
       this.error_msg = false;

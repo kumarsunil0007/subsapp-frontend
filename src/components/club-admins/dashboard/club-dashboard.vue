@@ -1,5 +1,20 @@
 <template>
-  <a-row type="flex">
+  <div>
+    <vue-cal
+      xsmall
+      style="height: 600px"
+      :time-from="1 * 60"
+      :time-to="24 * 60"
+      :time-cell-height="40"
+      default-view="month"
+      active-view="month"
+      events-on-month-view="short"
+      :disable-views="['years', 'year']"
+      :events="events"
+      :time-step="20"
+    >
+    </vue-cal>
+    <!-- <a-row type="flex">
     <a-col :xs="24" :sm="24" :md="8">
       <a-card>
         <a-row>
@@ -23,15 +38,6 @@
           </div>
         </a-row>
       </a-card>
-      <!-- <n-box to="/teams-list">
-            <div slot="title">
-              Teams
-            </div>
-            <div slot="description">
-              Schedule new training session, add and remove team members and
-              manage anything else related to that team.
-            </div>
-          </n-box> -->
     </a-col>
     <a-col :xs="24" :sm="24" :md="8">
       <a-card>
@@ -61,7 +67,12 @@
       <a-card>
         <a-row>
           <a-col :xs="16" :sm="16" :md="16">
-            <h4>Billing</h4>
+            <a-statistic
+              title="Billing"
+              :value-style="{ color: '#ffffff' }"
+              style="margin-right: 50px"
+            >
+            </a-statistic>
           </a-col>
           <a-col :xs="8" :sm="8" :md="8">
             <template>
@@ -74,28 +85,41 @@
           </div>
         </a-row>
       </a-card>
-      <!-- <n-box to="/club/billing">
-            <div slot="title">
-              Billing
-            </div>
-            <div slot="description">
-              View a breakdown of your clubs billing history. Track pending
-              payments and view individual transaction invoices.
-            </div>
-          </n-box> -->
     </a-col>
-  </a-row>
+  </a-row> -->
+  </div>
 </template>
 
 <script>
+import VueCal from "vue-cal";
+import "vue-cal/dist/vuecal.css";
 import { clubService } from "@/common/api/api.service";
 import { mapGetters } from "vuex";
 export default {
+  components: { VueCal },
   data() {
     return {
       dashboard_data: "",
       members: 0,
-      teams: 0
+      teams: 0,
+      events: [
+        {
+          start: "2021-10-01 14:00",
+          end: "2021-10-01 15:30",
+          title: "Training Session",
+          location: "Kenmare Soccer Pitch",
+          content: "You have joined",
+          class: "leisure"
+        },
+        {
+          start: "2021-10-01 16:00",
+          end: "2021-10-01 17:00",
+          title: "Indoor Rowing Session",
+          location: "Kenmare Rowing Club",
+          content: "You have joined",
+          class: "health"
+        }
+      ]
     };
   },
   computed: {
@@ -120,8 +144,8 @@ export default {
 };
 </script>
 
-<style scoped>
-.ant-card {
+<style>
+/* .ant-card {
   z-index: 1;
   margin-bottom: 32px;
   box-shadow: -1px 6px 11px 1px #d6d4d4;
@@ -151,5 +175,66 @@ i {
   padding: 18px;
   padding-bottom: 8px !important;
   zoom: 1;
+} */
+.vuecal__menu,
+/* .vuecal__cell-events-count {
+  background-color: #4b7bec;
+} */
+.vuecal__menu li {
+  border-bottom-color: #fff;
+  color: #fff;
+}
+.vuecal__menu li.active {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+.vuecal__title {
+  background-color: #e4f5ef;
+}
+.vuecal__cell.today,
+.vuecal__cell.current {
+  background-color: rgba(240, 240, 255, 0.4);
+}
+.vuecal:not(.vuecal--day-view) .vuecal__cell.selected {
+  background-color: rgba(235, 255, 245, 0.4);
+}
+.vuecal__cell.selected:before {
+  border-color: rgba(66, 185, 131, 0.5);
+}
+
+.vuecal__event {
+  cursor: pointer;
+}
+.vuecal__time-cell .hours.line:before {
+  border-color: #42b983;
+}
+.vuecal__event-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 4px 0 8px;
+}
+
+.vuecal__event-time {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.vuecal__event.leisure {
+  margin: 4px;
+  border-radius: 4px;
+  color: white;
+  background: #4b7bec !important;
+}
+
+.vuecal__event.health {
+  margin: 4px;
+  border-radius: 4px;
+  color: white;
+  background: #559f3f !important;
+}
+
+.vuecal__event-content {
+  font-style: italic;
 }
 </style>

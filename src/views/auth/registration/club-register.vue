@@ -6,7 +6,15 @@
           <div class="gx-login-header gx-text-center">
             <h1 class="gx-login-title">Register your club with SubsApp</h1>
           </div>
-          <a-alert v-if="message" type="error" :message="message" banner />
+          <div v-if="validationMsg && validationMsg.length">
+            <a-alert
+              v-for="(item, index) in validationMsg"
+              :key="index"
+              type="error"
+              :message="item"
+              banner
+            />
+          </div>
           <a-form :form="form" class="gx-login-form gx-form-row0">
             <a-form-item label="Club Name" class="gx-m-0">
               <a-input
@@ -78,6 +86,7 @@ export default {
     return {
       loginLoading: false,
       message: null,
+      validationMsg: [],
       confirmDirty: false,
       form: this.$form.createForm(this),
       fields: {
@@ -162,7 +171,6 @@ export default {
         this.message = null;
         if (!err) {
           if (values.password === values.c_password) {
-            console.log(123);
             this.handleFormSubmit({
               ...values,
               teamId: this.teamId
@@ -175,6 +183,7 @@ export default {
     },
     handleFormSubmit(values) {
       this.loginLoading = true;
+      this.validationMsg = [];
       authService
         .clubRegister(values)
         .then(resp => {
@@ -206,8 +215,15 @@ export default {
             }
           }
         })
-        .catch(() => {
+        .catch(error => {
           this.loginLoading = false;
+          if (error.response.status === 422) {
+            let errors = Object.values(error.response.data.errors);
+            this.validationMsg = errors.flat();
+            console.log(this.validationMsg);
+          } else {
+            notifications.warn("Something went wrong, please try again later");
+          }
         });
     },
     compareToFirstPassword(rule, value, callback) {

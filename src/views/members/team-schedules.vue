@@ -17,6 +17,11 @@
         >
         </vue-cal>
         <a-modal v-model="showDialog">
+          <template slot="footer">
+            <a-button key="back" type="primary" @click="showDialog = false">
+              Close
+            </a-button>
+          </template>
           <h2>{{ selectedEvent.title }}</h2>
           <a-divider />
           <strong>{{ nFormat(selectedEvent.startDate) }}</strong>

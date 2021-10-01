@@ -15,6 +15,11 @@
       :disable-views="['years', 'year', 'month']" >
     </vue-cal>
     <a-modal v-model="showDialog">
+      <template slot="footer">
+        <a-button key="submit" type="primary" @click="showDialog = false">
+          Close
+        </a-button>
+      </template>
       <h2>{{ selectedEvent.title }}</h2>
       <a-divider />
       <strong>{{ nFormat(selectedEvent.startDate) }}</strong>
@@ -44,18 +49,20 @@ export default {
     selectedEvent: {},
     events: [
       {
-        start: "2019-04-03 14:00",
-        end: "2019-04-03 15:30",
+        start: "2021-08-25 14:00",
+        end: "2021-08-25 15:30",
         title: "Training Session",
         location: "Kenmare Soccer Pitch",
+        content: "You have joined",
         class: "leisure"
       },
       {
-        start: "2019-04-03 11:00",
-        end: "2019-04-03 12:45",
+        start: "2021-08-26 11:00",
+        end: "2021-08-26 11:30",
         title: "Indoor Rowing Session",
         location: "Kenmare Rowing Club",
-        class: "leisure"
+        content: "You have joined",
+        class: "health"
       }
     ],
     selectedDate: ""
@@ -84,7 +91,7 @@ export default {
                 .format("YYYY-MM-DD HH:mm"),
               title: event.title,
               location: event.location,
-              class: "leisure"
+              class: event.AttendanceID ? "health" : "leisure"
             });
           }
           this.events = events;
@@ -105,9 +112,9 @@ export default {
 <style>
 /* Green-theme. */
 .vuecal__menu,
-.vuecal__cell-events-count {
+/* .vuecal__cell-events-count {
   background-color: #4b7bec;
-}
+} */
 .vuecal__menu li {
   border-bottom-color: #fff;
   color: #fff;
@@ -148,11 +155,18 @@ export default {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.vuecal__event {
+.vuecal__event.leisure {
   margin: 4px;
   border-radius: 4px;
   color: white;
-  background: #4b7bec;
+  background: #4b7bec !important;
+}
+
+.vuecal__event.health {
+  margin: 4px;
+  border-radius: 4px;
+  color: white;
+  background: #559f3f !important;
 }
 
 .vuecal__event-content {

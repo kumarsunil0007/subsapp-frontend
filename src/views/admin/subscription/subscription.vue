@@ -2,7 +2,7 @@
   <n-page>
     <a-row>
       <a-col :xs="24" :sm="24" :md="8">
-        <club-subscription-overview :cards="cards"/>
+        <club-subscription-overview :cards="cards" />
         <div class="add-new-card gx-text-right"></div>
         <a-card class="gx-card-full gx-card-header-full">
           <div slot="title">
