@@ -1,5 +1,15 @@
 <template>
   <div>
+    <div>
+      <strong> Upcoming Event :</strong
+      ><span v-if="upcomingEvent && upcomingEvent.title">
+        {{ upcomingEvent.title }}
+      </span>
+      <strong> Date : :</strong
+      ><span v-if="upcomingEvent && upcomingEvent.start">
+        {{ upcomingEvent.start }}</span
+      >
+    </div>
     <vue-cal
       xsmall
       style="height: 600px"
@@ -8,12 +18,57 @@
       :time-cell-height="40"
       default-view="month"
       active-view="month"
-      events-on-month-view="short"
-      :disable-views="['years', 'year']"
+      events-on-month-view="full"
+      :disable-views="['years', 'year', 'day']"
       :events="events"
       :time-step="20"
+      today-button
+      :on-event-click="onEventClick"
+      @view-change="logEvents($event)"
     >
     </vue-cal>
+    <a-modal v-model="showDialog">
+      <template slot="footer">
+        <a-button key="submit" type="primary" @click="showDialog = false">
+          Close
+        </a-button>
+      </template>
+      <h2>{{ selectedEvent.title }}</h2>
+      <a-divider />
+      <strong>{{ nFormat(selectedEvent.startDate) }}</strong>
+      <strong>Event details:</strong>
+      <ul>
+        <li>Location: {{ selectedEvent.location }}</li>
+        <li>Event starts at: {{ selectedEvent.startTime }}</li>
+        <li>Event ends at: {{ selectedEvent.endTime }}</li>
+      </ul>
+      <ul>
+        <strong>Joined Members</strong>
+        <li
+          v-for="member in selectedEvent.members"
+          :key="member.id"
+          style="color: blue;cursor:pointer;text-decoration: line"
+        >
+          <div @click.prevent="$router.push('/club/member/' + member.id)">
+            {{ member.preferred_name }}
+          </div>
+          <div>
+            <button
+              @click.prevent="
+                $router.push(
+                  '/teams/' +
+                    selectedEvent.team_id +
+                    '/session/' +
+                    selectedEvent.id
+                )
+              "
+            >
+              manage
+            </button>
+          </div>
+        </li>
+      </ul>
+    </a-modal>
     <!-- <a-row type="flex">
     <a-col :xs="24" :sm="24" :md="8">
       <a-card>
@@ -95,6 +150,7 @@ import VueCal from "vue-cal";
 import "vue-cal/dist/vuecal.css";
 import { clubService } from "@/common/api/api.service";
 import { mapGetters } from "vuex";
+import moment from "moment";
 export default {
   components: { VueCal },
   data() {
@@ -102,43 +158,91 @@ export default {
       dashboard_data: "",
       members: 0,
       teams: 0,
-      events: [
-        {
-          start: "2021-10-01 14:00",
-          end: "2021-10-01 15:30",
-          title: "Training Session",
-          location: "Kenmare Soccer Pitch",
-          content: "You have joined",
-          class: "leisure"
-        },
-        {
-          start: "2021-10-01 16:00",
-          end: "2021-10-01 17:00",
-          title: "Indoor Rowing Session",
-          location: "Kenmare Rowing Club",
-          content: "You have joined",
-          class: "health"
-        }
-      ]
+      showDialog: false,
+      selectedEvent: {},
+      events: [],
+      upcomingClubEvent: [],
+      upcomingEvent: {}
     };
   },
   computed: {
     ...mapGetters(["AUTH_USER"])
   },
   mounted() {
-    this.fetchStats();
+    let st = moment()
+      .startOf("month")
+      .format("YYYY-MM-DD");
+    let ed = moment()
+      .endOf("month")
+      .format("YYYY-MM-DD");
+    this.clubDashboad(st, ed);
   },
   methods: {
-    fetchStats() {
+    clubDashboad(st, ed) {
       const data = {
-        role: this.AUTH_USER.select_role
+        role: this.AUTH_USER.select_role,
+        startDate: st,
+        endDate: ed
       };
-      clubService.fetchStats({ params: data }).then(resp => {
-        if (resp.data.success) {
-          this.members = resp.data.members;
-          this.teams = resp.data.teams;
+      console.log(data);
+      clubService
+        .clubDashboad({ params: data })
+        .then(resp => {
+          this.events = [];
+          if (resp.data.success) {
+            const result = resp.data.result;
+            let events = [];
+            for (let event of result) {
+              events.push({
+                start: moment(event.start).format("YYYY-MM-DD HH:mm"),
+                end: moment(event.start)
+                  .add(event.length, "minutes")
+                  .format("YYYY-MM-DD HH:mm"),
+                title: event.title,
+                location: event.location,
+                content: event.users.length + " " + "members",
+                class: event.AttendanceID ? "health" : "leisure",
+                members: event.users,
+                team_id: event.team_id,
+                id: event.id
+              });
+            }
+            this.events = events;
+
+            let upcomingEvent = result.sort((a, b) => {
+              if (new Date(a.start).getTime() > new Date(b.start).getTime()) {
+                return 1;
+              } else {
+                return -1;
+              }
+            });
+            this.upcomingClubEvent = upcomingEvent;
+            this.getlatestEvent();
+          }
+        })
+        .catch(() => {
+          this.events = [];
+        });
+    },
+    onEventClick(event, e) {
+      this.selectedEvent = event;
+      this.showDialog = true;
+      // Prevent navigating to narrower view (default vue-cal behavior).
+      e.stopPropagation();
+    },
+    getlatestEvent() {
+      this.upcomingClubEvent.find(opt => {
+        let now = moment();
+        if (moment(opt.start).isAfter(now)) {
+          return (this.upcomingEvent = opt);
         }
       });
+    },
+    logEvents(e) {
+      this.clubDashboad(
+        moment(e.startDate).format("YYYY-MM-DD"),
+        moment(e.endDate).format("YYYY-MM-DD")
+      );
     }
   }
 };

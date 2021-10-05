@@ -311,6 +311,9 @@ export const clubService = {
   },
   fetchStats(params) {
     return ApiService.query("club/dashboard-data", params);
+  },
+  clubDashboad(params) {
+    return ApiService.query("admin/club-schedule", params);
   }
 };
 
