@@ -152,21 +152,21 @@ export default {
           if (resp.data.success) {
             notifications.success("Mail send successfully");
             this.close();
-          } else if (resp.data.code === 404) {
-            notifications.warn("There was a problem loading this user");
-            this.close();
           } else {
             if (resp.data.message) {
               notifications.warn(resp.data.message);
             } else {
               notifications.warn(
-                "There was an error updating this user, please contact support"
+                "There was an error sending the mail, please contact support"
               );
             }
           }
         })
         .catch(() => {
           this.loading = false;
+          notifications.warn(
+            "There was an error sending the mail, please contact support"
+          );
         });
     },
     handleFormUpdate(values) {
