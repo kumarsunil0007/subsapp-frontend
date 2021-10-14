@@ -6,13 +6,33 @@
     :loading="dataLoading"
   >
     <div slot="status" slot-scope="text">
-      <a-tag v-if="text === 'accept'" color="#27ae60">Active</a-tag>
+      <a-tag v-if="text === 'accept'" color="#27ae60">Active </a-tag>
       <a-tag v-if="text === 'invite'" color="#f39c12">Invite Pending</a-tag>
       <a-tag v-if="text === 'decline'" color="#c0392b">Decline Invite</a-tag>
     </div>
     <div slot="handlers" slot-scope="text, record">
+      <a-button
+        v-if="record.pivot.status === 'invite'"
+        size="small"
+        style="margin-bottom:0;"
+        type="danger"
+        :loading="loader && selectedId === record.pivot.member_id"
+        @click="updateTeamMember(record, 'archive')"
+      >
+        Cancel Invite
+      </a-button>
+      <a-button
+        v-if="record.pivot.status === 'accept'"
+        size="small"
+        style="margin-bottom:0;"
+        type="danger"
+        :loading="loader && selectedId === record.pivot.member_id"
+        @click="updateTeamMember(record, 'archive')"
+      >
+        Remove
+      </a-button>
       <router-link :to="'/club/member/' + record.id">
-        <a-button block size="small" style="margin-bottom:0;" type="primary">
+        <a-button size="small" style="margin-bottom:0;" type="primary">
           View Profile
         </a-button>
       </router-link>
@@ -22,7 +42,7 @@
 
 <script>
 import { memberService } from "@/common/api/api.service";
-
+import notifications from "@/common/notifications/notification.service";
 const columns = [
   {
     title: "Full Name",
@@ -60,7 +80,9 @@ export default {
     return {
       columns,
       dataLoading: true,
-      members: []
+      members: [],
+      selectedId: "",
+      loader: false
     };
   },
   mounted() {
@@ -78,6 +100,29 @@ export default {
           if (resp.data.success) {
             this.members = resp.data.result;
           }
+        });
+    },
+    updateTeamMember({ pivot }, action) {
+      this.selectedId = pivot.member_id;
+      this.loader = true;
+      memberService
+        .updateTeamMember({
+          memberId: pivot.member_id,
+          teamId: pivot.team_id,
+          action: action,
+          url: window.location.origin + "/#/login"
+        })
+        .then(resp => {
+          this.loader = false;
+          if (resp.data.success) {
+            this.getMembers();
+            notifications.success("Member updated successfully");
+          } else {
+            notifications.warn("We could not add this member");
+          }
+        })
+        .catch(() => {
+          this.loader = false;
         });
     }
   }

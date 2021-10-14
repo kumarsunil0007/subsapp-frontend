@@ -1,15 +1,5 @@
 <template>
   <div>
-    <div>
-      <strong> Upcoming Event :</strong
-      ><span v-if="upcomingEvent && upcomingEvent.title">
-        {{ upcomingEvent.title }}
-      </span>
-      <strong> Date : :</strong
-      ><span v-if="upcomingEvent && upcomingEvent.start">
-        {{ upcomingEvent.start }}</span
-      >
-    </div>
     <vue-cal
       xsmall
       style="height: 600px"
@@ -42,18 +32,18 @@
         <li>Event starts at: {{ selectedEvent.startTime }}</li>
         <li>Event ends at: {{ selectedEvent.endTime }}</li>
       </ul>
-      <ul>
-        <strong>Joined Members</strong>
+      <h4 class="joined-member-heading"><strong>Joined Members</strong></h4>
+      <ul class="joined-members">
         <li
           v-for="member in selectedEvent.members"
           :key="member.id"
           style="color: blue;cursor:pointer;text-decoration: line"
         >
           <div @click.prevent="$router.push('/club/member/' + member.id)">
-            {{ member.preferred_name }}
+            <h5>{{ member.preferred_name }}</h5>
           </div>
           <div>
-            <button
+            <a-button
               @click.prevent="
                 $router.push(
                   '/teams/' +
@@ -64,7 +54,7 @@
               "
             >
               manage
-            </button>
+            </a-button>
           </div>
         </li>
       </ul>
@@ -160,9 +150,7 @@ export default {
       teams: 0,
       showDialog: false,
       selectedEvent: {},
-      events: [],
-      upcomingClubEvent: [],
-      upcomingEvent: {}
+      events: []
     };
   },
   computed: {
@@ -184,7 +172,6 @@ export default {
         startDate: st,
         endDate: ed
       };
-      console.log(data);
       clubService
         .clubDashboad({ params: data })
         .then(resp => {
@@ -208,16 +195,6 @@ export default {
               });
             }
             this.events = events;
-
-            let upcomingEvent = result.sort((a, b) => {
-              if (new Date(a.start).getTime() > new Date(b.start).getTime()) {
-                return 1;
-              } else {
-                return -1;
-              }
-            });
-            this.upcomingClubEvent = upcomingEvent;
-            this.getlatestEvent();
           }
         })
         .catch(() => {
@@ -229,14 +206,6 @@ export default {
       this.showDialog = true;
       // Prevent navigating to narrower view (default vue-cal behavior).
       e.stopPropagation();
-    },
-    getlatestEvent() {
-      this.upcomingClubEvent.find(opt => {
-        let now = moment();
-        if (moment(opt.start).isAfter(now)) {
-          return (this.upcomingEvent = opt);
-        }
-      });
     },
     logEvents(e) {
       this.clubDashboad(
@@ -284,6 +253,9 @@ i {
 /* .vuecal__cell-events-count {
   background-color: #4b7bec;
 } */
+.vuecal__menu {
+  background: #4b7bec;
+}
 .vuecal__menu li {
   border-bottom-color: #fff;
   color: #fff;
@@ -340,5 +312,30 @@ i {
 
 .vuecal__event-content {
   font-style: italic;
+}
+ul.joined-members {
+  list-style: none;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0 8px;
+}
+ul.joined-members li {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+ul.joined-members li h5 {
+  color: #f18805;
+}
+.joined-members button {
+  margin-bottom: 0;
+}
+.joined-member-heading {
+  margin-bottom: 10px;
+  color: #545454;
 }
 </style>

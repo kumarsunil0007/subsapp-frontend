@@ -102,7 +102,7 @@ export default {
     this.fetchSubscription();
   },
   methods: {
-    openModal(){
+    openModal() {
       this.upgradeModal = false;
       this.showContactFormModal = true;
     },
@@ -118,6 +118,7 @@ export default {
     },
     closeUpgradeModal() {
       this.$store.dispatch(FETCH_SUBSCRIPTION);
+      this.$emit("fetchData");
       this.upgradeModal = false;
     },
     async cancelSubscription() {

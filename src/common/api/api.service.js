@@ -238,6 +238,9 @@ export const teamService = {
   },
   update(teamId, params) {
     return ApiService.update("/team/update", teamId, params);
+  },
+  searchTeam(params) {
+    return ApiService.post("/search-team", params);
   }
 };
 export const clubAdminsService = {

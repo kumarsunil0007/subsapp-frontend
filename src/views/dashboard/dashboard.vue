@@ -30,7 +30,9 @@
       </a-card>
     </div>
     <div v-else>
-      <ClubDashboard />
+      <a-card title="Events" class="gx-card-full">
+        <ClubDashboard />
+      </a-card>
     </div>
   </n-page>
 </template>

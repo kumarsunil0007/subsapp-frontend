@@ -8,7 +8,7 @@
   >
     <a-spin :spinning="spinning">
       <a-row type="flex" :gutter="10">
-        <a-col :xs="24" :sm="24" :md="6" :lg="6">
+        <!-- <a-col :xs="24" :sm="24" :md="6" :lg="6">
           <div class="gx-package">
             <div class="gx-package-header gx-bg-primary gx-text-white">
               <h2 class="gx-price">
@@ -41,11 +41,11 @@
               </ul>
               <div class="gx-package-footer">
                 <!--<a-button-->
-                <!--type="primary"-->
-                <!--@click="attemptUpgrade('stripe_plan_free')">-->
-                <!--Select Plan plan_F90t4jMmr704Up-->
-                <!--Select Plan plan_F90uT88HPbLzYO,plan_F90uIZHiMeBaVm-->
-                <!--</a-button>-->
+        <!--type="primary"-->
+        <!--@click="attemptUpgrade('stripe_plan_free')">-->
+        <!--Select Plan plan_F90t4jMmr704Up-->
+        <!--Select Plan plan_F90uT88HPbLzYO,plan_F90uIZHiMeBaVm-->
+        <!--</a-button>
                 <a-button
                   type="primary"
                   @click="attemptUpgrade('price_1JCh7LSDwmaq7GuvvefvXn2G')"
@@ -55,15 +55,15 @@
               </div>
             </div>
           </div>
-        </a-col>
-        <a-col :xs="24" :sm="24" :md="6" :lg="6">
+        </a-col> -->
+        <a-col :xs="24" :sm="24" :md="8" :lg="8">
           <div class="gx-package">
             <div class="gx-package-header gx-bg-cyan gx-text-white">
               <h2 class="gx-price"><i class="icon icon-halfstar"></i>Silver</h2>
               <p
                 class="gx-letter-spacing-base gx-text-white gx-text-uppercase gx-mb-0"
               >
-                <span>€19.99/month</span>
+                <span>€9.99/month</span>
               </p>
             </div>
             <div class="gx-package-body">
@@ -74,7 +74,7 @@
                 </li>
                 <li>
                   <a-icon type="team" />
-                  10 Club Coach
+                  20 Club Coach
                 </li>
                 <li>
                   <a-icon type="euro" />
@@ -96,14 +96,14 @@
             </div>
           </div>
         </a-col>
-        <a-col :xs="24" :sm="24" :md="6" :lg="6">
+        <a-col :xs="24" :sm="24" :md="8" :lg="8">
           <div class="gx-package">
             <div class="gx-package-header gx-bg-cyan gx-text-white">
               <h2 class="gx-price"><i class="icon icon-halfstar"></i>Gold</h2>
               <p
                 class="gx-letter-spacing-base gx-text-white gx-text-uppercase gx-mb-0"
               >
-                <span>€39.99/month</span>
+                <span>€19.99/month</span>
               </p>
             </div>
             <div class="gx-package-body">
@@ -136,7 +136,7 @@
             </div>
           </div>
         </a-col>
-        <a-col :xs="24" :sm="24" :md="6" :lg="6">
+        <a-col :xs="24" :sm="24" :md="8" :lg="8">
           <div class="gx-package">
             <div class="gx-package-header gx-bg-primary gx-text-white">
               <h2 class="gx-price">
@@ -156,7 +156,7 @@
                 </li>
                 <li>
                   <a-icon type="team" />
-                  Unlimited Club Administrators
+                  Unlimited Club Coaches
                 </li>
                 <li>
                   <a-icon type="euro" />
@@ -238,7 +238,7 @@ export default {
         });
     },
     contactForm() {
-      console.log('hitt')
+      console.log("hitt");
       this.$emit("openModal");
     },
     close() {

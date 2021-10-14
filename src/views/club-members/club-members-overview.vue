@@ -23,10 +23,10 @@
               <a-select-option value="invite"
                 >Pending Invitation Acceptance</a-select-option
               >
-              <a-select-option value="archived"
+              <a-select-option value="archive"
                 >Archived Members</a-select-option
               >
-              <a-select-option value="declined"
+              <a-select-option value="decline"
                 >Declined Invitations</a-select-option
               >
             </a-select>

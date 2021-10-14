@@ -6,13 +6,15 @@
       :time-from="1 * 60"
       :time-to="24 * 60"
       :time-cell-height="40"
-      default-view="week"
+      default-view="month"
+      active-view="month"
+      events-on-month-view="full"
       :events="events"
       :selected-date="selectedDate"
       :time-step="20"
       :on-event-click="onEventClick"
+      :disable-views="['years', 'year', 'day']"
     >
-      :disable-views="['years', 'year', 'month']" >
     </vue-cal>
     <a-modal v-model="showDialog">
       <template slot="footer">

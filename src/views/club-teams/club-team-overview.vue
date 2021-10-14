@@ -56,9 +56,7 @@
 <style lang="scss"></style>
 
 <script>
-import moment from "moment";
 import NPage from "@/components/ui/n-page/n-page";
-import { floatToHour } from "@/mixins/time";
 import ScheduleModal from "@/components/club-teams/modals/new-schedule-modal/schedule-modal";
 import TeamScheduleTable from "@/components/club-teams/team-schedule/team-schedule-table";
 import TeamMembersTable from "@/components/club-teams/club-members/team-members-table";

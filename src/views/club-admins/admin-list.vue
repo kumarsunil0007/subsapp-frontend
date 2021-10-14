@@ -9,7 +9,6 @@
           size="small"
           type="primary"
           class="gx-sm-full"
-          style="margin-bottom: 12px;"
           @click="openCoachModal"
           >Find & Add Coach</a-button
         >

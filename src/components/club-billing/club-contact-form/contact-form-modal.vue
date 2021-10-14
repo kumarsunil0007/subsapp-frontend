@@ -99,7 +99,17 @@ export default {
             ]
           }
         ],
-        phone: ["phone"],
+        phone: [
+          "phone",
+          {
+            rules: [
+              {
+                max: 12,
+                message: "Sorry You are Exceeding the Limit"
+              }
+            ]
+          }
+        ],
         club_size: ["club_size"]
       }
     };

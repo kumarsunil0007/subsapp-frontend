@@ -1,5 +1,78 @@
 <template>
   <n-page>
+    <a-row type="flex">
+      <a-col :xs="24" :sm="24" :md="8">
+        <a-card>
+          <a-row>
+            <a-col :xs="16" :sm="16" :md="16">
+              <a-statistic
+                title="Active Members"
+                :value="members"
+                :value-style="{ color: '#262626' }"
+                style="margin-right: 50px"
+              >
+              </a-statistic>
+            </a-col>
+            <a-col :xs="8" :sm="8" :md="8">
+              <template>
+                <a-icon type="user" />
+              </template>
+            </a-col>
+            <div class="text-dashboard">
+              Grow your club by inviting new members or just manage your
+              existing members.
+            </div>
+          </a-row>
+        </a-card>
+      </a-col>
+      <a-col :xs="24" :sm="24" :md="8">
+        <a-card>
+          <a-row>
+            <a-col :xs="16" :sm="16" :md="16">
+              <a-statistic
+                title="Teams"
+                :value="teams"
+                :value-style="{ color: '#262626' }"
+                style="margin-right: 50px"
+              >
+              </a-statistic>
+            </a-col>
+            <a-col :xs="8" :sm="8" :md="8">
+              <template>
+                <a-icon type="team" />
+              </template>
+            </a-col>
+            <div class="text-dashboard">
+              Schedule new training session, add and remove team members and
+              manage.
+            </div>
+          </a-row>
+        </a-card>
+      </a-col>
+      <a-col :xs="24" :sm="24" :md="8">
+        <a-card>
+          <a-row>
+            <a-col :xs="16" :sm="16" :md="16">
+              <a-statistic
+                title="Billing"
+                :value-style="{ color: '#ffffff' }"
+                style="margin-right: 50px"
+              >
+              </a-statistic>
+            </a-col>
+            <a-col :xs="8" :sm="8" :md="8">
+              <template>
+                <a-icon type="money-collect" />
+              </template>
+            </a-col>
+            <div class="text-dashboard">
+              View a breakdown of your clubs billing history. Track pending
+              payments and view individual transaction invoices.
+            </div>
+          </a-row>
+        </a-card>
+      </a-col>
+    </a-row>
     <a-row>
       <a-col :xs="24" :sm="24" :md="8">
         <a-alert
@@ -12,7 +85,7 @@
           class="margin_top"
           @close="close_alert"
         />
-        <club-subscription-overview :cards="cards" />
+        <club-subscription-overview :cards="cards" @fetchData="listInvoices" />
         <div class="add-new-card gx-text-right"></div>
         <a-card class="gx-card-full gx-card-header-full">
           <div slot="title">
@@ -79,6 +152,7 @@ import StripeBillingHistoryTable from "@/components/billing/stripe-billing-histo
 import ClubSubscriptionOverview from "@/components/club-billing/club-subscription-overview/club-subscription-overview";
 import NSectionLoading from "@/components/ui/n-section-loading/n-section-loading";
 import notifications from "@/common/notifications/notification.service";
+import { clubService } from "@/common/api/api.service";
 export default {
   name: "SubscriptionOverview",
   components: {
@@ -99,7 +173,9 @@ export default {
       cardsLoading: false,
       billingLoading: true,
       subscriptions: [],
-      error_msg: false
+      error_msg: false,
+      teams: 0,
+      members: 0
     };
   },
   computed: {
@@ -111,6 +187,7 @@ export default {
     this.listCards();
     this.listInvoices();
     this.getSubscriptions();
+    this.fetchStats();
   },
   methods: {
     getSubscriptions() {
@@ -220,6 +297,22 @@ export default {
     },
     close_alert() {
       this.error_msg = false;
+    },
+    fetchStats() {
+      const data = {
+        role: this.user.select_role
+      };
+      clubService
+        .fetchStats({ params: data })
+        .then(resp => {
+          if (resp.data.success) {
+            this.teams = resp.data.teams;
+            this.members = resp.data.members;
+          }
+        })
+        .catch(() => {
+          this.events = [];
+        });
     }
   }
 };
@@ -227,5 +320,36 @@ export default {
 <style scoped>
 .margin_top {
   margin-bottom: 20px;
+}
+.ant-card {
+  z-index: 1;
+  margin-bottom: 32px;
+  box-shadow: -1px 6px 11px 1px #d6d4d4;
+  border-bottom: 5px solid #028fd6;
+}
+.ant-statistic-title {
+  margin-bottom: 4px;
+  color: #595959;
+  font-size: 18px;
+}
+i {
+  font-size: 32px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.text-dashboard {
+  margin: 11px;
+  color: goldenrod;
+}
+.ant-card-body {
+  padding: 18px;
+  padding-bottom: 4px;
+  zoom: 1;
+}
+.ant-card-body {
+  padding: 18px;
+  padding-bottom: 8px !important;
+  zoom: 1;
 }
 </style>
