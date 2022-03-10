@@ -1,0 +1,18 @@
+export const AUTH_REQUEST = "AUTH_REQUEST";
+export const AUTH_SUCCESS = "AUTH_SUCCESS";
+export const AUTH_STATE = "AUTH_STATE";
+export const AUTH_ERROR = "AUTH_ERROR";
+export const AUTH_LOGOUT = "AUTH_LOGOUT";
+export const AUTH_CHECK = "AUTH_CHECK";
+export const AUTH_TOKEN = "AUTH_TOKEN";
+export const AUTH_USER = "AUTH_USER";
+export const SET_PROFILE = "SET_PROFILE";
+export const FETCH_PROFILE = "FETCH_PROFILE";
+
+export const SET_SUBSCRIPTION = "SET_SUBSCRIPTION";
+export const AUTH_SUBSCRIPTION = "AUTH_SUBSCRIPTION";
+export const FETCH_SUBSCRIPTION = "FETCH_SUBSCRIPTION";
+export const CHECK_SUBSCRIPTION = "CHECK_SUBSCRIPTION";
+
+export const AUTH_STATUS = "AUTH_STATUS";
+export const AUTH_MESSAGE = "AUTH_MESSAGE";
