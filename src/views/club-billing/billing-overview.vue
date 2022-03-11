@@ -30,10 +30,9 @@
     </a-row>
   </n-page>
 </template>
-
 <script>
 import { mapGetters } from "vuex";
-import { GET_CLUB_BILLING } from "@/store/modules/club/club-actions";
+//import { GET_CLUB_BILLING } from "@/store/modules/club/club-actions";
 import NPage from "@/components/ui/n-page/n-page";
 import { clubService, billingService } from "@/common/api/api.service";
 import ClubBillingInvoiceTable from "@/components/club-billing/club-billing-invoices-table/club-billing-invoice-table";

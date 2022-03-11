@@ -168,7 +168,7 @@ export default {
       collapsed: UITypes.getters.GET_SIDEBAR
     }),
     userProfileAvatar: function() {
-      if (this.user.user.profile.image) {
+      if (this.user.user.profile && this.user.user.profile.image) {
         return this.user.user.profile.image;
       } else {
         return "https://api.subsapp.com/missing.png";
