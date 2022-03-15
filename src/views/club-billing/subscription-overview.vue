@@ -46,6 +46,7 @@
               Schedule new training sessions, add and remove team members and
               manage.
             </div>
+            
           </a-row>
         </a-card>
       </a-col>

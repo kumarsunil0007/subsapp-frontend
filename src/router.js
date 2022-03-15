@@ -39,6 +39,8 @@ function authCheck(to, from, next) {
   }
 }
 
+
+
 export default new Router({
   mode: process.env.CORDOVA_PLATFORM ? "hash" : "hash",
   base: process.env.BASE_URL,

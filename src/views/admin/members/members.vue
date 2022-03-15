@@ -71,6 +71,7 @@
   </n-page>
 </template>
 
+
 <script>
 import NPage from "@/components/ui/n-page/n-page";
 import ClubMemberTable from "@/components/club-member/club-member-table/club-member-table";

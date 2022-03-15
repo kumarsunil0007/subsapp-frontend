@@ -7,6 +7,8 @@ import store from "./store/index";
 import "./registerServiceWorker";
 import api from "@/common/api/api.service";
 
+
+
 import {
   Button,
   Layout,
@@ -45,9 +47,7 @@ import Notifications from "vue-notification";
 import { Spin } from "ant-design-vue";
 import VueSweetalert2 from 'vue-sweetalert2';
 
-// If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';
-
 Vue.use(VueSweetalert2);
 Vue.use(Notifications);
 Vue.use(VueCookies);
