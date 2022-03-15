@@ -173,7 +173,7 @@ export default {
         .then(resp => {
           this.loading = false;
           if (resp.data.success) {
-            notifications.success("User Updated Successfully");
+            notifications.success("User Added Successfully");
             this.close();
           } else if (resp.data.code === 404) {
             notifications.warn("There was a problem loading this user");

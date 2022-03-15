@@ -192,6 +192,9 @@ export const memberService = {
   },
   uploadAvatar(data) {
     return ApiService.post("/member/upload-avatar", data);
+  },
+  deleteAvatar(data) {
+    return ApiService.post("member/remove-avatar");
   }
 };
 export const adminService = {

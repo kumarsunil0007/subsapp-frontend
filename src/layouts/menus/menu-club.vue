@@ -20,7 +20,7 @@
         </router-link>
       </a-menu-item>
       <a-menu-item
-        v-if="user.select_role === 'club_admin'"
+        v-if="user.select_role === 'club_admin'" 
         key="admins"
         @click="hideSidebar"
       >
@@ -30,7 +30,7 @@
         </router-link>
       </a-menu-item>
       <a-menu-item
-        v-if="user.select_role === 'club_admin'"
+        v-if="user.select_role === 'club_admin'"   
         key="club-billing"
         @click="hideSidebar"
       >
@@ -41,8 +41,8 @@
       </a-menu-item>
       <a-menu-item
         v-if="user.select_role === 'club_admin'"
-        key="subscription"
-        @click="hideSidebar"
+        key="subscription" 
+        @click="hideSidebar" 
       >
         <router-link to="/subscription">
           <a-icon type="euro" />
@@ -61,7 +61,7 @@
           <span>Club Details</span>
         </router-link>
       </a-menu-item>
-      <a-menu-item key="my_profile" @click="hideSidebar">
+      <a-menu-item  key="my_profile" @click="hideSidebar">
         <router-link to="/my-profile">
           <a-icon type="user" />
           <span>My Profile</span>

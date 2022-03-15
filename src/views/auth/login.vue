@@ -112,11 +112,16 @@ export default {
         .then(resp => {
           if (resp) {
             const role = store.state.auth.user.select_role;
-            if (role === "admin") {
-              this.$router.replace("/admin");
-            } else {
+             
+            //  var  no_of_cards = store.state.auth.user.no_of_cards;
+             
+             if (role === "admin") {
+               this.$router.replace("/admin");
+             }
+            else{
               this.$router.replace("/dashboard");
             }
+          
           }
           this.loginLoading = false;
         })

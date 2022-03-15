@@ -93,6 +93,7 @@ export default {
                 .format("YYYY-MM-DD HH:mm"),
               title: event.title,
               location: event.location,
+
               class: event.AttendanceID ? "health" : "leisure"
             });
           }
@@ -103,8 +104,6 @@ export default {
     onEventClick(event, e) {
       this.selectedEvent = event;
       this.showDialog = true;
-
-      // Prevent navigating to narrower view (default vue-cal behavior).
       e.stopPropagation();
     }
   }

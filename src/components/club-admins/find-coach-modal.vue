@@ -102,15 +102,18 @@ export default {
           this.loader = false;
           if (resp.data.success) {admin-list
             this.searchEmails();
-            notifications.success("Coach has been added");
+            alert("Coach has been added");
+        //    notifications.success("Coach has been added");
+            this.close();
           } else {
             notifications.warn(resp.data.message);
+            this.close();
           }
         })
         .catch(() => {
           this.loader = false;
         });
-    },
+    }, 
     searchEmails() {
       this.error_msg = false;
       clubAdminsService

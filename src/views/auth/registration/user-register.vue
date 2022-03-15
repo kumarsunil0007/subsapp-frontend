@@ -179,7 +179,7 @@ export default {
               })
               .then(resp => {
                 if (resp) {
-                  this.$router.push("/dashboard");
+                  this.$router.push("/my-billing");
                 }
                 this.loginLoading = false;
               })

@@ -1,56 +1,70 @@
 <template>
-  <a-menu
-    v-if="user && user.user_type.indexOf('admin') !== -1"
-    theme="dark"
-    mode="inline"
-  >
+  <a-menu theme="dark" mode="inline">
     <a-menu-item-group key="g2" class="gx-menu-group">
-      <a-menu-item key="admin_dashboard" @click="hideSidebar">
-        <router-link to="/admin/dashboard">
+      <a-menu-item key="dashboard" v-if="user.user.no_of_cards >0" @click="hideSidebar">
+        <router-link to="/dashboard">
           <a-icon type="home" />
-          <span>Dashboard</span>
+          <span>My Events</span>
         </router-link>
       </a-menu-item>
-      <a-menu-item key="users" @click="hideSidebar">
-        <router-link to="/admin/users">
-          <a-icon type="user" />
-          <span>Club Admins</span>
+      <a-menu-item key="teams" v-if="user.user.no_of_cards >0" @click="hideSidebar">
+        <router-link to="/teams-list">
+          <a-icon type="team" />
+          <span>Teams</span>
         </router-link>
       </a-menu-item>
-      <a-menu-item key="my_profile" @click="hideSidebar">
-        <router-link to="/admin/my-profile">
-          <a-icon type="user" />
-          <span>My Profile</span>
-        </router-link>
-      </a-menu-item>
-      <a-menu-item key="members" @click="hideSidebar">
-        <router-link to="/admin/members">
+      <a-menu-item key="members"  v-if="user.user.no_of_cards >0" @click="hideSidebar">
+        <router-link to="/members">
           <a-icon type="smile" />
           <span>Members</span>
         </router-link>
       </a-menu-item>
-      <a-menu-item key="club-billing" @click="hideSidebar">
-        <router-link to="/admin/club-billing">
+      <a-menu-item
+        v-if="user.select_role === 'club_admin' && user.user.no_of_cards >0" 
+        key="admins"
+        @click="hideSidebar"
+      >
+        <router-link to="/admin-list">
+          <a-icon type="smile" />
+          <span>Coaches</span>
+        </router-link>
+      </a-menu-item>
+      <a-menu-item
+        v-if="user.select_role === 'club_admin'"   
+        key="club-billing"
+        @click="hideSidebar"
+      >
+        <router-link to="/club/billing">
           <a-icon type="file" />
           <span>Club Billing</span>
         </router-link>
       </a-menu-item>
-      <a-menu-item key="subscription" @click="hideSidebar">
-        <router-link to="/admin/subscription">
+      <a-menu-item
+        v-if="user.select_role === 'club_admin' && user.user.no_of_cards >0"
+        key="subscription" 
+        @click="hideSidebar" 
+      >
+        <router-link to="/subscription">
           <a-icon type="euro" />
           <span>Subscription</span>
         </router-link>
       </a-menu-item>
-      <a-menu-item key="club-mangers" @click="hideSidebar">
-        <router-link to="/admin/club-managers">
+      <!-- <a-menu-item key="club_admins" @click="hideSidebar">
+        <router-link to="/club/admins">
           <a-icon type="solution" />
           <span>Club Managers</span>
         </router-link>
-      </a-menu-item>
-      <a-menu-item key="club-details" @click="hideSidebar">
-        <router-link to="/admin/club-details">
+      </a-menu-item> -->
+      <a-menu-item v-if="user.user.no_of_cards >0" key="club_config" @click="hideSidebar">
+        <router-link to="/club/settings/my-club">
           <a-icon type="setting" />
           <span>Club Details</span>
+        </router-link>
+      </a-menu-item>
+      <a-menu-item  key="my_profile" @click="hideSidebar">
+        <router-link to="/my-profile">
+          <a-icon type="user" />
+          <span>My Profile</span>
         </router-link>
       </a-menu-item>
       <a-menu-item key="logout" @click="Logout">
@@ -71,7 +85,7 @@ import { UITypes } from "@/store/modules/ui/ui-actions";
 import { AUTH_LOGOUT } from "@/store/modules/auth/auth-actions";
 
 export default {
-  name: "MenuAdmin",
+  name: "MenuClub",
   data() {
     return {
       collapsed: false

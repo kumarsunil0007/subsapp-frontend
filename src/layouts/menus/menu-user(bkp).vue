@@ -5,7 +5,7 @@
     mode="inline"
   >
     <a-menu-item-group key="g2" class="gx-menu-group">
-      <a-menu-item   key="dashboard" @click="hideSidebar">
+      <a-menu-item v-if="user.user.no_of_cards >0"  key="dashboard" @click="hideSidebar">
         <router-link to="/">
           <a-icon type="user" />
           <span>My Calendar</span>
@@ -14,14 +14,14 @@
 
       
       
-      <a-menu-item key="my_clubs" @click="hideSidebar">
+      <a-menu-item v-if="user.user.no_of_cards >0" key="my_clubs" @click="hideSidebar">
         <router-link to="/my-clubs">
           <a-icon type="trophy" />
           <span>My Clubs</span>
         </router-link>
       </a-menu-item>
 
-      <a-menu-item key="my_teams" @click="hideSidebar">
+      <a-menu-item v-if="user.user.no_of_cards >0" key="my_teams" @click="hideSidebar">
         <router-link to="/my-teams">
           <a-icon type="team" />
           <span>My Teams</span>

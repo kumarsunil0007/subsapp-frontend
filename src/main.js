@@ -1,5 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
+import VueCookies from 'vue-cookies';
 require("dotenv").config();
 import router from "./router";
 import store from "./store/index";
@@ -49,6 +50,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 Vue.use(VueSweetalert2);
 Vue.use(Notifications);
+Vue.use(VueCookies);
 
 Vue.use(VueRouterBackButton, { router });
 
@@ -84,6 +86,7 @@ Vue.use(Statistic);
 Vue.use(Divider);
 Vue.use(Popconfirm);
 Vue.use(Radio);
+
 
 Vue.config.productionTip = false;
 

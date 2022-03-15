@@ -84,6 +84,7 @@ const actions = {
             let userData = JSON.stringify({
               user: resp.data.user,
               user_type: resp.data.user_type,
+              no_of_cards : resp.data.no_of_cards,
               select_role: select_role,
               app: resp.data.app
             });

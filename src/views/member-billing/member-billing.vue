@@ -45,6 +45,7 @@ import MemberBillingHistoryTable from "@/components/member-billing/member-billin
 import StripeNewCardModal from "@/components/billing/stripe-new-card-modal/stripe-new-card-modal";
 import StripeCardPreview from "@/components/billing/stripe-card-preview/stripe-card-preview";
 import notifications from "@/common/notifications/notification.service";
+import { clubService } from "@/common/api/api.service";
 export default {
   name: "MemberBilling",
   components: {
@@ -66,13 +67,27 @@ export default {
   },
   mounted() {
     this.listCards();
+
   },
   methods: {
     openNewCardModal() {
       this.newCardModalVisible = true;
     },
+    getA : async() => {
+        
+    },
     closeNewCardModalVisible() {
       this.newCardModalVisible = false;
+    },
+  fetchRoles() {
+      clubService.fetchRoles().then(resp => {
+        if (resp.data.success) {
+          let userData = JSON.parse(localStorage.getItem("auth-user"));
+          userData.user_type = resp.data.result;
+          window.localStorage.setItem("auth-user", JSON.stringify(userData));
+          this.$store.commit("AUTH_STATE");
+        }
+      });
     },
     removeCard(tk) {
       billingService
@@ -124,7 +139,9 @@ export default {
               "Oops, something went wrong. We could not add your card."
             );
           }
+        //  this.user.user.no_of_cards = this.user.user.no_of_cards +1 ;
           this.listCards();
+          this.fetchRoles();
         });
     },
     listCards() {
@@ -138,6 +155,10 @@ export default {
         .then(resp => {
           if (resp.data.success) {
             this.cards = resp.data.result;
+            this.user.user.no_of_cards = resp.data.no_of_cards;
+            //setTimeout(function(){this.user.user.no_of_cards = resp.data.no_of_cards;},10000);
+            
+
           }
         });
     }
