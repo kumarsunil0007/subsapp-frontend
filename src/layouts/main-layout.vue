@@ -66,15 +66,10 @@
                 style="margin-top: 15px"
               >
                 <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                  Switch As
-                  
-                  
+                  Switch As <br/><span class="login-as-switch-case">{{this.UserName}}</span>
                 </a>
               
                 <a-menu slot="overlay">
-                <!--  <a-menu-item key="0" disabled>
-                    <span>Switch As</span>
-                  </a-menu-item>-->
                   <a-menu-item
                     v-if="user.user_type.indexOf('admin') !== -1"
                     key="1"
@@ -101,10 +96,13 @@
                     <a class="switch-as-users" @click.prevent="setRole('member')">Member</a>
                   </a-menu-item>
                 </a-menu>
+                
               </a-dropdown>
             </a-row>
+            
           </li>
         </ul>
+       
       </a-layout-header>
       <a-layout-content class="gx-layout-content">
         <!-- <router-link
@@ -210,10 +208,12 @@ export default {
     },
       setRole(role) { 
         if(role === "club_admin"){
-            this.$swal('You are selected as Club Admin');
+         //   this.$swal('You are selected as Club Admin');
+            this.UserName = "(Club Admin)";
         }
        if(role ==="member"){
-         this.$swal('You are selected as Member');
+       //  this.$swal('You are selected as Member');
+         this.UserName = "(Member)";
        }
       
       const roles = this.user.user_type;
@@ -271,5 +271,9 @@ export default {
 .gx-user-nav--name {
   font-size: 16px;
   padding: 16px 8px;
+}
+.login-as-switch-case{
+  font-size: 14px;
+  color: #222;
 }
 </style>

@@ -11,7 +11,7 @@
         :to="'/teams/' + row.id"
         @click.native="ManageTeam"
       >
-        <a-button type="primary" size="small">
+        <a-button type="primary" size="small" style="margin-left:5px;margin-bottom:0; ">
           Manage Team
         </a-button>
       </router-link>
@@ -19,7 +19,7 @@
         v-if="row.status === 'active'"
         type="danger"
         size="small"
-        style="margin-left:5px; "
+        style="margin-left:5px;margin-bottom:0; "
         @click="archiveTeam(row.id)"
       >
         Archive
@@ -28,7 +28,7 @@
         v-if="row.status === 'archived'"
         type="danger"
         size="small"
-        style="margin-left:5px; "
+        style="margin-left:5px;margin-bottom:0; "
         @click="activateTeam(row.id)"
       >
         Make Active

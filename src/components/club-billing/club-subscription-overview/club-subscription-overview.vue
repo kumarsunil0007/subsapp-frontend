@@ -3,8 +3,8 @@
     class="gx-card-widget gx-card-widget gx-card-full gx-p-3 gx-bg-red gx-text-white"
     :class="[{ 'gx-bg-cyan': sub && sub.active }]"
   >
-    <div class="gx-media gx-align-items-center gx-flex-nowrap">
-      <div class="gx-mr-2 gx-mr-xxl-3">
+    <div class="gx-media">
+      <div class="gx-mr-2 gx-mr-xxl-12 text-center subscription-symbol" >
         <a-icon type="euro" class="gx-fs-icon-lg" />
       </div>
       <div class="gx-media-body">
@@ -135,4 +135,12 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+@media (max-width:1100px){
+  .subscription-symbol{
+      text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+}
+</style>
