@@ -51,7 +51,6 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(VueSweetalert2);
 Vue.use(Notifications);
 Vue.use(VueCookies);
-
 Vue.use(VueRouterBackButton, { router });
 
 api.init();
@@ -91,6 +90,9 @@ Vue.use(Radio);
 Vue.config.productionTip = false;
 
 Vue.use(vueCountryRegionSelect);
+
+
+//Vue.prototype.$datetime;
 
 new Vue({
   router,

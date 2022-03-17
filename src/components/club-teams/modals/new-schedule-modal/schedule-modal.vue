@@ -5,6 +5,7 @@
     @cancel="close"
     @ok="handleForm"
   >
+  
     <template slot="footer">
       <a-button key="back" @click="close">
         Cancel
@@ -15,7 +16,7 @@
         :loading="loading"
         @click="handleForm"
       >
-        Ok
+      Ok
       </a-button>
     </template>
     <a-form :form="form" layout="vertical">
@@ -43,7 +44,8 @@
               rules: [
                 {
                   required: true,
-                  message: 'The location of this event is required'
+                  message: 'The location of this event is required',
+                  
                 }
               ]
             }
@@ -128,6 +130,7 @@
           format="DD/MM/YYYY HH:mm"
           placeholder="DD/MM/YYYY HH/MM"
           @change="changeDate"
+          :default-value="dateTime()"
         />
       </a-form-item>
       <a-form-item>
@@ -242,8 +245,9 @@ export default {
       isRecurring: false,
       setDate: "",
       form: this.$form.createForm(this),
-      loading: false
+      loading: false,
     };
+    
   },
   computed: {
     isVisible: {
@@ -253,13 +257,18 @@ export default {
       set() {
         return false;
       }
-    }
+    },
+
   },
   methods: {
     disabledDate(current) {
       // Can not select days before today and today
       return current && current < moment().endOf("day");
     },
+      dateTime() {
+          var dateTime = localStorage.getItem('storeGetDateTime');
+          return dateTime;
+      },
     changeDate(e) {
       this.setDate = e.format("YYYY-MM-D HH:mm");
     },

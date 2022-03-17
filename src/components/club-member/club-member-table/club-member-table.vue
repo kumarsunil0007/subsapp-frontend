@@ -36,7 +36,7 @@
           >Declined Invitation</a-tag
         >
       </div>
-      <div slot="handlers" slot-scope="text, record" class="gx-text-right">
+      <div slot="handlers" type="flex" slot-scope="text, record" class="gx-text-right" style="display:flex;">
         <router-link :to="'/club/member/' + record.user_id">
           <a-button size="small" type="primary" style="margin-right: 5px"
             >View Profile</a-button
@@ -45,7 +45,7 @@
         <a-button
           v-if="record.status === 'accept'"
           size="small"
-          style="color: #f5222d; background-color: #f5f5f5; border-color: #d9d9d9;"
+          style="color: #f5222d; background-color: #f5f5f5; border-color: #d9d9d9;margin-right: 5px"
           type="danger"
           @click="updateClubMember(record.id, 'archive')"
           >Archive</a-button

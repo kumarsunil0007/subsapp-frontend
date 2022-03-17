@@ -1,40 +1,28 @@
 <template>
-  <a-table
-    class="gx-table-responsive"
-    :columns="columns"
-    :data-source="teams"
-    :loading="teamsLoading"
-  >
-    <div slot="operations" slot-scope="text, row" class="gx-text-right">
-      <router-link
-        v-if="row.status === 'active'"
-        :to="'/teams/' + row.id"
-        @click.native="ManageTeam"
-      >
-        <a-button type="primary" size="small">
-          Manage Team
-        </a-button>
-      </router-link>
-      <a-button
-        v-if="row.status === 'active'"
-        type="danger"
-        size="small"
-        style="margin-left:5px; "
-        @click="archiveTeam(row.id)"
-      >
-        Archive
-      </a-button>
-      <a-button
-        v-if="row.status === 'archived'"
-        type="danger"
-        size="small"
-        style="margin-left:5px; "
-        @click="activateTeam(row.id)"
-      >
-        Make Active
-      </a-button>
+    <div class="dropdown">
+      <a-card title="Select Team For Manage" class="gx-card-table-full">
+      <!-- <select v-model="selectedTeamId" @change="onChangeTeam">
+        <option
+          v-for="(team, index) in teams"
+          :value="team.id"
+          :key="index"
+        >
+        {{team.team_name}}
+        </option>
+      </select> -->
+    <a-select style="width: 150px" v-model="selectedTeamId" @change="onChangeTeam">
+      <a-select-option  disabled hidden value="">Select One</a-select-option>>
+      <a-select-option  v-for="(team, index) in teams"
+          :value="team.id"
+          :key="index">
+        {{team.team_name}}
+      </a-select-option>
+    </a-select>
+     <a-button type="primary" @click="manageTeamRedirect" :disabled='!selectedTeamId'>
+      Manage Team
+    </a-button>
+      </a-card>
     </div>
-  </a-table>
 </template>
 
 <script>
@@ -64,7 +52,9 @@ export default {
     return {
       columns,
       teams: [],
-      teamsLoading: true
+      teamsLoading: true,
+      selected: "",
+      selectedTeamId:""
     };
   },
   mounted() {
@@ -115,16 +105,37 @@ export default {
       teamService.query().then(resp => {
         if (resp.data.success) {
           this.teams = resp.data.result;
-         // alert(JSON.stringify(this.teams));
         }
         this.teamsLoading = false;
       });
     },
+     manageTeamRedirect:function(){
+          var team_id = this.selectedTeamId;
+          this.$router.push('/teams/' +
+                    team_id);  
+     },
+
+     ManageEvent2:function(event){
+               var team_id =    event.target.value;
+               this.$router.push('/teams/' +
+                    team_id );  
+     },
     ManageTeam() {
       this.$store.commit("SET_TEAM_ZERO");
+    },
+      displaynumbers : function(event) {
+          alert("test");
     }
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.ant-card{
+  margin-bottom:0;
+}
+button.ant-btn.ant-btn-primary {
+    margin-bottom: 0;
+    margin-left: 14px;
+}
+</style>

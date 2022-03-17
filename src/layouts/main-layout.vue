@@ -80,25 +80,25 @@
                     key="1"
                   >
                    <a-menu-divider />
-                    <a @click.prevent="setRole('admin')">Admin</a>
+                    <a class="switch-as-users" @click.prevent="setRole('admin')">Admin</a>
                   </a-menu-item>
                   <a-menu-item
                     v-if="user.user_type.indexOf('club_admin') !== -1"
                     key="2"
                   >
-                    <a @click.prevent="setRole('club_admin')">Club Admin</a>
+                    <a class="switch-as-users" @click.prevent="setRole('club_admin')">Club Admin</a>
                   </a-menu-item>
                   <a-menu-item
                     v-if="user.user_type.indexOf('coach') !== -1"
                     key="3"
                   >
-                    <a @click.prevent="setRole('coach')">Coach</a>
+                    <a class="switch-as-users" @click.prevent="setRole('coach')">Coach</a>
                   </a-menu-item>
                   <a-menu-item
                     v-if="user.user_type.indexOf('member') !== -1"
                     key="4"
                   >
-                    <a @click.prevent="setRole('member')">Member</a>
+                    <a class="switch-as-users" @click.prevent="setRole('member')">Member</a>
                   </a-menu-item>
                 </a-menu>
               </a-dropdown>

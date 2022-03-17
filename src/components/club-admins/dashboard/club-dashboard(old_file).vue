@@ -5,7 +5,6 @@
       style="height: 600px"
       :time-from="1 * 60"
       :time-to="24 * 60"
-      :min-date="minDate"
       :time-cell-height="40"
       default-view="month"
       active-view="month"
@@ -15,8 +14,9 @@
       :time-step="20"
       today-button
       :on-event-click="onEventClick"
-      @cell-click="onEventClick2"
       @view-change="logEvents($event)"
+      :min-date="minDate"
+      :max-date="maxDate"
     >
     </vue-cal>
     <a-modal v-model="showDialog">
@@ -62,19 +62,96 @@
       </ul>
     </a-modal>
 
-  <a-modal title="Select Team" v-model="showDialog2">
+
+    <a-modal v-model="showDialog123">
       <template slot="footer">
-        <a-button key="submit" type="primary" @click="showDialog2 = false">
+        <a-button key="submit" type="primary" @click="showDialog123 = false">
           Close
         </a-button>
       </template>
-      <!-- <h2>Select Team</h2> -->
-          <a-row>
-             <a-col :span="24">
-               <club-teams-table />
-            </a-col>
-          </a-row>
+      <h2>Select Option</h2>
+      <a-divider />
+      <div id="app">
+        <select class="form-control" @change="changeJobTitle($event)" ref="selectedEl">
+          <option :value="undefined" selected disabled>Choose</option>
+          <option v-for="jobTitle in jobTitles"  class="details_scheduler" ref='dropdownObj' :value="jobTitle.id" :key="jobTitle.id">{{ jobTitle.name }}</option>
+        </select>
+        <!-- <p><span>Selected job title: {{ selectedJobTitle  }}</span></p> -->
+</div>
     </a-modal>
+    <!-- <a-row type="flex">
+    <a-col :xs="24" :sm="24" :md="8">
+      <a-card>
+        <a-row>
+          <a-col :xs="16" :sm="16" :md="16">
+            <a-statistic
+              title="Active Members"
+              :value="members"
+              :value-style="{ color: '#262626' }"
+              style="margin-right: 50px"
+            >
+            </a-statistic>
+          </a-col>
+          <a-col :xs="8" :sm="8" :md="8">
+            <template>
+              <a-icon type="user" />
+            </template>
+          </a-col>
+          <div class="text-dashboard">
+            Grow your club by inviting new members or just manage your existing
+            members.
+          </div>
+        </a-row>
+      </a-card>
+    </a-col>
+    <a-col :xs="24" :sm="24" :md="8">
+      <a-card>
+        <a-row>
+          <a-col :xs="16" :sm="16" :md="16">
+            <a-statistic
+              title="Teams"
+              :value="teams"
+              :value-style="{ color: '#262626' }"
+              style="margin-right: 50px"
+            >
+            </a-statistic>
+          </a-col>
+          <a-col :xs="8" :sm="8" :md="8">
+            <template>
+              <a-icon type="team" />
+            </template>
+          </a-col>
+          <div class="text-dashboard">
+            Schedule new training session, add and remove team members and
+            manage.
+          </div>
+        </a-row>
+      </a-card>
+    </a-col>
+    <a-col :xs="24" :sm="24" :md="8">
+      <a-card>
+        <a-row>
+          <a-col :xs="16" :sm="16" :md="16">
+            <a-statistic
+              title="Billing"
+              :value-style="{ color: '#ffffff' }"
+              style="margin-right: 50px"
+            >
+            </a-statistic>
+          </a-col>
+          <a-col :xs="8" :sm="8" :md="8">
+            <template>
+              <a-icon type="money-collect" />
+            </template>
+          </a-col>
+          <div class="text-dashboard">
+            View a breakdown of your clubs billing history. Track pending
+            payments and view individual transaction invoices.
+          </div>
+        </a-row>
+      </a-card>
+    </a-col>
+  </a-row> -->
   </div>
 </template>
 
@@ -82,28 +159,32 @@
 import VueCal from "vue-cal";
 import "vue-cal/dist/vuecal.css";
 import { clubService } from "@/common/api/api.service";
-import ClubTeamsTable from "@/components/club-teams/club-teams-table/club-teams-drop-down";
-import NewTeamModal from "@/components/club-teams/modals/new-team-modal/new-team-modal";
 import { mapGetters } from "vuex";
 import moment from "moment";
+let st,ed,team_id;
 export default {
-  components: { VueCal,ClubTeamsTable,NewTeamModal},
+  components: { VueCal },
   data() {
     return {
       dashboard_data: "",
       members: 0,
       teams: 0,
       showDialog: false,
-      showDialog2: false,
+      showDialog123: false,
       selectedEvent: {},
-      events: []
+      events: [],
+      jobTitles: [
+            { name: "Details", id: 1 },
+            { name: "Scheduler", id: 2 },
+            
+        ],
+      selected:undefined, 
     };
+
+    
   },
   computed: {
-    ...mapGetters(["AUTH_USER"]),
-      minDate () {
-    return new Date()
-  }
+    ...mapGetters(["AUTH_USER"])
   },
   mounted() {
     let st = moment()
@@ -116,6 +197,30 @@ export default {
   },
   methods: {
     clubDashboad(st, ed) {
+      // if (typeof st === "undefined") {
+      //       var st = moment()
+      //           .startOf("month")
+      //           .format("YYYY-MM-DD");
+            
+      //   }
+
+      // if (typeof ed === "undefined") {
+      //   var ed = moment()
+      //         .endOf("month")
+      //         .format("YYYY-MM-DD");   
+      //   }
+
+      
+      // if(st=="undefinded"){
+      //       let st = moment()
+      //               .startOf("month")
+      //               .format("YYYY-MM-DD");
+      // }
+      // if(ed="undefinded"){
+      //    let st = moment()
+      //               .startOf("month")
+      //               .format("YYYY-MM-DD");
+      // }
       const data = {
         role: this.AUTH_USER.select_role,
         startDate: st,
@@ -127,6 +232,7 @@ export default {
           this.events = [];
           if (resp.data.success) {
             const result = resp.data.result;
+           // console.log(JSON.stringify(resp.data.result));
             let events = [];
             for (let event of result) {
               events.push({
@@ -151,24 +257,40 @@ export default {
         });
     },
     onEventClick(event, e) {
+      team_id = event.team_id;
       this.selectedEvent = event;
-      this.showDialog = true;
+      this.showDialog123 = true;
       // Prevent navigating to narrower view (default vue-cal behavior).
       e.stopPropagation();
     },
-
-    onEventClick2(event, e) {
-      window.localStorage.setItem('storeGetDateTime',event)
-      this.showDialog2 = true;
-      // Prevent navigating to narrower view (default vue-cal behavior).
-      e.stopPropagation();
-    },
-
     logEvents(e) {
       this.clubDashboad(
         moment(e.startDate).format("YYYY-MM-DD"),
         moment(e.endDate).format("YYYY-MM-DD")
       );
+    },
+    changeJobTitle (event1) {
+      this.selectedJobTitle = event1.target.options[event1.target.options.selectedIndex].text
+      //alert(this.selectedJobTitle);
+      if(this.selectedJobTitle=="Details"){
+     //    $(".details_scheduler").empty(); 
+    
+        let st = moment()
+              .startOf("month")
+              .format("YYYY-MM-DD");
+        let ed = moment()
+          .endOf("month")
+          .format("YYYY-MM-DD");
+          this.clubDashboad(st, ed);
+          this.showDialog123 = false;
+          this.showDialog = true;
+      }
+      if(this.selectedJobTitle=="Scheduler"){
+        this.showDialog123 = false;
+        this.$router.push('/teams/' +
+                    team_id );
+      
+      }
     }
   }
 };
@@ -196,15 +318,16 @@ i {
   margin: 11px;
   color: goldenrod;
 }
-
+.ant-card-body {
+  padding: 18px;
+  padding-bottom: 4px;
+  zoom: 1;
+}
 .ant-card-body {
   padding: 18px;
   padding-bottom: 8px !important;
   zoom: 1;
 } */
-.ant-card.gx-card-table-full .ant-card-body{
-  padding: 25px;
-}
 .vuecal__menu,
 /* .vuecal__cell-events-count {
   background-color: #4b7bec;
