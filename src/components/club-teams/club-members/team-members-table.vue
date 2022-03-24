@@ -14,7 +14,7 @@
       <a-button
         v-if="record.pivot.status === 'invite'"
         size="small"
-        style="margin-bottom:0;"
+        style="margin-bottom:5px;"
         type="danger"
         :loading="loader && selectedId === record.pivot.member_id"
         @click="updateTeamMember(record, 'archive')"
@@ -24,7 +24,7 @@
       <a-button
         v-if="record.pivot.status === 'accept'"
         size="small"
-        style="margin-bottom:0;"
+        style="margin-bottom:5px;"
         type="danger"
         :loading="loader && selectedId === record.pivot.member_id"
         @click="updateTeamMember(record, 'archive')"
@@ -32,7 +32,7 @@
         Remove
       </a-button>
       <router-link :to="'/club/member/' + record.id">
-        <a-button size="small" style="margin-bottom:0;" type="primary">
+        <a-button size="small" style="margin-bottom:5px;" type="primary">
           View Profile
         </a-button>
       </router-link>

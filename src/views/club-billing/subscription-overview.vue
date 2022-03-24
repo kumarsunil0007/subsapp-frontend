@@ -454,7 +454,7 @@ i {
   .subscription-cards{
   height:160px
 }
-@media (max-width:1024px){
+@media (max-width:1180px){
   .subscription-cards{
   height:210px
 }

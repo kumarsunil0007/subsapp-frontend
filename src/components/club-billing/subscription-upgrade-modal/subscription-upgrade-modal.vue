@@ -3,7 +3,9 @@
     v-model="isVisible"
     title="Subscription Plans"
     width="1200px"
+    class="subscription-plans-modal"
     @cancel="close"
+    centered
     @ok="close"
   >
     <a-spin :spinning="spinning">
@@ -147,3 +149,6 @@ export default {
   }
 };
 </script>
+<style scoped>
+
+</style>
