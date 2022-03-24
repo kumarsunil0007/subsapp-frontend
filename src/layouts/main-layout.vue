@@ -71,7 +71,7 @@
                 >
                   <a
                     class="ant-dropdown-link"
-                    @click="(e) => e.preventDefault()"
+                    @click="(e) => e.preventDefault()" 
                   >
                     {{ this.UserName }} <a-icon type="setting" />
                   </a>
