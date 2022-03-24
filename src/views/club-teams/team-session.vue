@@ -37,7 +37,7 @@
               <a-card
                 class="gx-card-widget gx-card-widget gx-card-full gx-p-3 gx-bg-cyan gx-text-white ant-card-bordered"
               >
-                <div class="gx-media gx-align-items-center gx-flex-nowrap">
+                <div class="">
                   <div class="gx-mr-2 gx-mr-xxl-3">
                     <a-icon type="euro" class="gx-fs-icon-lg" />
                   </div>
@@ -47,7 +47,7 @@
                     >
                       €{{ parseFloat(getTotalInvoiceValue).toFixed(2) }}
                     </h1>
-                    <p class="gx-mb-0">Est. Revenue</p>
+                    <p class="gx-mb-0 gx-fs-sm">Est. Revenue</p>
                   </div>
                 </div>
               </a-card>
@@ -56,7 +56,7 @@
               <a-card
                 class="gx-card-widget gx-card-widget gx-card-full gx-p-3 gx-bg-teal gx-text-white ant-card-bordered"
               >
-                <div class="gx-media gx-align-items-center gx-flex-nowrap">
+                <div class="">
                   <div class="gx-mr-2 gx-mr-xxl-3">
                     <a-icon type="like" class="gx-fs-icon-lg" />
                   </div>
@@ -66,7 +66,7 @@
                     >
                       {{ getMembersAttending }}
                     </h1>
-                    <p class="gx-mb-0">Members Attending</p>
+                    <p class="gx-mb-0 gx-fs-sm">Members Attending</p>
                   </div>
                 </div>
               </a-card>
@@ -75,7 +75,7 @@
               <a-card
                 class="gx-card-widget gx-card-widget gx-card-full gx-p-3 gx-bg-orange gx-text-white ant-card-bordered"
               >
-                <div class="gx-media gx-align-items-center gx-flex-nowrap">
+                <div class="">
                   <div class="gx-mr-2 gx-mr-xxl-3">
                     <a-icon type="dislike" class="gx-fs-icon-lg" />
                   </div>
@@ -85,7 +85,7 @@
                     >
                       {{ getMembersNotAttending }}
                     </h1>
-                    <p class="gx-mb-0">Not attending</p>
+                    <p class="gx-mb-0 gx-fs-sm">Not attending</p>
                   </div>
                 </div>
               </a-card>

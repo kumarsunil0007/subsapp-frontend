@@ -13,7 +13,7 @@
 
     <stripe-card
       v-if="visible"
-      stripe="pk_test_51J7cRySDwmaq7Guvcfo34XOHvrV5eFyxyBkskUEDetAmNJn5RT0k1WJKNushY53PksZxm57TY2FWJM6snZtqgIxE006sBsVAUk"
+      stripe="pk_test_vtiw9yjBNR5blLsfDUKMA3pY"
       :options="{}"
       @token="saveCard"
     />

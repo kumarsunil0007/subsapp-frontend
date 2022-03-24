@@ -41,11 +41,11 @@
             />
           </template>
           <a-button
-            class="gx-btn-success gx-mb-0"
+            class="gx-btn-danger gx-mb-0"
             icon="check"
             :loading="select_member === record.member.id && loader"
             :disabled="select_member === record.member.id && loader"
-            >Present</a-button
+            >Mark Absent</a-button
           >
         </a-popconfirm>
         <a-popconfirm
@@ -59,10 +59,10 @@
             <p>Are you sure to mark Present</p>
           </template>
           <a-button
-            class="gx-btn-danger gx-mb-0"
+            class="gx-btn-success gx-mb-0"
             :loading="select_member === record.member.id && loading"
             :disabled="select_member === record.member.id && loading"
-            >Absent</a-button
+            >Mark Present</a-button
           >
         </a-popconfirm>
       </div>

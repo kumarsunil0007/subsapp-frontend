@@ -350,7 +350,14 @@ export const billingService = {
   },
   cancelSubscription() {
     return ApiService.post("/billing/cancel-subscription");
+  },
+  redirectStripe(){
+    return ApiService.post("/stripe-create-account");
+  },
+  listBankDetails(){
+      return ApiService.post('/account-list');
   }
+
 };
 
 export default ApiService;

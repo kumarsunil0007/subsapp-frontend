@@ -2,7 +2,7 @@
   <n-page>
     <a-row type="flex">
       <a-col :xs="24" :sm="24" :md="8">
-        <a-card>
+        <a-card class="subscription-cards">
           <a-row>
             <a-col :xs="16" :sm="16" :md="16">
               <a-statistic
@@ -26,7 +26,7 @@
         </a-card>
       </a-col>
       <a-col :xs="24" :sm="24" :md="8">
-        <a-card>
+        <a-card class="subscription-cards">
           <a-row>
             <a-col :xs="16" :sm="16" :md="16">
               <a-statistic
@@ -51,7 +51,7 @@
         </a-card>
       </a-col>
       <a-col :xs="24" :sm="24" :md="8">
-        <a-card>
+        <a-card class="subscription-cards">
           <a-row>
             <a-col :xs="16" :sm="16" :md="16">
               <a-statistic
@@ -75,7 +75,7 @@
       </a-col>
     </a-row>
     <a-row>
-      <a-col :xs="24" :sm="24" :md="8">
+      <a-col :xs="24" :sm="24" :md="12">
         <a-alert
           v-if="error_msg"
           message="Error"
@@ -107,6 +107,7 @@
               </a-col>
             </a-row>
           </div>
+          
           <div v-if="cards.length > 0" class="credit-cards">
             <stripe-card-preview
               v-for="(card, index) of cards"
@@ -124,7 +125,7 @@
           </div>
         </a-card>
       </a-col>
-      <a-col :xs="24" :sm="24" :md="16">
+      <a-col :xs="24" :sm="24" :md="12">
         <a-card class="gx-card-table-full">
           <stripe-billing-history-table
             :billing="billing"
@@ -138,7 +139,61 @@
       @token="saveCard"
       @close="closeNewCardModalVisible"
     />
+    <a-row>
+      <a-col :xs="24" :sm="24" :md="12">
+        <a-alert
+          v-if="error_msg"
+          message="Error"
+          description="Something went wrong, we could not add this card."
+          type="error"
+          closable
+          show-icon
+          class="margin_top"
+          @close="close_alert"
+        />
+        <div class="add-new-card gx-text-right"></div>
+        <a-card class="gx-card-full gx-card-header-full">
+          <div slot="title">
+            <a-row type="flex">
+              <a-col :xs="12" :sm="14" :md="12" :lg="14">
+                Active Bank Detail
+              </a-col>
+              <a-col :xs="12" :sm="10" :md="12" :lg="10">
+                <a-button
+                  block
+                  type="primary"
+                  style="margin:0;"
+                  size="small"
+                  @click="redirectStripeAccount"
+                >
+                  Add Bank Account 
+                </a-button>
+              </a-col>
+            </a-row>
+          </div>
+
+           <div  class="credit-cards">
+            <bank-card-preview
+              v-for="(bbank, index) of bank"
+              :key="index"
+              :card="bbank"
+            />
+          </div>
+          <n-section-loading v-if="bankLoading" />
+          <div v-if="!bankLoading && bank.length === 0">
+            <n-section-empty
+              warning="You have no bank account yet"
+            />
+          </div>
+          
+        </a-card>
+      </a-col>
+    </a-row>
+    
   </n-page>
+
+  
+  
 </template>
 
 <script>
@@ -147,6 +202,7 @@ import { billingService } from "@/common/api/api.service";
 import { mapGetters } from "vuex";
 import NPage from "@/components/ui/n-page/n-page";
 import StripeCardPreview from "@/components/billing/stripe-card-preview/stripe-card-preview";
+import BankCardPreview from "@/components/billing/bank-card-preview/bank-card-preview"
 import StripeNewCardModal from "@/components/billing/stripe-new-card-modal/stripe-new-card-modal";
 import NSectionEmpty from "@/components/ui/n-section-empty/n-section-empty";
 import StripeBillingHistoryTable from "@/components/billing/stripe-billing-history-table/stripe-billing-history-table";
@@ -163,6 +219,7 @@ export default {
     NSectionEmpty,
     StripeNewCardModal,
     StripeCardPreview,
+    BankCardPreview,
     NPage
   },
   data() {
@@ -171,8 +228,10 @@ export default {
       billing: [],
       plans: [],
       cards: [],
+      bank:[],
       cardsLoading: false,
       billingLoading: true,
+      bankLoading:false,
       subscriptions: [],
       error_msg: false,
       teams: 0,
@@ -189,6 +248,7 @@ export default {
     this.listInvoices();
     this.getSubscriptions();
     this.fetchStats();
+    this.fetchBankDetails();
   },
   methods: {
     getSubscriptions() {
@@ -280,6 +340,43 @@ export default {
           this.listCards();
         });
     },
+    redirectStripeAccount(){
+      billingService
+        .redirectStripe({
+          auth: {
+            id: this.user.user.user_id,
+            type: "club"
+          }
+        })
+        .then(resp => {
+          if (resp.data.success) {
+            window.open(resp.data.data, '_blank')
+          }
+        });
+    },
+
+    
+   fetchBankDetails() {
+      this.bankLoading = true;
+      billingService
+        .listBankDetails({
+          auth: {
+            id: this.user.user.user_id,
+            type: "club"
+          }
+        })
+        .then(resp => {
+          this.bankLoading = false;
+          if (resp.data.success) {
+            this.bank = resp.data.data;
+            console.log("this.bank => ", this.bank)
+          }
+        });
+    },
+
+
+    
+
     listCards() {
       this.cardsLoading = true;
       billingService
@@ -352,5 +449,13 @@ i {
   padding: 18px;
   padding-bottom: 8px !important;
   zoom: 1;
+}
+  .subscription-cards{
+  height:160px
+}
+@media (max-width:1024px){
+  .subscription-cards{
+  height:210px
+}
 }
 </style>

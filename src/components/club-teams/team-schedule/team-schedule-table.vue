@@ -44,7 +44,7 @@ const columns = [
     }
   },
   {
-    title: "Session Cost",
+    title: "Sessions Cost",
     dataIndex: "cost",
     scopedSlots: {
       customRender: "sessionCost"

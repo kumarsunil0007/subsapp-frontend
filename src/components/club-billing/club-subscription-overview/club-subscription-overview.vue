@@ -4,7 +4,7 @@
     :class="[{ 'gx-bg-cyan': sub && sub.active }]"
   >
     <div class="gx-media">
-      <div class="gx-mr-2 gx-mr-xxl-12 text-center subscription-symbol" >
+      <div class="gx-mr-2 gx-mr-xxl-12 text-center" >
         <a-icon type="euro" class="gx-fs-icon-lg" />
       </div>
       <div class="gx-media-body">
@@ -109,6 +109,9 @@ export default {
     fetchSubscription() {
       this.$store.dispatch(FETCH_SUBSCRIPTION);
     },
+
+
+
     openUpgradeModal() {
       if (this.cards.length <= 0) {
         notifications.warn("Please add a card to your account first");

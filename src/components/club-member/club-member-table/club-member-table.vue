@@ -23,29 +23,29 @@
         <template v-else>N/A</template>
       </div>
       <div slot="status" slot-scope="text" class="status_data">
-        <a-tag v-if="text === 'accept'" color="#27ae60">Active</a-tag>
-        <a-tag v-if="text === 'invite'" color="#f39c12">Invite Pending</a-tag>
-        <a-tag v-if="text === 'request'" color="#8e44ad"
+        <a-tag v-if="text === 'accept'" color="#27ae60"  style="margin-bottom:0px;" >Active</a-tag>
+        <a-tag v-if="text === 'invite'" color="#f39c12" style="margin-bottom:0px;">Invite Pending</a-tag>
+        <a-tag v-if="text === 'request'" color="#8e44ad"  style="margin-bottom:0px;"
           >Has Requested to Join</a-tag
         >
-        <a-tag v-if="text === 'cancel'" color="#8e44ad"
+        <a-tag v-if="text === 'cancel'" color="#8e44ad"  style="margin-bottom:0px;"
           >No Longer a Member</a-tag
         >
-        <a-tag v-if="text === 'archive'" color="#d35400">Archived</a-tag>
-        <a-tag v-if="text === 'decline'" color="#c0392b"
+        <a-tag v-if="text === 'archive'" color="#d35400"  style="margin-bottom:0px;">Archived</a-tag>
+        <a-tag v-if="text === 'decline'" color="#c0392b"  style="margin-bottom:0px;"
           >Declined Invitation</a-tag
         >
       </div>
       <div slot="handlers" type="flex" slot-scope="text, record" class="gx-text-right" style="display:flex;">
         <router-link :to="'/club/member/' + record.user_id">
-          <a-button size="small" type="primary" style="margin-right: 5px"
+          <a-button size="small" type="primary" style="margin-right: 5px;margin-bottom:0px;"
             >View Profile</a-button
           >
         </router-link>
         <a-button
           v-if="record.status === 'accept'"
           size="small"
-          style="color: #f5222d; background-color: #f5f5f5; border-color: #d9d9d9;margin-right: 5px"
+          style="color: #f5222d; background-color: #f5f5f5; border-color: #d9d9d9;margin-right: 5px;margin-bottom:0px;"
           type="danger"
           @click="updateClubMember(record.id, 'archive')"
           >Archive</a-button
@@ -53,7 +53,7 @@
         <a-button
           v-if="record.status === 'accept'"
           size="small"
-          style="color: #f5222d; background-color: #f5f5f5; border-color: #d9d9d9;"
+          style="color: #f5222d; background-color: #f5f5f5; border-color: #d9d9d9;margin-bottom:0px;"
           type="danger"
           @click="(searchTeamModal = true), (selectMemberId = record.id)"
           >Add to Team</a-button
@@ -75,6 +75,7 @@
           v-if="record.status === 'request'"
           size="small"
           class="gx-btn-cyan"
+          style="margin-bottom:0px;"
           @click="updateClubMember(record.id, 'accept')"
           >Accept Request</a-button
         >
@@ -82,13 +83,15 @@
           v-if="record.status === 'cancel'"
           size="small"
           type="primary"
+          style="margin-bottom:0px;"
           @click="updateClubMember(record.id, 'invite')"
           >Send Invite</a-button
         >
         <a-button
           v-if="record.status === 'invite'"
           size="small"
-          class="gx-btn-red"
+          class="gx-btn-red gx-fs-sm"
+          style="margin-bottom:0px;"
           @click="updateClubMember(record.id, 'cancel')"
           >Cancel Invite</a-button
         >

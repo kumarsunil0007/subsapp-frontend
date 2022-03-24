@@ -1,7 +1,7 @@
 <template>
   <n-page>
     <a-row>
-      <a-col :xs="24" :sm="24" :md="8">
+      <a-col :xs="24" :sm="24" :md="12">
         <div class="add-new-card gx-text-right">
           <a-button type="primary" @click="openNewCardModal">
             Add new Card
@@ -19,7 +19,7 @@
           </div>
         </a-card>
       </a-col>
-      <a-col :xs="24" :sm="24" :md="16">
+      <a-col :xs="24" :sm="24" :md="12">
         <a-card
           title="My Billing History"
           class="gx-card-table-full gx-table-responsive"
@@ -33,6 +33,21 @@
       @token="saveCard"
       @close="closeNewCardModalVisible"
     />
+        <a-row>
+      <a-col :xs="24" :sm="24" :md="12">
+        <a-alert
+          v-if="error_msg"
+          message="Error"
+          description="Something went wrong, we could not add this card."
+          type="error"
+          closable
+          show-icon
+          class="margin_top"
+          @close="close_alert"
+        />
+        <div class="add-new-card gx-text-right"></div>
+      </a-col>
+    </a-row>
   </n-page>
 </template>
 
@@ -44,6 +59,7 @@ import { billingService } from "@/common/api/api.service";
 import MemberBillingHistoryTable from "@/components/member-billing/member-billing-history-table/member-billing-history-table";
 import StripeNewCardModal from "@/components/billing/stripe-new-card-modal/stripe-new-card-modal";
 import StripeCardPreview from "@/components/billing/stripe-card-preview/stripe-card-preview";
+import BankCardPreview from "@/components/billing/bank-card-preview/bank-card-preview"
 import notifications from "@/common/notifications/notification.service";
 import { clubService } from "@/common/api/api.service";
 export default {
@@ -52,6 +68,7 @@ export default {
     StripeCardPreview,
     StripeNewCardModal,
     MemberBillingHistoryTable,
+    BankCardPreview,
     NPage
   },
   data() {
@@ -67,6 +84,7 @@ export default {
   },
   mounted() {
     this.listCards();
+    this.fetchBankDetails();
 
   },
   methods: {
@@ -144,6 +162,23 @@ export default {
           this.fetchRoles();
         });
     },
+
+  redirectStripeAccount(){
+      billingService
+        .redirectStripe({
+          auth: {
+            id: this.user.user.user_id,
+            type: "club"
+          }
+        })
+        .then(resp => {
+          if (resp.data.success) {
+            window.open(resp.data.data, '_blank')
+          }
+        });
+    },
+
+
     listCards() {
       billingService
         .listCards({
@@ -155,13 +190,29 @@ export default {
         .then(resp => {
           if (resp.data.success) {
             this.cards = resp.data.result;
-            this.user.user.no_of_cards = resp.data.no_of_cards;
-            //setTimeout(function(){this.user.user.no_of_cards = resp.data.no_of_cards;},10000);
-            
+            this.user.user.no_of_cards = resp.data.no_of_cards;            
 
           }
         });
-    }
+    },
+  fetchBankDetails() {
+      this.bankLoading = true;
+      billingService
+        .listBankDetails({
+          auth: {
+            id: this.user.user.user_id,
+            type: "club"
+          }
+        })
+        .then(resp => {
+          this.bankLoading = false;
+          if (resp.data.success) {
+            this.bank = resp.data.data;
+            console.log("this.bank => ", this.bank)
+          }
+        });
+    },
+
   }
 };
 </script>

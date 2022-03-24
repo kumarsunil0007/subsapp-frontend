@@ -8,7 +8,7 @@
     </a-col>
     <a-col :xs="24" :sm="24" :md="24" :lg="10" class="gx-text-right">
       <div v-if="card.default" class="card-default">
-        <a-tag color="#108ee9">Default</a-tag>
+        <a-tag color="#108ee9"  style="margin-right:0;">Default</a-tag>
       </div>
       <a-button
         v-if="!card.default"
@@ -20,7 +20,7 @@
       >
         Make Default
       </a-button>
-      <a-button size="small" block type="danger" @click="removeCard">
+      <a-button  v-if="card.default!=1" size="small" block type="danger" @click="removeCard">
         Remove
       </a-button>
     </a-col>

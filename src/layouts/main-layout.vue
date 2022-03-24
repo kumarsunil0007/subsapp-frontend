@@ -159,7 +159,8 @@ export default {
   components: { MenuUser, MenuClub, MenuAdmin },
   data() {
     return {
-      selectRole: ""
+      selectRole: "",
+      UserName:""
     };
   },
   computed: {
@@ -209,11 +210,14 @@ export default {
       setRole(role) { 
         if(role === "club_admin"){
          //   this.$swal('You are selected as Club Admin');
-            this.UserName = "(Club Admin)";
+            this.UserName = "(Curent Login As Club Admin)";
         }
        if(role ==="member"){
        //  this.$swal('You are selected as Member');
-         this.UserName = "(Member)";
+         this.UserName = "(Curent Login As Member)";
+       }
+       if(role==="coach"){
+         this.UserName = "(Current Login AS Coach)";
        }
       
       const roles = this.user.user_type;
