@@ -172,14 +172,14 @@
             </a-row>
           </div>
 
-           <div  class="credit-cards">
+           <div v-if="bank.length > 0" class="credit-cards">
             <bank-card-preview
               v-for="(bbank, index) of bank"
               :key="index"
               :card="bbank"
             />
           </div>
-          <n-section-loading v-if="bankLoading" />
+          <n-section-loading  v-if="bankLoading" />
           <div v-if="!bankLoading && bank.length === 0">
             <n-section-empty
               warning="You have no bank account yet"
@@ -338,6 +338,7 @@ export default {
             this.error_msg = true;
           }
           this.listCards();
+          this.fetchBankDetails();
         });
     },
     redirectStripeAccount(){
@@ -357,7 +358,7 @@ export default {
 
     
    fetchBankDetails() {
-      this.bankLoading = true;
+      this.bankLoading = false;
       billingService
         .listBankDetails({
           auth: {
