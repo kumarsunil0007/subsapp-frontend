@@ -34,46 +34,48 @@
         <li>Event starts at: {{ selectedEvent.startTime }}</li>
         <li>Event ends at: {{ selectedEvent.endTime }}</li>
       </ul>
-      <h4 class="joined-member-heading"><strong>Joined Members</strong></h4>
-      <ul class="joined-members">
-        <li
-          v-for="member in selectedEvent.members"
-          :key="member.id"
-          style="color: blue;cursor:pointer;text-decoration: line"
-        >
-          <div @click.prevent="$router.push('/club/member/' + member.id)">
-            <h5>{{ member.preferred_name }}</h5>
-          </div>
-          <div>
-            <a-button
-              @click.prevent="
-                $router.push(
-                  '/teams/' +
-                    selectedEvent.team_id +
-                    '/session/' +
-                    selectedEvent.id
-                )
-              "
-            >
-              manage
-            </a-button>
-          </div>
-        </li>
-      </ul>
+      <div>
+        <h4 class="joined-member-heading"><strong>Joined Members</strong></h4>
+        <ul class="joined-members">
+          <li
+            v-for="member in selectedEvent.members"
+            :key="member.id"
+            style="color: blue;cursor:pointer;text-decoration: line"
+          >
+            <div @click.prevent="$router.push('/club/member/' + member.id)">
+              <h5>{{ member.preferred_name }}</h5>
+            </div>
+            <div>
+              <a-button
+                @click.prevent="
+                  $router.push(
+                    '/teams/' +
+                      selectedEvent.team_id +
+                      '/session/' +
+                      selectedEvent.id
+                  )
+                "
+              >
+                manage
+              </a-button>
+            </div>
+          </li>
+        </ul>
+      </div>
     </a-modal>
 
-  <a-modal title="Select Team" v-model="showDialog2">
+    <a-modal title="Select Team" v-model="showDialog2">
       <template slot="footer">
         <a-button key="submit" type="primary" @click="showDialog2 = false">
           Close
         </a-button>
       </template>
       <!-- <h2>Select Team</h2> -->
-          <a-row>
-             <a-col :span="24">
-               <club-teams-table />
-            </a-col>
-          </a-row>
+      <a-row>
+        <a-col :span="24">
+          <club-teams-table />
+        </a-col>
+      </a-row>
     </a-modal>
   </div>
 </template>
@@ -87,7 +89,7 @@ import NewTeamModal from "@/components/club-teams/modals/new-team-modal/new-team
 import { mapGetters } from "vuex";
 import moment from "moment";
 export default {
-  components: { VueCal,ClubTeamsTable,NewTeamModal},
+  components: { VueCal, ClubTeamsTable, NewTeamModal },
   data() {
     return {
       dashboard_data: "",
@@ -96,14 +98,14 @@ export default {
       showDialog: false,
       showDialog2: false,
       selectedEvent: {},
-      events: []
+      events: [],
     };
   },
   computed: {
     ...mapGetters(["AUTH_USER"]),
-      minDate () {
-    return new Date()
-  }
+    minDate() {
+      return new Date();
+    },
   },
   mounted() {
     let st = moment()
@@ -119,11 +121,11 @@ export default {
       const data = {
         role: this.AUTH_USER.select_role,
         startDate: st,
-        endDate: ed
+        endDate: ed,
       };
       clubService
         .clubDashboad({ params: data })
-        .then(resp => {
+        .then((resp) => {
           this.events = [];
           if (resp.data.success) {
             const result = resp.data.result;
@@ -140,7 +142,7 @@ export default {
                 class: event.AttendanceID ? "health" : "leisure",
                 members: event.users,
                 team_id: event.team_id,
-                id: event.id
+                id: event.id,
               });
             }
             this.events = events;
@@ -158,7 +160,7 @@ export default {
     },
 
     onEventClick2(event, e) {
-      window.localStorage.setItem('storeGetDateTime',event)
+      window.localStorage.setItem("storeGetDateTime", event);
       this.showDialog2 = true;
       // Prevent navigating to narrower view (default vue-cal behavior).
       e.stopPropagation();
@@ -169,8 +171,8 @@ export default {
         moment(e.startDate).format("YYYY-MM-DD"),
         moment(e.endDate).format("YYYY-MM-DD")
       );
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -202,7 +204,7 @@ i {
   padding-bottom: 8px !important;
   zoom: 1;
 } */
-.ant-card.gx-card-table-full .ant-card-body{
+.ant-card.gx-card-table-full .ant-card-body {
   padding: 25px;
 }
 .vuecal__menu,

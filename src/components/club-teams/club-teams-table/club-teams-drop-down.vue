@@ -1,6 +1,6 @@
 <template>
     <div class="dropdown">
-      <a-card title="Select Team For Manage" class="gx-card-table-full">
+      <a-card title="Select Team For Manage" class="gx-card-table-full text-center">
       <!-- <select v-model="selectedTeamId" @change="onChangeTeam">
         <option
           v-for="(team, index) in teams"
@@ -10,7 +10,7 @@
         {{team.team_name}}
         </option>
       </select> -->
-    <a-select style="width: 150px" v-model="selectedTeamId" @change="onChangeTeam">
+    <a-select style="width: 150px;margin-bottom:10px;margin-right:10px;" v-model="selectedTeamId" @change="onChangeTeam">
       <a-select-option  disabled hidden value="">Select One</a-select-option>>
       <a-select-option  v-for="(team, index) in teams"
           :value="team.id"
@@ -136,6 +136,5 @@ export default {
 }
 button.ant-btn.ant-btn-primary {
     margin-bottom: 0;
-    margin-left: 14px;
 }
 </style>

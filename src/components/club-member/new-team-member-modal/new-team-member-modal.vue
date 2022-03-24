@@ -1,14 +1,14 @@
 <template>
   <a-modal v-model="isVisible" title="Add/Remove Team Members" @cancel="close">
     <a-row type="flex" :gutter="1">
-      <a-col :xs="18">
+      <a-col :xs="14">
         <a-input
           v-model="keyword"
           type="email"
           placeholder="Enter members email"
         ></a-input>
       </a-col>
-      <a-col :xs="6">
+      <a-col :xs="10">
         <a-button block type="primary" @click="searchEmails">Search</a-button>
       </a-col>
     </a-row>

@@ -13,14 +13,14 @@
             :type="collapsed ? 'menu-unfold' : 'menu-fold'"
             :class="{
               'icon-menu-unfold': collapsed,
-              'icon-menu-fold': !collapsed
+              'icon-menu-fold': !collapsed,
             }"
             @click="toggleSidebar()"
           ></i>
         </div>
         <router-link class="gx-site-logo" to="/">
           <img
-            style="max-height: 50px;"
+            style="max-height: 50px"
             alt="SubsApp"
             src="@/assets/regular-logo.png"
           />
@@ -42,67 +42,88 @@
         </div>
         <router-link class="gx-d-block gx-d-lg-none gx-pointer" to="/">
           <img
-            style="max-height: 50px;"
+            style="max-height: 50px"
             alt="LeadSurge"
             src="@/assets/regular-logo.png"
           />
         </router-link>
+
         <ul v-if="user && user.user" class="gx-header-notifications gx-ml-auto">
           <li class="gx-user-nav">
             <a-row type="flex">
               <div
-                class="ant-avatar gx-avatar gx-pointer ant-avatar-circle ant-avatar-image"
+                class="
+                  ant-avatar
+                  gx-avatar gx-pointer
+                  ant-avatar-circle ant-avatar-image
+                "
               >
                 <img alt="" :src="userProfileAvatar" />
               </div>
-              <router-link to="/my-profile" tag="div" style="cursor:pointer;">
+              <router-link to="/my-profile" tag="div" style="cursor: pointer">
                 <div class="gx-user-nav--name">
                   Hi {{ user.user.first_name }}
                 </div>
+                <a-dropdown
+                  v-if="user.user_type.length > 1"
+                  :trigger="['click']"
+                  class="switch-as"
+                >
+                  <a
+                    class="ant-dropdown-link"
+                    @click="(e) => e.preventDefault()"
+                  >
+                    (Role{{ this.UserName }}) <a-icon type="down" />
+                  </a>
+
+                  <a-menu slot="overlay">
+                    <a-menu-item
+                      v-if="user.user_type.indexOf('admin') !== -1"
+                      key="1"
+                    >
+                      <a-menu-divider />
+                      <a
+                        class="switch-as-users"
+                        @click.prevent="setRole('admin')"
+                        >Admin</a
+                      >
+                    </a-menu-item>
+                    <a-menu-item
+                      v-if="user.user_type.indexOf('club_admin') !== -1"
+                      key="2"
+                    >
+                      <a
+                        class="switch-as-users"
+                        @click.prevent="setRole('club_admin')"
+                        >Club Admin</a
+                      >
+                    </a-menu-item>
+                    <a-menu-item
+                      v-if="user.user_type.indexOf('coach') !== -1"
+                      key="3"
+                    >
+                      <a
+                        class="switch-as-users"
+                        @click.prevent="setRole('coach')"
+                        >Coach</a
+                      >
+                    </a-menu-item>
+                    <a-menu-item
+                      v-if="user.user_type.indexOf('member') !== -1"
+                      key="4"
+                    >
+                      <a
+                        class="switch-as-users"
+                        @click.prevent="setRole('member')"
+                        >Member</a
+                      >
+                    </a-menu-item>
+                  </a-menu>
+                </a-dropdown>
               </router-link>
-              <a-dropdown
-                v-if="user.user_type.length > 1"
-                :trigger="['click']"
-                style="margin-top: 15px"
-              >
-                <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                  Switch As <br/><span class="login-as-switch-case">{{this.UserName}}</span>
-                </a>
-              
-                <a-menu slot="overlay">
-                  <a-menu-item
-                    v-if="user.user_type.indexOf('admin') !== -1"
-                    key="1"
-                  >
-                   <a-menu-divider />
-                    <a class="switch-as-users" @click.prevent="setRole('admin')">Admin</a>
-                  </a-menu-item>
-                  <a-menu-item
-                    v-if="user.user_type.indexOf('club_admin') !== -1"
-                    key="2"
-                  >
-                    <a class="switch-as-users" @click.prevent="setRole('club_admin')">Club Admin</a>
-                  </a-menu-item>
-                  <a-menu-item
-                    v-if="user.user_type.indexOf('coach') !== -1"
-                    key="3"
-                  >
-                    <a class="switch-as-users" @click.prevent="setRole('coach')">Coach</a>
-                  </a-menu-item>
-                  <a-menu-item
-                    v-if="user.user_type.indexOf('member') !== -1"
-                    key="4"
-                  >
-                    <a class="switch-as-users" @click.prevent="setRole('member')">Member</a>
-                  </a-menu-item>
-                </a-menu>
-                
-              </a-dropdown>
             </a-row>
-            
           </li>
         </ul>
-       
       </a-layout-header>
       <a-layout-content class="gx-layout-content">
         <!-- <router-link
@@ -115,8 +136,8 @@
         <a-button
           v-if="
             $route.path !== '/' &&
-              $route.path !== '/admin' &&
-              $route.path !== '/dashboard'
+            $route.path !== '/admin' &&
+            $route.path !== '/dashboard'
           "
           block
           class="back-button"
@@ -148,7 +169,7 @@
 <script>
 import {
   AUTH_USER,
-  AUTH_SUBSCRIPTION
+  AUTH_SUBSCRIPTION,
 } from "@/store/modules/auth/auth-actions";
 import { UITypes } from "@/store/modules/ui/ui-actions";
 import { mapGetters } from "vuex";
@@ -160,22 +181,22 @@ export default {
   data() {
     return {
       selectRole: "",
-      UserName:""
+      UserName: "",
     };
   },
   computed: {
     ...mapGetters({
       user: AUTH_USER,
       sub: AUTH_SUBSCRIPTION,
-      collapsed: UITypes.getters.GET_SIDEBAR
+      collapsed: UITypes.getters.GET_SIDEBAR,
     }),
-    userProfileAvatar: function() {
+    userProfileAvatar: function () {
       if (this.user.user.profile.image) {
         return this.user.user.profile.image;
       } else {
         return "https://api.subsapp.com/missing.png";
       }
-    }
+    },
   },
   mounted() {
     this.selectRole = this.user.user_type[0];
@@ -207,19 +228,19 @@ export default {
     hideSidebar() {
       this.$store.commit(UITypes.mutations.HIDE_SIDEBAR);
     },
-      setRole(role) { 
-        if(role === "club_admin"){
-         //   this.$swal('You are selected as Club Admin');
-            this.UserName = "(Curent Login As Club Admin)";
-        }
-       if(role ==="member"){
-       //  this.$swal('You are selected as Member');
-         this.UserName = "(Curent Login As Member)";
-       }
-       if(role==="coach"){
-         this.UserName = "(Current Login AS Coach)";
-       }
-      
+    setRole(role) {
+      if (role === "club_admin") {
+        //   this.$swal('You are selected as Club Admin');
+        this.UserName = " - Club Admin";
+      }
+      if (role === "member") {
+        //  this.$swal('You are selected as Member');
+        this.UserName = " - Member";
+      }
+      if (role === "coach") {
+        this.UserName = " - Coach";
+      }
+
       const roles = this.user.user_type;
       if (roles.indexOf(role) !== -1) {
         let userData = JSON.parse(localStorage.getItem("auth-user"));
@@ -233,8 +254,8 @@ export default {
           this.$router.replace("/dashboard");
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
@@ -276,8 +297,37 @@ export default {
   font-size: 16px;
   padding: 16px 8px;
 }
-.login-as-switch-case{
+.login-as-switch-case {
   font-size: 14px;
   color: #222;
+  margin-top: 7px;
 }
+.switch-as {
+  font-size: 14px;
+  margin-left: 6px;
+  margin-top: 0px;
+}
+.gx-user-nav--name {
+    font-size: 16px;
+    padding: 2px 8px;
+}
+.switch-as i.anticon.anticon-down {
+    color: #ffc107;
+    border: 3px solid #003366;
+    /* box-shadow: 0 0 6px #ffc107; */
+    background-color: #003366;
+    color: #fff;
+    border-radius: 29px;
+        /* animation: animate 3s linear infinite; */
+    padding: 3px 3px;
+}
+@keyframes animate {
+  from {
+    filter: hue-rotate(0deg);
+  }
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
 </style>
