@@ -73,7 +73,7 @@
                     class="ant-dropdown-link"
                     @click="(e) => e.preventDefault()"
                   >
-                    (Role{{ this.UserName }}) <a-icon type="down" />
+                    {{ this.UserName }} <a-icon type="setting" />
                   </a>
 
                   <a-menu slot="overlay">
@@ -85,7 +85,7 @@
                       <a
                         class="switch-as-users"
                         @click.prevent="setRole('admin')"
-                        >Admin</a
+                        >Use as Admin</a
                       >
                     </a-menu-item>
                     <a-menu-item
@@ -95,7 +95,7 @@
                       <a
                         class="switch-as-users"
                         @click.prevent="setRole('club_admin')"
-                        >Club Admin</a
+                        >Use as Club Admin</a
                       >
                     </a-menu-item>
                     <a-menu-item
@@ -105,7 +105,7 @@
                       <a
                         class="switch-as-users"
                         @click.prevent="setRole('coach')"
-                        >Coach</a
+                        >Use as Coach</a
                       >
                     </a-menu-item>
                     <a-menu-item
@@ -115,7 +115,7 @@
                       <a
                         class="switch-as-users"
                         @click.prevent="setRole('member')"
-                        >Member</a
+                        >Use as Member</a
                       >
                     </a-menu-item>
                   </a-menu>
@@ -231,14 +231,14 @@ export default {
     setRole(role) {
       if (role === "club_admin") {
         //   this.$swal('You are selected as Club Admin');
-        this.UserName = " - Club Admin";
+        this.UserName = "Club Admin";
       }
       if (role === "member") {
         //  this.$swal('You are selected as Member');
-        this.UserName = " - Member";
+        this.UserName = "Member";
       }
       if (role === "coach") {
-        this.UserName = " - Coach";
+        this.UserName = "Coach";
       }
 
       const roles = this.user.user_type;
