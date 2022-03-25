@@ -15,7 +15,7 @@
               <p
                 class="gx-letter-spacing-base gx-text-white gx-text-uppercase gx-mb-0"
               >
-                <span v-if="!!fd2.metadata.total_amount">€{{fd2.metadata.total_amount}}</span>
+                <span v-if="!!fd2.metadata.total_amount">€{{parseFloat(fd2.metadata.total_amount).toFixed(2)}}</span>
                 <span v-else>Contact Us!</span>
               </p>
             </div>

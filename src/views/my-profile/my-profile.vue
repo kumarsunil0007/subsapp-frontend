@@ -310,8 +310,9 @@ export default {
             town: resp.data.result.profile.town,
             post_code: resp.data.result.profile.post_code,
             region: resp.data.result.profile.region,
-            dob: moment(resp.data.result.profile.dob, "YYYY-MM-DD")
+            //dob: moment(resp.data.result.profile.dob, "YYYY-MM-DD")
           });
+          this.fields.dob =  moment(resp.data.result.profile.dob, "YYYY-MM-DD");
           this.fields.country = resp.data.result.profile.country;
           this.user_image = resp.data.result.profile.image;
 
@@ -331,7 +332,8 @@ export default {
       memberService
         .updateProfile({
           ...values,
-          country: this.fields.country
+          country: this.fields.country,
+          dob:this.fields.dob
         })
         .then(resp => {
           this.loading = false;
