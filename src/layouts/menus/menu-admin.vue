@@ -53,12 +53,12 @@
           <span>Club Details</span>
         </router-link>
       </a-menu-item>
-      <a-menu-item key="club-details" @click="hideSidebar">
+      <!-- <a-menu-item key="club-details" @click="hideSidebar">
         <router-link to="/admin/club-details">
           <a-icon type="setting" />
           <span></span>
         </router-link>
-      </a-menu-item>
+      </a-menu-item> -->
       <a-menu-item key="logout" @click="Logout">
         <a-icon type="logout" />
         <span>Logout</span>

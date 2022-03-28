@@ -1,4 +1,6 @@
 <template>
+<div>
+
   <a-table
     class="gx-table-responsive"
     :columns="columns"
@@ -18,12 +20,22 @@
       <template v-if="text">+353 {{ text }}</template>
       <template v-else>N/A</template>
     </div>
+
+    <div slot="commission" slot-scope="text">
+      <template v-if="text">{{ text }}</template>
+      <template v-else>N/A</template>
+    </div>
+
+
     <div slot="handlers" slot-scope="text, record" class="gx-text-right">
       <a-button size="small" type="primary" @click="viewClub(record)"
         >View</a-button
       >
     </div>
   </a-table>
+
+</div>
+
 </template>
 
 <script>
@@ -73,17 +85,27 @@ const columns = [
     key: "club_admin"
   },
   {
+    title: "Commission",
+    dataIndex: "commission",
+    key: "commission",
+    scopedSlots: {
+      customRender: "commission"
+    }
+  },
+  {
     dataIndex: "handlers",
     key: "handlers",
     scopedSlots: {
       customRender: "handlers"
     }
-  }
+  },
+
 ];
 
 import { memberService } from "@/common/api/api.service";
 import { adminService } from "@/common/api/api.service";
-
+// import NPage from "@/components/ui/n-page/n-page";
+// import  updateClubComission  from "@/components/club-member/update-commission-modal/update-commission-modal";
 export default {
   name: "ClubMemberTable",
   mixins: [nTime, nCurrency],
@@ -101,7 +123,8 @@ export default {
       columns,
       schedule: [],
       pagination: { pageSize: 10 },
-      loading: false
+      loading: false,
+      hasModal: false,
     };
   },
   watch: {
@@ -118,6 +141,13 @@ export default {
   methods: {
     viewClub({ id }) {
       this.$router.push(`/admin/club-info/${id}`);
+    },
+    updateClubComission(record){
+
+      var id = record.id;
+      var commission = record.commission;
+      
+      
     },
     userTableList(memberId, status) {
       memberService

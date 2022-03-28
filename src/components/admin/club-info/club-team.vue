@@ -9,7 +9,7 @@
     @change="handleTableChange"
   >
     <div slot="operations" slot-scope="text, row" class="gx-text-right">
-      <router-link :to="'/teams/' + row.id" @click.native="ManageTeam">
+      <router-link :to="'/teams/' + row.id" @click.native="ManageTeam(row.id)">
         <a-button type="primary" size="small">
           View members
         </a-button>
@@ -81,8 +81,8 @@ export default {
         this.teamsLoading = false;
       });
     },
-    ManageTeam() {
-      this.$store.commit("SET_TEAM_ZERO");
+    ManageTeam(record) {
+        this.$router.push(`/admin/member-listing/${record}`);
     }
   }
 };
