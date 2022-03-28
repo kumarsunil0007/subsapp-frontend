@@ -95,7 +95,7 @@
                       <a
                         class="switch-as-users"
                         @click.prevent="setRole('club_admin')"
-                        >Use as Club Admin</a
+                        >{{this.ClubAdmin}}</a
                       >
                     </a-menu-item>
                     <a-menu-item
@@ -105,7 +105,7 @@
                       <a
                         class="switch-as-users"
                         @click.prevent="setRole('coach')"
-                        >Use as Coach</a
+                        >{{this.Coach}}</a
                       >
                     </a-menu-item>
                     <a-menu-item
@@ -115,7 +115,7 @@
                       <a
                         class="switch-as-users"
                         @click.prevent="setRole('member')"
-                        >Use as Member</a
+                        >{{this.Member}}</a
                       >
                     </a-menu-item>
                   </a-menu>
@@ -181,7 +181,14 @@ export default {
   data() {
     return {
       selectRole: "",
-      UserName: "",
+      UserName:"",
+      ClubAdmin:"",
+      Coach:"",
+      Member:"",
+      Coach:""
+
+
+
     };
   },
   computed: {
@@ -200,9 +207,31 @@ export default {
   },
   mounted() {
     this.selectRole = this.user.user_type[0];
+    if(this.user.select_role == "club_admin"){
+          this.UserName   = "Club Admin";
+          this.Member = "Switch to Member";
+          this.ClubAdmin = "Current login as Club Admin";
+          this.Coach = "Switch to Coach";
+    }
+
+    if(this.user.select_role == "member"){
+          this.UserName   = "Member";
+          this.Member = "Current login as Member";
+          this.ClubAdmin = "Switch to Club Admin";
+          this.Coach = "Switch to Coach";
+    }
+
+    if(this.user.select_role == "coach"){
+          this.UserName   = "Coach";
+          this.Member = "Switch to Member";
+          this.ClubAdmin = "Switch to Club Admin";
+          this.Coach = "Current login as Coach";
+     }
+
     if (!this.user.user) {
       this.$router.push("/login");
     }
+
   },
   methods: {
     checkPreviousPath() {
@@ -232,10 +261,14 @@ export default {
       if (role === "club_admin") {
         //   this.$swal('You are selected as Club Admin');
         this.UserName = "Club Admin";
+        this.Member = "Switch to Member";
+        this.ClubAdmin = "Current login as Club Admin";
       }
       if (role === "member") {
         //  this.$swal('You are selected as Member');
         this.UserName = "Member";
+        this.Member = "Current login as Member";
+        this.ClubAdmin = "Switch to Club Admin";
       }
       if (role === "coach") {
         this.UserName = "Coach";

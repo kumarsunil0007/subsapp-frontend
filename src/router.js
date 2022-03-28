@@ -247,6 +247,15 @@ export default new Router({
           component: () => import("@/views/admin/users/user")
         },
         {
+          path: "/admin/member-listing/:id",
+          name: "admin-user",
+          meta: {
+            permission: ["admin"]
+          },
+          beforeEnter: authGuard,
+          component: () => import("@/views/admin/member/member-listing")
+        },
+        {
           path: "/admin/club-info/:id",
           name: "club info",
           meta: {

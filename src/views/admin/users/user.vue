@@ -11,7 +11,7 @@
             ></a-input>
           </a-col>
           <a-col :xs="24" :sm="24" :md="8" :lg="6">
-            <!-- <a-select
+            <a-select
               v-model="filters.type"
               style="min-width: 100%;margin-bottom: 10px;"
             >
@@ -29,19 +29,19 @@
               <a-select-option value="declined"
                 >Declined Invitations</a-select-option
               >
-            </a-select> -->
+            </a-select> 
           </a-col>
         </a-row>
       </a-col>
       <a-col :xs="24" :sm="24" :md="10" :lg="8" class="gx-text-right">
-        <!-- <a-button
+        <a-button
           size="small"
           type="primary"
           class="gx-sm-full"
           style="margin-bottom: 12px;background-color: rgb(39, 174, 96) !important;  height:35px; border-color:rgb(39, 174, 96) !important;"
           @click="addMemberModal"
-          >Add Member</a-button
-        > -->
+          >Add Club Member</a-button
+        > 
       </a-col>
       <a-col :span="24">
         <a-card class="gx-card-table-full gx-table-responsive">
