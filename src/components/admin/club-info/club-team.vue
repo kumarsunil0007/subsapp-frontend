@@ -8,12 +8,14 @@
     :pagination="pagination"
     @change="handleTableChange"
   >
-    <div slot="operations" slot-scope="text, row" class="gx-text-right">
-      <router-link :to="'/teams/' + row.id" @click.native="ManageTeam">
+    <div slot="operations" slot-scope="text, row" class="gx-text-right">  
+     <a-button @click.prevent="$router.push('/admin/member-listing/'+row.id)"> View Memeber
+     </a-button> 
+      <!-- <router-link :to="'/teams/' + row.id" @click.native="ManageTeam(row.id)">
         <a-button type="primary" size="small">
           View members
         </a-button>
-      </router-link>
+      </router-link> -->
     </div>
   </a-table>
 </template>
@@ -81,9 +83,10 @@ export default {
         this.teamsLoading = false;
       });
     },
-    ManageTeam() {
-      this.$store.commit("SET_TEAM_ZERO");
-    }
+    // ManageTeam(id) {
+    //   //this.$store.commit("SET_TEAM_ZERO");
+    //   alert();
+    // }
   }
 };
 </script>

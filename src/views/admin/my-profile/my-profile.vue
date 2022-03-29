@@ -267,7 +267,7 @@ export default {
             town: resp.data.result.profile.town,
             post_code: resp.data.result.profile.post_code,
             region: resp.data.result.profile.region,
-            dob: moment(resp.data.result.profile.dob, "YYYY-MM-DD")
+            dob: resp.data.result.profile.dob
           });
           this.fields.country = resp.data.result.profile.country;
         }

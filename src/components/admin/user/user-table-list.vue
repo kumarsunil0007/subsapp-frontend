@@ -1,4 +1,5 @@
 <template>
+<div>
   <a-table
     class="gx-table-responsive"
     :columns="columns"
@@ -18,12 +19,53 @@
       <template v-if="text">+353 {{ text }}</template>
       <template v-else>N/A</template>
     </div>
+    <div slot="commission" slot-scope="text">
+      <template v-if="text">{{ text }}</template>
+    
+      
+      <template v-else>N/A</template>
+          <div slot="handlers2" slot-scope="text, record" class="gx-text-right">
+              <a-icon type="edit" @click="editClick(record)" />
+    </div>
+    </div>
+
+
     <div slot="handlers" slot-scope="text, record" class="gx-text-right">
       <a-button size="small" type="primary" @click="viewClub(record)"
         >View</a-button
       >
     </div>
+
+    <div slot="handlers2" slot-scope="text, record" class="gx-text-right">
+      <a-button size="small" type="primary" @click="editClick(record)"
+        >Update Commission</a-button
+      >
+    </div>
   </a-table>
+    <a-modal :visible="visible" title="Update Commission" @cancel="close">
+    <template slot="footer">
+      <a-button key="back" @click="close" >
+        Cancel
+      </a-button>
+      <a-button
+        key="submit"
+        type="primary"
+        :loading="loading"
+        @click="updateCommission"
+      >
+        Update Commission
+      </a-button>
+    </template>
+    <a-form :form="form" layout="vertical">
+      <div class="info">
+        <a-form-item label="commission">
+          <a-input v-decorator="fields.commission" placeholder="Enter Commission" />
+        </a-form-item>
+      </div>
+    </a-form>
+  </a-modal>
+
+</div>
 </template>
 
 <script>
@@ -72,15 +114,33 @@ const columns = [
     dataIndex: "club_admin",
     key: "club_admin"
   },
+
+  {
+    title: "Commission",
+    dataIndex: "commission",
+    key: "commission",
+    scopedSlots: {
+      customRender: "commission"
+    }
+  },
+
   {
     dataIndex: "handlers",
     key: "handlers",
     scopedSlots: {
       customRender: "handlers"
     }
-  }
-];
+  },
 
+    {
+    dataIndex: "handlers2",
+    key: "handlers2",
+    scopedSlots: {
+      customRender: "handlers2"
+    }
+  },
+];
+import notifications from "@/common/notifications/notification.service";
 import { memberService } from "@/common/api/api.service";
 import { adminService } from "@/common/api/api.service";
 
@@ -94,15 +154,37 @@ export default {
       default: function() {
         return {};
       }
-    }
+    },
+    visible: {
+      default: false,
+      required: true,
+      type: Boolean
+    },
   },
   data() {
     return {
       columns,
       schedule: [],
       pagination: { pageSize: 10 },
-      loading: false
-    };
+      loading: false,
+      form: this.$form.createForm(this),
+      dataLoading: false,
+      loading: false,
+      idsss :'',
+       fields: {
+        commission: [
+          "commission",
+          {
+            rules: [
+              {
+                required: true,
+                message: "Commission is required"
+              }
+            ]
+          }
+        ],
+      }
+    };    
   },
   watch: {
     filters: {
@@ -131,6 +213,53 @@ export default {
           }
         });
     },
+    updateCommission(record) {
+      console.log(record);
+      //e.preventDefault();
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          this.loading = true;
+          values.id = this.idsss;
+          memberService
+            .updateCommission(values)
+            .then(resp => {
+              this.loading = false;
+              if (resp.data.success) {
+                notifications.success("Commission Update Successfully");
+                this.getClubMembers();
+                this.visible=false;
+              } else {
+                notifications.warn(resp.data.message);
+                this.getClubMembers();
+                this.visible=false;
+              }
+            })
+            .catch(error => {
+              this.loading = false;
+              this.visible=false;
+              this.getClubMembers();
+              console.log(error);
+            });
+        }
+      });
+    },
+
+
+    editClick(record){
+      this.visible =true;
+      this.idsss = record.id;
+     // console.log(record.id,record.commission);
+      this.form.setFieldsValue({
+        commission: record.commission,
+        id: record.id
+      });
+      
+    },  
+    close() {
+      this.form.resetFields();
+      this.visible=false;
+      this.$emit("close");
+    },
     handleTableChange(pagination, filters, sorter) {
       const pager = { ...this.pagination };
       pager.current = pagination.current;
@@ -152,12 +281,6 @@ export default {
           data = { keyword: this.filters.keyword };
         }
       }
-
-      // memberService.query(data).then(resp => {
-      //   if (resp.data.success) {
-      //     this.schedule = resp.data.result;
-      //   }
-      // });
       adminService
         .query({
           results: this.pagination.pageSize,

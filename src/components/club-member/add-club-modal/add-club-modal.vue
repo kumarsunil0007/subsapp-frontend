@@ -2,12 +2,39 @@
   <a-modal
     v-model="isVisible"
     class="add-member"
-    title="Add New Members"
+    title="Add Club Admin"
     @cancel="close"
   >
     <a-row>
       <a-col :lg="24" :md="24" :sm="24" :xs="24">
         <a-form :form="form" @submit="addMember">
+        <a-form-item>
+            <a-row
+              type="flex"
+              align="middle"
+              :gutter="1"
+              style="margin-left:5px;"
+            >
+              <a-col :xs="2">
+                <a-icon type="commission" />
+              </a-col>
+
+              <a-col :xs="22">
+                <a-input
+                  v-decorator="[
+                    'club_name',
+                    {
+                      rules: [
+                        { required: text, message: 'Club name is required' },
+                      ]
+                    }
+                  ]"
+                  type="text"
+                  placeholder="Enter Club Name"
+                ></a-input>
+              </a-col>
+            </a-row>
+          </a-form-item>
           <a-form-item>
             <a-row
               type="flex"
@@ -106,103 +133,6 @@
               </a-col>
             </a-row>
           </a-form-item>
-          <a-form-item>
-            <a-row
-              type="flex"
-              align="middle"
-              :gutter="1"
-              style="margin-left:5px;"
-            >
-              <a-col :xs="2">
-                <a-icon type="mobile" />
-              </a-col>
-              <a-col :xs="22">
-                <a-input
-                  v-decorator="[
-                    'phone_no',
-                    {
-                      rules: [
-                        { required: true, message: 'Phone is required' },
-                        {
-                          max: 10,
-                          message: 'Please use a 10 digit phone number'
-                        }
-                      ]
-                    }
-                  ]"
-                  type="number"
-                  min="0"
-                  addon-before="+353"
-                  placeholder="Enter phone number"
-                ></a-input>
-              </a-col>
-            </a-row>
-          </a-form-item>
-          <a-form-item>
-            <a-row
-              type="flex"
-              align="middle"
-              :gutter="1"
-              style="margin-left:5px;"
-            >
-              <a-col :xs="2">
-                <a-icon type="environment" />
-              </a-col>
-              <a-col :xs="22">
-                <a-input
-                  v-decorator="[
-                    'address_1',
-                    {
-                      rules: [
-                        { required: true, message: 'Address is required' }
-                      ]
-                    }
-                  ]"
-                  type="text"
-                  placeholder="Enter address"
-                ></a-input>
-              </a-col>
-            </a-row>
-          </a-form-item>
-          <a-form-item>
-            <a-row
-              type="flex"
-              align="middle"
-              :gutter="1"
-              style="margin-left:5px;"
-            >
-              <a-col :xs="2">
-                <a-icon type="user" />
-              </a-col>
-              <a-col :xs="22">
-                <a-input
-                  v-decorator="['emergency_phone']"
-                  type="text"
-                  placeholder="Emergency phone"
-                ></a-input>
-              </a-col>
-            </a-row>
-          </a-form-item>
-          <a-form-item>
-            <a-row
-              type="flex"
-              align="middle"
-              :gutter="1"
-              style="margin-left:5px;"
-            >
-              <a-col :xs="2">
-                <a-icon type="calendar" />
-              </a-col>
-              <a-col :xs="22">
-                <a-date-picker
-                  v-decorator="['dob']"
-                  style="width:100%"
-                  format="DD/MM/YYYY"
-                  placeholder="Date of birth"
-                />
-              </a-col>
-            </a-row>
-          </a-form-item>
 
           <a-form-item>
             <a-row
@@ -216,7 +146,7 @@
                 type="primary"
                 html-type="submit"
                 :loading="memberLoading"
-                >Add Members</a-button
+                >Add Club Admin</a-button
               >
             </a-row>
           </a-form-item>
@@ -233,7 +163,7 @@ import { memberService } from "@/common/api/api.service";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "AddMemberModal",
+  name: "AddClubModal",
   props: {
     visible: {
       type: Boolean,
@@ -278,7 +208,7 @@ export default {
           values.role = this.AUTH_USER.select_role;
           values.url = window.location.origin + "/#/login";
           memberService
-            .addMember2(values)
+            .addMember(values)
             .then(resp => {
               this.memberLoading = false;
               if (resp.data.success) {
