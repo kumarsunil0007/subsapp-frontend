@@ -24,7 +24,7 @@
       </a-col>
       <a-col>
         <label>Date of Birth</label>
-        <p>{{ nFormat(member.dob) }}</p>
+        <p>{{member.dob }}</p>
       </a-col>
     </a-row>
     <a-row :gutter="16">

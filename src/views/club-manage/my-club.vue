@@ -20,7 +20,7 @@
                 accept="image/png,image/jpeg,/image/jpg"
                 name="logo"
                 :data="enjectRole"
-                :action="`${action}club/upload-club-logo`"
+                :action="`${action}/club/upload-club-logo`"
                 :headers="{ Authorization: 'Bearer ' + userToken }"
                 list-type="picture"
                 @change="uploadImage"

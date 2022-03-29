@@ -221,6 +221,7 @@ export default {
     if (!this.user.user) {
       this.$router.push("/login");
     }
+
   },
   methods: {
     checkPreviousPath() {

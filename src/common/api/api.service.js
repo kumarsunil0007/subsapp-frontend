@@ -207,7 +207,11 @@ export const memberService = {
 export const adminService = {
   query(params) {
     return ApiService.query("/club-admin/query", { params: params });
+  },
+  updateAdminService(){
+    return ApiService.post("/club-admin/update-club-info",);
   }
+  
 };
 export const memberBillingService = {
   query(params) {

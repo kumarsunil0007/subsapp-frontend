@@ -125,6 +125,14 @@ const columns = [
   },
 
   {
+    title: "Commission",
+    dataIndex: "commission",
+    key: "commission",
+    scopedSlots: {
+      customRender: "commission"
+    }
+  },
+  {
     dataIndex: "handlers",
     key: "handlers",
     scopedSlots: {
@@ -143,7 +151,8 @@ const columns = [
 import notifications from "@/common/notifications/notification.service";
 import { memberService } from "@/common/api/api.service";
 import { adminService } from "@/common/api/api.service";
-
+// import NPage from "@/components/ui/n-page/n-page";
+// import  updateClubComission  from "@/components/club-member/update-commission-modal/update-commission-modal";
 export default {
   name: "ClubMemberTable",
   mixins: [nTime, nCurrency],
@@ -200,6 +209,13 @@ export default {
   methods: {
     viewClub({ id }) {
       this.$router.push(`/admin/club-info/${id}`);
+    },
+    updateClubComission(record){
+
+      var id = record.id;
+      var commission = record.commission;
+      
+      
     },
     userTableList(memberId, status) {
       memberService

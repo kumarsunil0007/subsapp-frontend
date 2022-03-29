@@ -29,7 +29,7 @@
               <a-select-option value="declined"
                 >Declined Invitations</a-select-option
               >
-            </a-select>
+            </a-select> 
           </a-col>
         </a-row>
       </a-col>

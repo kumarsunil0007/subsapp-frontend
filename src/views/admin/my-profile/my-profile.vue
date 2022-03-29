@@ -255,7 +255,9 @@ export default {
     fetchProfile() {
       memberService.userProfile().then(resp => {
         if (resp.data.success) {
+          
           this.form.setFieldsValue({
+            
             first_name: resp.data.result.first_name,
             last_name: resp.data.result.last_name,
             work_email: resp.data.result.work_email,
