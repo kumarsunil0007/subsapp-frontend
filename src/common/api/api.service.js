@@ -143,6 +143,9 @@ export const memberService = {
     return ApiService.get("/member/get", id);
   },
   addMember(params) {
+    return ApiService.post("/member/add-club-admin", params);
+  },
+  addMember2(params) {
     return ApiService.post("/member/add-member", params);
   },
   put(params) {
@@ -195,7 +198,11 @@ export const memberService = {
   },
   deleteAvatar(data) {
     return ApiService.post("member/remove-avatar");
-  }
+  },
+  updateCommission(commission){ 
+    return ApiService.post("club-admin/update-commision",commission);
+
+  },
 };
 export const adminService = {
   query(params) {

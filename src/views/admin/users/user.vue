@@ -40,8 +40,8 @@
           class="gx-sm-full"
           style="margin-bottom: 12px;background-color: rgb(39, 174, 96) !important;  height:35px; border-color:rgb(39, 174, 96) !important;"
           @click="addMemberModal"
-          >Add Club Member</a-button
-        > 
+          >Add Club Admin</a-button
+        >
       </a-col>
       <a-col :span="24">
         <a-card class="gx-card-table-full gx-table-responsive">
@@ -53,10 +53,10 @@
       :visible="inviteMemberVisible"
       @close="closeMemberModal"
     ></invite-member-modal>
-    <add-member-modal
+    <add-club-modal
       :visible="addMemberVisible"
       @close="closeMemberModal"
-    ></add-member-modal>
+    ></add-club-modal>
   </n-page>
 </template>
 
@@ -64,14 +64,15 @@
 import NPage from "@/components/ui/n-page/n-page";
 import UserTablelist from "@/components/admin/user/user-table-list";
 import InviteMemberModal from "@/components/club-member/invite-member-modal/invite-member-modal";
-import AddMemberModal from "@/components/club-member/add-member-modal/add-member-modal";
+import AddClubModal from "@/components/club-member/add-club-modal/add-club-modal";
+
 export default {
   name: "Userlist",
   components: {
     InviteMemberModal,
-    AddMemberModal,
+    AddClubModal,
     UserTablelist,
-    NPage
+    NPage,
   },
   data() {
     return {

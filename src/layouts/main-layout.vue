@@ -52,11 +52,7 @@
           <li class="gx-user-nav">
             <a-row type="flex">
               <div
-                class="
-                  ant-avatar
-                  gx-avatar gx-pointer
-                  ant-avatar-circle ant-avatar-image
-                "
+                class="ant-avatar gx-avatar gx-pointer ant-avatar-circle ant-avatar-image"
               >
                 <img alt="" :src="userProfileAvatar" />
               </div>
@@ -71,7 +67,7 @@
                 >
                   <a
                     class="ant-dropdown-link"
-                    @click="(e) => e.preventDefault()" 
+                    @click="(e) => e.preventDefault()"
                   >
                     {{ this.UserName }} <a-icon type="setting" />
                   </a>
@@ -186,9 +182,6 @@ export default {
       Coach:"",
       Member:"",
       Coach:""
-
-
-
     };
   },
   computed: {
@@ -213,21 +206,18 @@ export default {
           this.ClubAdmin = "Current login as Club Admin";
           this.Coach = "Switch to Coach";
     }
-
     if(this.user.select_role == "member"){
           this.UserName   = "Member";
           this.Member = "Current login as Member";
           this.ClubAdmin = "Switch to Club Admin";
           this.Coach = "Switch to Coach";
     }
-
     if(this.user.select_role == "coach"){
           this.UserName   = "Coach";
           this.Member = "Switch to Member";
           this.ClubAdmin = "Switch to Club Admin";
           this.Coach = "Current login as Coach";
      }
-
     if (!this.user.user) {
       this.$router.push("/login");
     }
@@ -273,7 +263,6 @@ export default {
       if (role === "coach") {
         this.UserName = "Coach";
       }
-
       const roles = this.user.user_type;
       if (roles.indexOf(role) !== -1) {
         let userData = JSON.parse(localStorage.getItem("auth-user"));
@@ -341,18 +330,18 @@ export default {
   margin-top: 0px;
 }
 .gx-user-nav--name {
-    font-size: 16px;
-    padding: 2px 8px;
+  font-size: 16px;
+  padding: 2px 8px;
 }
 .switch-as i.anticon.anticon-down {
-    color: #ffc107;
-    border: 3px solid #003366;
-    /* box-shadow: 0 0 6px #ffc107; */
-    background-color: #003366;
-    color: #fff;
-    border-radius: 29px;
-        /* animation: animate 3s linear infinite; */
-    padding: 3px 3px;
+  color: #ffc107;
+  border: 3px solid #003366;
+  /* box-shadow: 0 0 6px #ffc107; */
+  background-color: #003366;
+  color: #fff;
+  border-radius: 29px;
+  /* animation: animate 3s linear infinite; */
+  padding: 3px 3px;
 }
 @keyframes animate {
   from {
@@ -362,5 +351,4 @@ export default {
     filter: hue-rotate(360deg);
   }
 }
-
 </style>
