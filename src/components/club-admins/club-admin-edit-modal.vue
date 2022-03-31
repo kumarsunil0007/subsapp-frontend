@@ -100,8 +100,28 @@ export default {
             ]
           }
         ],
-        phone: ["phone"],
-        address_1: ["address_1"]
+        phone: [
+          "phone",
+          {
+            rules: [
+              {
+                required: true,
+                message: "Your phone number is required"
+              }
+            ]
+          }
+        ],
+      address_1: [
+          "address_1",
+          {
+            rules: [
+              {
+                required: true,
+                message: "Your addreess is required"
+              }
+            ]
+          }
+        ],
       }
     };
   },
@@ -166,6 +186,7 @@ export default {
     handleFormSubmit(values) {
       this.loading = true;
       clubAdminsService
+
         .put({
           ...values,
           id: this.adminId

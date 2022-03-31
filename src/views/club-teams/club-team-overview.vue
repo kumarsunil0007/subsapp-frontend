@@ -17,7 +17,9 @@
                 New Session
               </a-button>
             </div>
-            <team-schedule-table ref="schedule_list" :club-id="team.id">
+            <team-schedule-table 
+            ref="schedule_list" 
+            :club-id="team.id">
             </team-schedule-table>
           </a-card>
         </a-col>
