@@ -1,5 +1,5 @@
 <template>
-  <a-row type="flex" justify="space-around" align="middle">
+  <a-row type="flex">
    
     <a-col class="card-number" :xs="24" :sm="24" :md="24" :lg="14">
       <a-icon type="credit-card" />
