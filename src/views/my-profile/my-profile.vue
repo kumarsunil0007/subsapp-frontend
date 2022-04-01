@@ -13,11 +13,6 @@
               />
             </template>
             <a-form-item>
-              <!-- <a-upload :before-upload="beforeUpload" :file-list="fileList" :remove="handleRemove" >
-                <a-button @click="handleUpload">
-                  <a-icon type="upload" /> Change your profile picture
-                </a-button>
-              </a-upload> -->
               <a-upload
                 :file-list="fileList"
                 :remove="handleRemove"
@@ -37,6 +32,9 @@
               </a-button>
             </a-form-item>
 
+             <a-form-item>
+              <button @click="removeImage()">Remove image</button>
+            </a-form-item>
             <a-form-item label="First Name">
               <a-input
                 v-decorator="[
@@ -100,7 +98,7 @@
               />
             </a-form-item>
 
-            <a-form-item label="Emergency Name">
+              <a-form-item label="Emergency Name">
               <a-input v-decorator="['emergency_name']" type="text"> </a-input>
             </a-form-item>
             <a-form-item label="Emergency Phone">
@@ -390,7 +388,25 @@ export default {
       const newFileList = this.fileList.slice();
       newFileList.splice(index, 1);
       this.fileList = newFileList;
-    }
+    },
+    removeImage () {
+      memberService
+        .deleteAvatar()
+        .then(resp => {
+          if (resp.data.success === true) {
+            notifications.success("Profile Image Remove Succesfully.");
+            this.fileList = [];
+            this.fetchProfile();
+          } else {
+            notifications.warn(resp.data.message);
+          }
+        })
+        .catch(() => {
+
+          notifications.warn("Server error");
+        });
+    },
   }
+  
 };
 </script>
