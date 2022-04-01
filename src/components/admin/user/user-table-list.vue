@@ -58,7 +58,7 @@
     </template>
     <a-form :form="form" layout="vertical">
       <div class="info">
-        <a-form-item label="commission">
+        <a-form-item label="Commission">
           <a-input v-decorator="fields.commission" placeholder="Enter Commission" />
         </a-form-item>
       </div>
@@ -114,16 +114,6 @@ const columns = [
     dataIndex: "club_admin",
     key: "club_admin"
   },
-
-  {
-    title: "Commission",
-    dataIndex: "commission",
-    key: "commission",
-    scopedSlots: {
-      customRender: "commission"
-    }
-  },
-
   {
     title: "Commission",
     dataIndex: "commission",
@@ -139,8 +129,7 @@ const columns = [
       customRender: "handlers"
     }
   },
-
-    {
+  {
     dataIndex: "handlers2",
     key: "handlers2",
     scopedSlots: {

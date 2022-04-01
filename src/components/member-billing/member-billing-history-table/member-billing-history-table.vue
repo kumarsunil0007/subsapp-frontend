@@ -12,7 +12,7 @@
       </div>
       <div slot="total" slot-scope="text">€{{ formatMoney(text) }}</div>
       <div slot="refund" slot-scope="text, row">
-        <p v-if="row.refund_amount > 0">{{ row.refund_amount }}</p>
+        <p v-if="row.refund_amount > 0">€{{ row.refund_amount }}</p>
         <p v-else>-</p>
       </div>
       <div slot="transaction" slot-scope="text, row">
@@ -56,7 +56,7 @@
           </p>
           <p v-if="selectedInvoice.refund_amount > 0">
             <strong>Refund Amount:</strong>
-            <span> {{ selectedInvoice.refund_amount }}</span>
+            <span> €{{ formatMoney(selectedInvoice.refund_amount) }}</span>
           </p>
           <p v-if="selectedInvoice.created_at">
             <strong>Created At:</strong>

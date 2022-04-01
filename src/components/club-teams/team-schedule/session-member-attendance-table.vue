@@ -67,13 +67,49 @@
         </a-popconfirm>
       </div>
       <div v-else>
-
-                  <a-popconfirm
+        <a-popconfirm
           v-if="record.schedule && record.schedule.id"
           placement="top"
           ok-text="Yes"
           cancel-text="No"
-          @confirm="removeMemberAttendance(record)"
+          @confirm="removeTeamMember(record)"
+        >
+          <template slot="title">
+            <p>Are you sure to mark Absent</p>
+          </template>
+          <a-button
+            class="gx-btn-success gx-mb-0"
+            icon="check"
+            :loading="select_member === record.member.id && loader"
+            :disabled="select_member === record.member.id && loader"
+          >
+            Present
+          </a-button>
+        </a-popconfirm>
+        <a-popconfirm
+          v-else
+          placement="top"
+          ok-text="Yes"
+          cancel-text="No"
+          @confirm="createNewSchedule(record)"
+        >
+          <template slot="title">
+            <p>Are you sure to mark Present</p>
+          </template>
+          <a-button
+            class="gx-btn-danger gx-mb-0"
+            :loading="select_member === record.member.id && loading"
+            :disabled="select_member === record.member.id && loading"
+            >Absent</a-button
+          >
+        </a-popconfirm>
+
+        <a-popconfirm
+          v-if="record.schedule && record.schedule.id"
+          placement="top"
+          ok-text="Yes"
+          cancel-text="No"
+          @confirm="refundAmount(record)"
         >
           <template slot="title">
             <p>Please select the Refund type</p>
@@ -96,30 +132,11 @@
           </template>
           <a-button
             class="gx-btn-danger gx-mb-0"
-            icon="check"
-            :loading="select_member === record.member.id && loader"
-            :disabled="select_member === record.member.id && loader"
-            >Mark Absent</a-button
+            :loading="select_member === record.member.id && refundLoading"
+            :disabled="select_member === record.member.id && refundLoading"
+            >Refund</a-button
           >
         </a-popconfirm>
-        <a-popconfirm
-          v-else
-          placement="top"
-          ok-text="Yes"
-          cancel-text="No"
-          @confirm="createNewSchedule(record)"
-        >
-          <template slot="title">
-            <p>Are you sure to mark Present</p>
-          </template>
-          <a-button
-            class="gx-btn-success gx-mb-0"
-            :loading="select_member === record.member.id && loading"
-            :disabled="select_member === record.member.id && loading"
-            >Mark Present</a-button
-          >
-        </a-popconfirm>
-
       </div>
     </div>
   </a-table>
