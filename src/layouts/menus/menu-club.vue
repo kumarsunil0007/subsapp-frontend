@@ -1,3 +1,4 @@
+
 <template>
   <a-menu theme="dark" mode="inline">
     <a-menu-item-group key="g2" class="gx-menu-group">

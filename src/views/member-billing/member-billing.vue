@@ -4,7 +4,7 @@
       <a-col :xs="24" :sm="24" :md="12">
         <div class="add-new-card gx-text-right">
           <a-button type="primary" @click="openNewCardModal">
-            Add new Card
+            Add new Card 
           </a-button>
         </div>
         <a-card title="Active Cards" class="gx-card-full">

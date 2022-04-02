@@ -111,16 +111,23 @@ export default {
         })
         .then(resp => {
           if (resp) {
+
+            const no_of_cards = store.state.auth.user.no_of_cards;
+            const invitation_email = store.state.auth.user.user.invitation_email;
             const role = store.state.auth.user.select_role;
-             
-            //  var  no_of_cards = store.state.auth.user.no_of_cards;
              
              if (role === "admin") {
                this.$router.replace("/admin");
              }
-            else{
-              this.$router.replace("/dashboard");
-            }
+
+
+             if(role === "member" && no_of_cards =="0" && invitation_email == "1" ){
+                this.$router.replace("/my-billing");
+                this.$swal(' Welcome to your new Club, please fill in your card details to view your upcoming events.');
+             }
+             else{
+               this.$router.replace("/dashboard");
+             }
           
           }
           this.loginLoading = false;
@@ -132,7 +139,19 @@ export default {
   }
 };
 </script>
+<style>
+.swal2-title {
+    position: relative;
+    max-width: 100%;
+    margin: 20px !important;
+    padding: 0.8em 1em 0;
+    color: inherit;
+    font-size: 20px !important;
+    font-weight: 100;
+}
+</style>
 
+</style>
 <style lang="scss">
 .form-divider {
   position: relative;

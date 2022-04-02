@@ -115,7 +115,7 @@ const columns = [
     key: "club_admin"
   },
   {
-    title: "Commission",
+    title: "Commission(%)",
     dataIndex: "commission",
     key: "commission",
     scopedSlots: {
