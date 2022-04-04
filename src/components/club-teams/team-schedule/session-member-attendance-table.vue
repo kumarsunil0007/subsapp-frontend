@@ -289,7 +289,6 @@ export default {
       });
       this.refundLoading = false;
       this.$store.dispatch(GET_SESSION_INVOICES, this.sessionId);
-      this.amount = 0;
       this.getTeamSchedule();
     },
     async removeTeamMember(row) {
