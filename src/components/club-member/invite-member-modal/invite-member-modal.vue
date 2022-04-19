@@ -27,10 +27,10 @@
         <a-col :span="6">
           {{ member.first_name }} {{ member.last_name }}..
         </a-col>
-        <a-col :span="12">
+        <a-col :span="8">
           {{ member.work_email }}
         </a-col>
-        <a-col :span="6" class="gx-text-right">
+        <a-col :span="10" class="gx-text-right">
           <a-button
             v-if="!member.status || member.status === 'decline'"
             block
@@ -47,8 +47,8 @@
                 member.status === 'archive'
             "
             type="danger"
-            block
             size="small"
+            style="margin-bottom:5px;margin-right:0"
             :loading="loader && selectId === member.id"
           >
             <template v-if="member.status === 'invite'"
@@ -59,12 +59,30 @@
               >Already a Member</template
             >
           </a-button>
+         <a-button
+          v-if="member.status === 'invite'"
+          size="small"
+          class="gx-btn-red gx-fs-sm"
+          type="primary"
+          style="margin-bottom:5px;margin-right:8px"
+          @click="updateClubMember(member.id, 'inviteModal')"
+          >Resend Invite</a-button
+        >
+        <a-button
+          v-if="member.status === 'invite'"
+          size="small"
+          class="gx-btn-red gx-fs-sm"
+          style="margin-bottom:5px;"
+          @click="updateClubMember(member.id, 'cancelModal')"
+          >Cancel Invite</a-button
+        >
         </a-col>
       </a-row>
     </div>
     <div v-if="members.length < 1 && error_msg" class="gx-text-center">
       Member not found
     </div>
+    <vue-instant-loading-spinner ref="Spinner"></vue-instant-loading-spinner>
     <div slot="footer"></div>
   </a-modal>
 </template>
@@ -72,10 +90,14 @@
 <script>
 import notifications from "@/common/notifications/notification.service";
 import { memberService } from "@/common/api/api.service";
+import VueInstantLoadingSpinner from 'vue-instant-loading-spinner/src/components/VueInstantLoadingSpinner.vue'
 import { mapGetters } from "vuex";
 
 export default {
   name: "InviteMemberModal",
+  components: {
+    VueInstantLoadingSpinner
+  },
   props: {
     visible: {
       default: false,
@@ -128,6 +150,36 @@ export default {
           this.loader = false;
         });
     },
+
+   updateClubMember(memberId, status) {
+      this.$refs.Spinner.show();
+          setTimeout(function () {
+          this.$refs.Spinner.hide();
+          }.bind(this), 4000);
+      memberService
+        .updateClubMember(memberId, {
+          status: status,
+          role: this.AUTH_USER.select_role,
+          url: window.location.origin
+        })
+        .then(resp => {
+          if (resp.data.success) {
+            if(status == "cancelModal"){
+              notifications.warn("Member Invitation Cancel Successfully");
+              this.close();
+            }
+            else if(status == "inviteModal")
+            {
+              notifications.warn("Member Invitation Resend Successfully");
+              this.close();
+            }
+          } else {
+            notifications.warn(resp.data.message);
+            this.close();
+          }
+        });
+    },
+
     searchEmails() {
       this.error_msg = false;
       memberService

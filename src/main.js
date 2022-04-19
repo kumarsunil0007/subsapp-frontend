@@ -10,34 +10,34 @@ import api from "@/common/api/api.service";
 
 
 import {
-  Button,
-  Layout,
-  Row,
-  TimePicker,
-  Checkbox,
-  DatePicker,
-  Col,
-  Carousel,
-  Upload,
-  Breadcrumb,
-  Table,
-  Menu,
-  Tooltip,
-  Modal,
-  Form,
-  Input,
-  Collapse,
-  Icon,
-  Alert,
-  Drawer,
-  Card,
-  Select,
-  Dropdown,
-  Statistic,
-  Tag,
-  Divider,
-  Popconfirm,
-  Radio
+    Button,
+    Layout,
+    Row,
+    TimePicker,
+    Checkbox,
+    DatePicker,
+    Col,
+    Carousel,
+    Upload,
+    Breadcrumb,
+    Table,
+    Menu,
+    Tooltip,
+    Modal,
+    Form,
+    Input,
+    Collapse,
+    Icon,
+    Alert,
+    Drawer,
+    Card,
+    Select,
+    Dropdown,
+    Statistic,
+    Tag,
+    Divider,
+    Popconfirm,
+    Radio
 } from "ant-design-vue";
 import "./styles/wieldy.less";
 import "./assets/style";
@@ -46,6 +46,7 @@ import vueCountryRegionSelect from "vue-country-region-select";
 import Notifications from "vue-notification";
 import { Spin } from "ant-design-vue";
 import VueSweetalert2 from 'vue-sweetalert2';
+
 
 import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(VueSweetalert2);
@@ -90,16 +91,10 @@ Vue.use(Radio);
 Vue.config.productionTip = false;
 
 Vue.use(vueCountryRegionSelect);
-
-
 //Vue.prototype.$datetime;
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount("#app");
-
-
-
-

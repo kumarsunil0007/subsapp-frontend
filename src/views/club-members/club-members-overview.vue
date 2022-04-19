@@ -107,8 +107,14 @@ export default {
 
     closeMemberModal() {
       if (this.inviteMemberVisible) {
+<<<<<<< Updated upstream
         this.$refs.club_member_Listing.getClubMembers();
         this.inviteMemberVisible = false;
+=======
+       // this.$refs.club_member_Listing.getClubMembers();
+        this.inviteMemberVisible = false;
+    
+>>>>>>> Stashed changes
       }
       if (this.addMemberVisible) {
         this.$refs.club_member_Listing.getClubMembers();
