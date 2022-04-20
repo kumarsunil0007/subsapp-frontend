@@ -95,6 +95,8 @@
           @click="updateClubMember(record.id, 'cancel')"
           >Cancel Invite</a-button
         >
+
+
       </div>
     </a-table>
     <search-team-modal
