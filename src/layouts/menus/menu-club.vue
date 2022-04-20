@@ -136,12 +136,7 @@
          <a-icon type="logout" />
           <span>Logout</span>
         </router-link>
-    </nav> 
-
-
-
-
-  
+    </nav>   
 </template>
 
 <script>
