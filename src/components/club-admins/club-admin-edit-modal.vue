@@ -1,9 +1,7 @@
 <template>
   <a-modal :visible="visible" title="Manage Coach" @cancel="close">
     <template slot="footer">
-      <a-button key="back" @click="close">
-        Cancel
-      </a-button>
+      <a-button key="back" @click="close">Cancel</a-button>
       <a-button
         key="submit"
         type="primary"
@@ -31,6 +29,7 @@
           placeholder="Phone"
           type="number"
           min="0"
+          max="16"
           addon-before="+353"
         >
         </a-input>
@@ -161,6 +160,7 @@ export default {
           })
           .catch(err => {
             this.dataLoading = false;
+            console.log(err);
             notifications.warn(
               "We could not load this user, please try again or contact support."
             );
