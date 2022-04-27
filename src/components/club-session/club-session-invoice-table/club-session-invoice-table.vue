@@ -36,7 +36,7 @@ const columns = [
     }
   },
   {
-    title: "Total+Taxes",
+    title: "Total",
     dataIndex: "total",
     key: "total",
     scopedSlots: {
