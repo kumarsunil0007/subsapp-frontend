@@ -1,7 +1,7 @@
 <template>
   <a-modal
     :visible="visible"
-    title="Add a new Card www"
+    title="Add a new Card"
     ok-text=""
     class="hide-ok-button"
     @cancel="close"
