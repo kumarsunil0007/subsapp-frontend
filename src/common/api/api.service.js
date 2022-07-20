@@ -42,9 +42,17 @@ const ApiService = {
 
   get(resource, slug = "") {
     ApiService.setHeader();
-    return Vue.axios.get(`${resource}/${slug}`).catch(error => {
-      throw new Error(`[RWV] ApiService ${error}`);
-    });
+    if(slug != "") {
+      return Vue.axios.get(`${resource}/${slug}`).catch(error => {
+        throw new Error(`[RWV] ApiService ${error}`);
+      });
+    }
+    else {
+      return Vue.axios.get(`${resource}`).catch(error => {
+        throw new Error(`[RWV] ApiService ${error}`);
+      });
+    }
+    
   },
 
   post(resource, params) {
@@ -84,6 +92,9 @@ const ApiService = {
 export const authService = {
   login(params) {
     return ApiService.post("/auth/login", params);
+  },
+  init(){
+    return ApiService.get("/init");
   },
   logout() {
     return ApiService.post("/auth/logout");
@@ -365,6 +376,7 @@ export const billingService = {
   redirectStripe(){
     return ApiService.post("/stripe-create-account");
   },
+ 
   listBankDetails(){
       return ApiService.post('/account-list');
   }

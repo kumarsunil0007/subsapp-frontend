@@ -29,7 +29,7 @@
           placeholder="Phone"
           type="number"
           min="0"
-          max="16"
+          maxlength="16"
           addon-before="+353"
         >
         </a-input>

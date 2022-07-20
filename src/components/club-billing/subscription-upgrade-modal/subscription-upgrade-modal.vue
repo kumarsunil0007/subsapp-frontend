@@ -88,7 +88,7 @@
               <div class="gx-package-footer">
                 <a-button
                   class="gx-btn-cyan"
-                  @click="attemptUpgrade('price_1KjIINCg8u1Dv8tMWEa3IRa0')"
+                  @click="attemptUpgrade('price_1KjIINCg8u1Dv8tMWEa3IRa0', 1)"
                 >
                   Select Plan
                 </a-button>
@@ -128,7 +128,7 @@
               <div class="gx-package-footer">
                 <a-button
                   class="gx-btn-cyan"
-                  @click="attemptUpgrade('price_1KjIItCg8u1Dv8tMzdst1LKV')"
+                  @click="attemptUpgrade('price_1KjIItCg8u1Dv8tMzdst1LKV', 2)"
                 >
                   Select Plan
                 </a-button>
@@ -215,11 +215,12 @@ export default {
     }
   },
   methods: {
-    attemptUpgrade(plan) {
+    attemptUpgrade(plan, id) {
       this.spinning = true;
       billingService
         .attemptUpgrade({
-          planId: plan
+          planId: plan,
+          id: id
         })
         .then(resp => {
           this.spinning = false;

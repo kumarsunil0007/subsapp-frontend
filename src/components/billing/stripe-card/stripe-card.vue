@@ -28,6 +28,9 @@
           @change="cvc = $event.complete"
         />
       </a-col>
+      <a-col :span="24" v-if="isStripeError" class="stripe-error">
+        {{isStripeErrorMessage}}
+      </a-col>
       <a-col :span="24">
         <a-button block type="primary" @click="getToken">Save</a-button>
       </a-col>
@@ -60,7 +63,9 @@ export default {
       complete: false,
       number: false,
       expiry: false,
-      cvc: false
+      cvc: false,
+      isStripeError: false,
+      isStripeErrorMessage: null
     };
   },
   watch: {
@@ -77,7 +82,14 @@ export default {
   methods: {
     getToken() {
       createToken().then(resp => {
-        this.$emit("token", resp.token);
+        if(resp.error) {
+          this.isStripeErrorMessage = resp.error.message
+          this.isStripeError = true
+        }
+        else {
+          this.$emit("token", resp.token);
+        }
+        
       });
     },
     update() {
@@ -135,5 +147,9 @@ export default {
 }
 .credit-card-inputs.complete {
   border: 2px solid green;
+}
+.stripe-error {
+  color:red;
+  padding:10px;
 }
 </style>

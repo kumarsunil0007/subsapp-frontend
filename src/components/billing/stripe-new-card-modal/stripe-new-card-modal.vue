@@ -1,7 +1,7 @@
 <template>
   <a-modal
     :visible="visible"
-    title="Add a new Card"
+    title="Add a new Card www"
     ok-text=""
     class="hide-ok-button"
     @cancel="close"
@@ -13,7 +13,7 @@
 
     <stripe-card
       v-if="visible"
-      stripe="pk_test_vtiw9yjBNR5blLsfDUKMA3pY"
+      :stripe="stripePublicKey"
       :options="{}"
       @token="saveCard"
     />
@@ -41,6 +41,7 @@
 import nTime from "@/mixins/time";
 import nCurrency from "@/mixins/currency";
 import StripeCard from "@/components/billing/stripe-card/stripe-card";
+import { authService } from "@/common/api/api.service";
 
 export default {
   name: "StripeNewCardModal",
@@ -54,7 +55,12 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      stripePublicKey: null
+    };
+  },
+  mounted() {
+    this.getPublicKey()
   },
   methods: {
     saveCard(tk) {
@@ -63,6 +69,15 @@ export default {
     },
     close() {
       this.$emit("close");
+    },
+    getPublicKey() {
+      authService
+        .init()
+        .then(resp => {
+          console.log("resp => ", resp)
+          console.log("resp 11 => ", resp.data)
+          this.stripePublicKey = resp.data.success ? resp.data.data.stripe_pk : 'pk_test_vtiw9yjBNR5blLsfDUKMA3pY'
+        });
     }
   }
 };

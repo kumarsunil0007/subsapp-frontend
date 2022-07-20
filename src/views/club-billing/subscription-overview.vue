@@ -79,7 +79,7 @@
         <a-alert
           v-if="error_msg"
           message="Error"
-          description="Something went wrong, we could not add this card."
+          :description="stripeErrorMsg"
           type="error"
           closable
           show-icon
@@ -144,7 +144,7 @@
         <a-alert
           v-if="error_msg"
           message="Error"
-          description="Something went wrong, we could not add this card."
+          :description="stripeErrorMsg"
           type="error"
           closable
           show-icon
@@ -234,6 +234,7 @@ export default {
       bankLoading:false,
       subscriptions: [],
       error_msg: false,
+      stripeErrorMsg: null,
       teams: 0,
       members: 0
     };
@@ -336,6 +337,7 @@ export default {
         .then(resp => {
           if (!resp.data.success) {
             this.error_msg = true;
+            this.stripeErrorMsg = resp.data.message
           }
           this.listCards();
           this.fetchBankDetails();
