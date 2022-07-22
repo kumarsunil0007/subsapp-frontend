@@ -94,9 +94,15 @@
               <a-col :xs="12" :sm="14" :md="12" :lg="14">
                 Active Cards
               </a-col>
-              <a-col :xs="12" :sm="10" :md="12" :lg="10">
+              <a-col
+                :xs="12"
+                :sm="10"
+                :md="12"
+                :lg="10"
+                style="text-align:right;"
+              >
                 <a-button
-                  block
+                  inline-block
                   type="primary"
                   style="margin:0;"
                   size="small"
@@ -158,15 +164,21 @@
               <a-col :xs="12" :sm="14" :md="12" :lg="14">
                 Active Bank Detail
               </a-col>
-              <a-col :xs="12" :sm="10" :md="12" :lg="10">
+              <a-col
+                :xs="12"
+                :sm="10"
+                :md="12"
+                :lg="10"
+                style="text-align:right;"
+              >
                 <a-button
-                  block
+                  inline-block
                   type="primary"
                   style="margin:0;"
                   size="small"
                   @click="redirectStripeAccount"
                 >
-                  Add Bank Account 
+                  Add Bank Account
                 </a-button>
               </a-col>
             </a-row>
