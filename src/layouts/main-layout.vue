@@ -50,7 +50,7 @@
 
         <ul v-if="user && user.user" class="gx-header-notifications gx-ml-auto">
           <li class="gx-user-nav">
-            <a-row type="flex">
+            <a-row type="flex" style="align-items: center;">
               <div
                 class="ant-avatar gx-avatar gx-pointer ant-avatar-circle ant-avatar-image"
               >
