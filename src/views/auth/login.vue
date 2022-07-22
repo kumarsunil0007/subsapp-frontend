@@ -8,7 +8,7 @@
           </div>
           <div class="login-brand">
             <img
-              style="max-height: 80px;"
+              style="max-height: 80px"
               alt="SubsApp"
               src="@/assets/regular-logo.png"
             />
@@ -82,7 +82,7 @@
 import {
   AUTH_MESSAGE,
   AUTH_REQUEST,
-  AUTH_STATUS
+  AUTH_STATUS,
 } from "@/store/modules/auth/auth-actions";
 import { mapGetters } from "vuex";
 import store from "@/store/index";
@@ -92,14 +92,14 @@ export default {
     return {
       username: "",
       password: "",
-      loginLoading: false
+      loginLoading: false,
     };
   },
   computed: {
     ...mapGetters({
       status: AUTH_STATUS,
-      message: AUTH_MESSAGE
-    })
+      message: AUTH_MESSAGE,
+    }),
   },
   methods: {
     login() {
@@ -107,47 +107,52 @@ export default {
       this.$store
         .dispatch(AUTH_REQUEST, {
           username: this.username,
-          password: this.password
+          password: this.password,
         })
-        .then(resp => {
+        .then((resp) => {
           if (resp) {
-
             const no_of_cards = store.state.auth.user.no_of_cards;
-            const invitation_email = store.state.auth.user.user.invitation_email;
+            const invitation_email =
+              store.state.auth.user.user.invitation_email;
             const role = store.state.auth.user.select_role;
-             
-             if (role === "admin") {
-               this.$router.replace("/admin");
-             }
-
-
-             if(role === "member" && no_of_cards =="0" && invitation_email == "1" ){
-                this.$router.replace("/my-billing");
-                this.$swal(' Welcome to your new Club, please fill in your card details to view your upcoming events.');
-             }
-             else{
-               this.$router.replace("/dashboard");
-             }
-          
+            if (role === "admin") {
+              this.$router.replace("/admin");
+            } else if (
+              role === "club_admin" &&
+              window.localStorage.getItem("isSubscribed") == "false"
+            ) {
+              this.$router.replace("/subscription");
+            } else if (
+              role === "member" &&
+              no_of_cards == "0" &&
+              invitation_email == "1"
+            ) {
+              this.$router.replace("/my-billing");
+              this.$swal(
+                " Welcome to your new Club, please fill in your card details to view your upcoming events."
+              );
+            } else {
+              this.$router.replace("/dashboard");
+            }
           }
           this.loginLoading = false;
         })
         .catch(() => {
           this.loginLoading = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
 .swal2-title {
-    position: relative;
-    max-width: 100%;
-    margin: 20px !important;
-    padding: 0.8em 1em 0;
-    color: inherit;
-    font-size: 20px !important;
-    font-weight: 100;
+  position: relative;
+  max-width: 100%;
+  margin: 20px !important;
+  padding: 0.8em 1em 0;
+  color: inherit;
+  font-size: 20px !important;
+  font-weight: 100;
 }
 </style>
 

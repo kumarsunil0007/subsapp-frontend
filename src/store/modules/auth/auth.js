@@ -84,11 +84,12 @@ const actions = {
             let userData = JSON.stringify({
               user: resp.data.user,
               user_type: resp.data.user_type,
-              no_of_cards : resp.data.no_of_cards,
+              no_of_cards: resp.data.no_of_cards,
               select_role: select_role,
               app: resp.data.app
             });
             window.localStorage.setItem("auth-user", userData);
+            window.localStorage.setItem("isSubscribed", resp.data.isSubscribed);
             window.localStorage.setItem(
               "subscription",
               JSON.stringify(resp.data.subscription)
@@ -116,6 +117,7 @@ const actions = {
         .logout()
         // eslint-disable-next-line no-unused-vars
         .then(resp => {
+          window.localStorage.setItem("isSubscribed", false);
           commit(AUTH_LOGOUT);
           resolve(true);
         })
