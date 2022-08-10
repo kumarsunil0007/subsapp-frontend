@@ -14,7 +14,7 @@
       <a-menu-item key="users" @click="hideSidebar">
         <router-link to="/admin/users">
           <a-icon type="user" />
-          <span>Club Admins</span>
+          <span>Club Admins</span><LeftOutlined />
         </router-link>
       </a-menu-item>
       <!-- <a-menu-item key="my_profile" @click="hideSidebar">
@@ -107,5 +107,3 @@ export default {
   }
 };
 </script>
-
-<style scoped></style>
