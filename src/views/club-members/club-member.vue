@@ -2,7 +2,7 @@
   <n-page padding>
     <club-member-header :member="member"></club-member-header>
     <a-row>
-      <a-col :xxl="8" :lg="12" :md="12" :sm="24" :xs="24">
+      <a-col :xxl="8" :lg="12" :md="24" :sm="24" :xs="24">
         <a-card class="gx-card-widget" title="Personal Details">
           <club-member-details :member="member" />
           <p v-if="pageLoading" style="text-align: center"><a-spin /></p>

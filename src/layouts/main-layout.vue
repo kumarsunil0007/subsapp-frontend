@@ -13,7 +13,7 @@
             :type="collapsed ? 'menu-unfold' : 'menu-fold'"
             :class="{
               'icon-menu-unfold': collapsed,
-              'icon-menu-fold': !collapsed,
+              'icon-menu-fold': !collapsed
             }"
             @click="toggleSidebar()"
           ></i>
@@ -65,10 +65,7 @@
                   :trigger="['click']"
                   class="switch-as"
                 >
-                  <a
-                    class="ant-dropdown-link"
-                    @click="(e) => e.preventDefault()"
-                  >
+                  <a class="ant-dropdown-link" @click="e => e.preventDefault()">
                     {{ this.UserName }} <a-icon type="setting" />
                   </a>
 
@@ -91,7 +88,7 @@
                       <a
                         class="switch-as-users"
                         @click.prevent="setRole('club_admin')"
-                        >{{this.ClubAdmin}}</a
+                        >{{ this.ClubAdmin }}</a
                       >
                     </a-menu-item>
                     <a-menu-item
@@ -101,7 +98,7 @@
                       <a
                         class="switch-as-users"
                         @click.prevent="setRole('coach')"
-                        >{{this.Coach}}</a
+                        >{{ this.Coach }}</a
                       >
                     </a-menu-item>
                     <a-menu-item
@@ -111,7 +108,7 @@
                       <a
                         class="switch-as-users"
                         @click.prevent="setRole('member')"
-                        >{{this.Member}}</a
+                        >{{ this.Member }}</a
                       >
                     </a-menu-item>
                   </a-menu>
@@ -132,14 +129,14 @@
         <a-button
           v-if="
             $route.path !== '/' &&
-            $route.path !== '/admin' &&
-            $route.path !== '/dashboard'
+              $route.path !== '/admin' &&
+              $route.path !== '/dashboard'
           "
           block
-          class="back-button"
+          class="back-button gx-mb-0"
           @click="$router.go(-1)"
         >
-          GO BACK {{ $router.path }}
+          <a-icon type="left" />Go Back {{ $router.path }}
         </a-button>
         <router-view />
       </a-layout-content>
@@ -165,7 +162,7 @@
 <script>
 import {
   AUTH_USER,
-  AUTH_SUBSCRIPTION,
+  AUTH_SUBSCRIPTION
 } from "@/store/modules/auth/auth-actions";
 import { UITypes } from "@/store/modules/ui/ui-actions";
 import { mapGetters } from "vuex";
@@ -177,51 +174,49 @@ export default {
   data() {
     return {
       selectRole: "",
-      UserName:"",
-      ClubAdmin:"",
-      Coach:"",
-      Member:"",
-      Coach:""
+      UserName: "",
+      ClubAdmin: "",
+      Coach: "",
+      Member: ""
     };
   },
   computed: {
     ...mapGetters({
       user: AUTH_USER,
       sub: AUTH_SUBSCRIPTION,
-      collapsed: UITypes.getters.GET_SIDEBAR,
+      collapsed: UITypes.getters.GET_SIDEBAR
     }),
-    userProfileAvatar: function () {
+    userProfileAvatar: function() {
       if (this.user.user.profile.image) {
         return this.user.user.profile.image;
       } else {
         return "https://api.subsapp.com/missing.png";
       }
-    },
+    }
   },
   mounted() {
     this.selectRole = this.user.user_type[0];
-    if(this.user.select_role == "club_admin"){
-          this.UserName   = "Club Admin";
-          this.Member = "Switch to Member";
-          this.ClubAdmin = "Current login as Club Admin";
-          this.Coach = "Switch to Coach";
+    if (this.user.select_role == "club_admin") {
+      this.UserName = "Club Admin";
+      this.Member = "Switch to Member";
+      this.ClubAdmin = "Current login as Club Admin";
+      this.Coach = "Switch to Coach";
     }
-    if(this.user.select_role == "member"){
-          this.UserName   = "Member";
-          this.Member = "Current login as Member";
-          this.ClubAdmin = "Switch to Club Admin";
-          this.Coach = "Switch to Coach";
+    if (this.user.select_role == "member") {
+      this.UserName = "Member";
+      this.Member = "Current login as Member";
+      this.ClubAdmin = "Switch to Club Admin";
+      this.Coach = "Switch to Coach";
     }
-    if(this.user.select_role == "coach"){
-          this.UserName   = "Coach";
-          this.Member = "Switch to Member";
-          this.ClubAdmin = "Switch to Club Admin";
-          this.Coach = "Current login as Coach";
-     }
+    if (this.user.select_role == "coach") {
+      this.UserName = "Coach";
+      this.Member = "Switch to Member";
+      this.ClubAdmin = "Switch to Club Admin";
+      this.Coach = "Current login as Coach";
+    }
     if (!this.user.user) {
       this.$router.push("/login");
     }
-
   },
   methods: {
     checkPreviousPath() {
@@ -276,8 +271,8 @@ export default {
           this.$router.replace("/dashboard");
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style>

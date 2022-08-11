@@ -1,6 +1,6 @@
 <template>
   <n-page>
-    <a-row type="flex">
+    <a-row>
       <a-col :xs="24" :sm="24" :md="8">
         <a-card class="subscription-cards">
           <a-row>
@@ -46,7 +46,6 @@
               Schedule new training sessions, add and remove team members and
               manage.
             </div>
-            
           </a-row>
         </a-card>
       </a-col>
@@ -75,7 +74,7 @@
       </a-col>
     </a-row>
     <a-row>
-      <a-col :xs="24" :sm="24" :md="12">
+      <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
         <a-alert
           v-if="error_msg"
           message="Error"
@@ -113,7 +112,7 @@
               </a-col>
             </a-row>
           </div>
-          
+
           <div v-if="cards.length > 0" class="credit-cards">
             <stripe-card-preview
               v-for="(card, index) of cards"
@@ -130,23 +129,6 @@
             />
           </div>
         </a-card>
-      </a-col>
-      <a-col :xs="24" :sm="24" :md="12">
-        <a-card class="gx-card-table-full">
-          <stripe-billing-history-table
-            :billing="billing"
-            :loading="billingLoading"
-          />
-        </a-card>
-      </a-col>
-    </a-row>
-    <stripe-new-card-modal
-      :visible="newCardModalVisible"
-      @token="saveCard"
-      @close="closeNewCardModalVisible"
-    />
-    <a-row>
-      <a-col :xs="24" :sm="24" :md="12">
         <a-alert
           v-if="error_msg"
           message="Error"
@@ -184,28 +166,34 @@
             </a-row>
           </div>
 
-           <div v-if="bank.length > 0" class="credit-cards">
+          <div v-if="bank.length > 0" class="credit-cards">
             <bank-card-preview
               v-for="(bbank, index) of bank"
               :key="index"
               :card="bbank"
             />
           </div>
-          <n-section-loading  v-if="bankLoading" />
+          <n-section-loading v-if="bankLoading" />
           <div v-if="!bankLoading && bank.length === 0">
-            <n-section-empty
-              warning="You have no bank account yet"
-            />
+            <n-section-empty warning="You have no bank account yet" />
           </div>
-          
+        </a-card>
+      </a-col>
+      <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+        <a-card class="gx-card-table-full">
+          <stripe-billing-history-table
+            :billing="billing"
+            :loading="billingLoading"
+          />
         </a-card>
       </a-col>
     </a-row>
-    
+    <stripe-new-card-modal
+      :visible="newCardModalVisible"
+      @token="saveCard"
+      @close="closeNewCardModalVisible"
+    />
   </n-page>
-
-  
-  
 </template>
 
 <script>
@@ -214,7 +202,7 @@ import { billingService } from "@/common/api/api.service";
 import { mapGetters } from "vuex";
 import NPage from "@/components/ui/n-page/n-page";
 import StripeCardPreview from "@/components/billing/stripe-card-preview/stripe-card-preview";
-import BankCardPreview from "@/components/billing/bank-card-preview/bank-card-preview"
+import BankCardPreview from "@/components/billing/bank-card-preview/bank-card-preview";
 import StripeNewCardModal from "@/components/billing/stripe-new-card-modal/stripe-new-card-modal";
 import NSectionEmpty from "@/components/ui/n-section-empty/n-section-empty";
 import StripeBillingHistoryTable from "@/components/billing/stripe-billing-history-table/stripe-billing-history-table";
@@ -240,10 +228,10 @@ export default {
       billing: [],
       plans: [],
       cards: [],
-      bank:[],
+      bank: [],
       cardsLoading: false,
       billingLoading: true,
-      bankLoading:false,
+      bankLoading: false,
       subscriptions: [],
       error_msg: false,
       stripeErrorMsg: null,
@@ -349,13 +337,13 @@ export default {
         .then(resp => {
           if (!resp.data.success) {
             this.error_msg = true;
-            this.stripeErrorMsg = resp.data.message
+            this.stripeErrorMsg = resp.data.message;
           }
           this.listCards();
           this.fetchBankDetails();
         });
     },
-    redirectStripeAccount(){
+    redirectStripeAccount() {
       billingService
         .redirectStripe({
           auth: {
@@ -365,13 +353,12 @@ export default {
         })
         .then(resp => {
           if (resp.data.success) {
-            window.open(resp.data.data, '_blank')
+            window.open(resp.data.data, "_blank");
           }
         });
     },
 
-    
-   fetchBankDetails() {
+    fetchBankDetails() {
       this.bankLoading = false;
       billingService
         .listBankDetails({
@@ -384,13 +371,10 @@ export default {
           this.bankLoading = false;
           if (resp.data.success) {
             this.bank = resp.data.data;
-            console.log("this.bank => ", this.bank)
+            console.log("this.bank => ", this.bank);
           }
         });
     },
-
-
-    
 
     listCards() {
       this.cardsLoading = true;
@@ -465,12 +449,12 @@ i {
   padding-bottom: 8px !important;
   zoom: 1;
 }
-  .subscription-cards{
-  height:160px
+.subscription-cards {
+  height: 160px;
 }
-@media (max-width:1180px){
-  .subscription-cards{
-  height:210px
-}
+@media (max-width: 1180px) {
+  .subscription-cards {
+    height: 210px;
+  }
 }
 </style>

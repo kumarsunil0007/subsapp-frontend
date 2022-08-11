@@ -4,12 +4,12 @@
     :class="[{ 'gx-bg-cyan': sub && sub.active }]"
   >
     <div class="gx-media">
-      <div class="gx-mr-2 gx-mr-xxl-12 text-center" >
+      <div class="gx-mr-2 gx-mr-xxl-12 text-center">
         <a-icon type="euro" class="gx-fs-icon-lg" />
       </div>
       <div class="gx-media-body">
         <a-row type="flex">
-          <a-col v-if="sub && sub.active" :span="24">
+          <a-col v-if="sub && sub.active" :span="24" class="gx-px-0">
             <h4 class="gx-text-white">
               Great! You have an active subscription
             </h4>
@@ -32,8 +32,12 @@
               SubsApp
             </h4>
           </a-col>
-          <a-col :span="24" class="gx-pt-3">
-            <a-button type="primary" @click="openUpgradeModal">
+          <a-col :span="24" class="gx-pt-3 gx-px-0">
+            <a-button
+              type="primary"
+              class="subscription-btn"
+              @click="openUpgradeModal"
+            >
               Select Subscription
             </a-button>
             <a-popconfirm
@@ -41,6 +45,7 @@
               placement="top"
               ok-text="Yes"
               cancel-text="No"
+              class="subscription-btn"
               @confirm="cancelSubscription"
             >
               <template slot="title">
@@ -110,8 +115,6 @@ export default {
       this.$store.dispatch(FETCH_SUBSCRIPTION);
     },
 
-
-
     openUpgradeModal() {
       if (this.cards.length <= 0) {
         notifications.warn("Please add a card to your account first");
@@ -139,11 +142,14 @@ export default {
 </script>
 
 <style scoped>
-@media (max-width:1100px){
-  .subscription-symbol{
-      text-align: center;
+@media (max-width: 1100px) {
+  .subscription-symbol {
+    text-align: center;
     width: 100%;
     margin-bottom: 10px;
-}
+  }
+  button.subscription-btn {
+    font-size: 12px;
+  }
 }
 </style>

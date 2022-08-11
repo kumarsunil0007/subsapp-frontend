@@ -37,16 +37,14 @@
         <a-button
           size="small"
           type="primary"
-          class="gx-sm-full"
-          style="margin-bottom: 12px; margin-right:0px; height:35px; background-color: rgb(39, 174, 96) !important;border-color:rgb(39, 174, 96) !important;"
+          style="margin-bottom: 12px;height:35px; background-color: rgb(39, 174, 96) !important;border-color:rgb(39, 174, 96) !important;"
           @click="addMemberModal"
           >Add Member</a-button
         >
         <a-button
           size="small"
           type="primary"
-          class="gx-sm-full"
-          style="margin-bottom: 12px; height:35px; margin-left:5px"
+          style="margin-bottom: 12px; height:35px"
           @click="openMemberModal"
           >Find & Invite Members</a-button
         >
@@ -70,8 +68,6 @@
     ></add-member-modal>
   </n-page>
 </template>
-
-
 <script>
 import NPage from "@/components/ui/n-page/n-page";
 import ClubMemberTable from "@/components/club-member/club-member-table/club-member-table";

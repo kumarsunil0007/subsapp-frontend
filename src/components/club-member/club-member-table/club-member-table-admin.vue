@@ -8,13 +8,14 @@
       :data-source="schedule"
       @change="handleTableChange"
     >
-      <div slot="work_email" slot-scope="text">
+      <div slot="work_email" slot-scope="text" class="email-block">
         <template
           >{{ text }}
           <a-icon
             type="copy"
             theme="twoTone"
             style="cursor: pointer"
+            class="gx-ml-1"
             @click="copyEmail(text)"
         /></template>
       </div>
@@ -23,22 +24,55 @@
         <template v-else>N/A</template>
       </div>
       <div slot="status" slot-scope="text" class="status_data">
-        <a-tag v-if="text === 'accept'" color="#27ae60"  style="margin-bottom:0px;" >Active</a-tag>
-        <a-tag v-if="text === 'invite'" color="#f39c12" style="margin-bottom:0px;">Invite Pending</a-tag>
-        <a-tag v-if="text === 'request'" color="#8e44ad"  style="margin-bottom:0px;"
+        <a-tag
+          v-if="text === 'accept'"
+          color="#27ae60"
+          style="margin-bottom:0px;"
+          >Active</a-tag
+        >
+        <a-tag
+          v-if="text === 'invite'"
+          color="#f39c12"
+          style="margin-bottom:0px;"
+          >Invite Pending</a-tag
+        >
+        <a-tag
+          v-if="text === 'request'"
+          color="#8e44ad"
+          style="margin-bottom:0px;"
           >Has Requested to Join</a-tag
         >
-        <a-tag v-if="text === 'cancel'" color="#8e44ad"  style="margin-bottom:0px;"
+        <a-tag
+          v-if="text === 'cancel'"
+          color="#8e44ad"
+          style="margin-bottom:0px;"
           >No Longer a Member</a-tag
         >
-        <a-tag v-if="text === 'archive'" color="#d35400"  style="margin-bottom:0px;">Archived</a-tag>
-        <a-tag v-if="text === 'decline'" color="#c0392b"  style="margin-bottom:0px;"
+        <a-tag
+          v-if="text === 'archive'"
+          color="#d35400"
+          style="margin-bottom:0px;"
+          >Archived</a-tag
+        >
+        <a-tag
+          v-if="text === 'decline'"
+          color="#c0392b"
+          style="margin-bottom:0px;"
           >Declined Invitation</a-tag
         >
       </div>
-      <div slot="handlers" type="flex" slot-scope="text, record" class="gx-text-right" style="display:flex;">
+      <div
+        slot="handlers"
+        slot-scope="text, record"
+        type="flex"
+        class="gx-text-right"
+        style="display:flex;"
+      >
         <router-link :to="'/club/member/' + record.user_id">
-          <a-button size="small" type="primary" style="margin-right: 5px;margin-bottom:0px;"
+          <a-button
+            size="small"
+            type="primary"
+            style="margin-right: 5px;margin-bottom:0px;"
             >View Profile</a-button
           >
         </router-link>
@@ -264,3 +298,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.email-block {
+  display: flex;
+}
+</style>

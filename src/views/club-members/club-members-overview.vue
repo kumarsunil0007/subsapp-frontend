@@ -37,16 +37,14 @@
         <a-button
           size="small"
           type="primary"
-          class="gx-sm-full"
-          style="margin-bottom: 12px; margin-right:0px; background-color: rgb(39, 174, 96) !important;border-color:rgb(39, 174, 96) !important;"
+          style="margin-bottom: 12px; background-color: rgb(39, 174, 96) !important;border-color:rgb(39, 174, 96) !important;"
           @click="addMemberModal"
           >Add Member</a-button
         >
         <a-button
           size="small"
           type="primary"
-          class="gx-sm-full"
-          style="margin-bottom: 12px; margin-left:5px"
+          style="margin-bottom: 12px;"
           @click="openMemberModal"
           >Find & Invite Members</a-button
         >

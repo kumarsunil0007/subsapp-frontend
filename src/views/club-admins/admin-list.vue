@@ -2,16 +2,14 @@
   <n-page v-if="renderComponent">
     <a-row type="flex">
       <a-col :span="24" class="gx-text-right">
-        <a-button type="primary" size="small" @click="openAdminModal(null)">
-          Create a new Coach
-        </a-button>
-        <a-button
-          size="small"
-          type="primary"
-          class="gx-sm-full"
-          @click="openCoachModal"
-          >Find & Add Coach</a-button
-        >
+        <a-space
+          ><a-button type="primary" size="small" @click="openAdminModal(null)">
+            Create a new Coach
+          </a-button>
+          <a-button size="small" type="primary" @click="openCoachModal"
+            >Find & Add Coach</a-button
+          >
+        </a-space>
       </a-col>
     </a-row>
     <a-row type="flex">
@@ -76,6 +74,5 @@ export default {
   }
 };
 </script>
-
 
 <style scoped></style>
