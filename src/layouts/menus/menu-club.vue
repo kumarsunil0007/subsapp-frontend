@@ -8,16 +8,16 @@
           <span>My Events</span>
         </router-link>
       </a-menu-item>
-      <a-menu-item key="teams" @click="hideSidebar">
-        <router-link to="/teams-list">
-          <a-icon type="team" />
-          <span>Teams</span>
-        </router-link>
-      </a-menu-item>
       <a-menu-item key="members" @click="hideSidebar">
         <router-link to="/members">
           <a-icon type="smile" />
           <span>Members</span>
+        </router-link>
+      </a-menu-item>
+      <a-menu-item key="teams" @click="hideSidebar">
+        <router-link to="/teams-list">
+          <a-icon type="team" />
+          <span>Teams</span>
         </router-link>
       </a-menu-item>
       <a-menu-item

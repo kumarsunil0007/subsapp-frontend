@@ -183,6 +183,9 @@ export const memberService = {
   updateClubMember(memberId, data) {
     return ApiService.update("/member/update-club-member", memberId, data);
   },
+  deleteClubMember(data) {
+    return ApiService.post("/member/delete", data);
+  },
   UserTablelist(memberId, data) {
     return ApiService.update("/member/update-club-member", memberId, data);
   },
@@ -266,7 +269,10 @@ export const teamService = {
   },
   searchTeam(params) {
     return ApiService.post("/search-team", params);
-  }
+  },
+  deleteTeam(data) {
+    return ApiService.post("/team/delete", data);
+  },
 };
 export const clubAdminsService = {
   query(params) {

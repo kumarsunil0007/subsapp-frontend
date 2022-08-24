@@ -11,7 +11,11 @@
         :to="'/teams/' + row.id"
         @click.native="ManageTeam"
       >
-        <a-button type="primary" size="small" style="margin-left:5px;margin-bottom:0; ">
+        <a-button
+          type="primary"
+          size="small"
+          style="margin-left: 5px; margin-bottom: 0"
+        >
           Manage Team
         </a-button>
       </router-link>
@@ -19,16 +23,29 @@
         v-if="row.status === 'active'"
         type="danger"
         size="small"
-        style="margin-left:5px;margin-bottom:0; "
+        style="margin-left: 5px; margin-bottom: 0"
         @click="archiveTeam(row.id)"
       >
         Archive
       </a-button>
       <a-button
+        size="small"
+        style="
+          color: #f5222d;
+          background-color: #f5f5f5;
+          border-color: #d9d9d9;
+          margin-right: 5px;
+          margin-bottom: 0px;
+        "
+        type="danger"
+        @click="deleteTeam(row.id)"
+        >Delete</a-button
+      >
+      <a-button
         v-if="row.status === 'archived'"
         type="danger"
         size="small"
-        style="margin-left:5px;margin-bottom:0; "
+        style="margin-left: 5px; margin-bottom: 0"
         @click="activateTeam(row.id)"
       >
         Make Active
@@ -42,19 +59,20 @@ import timeMixing from "@/mixins/time";
 import nCurrency from "@/mixins/currency";
 import { teamService } from "@/common/api/api.service";
 import notifications from "@/common/notifications/notification.service";
+import Toaster from "@/common/sweetToast.js";
 
 const columns = [
   {
     title: "Team Name",
     dataIndex: "team_name",
-    key: "team_name"
+    key: "team_name",
   },
   {
     title: "",
     scopedSlots: {
-      customRender: "operations"
-    }
-  }
+      customRender: "operations",
+    },
+  },
 ];
 
 export default {
@@ -64,7 +82,7 @@ export default {
     return {
       columns,
       teams: [],
-      teamsLoading: true
+      teamsLoading: true,
     };
   },
   mounted() {
@@ -74,9 +92,9 @@ export default {
     archiveTeam(teamId) {
       teamService
         .update(teamId, {
-          status: "archived"
+          status: "archived",
         })
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success) {
             this.getTeams();
             notifications.success("Team archived successfully");
@@ -94,9 +112,9 @@ export default {
     activateTeam(teamId) {
       teamService
         .update(teamId, {
-          status: "active"
+          status: "active",
         })
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success) {
             this.getTeams();
             notifications.success("Team activated successfully");
@@ -112,18 +130,37 @@ export default {
         });
     },
     getTeams() {
-      teamService.query().then(resp => {
+      teamService.query().then((resp) => {
         if (resp.data.success) {
           this.teams = resp.data.result;
-         // alert(JSON.stringify(this.teams));
+          // alert(JSON.stringify(this.teams));
         }
         this.teamsLoading = false;
       });
     },
     ManageTeam() {
       this.$store.commit("SET_TEAM_ZERO");
-    }
-  }
+    },
+    deleteTeam(teamId) {
+      console.log("teamId => ", teamId);
+      Toaster.confirmation().then((resp) => {
+        if (resp.isConfirmed) {
+          teamService
+            .deleteTeam({
+              teamId: teamId
+            })
+            .then((resp) => {
+              if (resp.data.success) {
+                notifications.success(resp.data.message);
+                this.getTeams();
+              } else {
+                notifications.warn(resp.data.message);
+              }
+            });
+        }
+      });
+    },
+  },
 };
 </script>
 
