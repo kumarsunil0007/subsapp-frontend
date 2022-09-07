@@ -1,3 +1,5 @@
+<!-- eslint-disable prettier/prettier -->
+<!-- eslint-disable prettier/prettier -->
 <template>
   <div v-if="member && member.profile" class="member-details">
     <a-row :gutter="16">
@@ -72,10 +74,16 @@
         <p>{{ member.profile.emergency_phone }}</p>
       </a-col>
     </a-row>
+
+    <a-button type="primary" size="small" @click="makeCoach">
+      Make Coach
+    </a-button>
   </div>
 </template>
 
 <script>
+import { memberService } from "@/common/api/api.service";
+import notifications from "@/common/notifications/notification.service";
 import nTime from "@/mixins/time";
 export default {
   name: "ClubMemberDetails",
@@ -83,16 +91,42 @@ export default {
   props: {
     member: {
       required: true,
-      type: Object
-    }
-  }
+      type: Object,
+    },
+  },
+  methods: {
+    makeCoach() {
+      const payload = {
+        memberId: this.member.id
+      }
+      memberService
+        .makeCoach(payload)
+        .then(resp => {
+          this.loading = false;
+          if (resp.data.success) {
+            notifications.success(resp.data.message);
+          } else {
+            if (resp.data.message) {
+              notifications.warn(resp.data.message);
+            } else {
+              notifications.warn(
+                "There was an error updating this user, please contact support"
+              );
+            }
+          }
+        })
+        .catch(() => {
+          this.loading = false;
+        });
+    },
+  },
 };
 </script>
 
 <style lang="scss">
 .member-details {
   & img {
-    width: 36px;
+    width: 36px
   }
   & .ant-row {
     margin-bottom: 12px;

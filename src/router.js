@@ -84,6 +84,15 @@ export default new Router({
           beforeEnter: authGuard
         },
         {
+          path: "clubs-list",
+          component: () => import("@/views/clubs/club-list"),
+          meta: {
+            permission: ["club_admin", "coach"],
+            billing: true
+          },
+          beforeEnter: authGuard
+        },
+        {
           path: "teams/:teamId",
           component: () => import("@/views/club-teams/club-team-overview"),
           meta: {
@@ -123,6 +132,15 @@ export default new Router({
         {
           path: "club/settings/my-club",
           component: () => import("@/views/club-manage/my-club"),
+          meta: {
+            permission: ["club_admin", "coach"],
+            billing: true
+          },
+          beforeEnter: authGuard
+        },
+        {
+          path: "club/:id",
+          component: () => import("@/views/clubs/club-data"),
           meta: {
             permission: ["club_admin", "coach"],
             billing: true

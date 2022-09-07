@@ -315,13 +315,13 @@ export default {
           this.fields.country = resp.data.result.profile.country;
           this.user_image = resp.data.result.profile.image;
 
-          let userData = JSON.parse(localStorage.getItem("auth-user"));
+          let userData = JSON.parse(localStorage.getItem("authUserData"));
           userData.user.profile.image = resp.data.result.profile.image;
           userData.user.first_name = resp.data.result.first_name;
           userData.user.last_name = resp.data.result.last_name;
           userData.user.work_email = resp.data.result.work_email;
           userData.user.preferred_name = resp.data.result.preferred_name;
-          window.localStorage.setItem("auth-user", JSON.stringify(userData));
+          window.localStorage.setItem("authUserData", JSON.stringify(userData));
           this.$store.commit("AUTH_STATE");
         }
       });

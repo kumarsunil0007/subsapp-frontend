@@ -56,10 +56,16 @@
           <span>Club Managers</span>
         </router-link>
       </a-menu-item> -->
-      <a-menu-item key="club_config" @click="hideSidebar">
+      <!-- <a-menu-item key="club_config" @click="hideSidebar">
         <router-link to="/club/settings/my-club">
           <a-icon type="setting" />
           <span>Club Details</span>
+        </router-link>
+      </a-menu-item> -->
+      <a-menu-item key="teams" @click="hideSidebar">
+        <router-link to="/clubs-list">
+          <a-icon type="setting" />
+          <span>Clubs</span>
         </router-link>
       </a-menu-item>
       <a-menu-item  key="my_profile" @click="hideSidebar">

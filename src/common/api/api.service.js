@@ -201,6 +201,9 @@ export const memberService = {
   updateProfile(data) {
     return ApiService.post("/update/user-profile", data);
   },
+  makeCoach(data) {
+    return ApiService.post("member/make-coach", data);
+  },
   memberTeams() {
     return ApiService.query("/member/teams-query");
   },
@@ -330,6 +333,9 @@ export const clubService = {
   },
   getMyClub(params) {
     return ApiService.query("/club/get-my-club", params);
+  },
+  getMyAllClub() {
+    return ApiService.get("/club/get-all-clubs");
   },
   getMyClubBilling(params) {
     return ApiService.query("/club/get-my-club-billing", params);

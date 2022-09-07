@@ -243,6 +243,7 @@ export default {
       this.$store.commit(UITypes.mutations.HIDE_SIDEBAR);
     },
     setRole(role) {
+      console.log("role => ", role)
       if (role === "club_admin") {
         //   this.$swal('You are selected as Club Admin');
         this.UserName = "Club Admin";
@@ -260,9 +261,10 @@ export default {
       }
       const roles = this.user.user_type;
       if (roles.indexOf(role) !== -1) {
-        let userData = JSON.parse(localStorage.getItem("auth-user"));
+        let userData = JSON.parse(localStorage.getItem("authUserData"));
+        console.log("userData => ", userData)
         userData.select_role = role;
-        window.localStorage.setItem("auth-user", JSON.stringify(userData));
+        window.localStorage.setItem("authUserData", JSON.stringify(userData));
         this.$store.commit("AUTH_STATE");
         if (role === "admin") {
           this.$router.replace("/admin");

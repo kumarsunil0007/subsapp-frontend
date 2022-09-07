@@ -53,7 +53,12 @@ export default {
       this.currentAdmin = null;
       this.clubAdminModal = false;
       this.forceRerender();
-    }
+    },
+    getMemberList() {
+      this.currentAdmin = null;
+      this.clubAdminModal = false;
+      this.forceRerender();
+    },
   }
 };
 </script>

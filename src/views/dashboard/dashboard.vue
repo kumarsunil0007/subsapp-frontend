@@ -106,9 +106,9 @@ export default {
     fetchRoles() {
       clubService.fetchRoles().then(resp => {
         if (resp.data.success) {
-          let userData = JSON.parse(localStorage.getItem("auth-user"));
+          let userData = JSON.parse(localStorage.getItem("authUserData"));
           userData.user_type = resp.data.result;
-          window.localStorage.setItem("auth-user", JSON.stringify(userData));
+          window.localStorage.setItem("authUserData", JSON.stringify(userData));
           this.$store.commit("AUTH_STATE");
         }
       });

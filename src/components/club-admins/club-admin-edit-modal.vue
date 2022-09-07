@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
   <a-modal :visible="visible" title="Manage Coach" @cancel="close">
     <template slot="footer">

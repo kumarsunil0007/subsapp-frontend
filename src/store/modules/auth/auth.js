@@ -20,20 +20,20 @@ import { authService, billingService } from "@/common/api/api.service";
 
 const getUser = () => {
   try {
-    return JSON.parse(window.localStorage.getItem("auth-user"));
+    return JSON.parse(window.localStorage.getItem("authUserData"));
   } catch (e) {
     return [];
   }
 };
 const removeUser = () => {
-  window.localStorage.removeItem("auth-user");
+  // window.localStorage.removeItem("authUserData");
 };
 
 const getSubscription = () => {
   return JSON.parse(window.localStorage.getItem("subscription"));
 };
 const removeLocalSubscription = () => {
-  window.localStorage.removeItem("subscription");
+  // window.localStorage.removeItem("subscription");
 };
 
 const state = {
@@ -80,7 +80,6 @@ const actions = {
             } else {
               select_role = roles[roles.indexOf("member")];
             }
-
             let userData = JSON.stringify({
               user: resp.data.user,
               user_type: resp.data.user_type,
@@ -88,7 +87,7 @@ const actions = {
               select_role: select_role,
               app: resp.data.app
             });
-            window.localStorage.setItem("auth-user", userData);
+            window.localStorage.setItem("authUserData", userData);
             window.localStorage.setItem("isSubscribed", resp.data.isSubscribed);
             window.localStorage.setItem(
               "subscription",
@@ -104,7 +103,7 @@ const actions = {
         .catch(err => {
           commit(AUTH_ERROR, "Incorrect Details");
           destroyToken();
-          removeUser();
+          // removeUser();
           reject(err);
         });
     });
@@ -179,7 +178,7 @@ const mutations = {
   [SET_PROFILE]: (state, data) => {
     let user = getUser();
     user.user = data;
-    window.localStorage.setItem("auth-user", JSON.stringify(user));
+    window.localStorage.setItem("authUserData", JSON.stringify(user));
     state.user = getUser();
     state.hasLoadedOnce = true;
   },
