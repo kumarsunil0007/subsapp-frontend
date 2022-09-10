@@ -2,7 +2,7 @@
   <a-modal
     v-model="isVisible"
     class="add-member"
-    title="Add New Members"
+    title="Add Member"
     @cancel="close"
   >
     <a-row>

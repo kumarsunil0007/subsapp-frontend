@@ -58,6 +58,7 @@
 import timeMixing from "@/mixins/time";
 import nCurrency from "@/mixins/currency";
 import { teamService } from "@/common/api/api.service";
+import { mapGetters } from "vuex";
 import notifications from "@/common/notifications/notification.service";
 import Toaster from "@/common/sweetToast.js";
 
@@ -66,6 +67,11 @@ const columns = [
     title: "Team Name",
     dataIndex: "team_name",
     key: "team_name",
+  },
+  {
+    title: "Club Name",
+    dataIndex: "club.club_name",
+    key: "club.club_name",
   },
   {
     title: "",
@@ -87,6 +93,9 @@ export default {
   },
   mounted() {
     this.getTeams();
+  },
+  computed: {
+    ...mapGetters(["AUTH_USER"]),
   },
   methods: {
     archiveTeam(teamId) {
@@ -130,7 +139,10 @@ export default {
         });
     },
     getTeams() {
-      teamService.query().then((resp) => {
+      let data = {
+        role: this.AUTH_USER.select_role,
+      };
+      teamService.query(data).then((resp) => {
         if (resp.data.success) {
           this.teams = resp.data.result;
           // alert(JSON.stringify(this.teams));

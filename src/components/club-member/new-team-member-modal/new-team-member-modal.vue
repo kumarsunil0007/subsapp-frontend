@@ -136,6 +136,7 @@ export default {
         .updateTeamMember({
           memberId: memberId,
           teamId: this.teamId,
+          role: this.user.select_role,
           action: action,
           url: window.location.origin + "/#/login"
         })

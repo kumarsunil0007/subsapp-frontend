@@ -2,7 +2,7 @@
   <a-modal
     v-model="isVisible"
     class="search_member-popup"
-    title="Search & Find Members"
+    title="Find & Add Coach"
     @cancel="close"
   >
     <a-row type="flex" :gutter="1">
@@ -10,7 +10,7 @@
         <a-input
           v-model="keyword"
           type="email"
-          placeholder="Enter members email"
+          placeholder="Enter email"
         ></a-input>
       </a-col>
       <a-col :xs="6">
@@ -64,8 +64,8 @@ export default {
     visible: {
       default: false,
       required: true,
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -74,7 +74,7 @@ export default {
       error_msg: false,
       loader: false,
       selectedId: "",
-      members: []
+      members: [],
     };
   },
   computed: {
@@ -84,9 +84,9 @@ export default {
       },
       set() {
         return false;
-      }
+      },
     },
-    ...mapGetters(["AUTH_USER"])
+    ...mapGetters(["AUTH_USER"]),
   },
   methods: {
     addCoach(memberId) {
@@ -94,16 +94,15 @@ export default {
       this.loader = true;
       const param = {
         memberId: memberId,
-        url: window.location.origin
+        url: window.location.origin,
       };
       clubAdminsService
         .addCoach(param)
-        .then(resp => {
+        .then((resp) => {
           this.loader = false;
-          if (resp.data.success) {admin-list
+          if (resp.data.success) {
             this.searchEmails();
-            alert("Coach has been added");
-        //    notifications.success("Coach has been added");
+            notifications.success("Coach has been added");
             this.close();
           } else {
             notifications.warn(resp.data.message);
@@ -113,14 +112,14 @@ export default {
         .catch(() => {
           this.loader = false;
         });
-    }, 
+    },
     searchEmails() {
       this.error_msg = false;
       clubAdminsService
         .searchCoach({
-          keyword: this.keyword
+          keyword: this.keyword,
         })
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success) {
             this.members = resp.data.result;
             this.error_msg = true;
@@ -134,8 +133,8 @@ export default {
       this.members = [];
       this.error_msg = false;
       this.$emit("close");
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

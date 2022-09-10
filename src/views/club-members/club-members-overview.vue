@@ -46,7 +46,7 @@
           type="primary"
           style="margin-bottom: 12px;"
           @click="openMemberModal"
-          >Find & Invite Members</a-button
+          >Search & Invite Members</a-button
         >
       </a-col>
       <a-col :span="24">

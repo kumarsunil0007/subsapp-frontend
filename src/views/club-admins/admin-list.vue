@@ -14,7 +14,7 @@
     </a-row>
     <a-row type="flex">
       <a-col :span="24">
-        <a-card title="Teams" class="gx-card-table-full">
+        <a-card title="Coaches" class="gx-card-table-full">
           <club-admins-list-table @edit="openAdminModal" />
         </a-card>
       </a-col>

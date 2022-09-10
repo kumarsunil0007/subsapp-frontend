@@ -2,7 +2,7 @@
   <a-modal
     v-model="isVisible"
     class="search_member-popup"
-    title="Search & Invite new Members"
+    title="Search & Invite Members"
     @cancel="close"
   >
     <a-row type="flex" :gutter="1">

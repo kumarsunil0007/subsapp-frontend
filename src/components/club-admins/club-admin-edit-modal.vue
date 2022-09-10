@@ -1,6 +1,6 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-  <a-modal :visible="visible" title="Manage Coach" @cancel="close">
+  <a-modal :visible="visible" title="Add Coach" @cancel="close">
     <template slot="footer">
       <a-button key="back" @click="close">Cancel</a-button>
       <a-button

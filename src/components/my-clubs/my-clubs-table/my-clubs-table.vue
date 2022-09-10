@@ -115,6 +115,7 @@ const columns = [
   },
   {
     dataIndex: "handlers",
+    title: "Actions",
     key: "handlers",
     scopedSlots: {
       customRender: "handlers"
