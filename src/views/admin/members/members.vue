@@ -50,7 +50,7 @@
         >
       </a-col>
       <a-col :span="24">
-        <a-card class="gx-card-table-full gx-table-responsive">
+        <a-card title="Members" class="gx-card-table-full gx-table-responsive">
           <club-member-table
             :filters="filters"
             :club-id="1"

@@ -5,7 +5,7 @@
     :data-source="teams"
     :loading="dataLoading"
   >
-    <div slot="operations" slot-scope="text, row" class="gx-text-right">
+    <div slot="operations" slot-scope="text, row" class="gx-text-left">
       <a-button
         class="gx-btn-cyan"
         size="small"
@@ -48,7 +48,7 @@ const columns = [
     dataIndex: "phone"
   },
   {
-    title: "",
+    title: "Actions",
     scopedSlots: {
       customRender: "operations"
     }

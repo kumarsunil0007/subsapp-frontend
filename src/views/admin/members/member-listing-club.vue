@@ -3,7 +3,6 @@
     <a-row type="flex">
       <a-col :xs="24" :sm="24" :md="14" :lg="16">
         <a-row type="flex" :gutter="10">
-
           <!-- <a-col :xs="24" :sm="24" :md="8" :lg="6">
             <a-select
               v-model="filters.type"
@@ -46,7 +45,7 @@
         >
       </a-col> -->
       <a-col :span="24">
-        <a-card class="gx-card-table-full gx-table-responsive">
+        <a-card title="Members" class="gx-card-table-full gx-table-responsive">
           <ClubMemberTableAdmin
             ref="club_member_Listing"
             :filters="filters"
@@ -88,7 +87,7 @@ export default {
     fetchMembers() {},
     openMemberModal() {
       this.inviteMemberVisible = true;
-    },
+    }
   }
 };
 </script>
