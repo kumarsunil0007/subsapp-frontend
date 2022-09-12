@@ -72,12 +72,12 @@
             </a-row>
           </div>
           <template #prevArrow>
-            <div class="custom-slick-arrow rrghh" style="left: 10px; zindex: 1">
+            <div class="custom-slick-arrow rrghh" style="z-index: 1">
               Previous
             </div>
           </template>
           <template #nextArrow>
-            <div class="custom-slick-arrow" style="right: 10px">
+            <div class="custom-slick-arrow" >
               Next
             </div>
           </template>
@@ -160,7 +160,7 @@
               </a-row>
             </div>
             <template #prevArrow>
-              <div class="custom-slick-arrow " style=" zindex: 1">
+              <div class="custom-slick-arrow " style=" z-index: 1">
                 Previous
               </div>
             </template>
