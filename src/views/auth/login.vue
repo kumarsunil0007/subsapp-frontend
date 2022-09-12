@@ -112,6 +112,7 @@ export default {
         .then(resp => {
           if (resp) {
             const no_of_cards = store.state.auth.user.no_of_cards;
+            const isFirstTimeLoggedIn = store.state.auth.user.is_logged_in;
             const invitation_email =
               store.state.auth.user.user.invitation_email;
             const role = store.state.auth.user.select_role;
@@ -128,9 +129,9 @@ export default {
               invitation_email == "1"
             ) {
               this.$router.replace("/my-billing");
-              this.$swal(
-                " Welcome to your new Club, please fill in your card details to view your upcoming events."
-              );
+              // this.$swal(
+              //   " Welcome to your new Club, please fill in your card details to view your upcoming events."
+              // );
             } else {
               this.$router.replace("/dashboard");
             }

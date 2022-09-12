@@ -1,197 +1,30 @@
 <template>
   <n-page>
-    <div class="coach-welcome-modal">
-      <a-modal v-model="visible" class="welcome-modal" width="800px">
-        <a-carousel :after-change="onChange" arrows class="coach-slides">
-          <div>
-            <a-row type="flex" align="middle" class="gx-pt-5">
-              <a-col :lg="14">
-                <h1>WELCOME</h1>
-                <h2>To SubsAPP.</h2>
-                <p>You have successfully logged-in as a Coach.</p>
-              </a-col>
-              <a-col :lg="10">
-                <img src="../../assets/images/coach-slide1.png" alt="slide1" />
-              </a-col>
-            </a-row>
-          </div>
-          <div>
-            <a-row type="flex" align="middle" class="gx-pb-5">
-              <a-col :lg="12">
-                <h3>
-                  Coach can check the Events and can manage his team Schedule
-                </h3>
-              </a-col>
-              <a-col :lg="12">
-                <img src="../../assets/images/coach-slide2.png" alt="slide2" />
-              </a-col>
-            </a-row>
-          </div>
-          <div>
-            <a-row type="flex" align="middle" class="gx-pb-5">
-              <a-col :lg="12">
-                <h3>
-                  Coach can
-                </h3>
-                <p class="gx-mb-0">Add and Search</p>
-                <h3>
-                  Members
-                </h3>
-              </a-col>
-              <a-col :lg="12">
-                <img src="../../assets/images/coach-slide3.png" alt="slide3" />
-              </a-col>
-            </a-row>
-          </div>
-          <div>
-            <a-row type="flex" align="middle" class="gx-pt-5">
-              <a-col :lg="14">
-                <h2>Coach can</h2>
-                <h4 class="gx-mb-0">
-                  manage and
-                </h4>
-                <h3>create new team</h3>
-              </a-col>
-              <a-col :lg="10">
-                <img src="../../assets/images/coach-slide4.png" alt="slide4" />
-              </a-col>
-            </a-row>
-          </div>
-          <div>
-            <a-row type="flex" align="middle" class="gx-pt-5">
-              <a-col :lg="12">
-                <h2>Coach</h2>
-                <p class="gx-mb-0">
-                  can check
-                </p>
-                <h2>the club list</h2>
-              </a-col>
-              <a-col :lg="12">
-                <img src="../../assets/images/coach-slide5.png" alt="slide5" />
-              </a-col>
-            </a-row>
-          </div>
-          <template #prevArrow>
-            <div class="custom-slick-arrow rrghh" style="z-index: 1">
-              Previous
-            </div>
-          </template>
-          <template #nextArrow>
-            <div class="custom-slick-arrow" >
-              Next
-            </div>
-          </template>
-        </a-carousel>
-      </a-modal>
-    </div>
     <div v-if="user.select_role === 'member'">
-      <div class="member-welcome-modal">
-        <a-modal v-model="visible" class="welcome-modal" width="800px">
-          <a-carousel :after-change="onChange" arrows>
-            <div>
-              <a-row type="flex" align="middle" class="gx-pt-5">
-                <a-col :lg="14">
-                  <h1>WELCOME</h1>
-                  <h2>To SubsAPP.</h2>
-                  <p>You have successfully logged-in as a Member.</p>
-                </a-col>
-                <a-col :lg="10">
-                  <img src="../../assets/images/slide1.png" alt="slide1" />
-                </a-col>
-              </a-row>
-            </div>
-            <div>
-              <a-row type="flex" align="middle" class="gx-pt-5">
-                <a-col :lg="12">
-                  <h3>Member can check the schedule</h3>
-                </a-col>
-                <a-col :lg="12">
-                  <img src="../../assets/images/slide2.png" alt="slide2" />
-                </a-col>
-              </a-row>
-            </div>
-            <div>
-              <a-row type="flex" align="middle" class="gx-pt-4">
-                <a-col :lg="12">
-                  <h4>
-                    Member can join the new club and Accept/ reject any new club
-                    invitation.
-                  </h4>
-                </a-col>
-                <a-col :lg="12">
-                  <img src="../../assets/images/slide3.png" alt="slide3" />
-                </a-col>
-              </a-row>
-            </div>
-            <div>
-              <a-row type="flex" align="middle" class="gx-pb-5">
-                <a-col :lg="12">
-                  <h3>Subs APP helps the Member to check the Team Status</h3>
-                </a-col>
-                <a-col :lg="12">
-                  <img src="../../assets/images/slider4.png" alt="slide4" />
-                </a-col>
-              </a-row>
-            </div>
-            <div>
-              <a-row type="flex" align="middle">
-                <a-col :lg="12">
-                  <p>
-                    SubsAPP Sign Stripe for secured payment system. Member can
-                    manage his billing details from this portal
-                  </p>
-                </a-col>
-                <a-col :lg="12">
-                  <img src="../../assets/images/slider5.png" alt="slide5" />
-                </a-col>
-              </a-row>
-            </div>
-            <div>
-              <a-row type="flex" align="middle" class="gx-pt-5">
-                <a-col :lg="12">
-                  <h2>Enter your</h2>
-                  <p>
-                    card details and become a member
-                  </p>
-                </a-col>
-                <a-col :lg="12">
-                  <img src="../../assets/images/slider6.png" alt="slide6" />
-                </a-col>
-              </a-row>
-            </div>
-            <template #prevArrow>
-              <div class="custom-slick-arrow " style=" z-index: 1">
-                Previous
-              </div>
-            </template>
-            <template #nextArrow>
-              <div class="custom-slick-arrow">
-                Next
-              </div>
-            </template>
-          </a-carousel>
-        </a-modal>
-      </div>
       <div style="display: flex">
-        <p style=" margin-right: 20px;">
+        <p style="margin-right: 20px">
           <span
-            style="    padding: 6px;
-    height: 10px;
-    display: inline-block;
-    width: 10px;
-    border-radius: 50%;
-    background: #559f3f;"
+            style="
+              padding: 6px;
+              height: 10px;
+              display: inline-block;
+              width: 10px;
+              border-radius: 50%;
+              background: #559f3f;
+            "
           ></span>
           Joined .
         </p>
         <p>
           <span
-            style="    padding: 6px;
-    height: 10px;
-    display: inline-block;
-    width: 10px;
-    border-radius: 50%;
-    background: #4b7bec;"
+            style="
+              padding: 6px;
+              height: 10px;
+              display: inline-block;
+              width: 10px;
+              border-radius: 50%;
+              background: #4b7bec;
+            "
           ></span>
           Not Joined .
         </p>
@@ -201,6 +34,104 @@
       </a-card>
     </div>
     <div v-else>
+      <div class="coach-welcome-modal">
+        <a-modal v-model="visible" class="welcome-modal" width="800px">
+          <a-carousel :after-change="onChange" arrows class="coach-slides">
+            <div>
+              <a-row type="flex" align="middle" class="gx-pt-5">
+                <a-col :lg="14">
+                  <h1>WELCOME</h1>
+                  <h2>To SubsAPP.</h2>
+                  <p>You have successfully logged-in as a Coach.</p>
+                </a-col>
+                <a-col :lg="10">
+                  <img
+                    src="../../assets/images/coach-slide1.png"
+                    alt="slide1"
+                  />
+                </a-col>
+              </a-row>
+            </div>
+            <div>
+              <a-row type="flex" align="middle" class="gx-pb-5">
+                <a-col :lg="12">
+                  <h3>
+                    Coach can check the Events and can manage his team Schedule
+                  </h3>
+                </a-col>
+                <a-col :lg="12">
+                  <img
+                    src="../../assets/images/coach-slide2.png"
+                    alt="slide2"
+                  />
+                </a-col>
+              </a-row>
+            </div>
+            <div>
+              <a-row type="flex" align="middle" class="gx-pb-5">
+                <a-col :lg="12">
+                  <h3>Coach can</h3>
+                  <p class="gx-mb-0">Add and Search</p>
+                  <h3>Members</h3>
+                </a-col>
+                <a-col :lg="12">
+                  <img
+                    src="../../assets/images/coach-slide3.png"
+                    alt="slide3"
+                  />
+                </a-col>
+              </a-row>
+            </div>
+            <div>
+              <a-row type="flex" align="middle" class="gx-pt-5">
+                <a-col :lg="14">
+                  <h2>Coach can</h2>
+                  <h4 class="gx-mb-0">manage and</h4>
+                  <h3>create new team</h3>
+                </a-col>
+                <a-col :lg="10">
+                  <img
+                    src="../../assets/images/coach-slide4.png"
+                    alt="slide4"
+                  />
+                </a-col>
+              </a-row>
+            </div>
+            <div>
+              <a-row type="flex" align="middle" class="gx-pt-5">
+                <a-col :lg="12">
+                  <h2>Coach</h2>
+                  <p class="gx-mb-0">can check</p>
+                  <h2>the club list</h2>
+                </a-col>
+                <a-col :lg="12">
+                  <img
+                    src="../../assets/images/coach-slide5.png"
+                    alt="slide5"
+                  />
+                </a-col>
+                <a-col :lg="24" class="gx-text-right">
+                  <div class="click-btn">
+                    <div
+                      class="custom-slick-arrow"
+                      @click="updateIsloggedIn"
+                      v-if="!displayCoachNextBtn"
+                    >
+                      Click here
+                    </div>
+                  </div></a-col
+                >
+              </a-row>
+            </div>
+            <template #prevArrow v-if="displayCoachPreviousBtn">
+              <div class="custom-slick-arrow" style="z-index: 1;left:8px">Previous</div>
+            </template>
+            <template #nextArrow v-if="displayCoachNextBtn">
+              <div class="custom-slick-arrow" style="right:8px">Next</div>
+            </template>
+          </a-carousel>
+        </a-modal>
+      </div>
       <a-card title="Events" class="gx-card-full">
         <ClubDashboard />
       </a-card>
@@ -229,7 +160,7 @@ import { AUTH_USER } from "@/store/modules/auth/auth-actions";
 import { mapGetters } from "vuex";
 import MemberCalendar from "@/components/member-calendar/member-calendar";
 import ClubDashboard from "@/components/club-admins/dashboard/club-dashboard";
-import { clubService } from "@/common/api/api.service";
+import { clubService, authService } from "@/common/api/api.service";
 
 import moment from "moment";
 export default {
@@ -237,24 +168,24 @@ export default {
   components: {
     NPage,
     MemberCalendar,
-    ClubDashboard
+    ClubDashboard,
   },
   data() {
     return {
-      visible: true,
+      visible: false,
       teams: [
         {
           teamID: 1,
           teamName: "Avonmore FC 95 Training Sub U18",
           totalMembers: 22,
-          revenueThisWeek: 919
+          revenueThisWeek: 919,
         },
         {
           teamID: 2,
           teamName: "Terenure College Rugby Football Club U21",
           totalMembers: 22,
-          revenueThisWeek: 522
-        }
+          revenueThisWeek: 522,
+        },
       ],
       showDate: new Date(),
       items: [
@@ -262,29 +193,47 @@ export default {
           id: 1,
           startDate: moment(),
           endDate: moment().add(1, "hours"),
-          title: "heldfsdfsdfslo"
-        }
-      ]
+          title: "heldfsdfsdfslo",
+        },
+      ],
+      displayCoachPreviousBtn: false,
+      displayCoachNextBtn: true,
     };
   },
   computed: {
     ...mapGetters({
-      user: AUTH_USER
-    })
+      user: AUTH_USER,
+    }),
   },
   mounted() {
     this.fetchRoles();
+    this.checkModalDisplay();
+    this.checkModalDisplay();
   },
   methods: {
-    onChange(a, b, c) {
-      console.log(a, b, c);
+    onChange(index) {
+      console.log(index);
+      this.displayCoachPreviousBtn = index === 0 ? false : true;
+      this.displayCoachNextBtn = index === 4 ? false : true;
     },
-    showModal() {
-      this.visible = true;
+
+    checkModalDisplay() {
+      let userData = JSON.parse(localStorage.getItem("authUserData"));
+      console.log("userData => ", userData);
+      this.visible =
+        userData.is_logged_in || this.user.user.is_logged_in ? false : true;
+    },
+    updateIsloggedIn() {
+      authService.updateUserLoggedIn().then(() => {
+        let userData = JSON.parse(localStorage.getItem("authUserData"));
+        userData.is_logged_in = 1;
+        window.localStorage.setItem("authUserData", JSON.stringify(userData));
+        this.visible = false;
+      });
     },
 
     fetchRoles() {
-      clubService.fetchRoles().then(resp => {
+      clubService.fetchRoles().then((resp) => {
         if (resp.data.success) {
           let userData = JSON.parse(localStorage.getItem("authUserData"));
           userData.user_type = resp.data.result;
@@ -300,10 +249,10 @@ export default {
     getHeader(t) {
       console.log(t);
       return {
-        value: "sdsdas"
+        value: "sdsdas",
       };
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -337,11 +286,10 @@ export default {
 }
 
 .ant-carousel >>> .custom-slick-arrow:hover {
-  opacity: 0.5;
+  opacity: 0.8;
 }
 
 .ant-carousel >>> .slick-slide {
-  overflow: hidden;
   line-height: 100px;
   padding: 50px 0;
 }
@@ -399,4 +347,14 @@ export default {
 .welcome-modal .ant-modal-body {
   padding: 0;
 }
+
+.ant-carousel .click-btn {
+  position: absolute;
+    right: 0;
+    bottom: -90px;
+}
+.ant-carousel .click-btn .custom-slick-arrow{
+cursor:pointer
+}
+
 </style>

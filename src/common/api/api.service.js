@@ -116,7 +116,10 @@ export const authService = {
   },
   passwordReset(params) {
     return ApiService.post("/auth/password-reset", params);
-  }
+  },
+  updateUserLoggedIn() {
+    return ApiService.get("/update-user-loggedin");
+  },
 };
 export const subAccountsService = {
   query(params) {
