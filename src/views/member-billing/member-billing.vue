@@ -4,7 +4,7 @@
       <a-col :xs="24" :sm="24" :md="12">
         <div class="add-new-card gx-text-right">
           <a-button type="primary" @click="openNewCardModal">
-            Add new Card 
+            Add new Card
           </a-button>
         </div>
         <a-card title="Active Cards" class="gx-card-full">
@@ -28,12 +28,100 @@
         </a-card>
       </a-col>
     </a-row>
+    <div class="member-welcome-modal">
+      <a-modal v-model="visible" class="welcome-modal" width="800px">
+        <a-carousel :after-change="onMemberModalChange" arrows>
+          <div>
+            <a-row type="flex" align="middle" class="gx-pt-5">
+              <a-col :lg="14">
+                <h1>WELCOME</h1>
+                <h2>To SubsAPP.</h2>
+                <p>You have successfully logged-in as a Member.</p>
+              </a-col>
+              <a-col :lg="10">
+                <img src="../../assets/images/slide1.png" alt="slide1" />
+              </a-col>
+            </a-row>
+          </div>
+          <div>
+            <a-row type="flex" align="middle" class="gx-pt-5">
+              <a-col :lg="12">
+                <h3>Member can check the schedule</h3>
+              </a-col>
+              <a-col :lg="12">
+                <img src="../../assets/images/slide2.png" alt="slide2" />
+              </a-col>
+            </a-row>
+          </div>
+          <div>
+            <a-row type="flex" align="middle" class="gx-pt-4">
+              <a-col :lg="12">
+                <h4>
+                  Member can join the new club and Accept/ reject any new club
+                  invitation.
+                </h4>
+              </a-col>
+              <a-col :lg="12">
+                <img src="../../assets/images/slide3.png" alt="slide3" />
+              </a-col>
+            </a-row>
+          </div>
+          <div>
+            <a-row type="flex" align="middle" class="gx-pb-5">
+              <a-col :lg="12">
+                <h3>Subs APP helps the Member to check the Team Status</h3>
+              </a-col>
+              <a-col :lg="12">
+                <img src="../../assets/images/slider4.png" alt="slide4" />
+              </a-col>
+            </a-row>
+          </div>
+          <div>
+            <a-row type="flex" align="middle">
+              <a-col :lg="12">
+                <p>
+                  SubsAPP Sign Stripe for secured payment system. Member can
+                  manage his billing details from this portal
+                </p>
+              </a-col>
+              <a-col :lg="12">
+                <img src="../../assets/images/slider5.png" alt="slide5" />
+              </a-col>
+            </a-row>
+          </div>
+          <div>
+            <a-row type="flex" align="middle" class="gx-pt-5">
+              <a-col :lg="12">
+                <h2>Enter your</h2>
+                <p>card details and become a member</p>
+              </a-col>
+              <a-col :lg="12">
+                <img src="../../assets/images/slider6.png" alt="slide6" />
+              </a-col>
+              <div
+                class="custom-slick-arrow"
+                @click="updateIsloggedIn"
+                v-if="!displayMemberNextBtn"
+              >
+                Click next
+              </div>
+            </a-row>
+          </div>
+          <template #prevArrow v-if="displayMemberPreviousBtn">
+            <div class="custom-slick-arrow" style="z-index: 1">Previous</div>
+          </template>
+          <template #nextArrow v-if="displayMemberNextBtn">
+            <div class="custom-slick-arrow">Next</div>
+          </template>
+        </a-carousel>
+      </a-modal>
+    </div>
     <stripe-new-card-modal
       :visible="newCardModalVisible"
       @token="saveCard"
       @close="closeNewCardModalVisible"
     />
-        <a-row>
+    <a-row>
       <a-col :xs="24" :sm="24" :md="12">
         <a-alert
           v-if="error_msg"
@@ -55,11 +143,11 @@
 import NPage from "@/components/ui/n-page/n-page";
 import { AUTH_USER } from "@/store/modules/auth/auth-actions";
 import { mapGetters } from "vuex";
-import { billingService } from "@/common/api/api.service";
+import { billingService, authService } from "@/common/api/api.service";
 import MemberBillingHistoryTable from "@/components/member-billing/member-billing-history-table/member-billing-history-table";
 import StripeNewCardModal from "@/components/billing/stripe-new-card-modal/stripe-new-card-modal";
 import StripeCardPreview from "@/components/billing/stripe-card-preview/stripe-card-preview";
-import BankCardPreview from "@/components/billing/bank-card-preview/bank-card-preview"
+import BankCardPreview from "@/components/billing/bank-card-preview/bank-card-preview";
 import notifications from "@/common/notifications/notification.service";
 import { clubService } from "@/common/api/api.service";
 export default {
@@ -69,36 +157,42 @@ export default {
     StripeNewCardModal,
     MemberBillingHistoryTable,
     BankCardPreview,
-    NPage
+    NPage,
   },
   data() {
     return {
       newCardModalVisible: false,
-      cards: []
+      cards: [],
+      visible: true,
+      displayMemberPreviousBtn: false,
+      displayMemberNextBtn: true,
     };
   },
   computed: {
     ...mapGetters({
-      user: AUTH_USER
-    })
+      user: AUTH_USER,
+    }),
   },
   mounted() {
     this.listCards();
     this.fetchBankDetails();
-
+    this.checkModalDisplay();
   },
   methods: {
     openNewCardModal() {
       this.newCardModalVisible = true;
     },
-    getA : async() => {
-        
+    onMemberModalChange(index) {
+      console.log(index);
+      this.displayMemberPreviousBtn = index === 0 ? false : true;
+      this.displayMemberNextBtn = index === 5 ? false : true;
     },
+    getA: async () => {},
     closeNewCardModalVisible() {
       this.newCardModalVisible = false;
     },
-  fetchRoles() {
-      clubService.fetchRoles().then(resp => {
+    fetchRoles() {
+      clubService.fetchRoles().then((resp) => {
         if (resp.data.success) {
           let userData = JSON.parse(localStorage.getItem("authUserData"));
           userData.user_type = resp.data.result;
@@ -112,9 +206,9 @@ export default {
         .removeCard({
           auth: {
             id: this.user.user.user_id,
-            type: "user"
+            type: "user",
           },
-          tk: tk
+          tk: tk,
         })
         .then(() => {
           this.listCards();
@@ -125,11 +219,11 @@ export default {
         .setDefaultCard({
           auth: {
             id: this.user.user.user_id,
-            type: "user"
+            type: "user",
           },
-          tk: tk
+          tk: tk,
         })
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success) {
             notifications.success("Awesome! Your default card was updated");
           } else {
@@ -145,11 +239,11 @@ export default {
         .saveCard({
           auth: {
             id: this.user.user.user_id,
-            type: "user"
+            type: "user",
           },
-          tk: token
+          tk: token,
         })
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success) {
             notifications.success("Awesome! Your card was added successfully");
           } else {
@@ -157,64 +251,167 @@ export default {
               "Oops, something went wrong. We could not add your card."
             );
           }
-        //  this.user.user.no_of_cards = this.user.user.no_of_cards +1 ;
+          //  this.user.user.no_of_cards = this.user.user.no_of_cards +1 ;
           this.listCards();
           this.fetchRoles();
         });
     },
 
-  redirectStripeAccount(){
+    redirectStripeAccount() {
       billingService
         .redirectStripe({
           auth: {
             id: this.user.user.user_id,
-            type: "club"
-          }
+            type: "club",
+          },
         })
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success) {
-            window.open(resp.data.data, '_blank')
+            window.open(resp.data.data, "_blank");
           }
         });
     },
-
 
     listCards() {
       billingService
         .listCards({
           auth: {
             id: this.user.user.user_id,
-            type: "user"
-          }
+            type: "user",
+          },
         })
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success) {
             this.cards = resp.data.result;
-            this.user.user.no_of_cards = resp.data.no_of_cards;            
-
+            this.user.user.no_of_cards = resp.data.no_of_cards;
           }
         });
     },
-  fetchBankDetails() {
+    fetchBankDetails() {
       this.bankLoading = true;
       billingService
         .listBankDetails({
           auth: {
             id: this.user.user.user_id,
-            type: "club"
-          }
+            type: "club",
+          },
         })
-        .then(resp => {
+        .then((resp) => {
           this.bankLoading = false;
           if (resp.data.success) {
             this.bank = resp.data.data;
-            console.log("this.bank => ", this.bank)
+            console.log("this.bank => ", this.bank);
           }
         });
     },
-
-  }
+    checkModalDisplay() {
+      let userData = JSON.parse(localStorage.getItem("authUserData"));
+      console.log("userData => ", userData);
+      this.visible =
+        userData.is_logged_in || this.user.user.is_logged_in ? false : true;
+    },
+    updateIsloggedIn() {
+      authService.updateUserLoggedIn().then(() => {
+        let userData = JSON.parse(localStorage.getItem("authUserData"));
+        userData.is_logged_in = 1;
+        window.localStorage.setItem("authUserData", JSON.stringify(userData));
+        this.visible = false;
+      });
+    },
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.welcome-modal .ant-modal-body {
+  padding: 0;
+}
+.welcome-modal .ant-modal .ant-modal-content {
+  padding: 20px;
+}
+
+.welcome-modal .ant-modal-body {
+  padding: 0;
+}
+
+#show-cal {
+  color: #2c3e50;
+  height: 67vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ant-carousel >>> .custom-slick-arrow {
+  width: 120px;
+  height: 36px;
+  font-size: 16px;
+  color: #38d0f9;
+  background-color: #fff;
+  text-align: center;
+  opacity: 1;
+  line-height: 36px;
+  border-radius: 20px;
+  bottom: 0;
+  top: 94%;
+}
+
+.ant-carousel >>> .custom-slick-arrow:before {
+  display: none;
+}
+
+.ant-carousel >>> .custom-slick-arrow:hover {
+  opacity: 0.5;
+}
+
+.ant-carousel >>> .slick-slide {
+  overflow: hidden;
+  line-height: 100px;
+  padding: 50px 0;
+}
+
+.ant-carousel >>> .slick-slide h1 {
+  color: #fff;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  line-height: 80px;
+  font-size: 64px;
+  text-shadow: 0px 2px 6px rgb(0 0 0 / 25%);
+}
+
+.ant-carousel >>> .slick-slide h2 {
+  color: #fff;
+  font-size: 54px;
+  font-weight: 500;
+  line-height: 60px;
+  text-shadow: 0px 2px 6px rgb(0 0 0 / 25%);
+  letter-spacing: 0.05em;
+}
+
+.ant-carousel >>> .slick-slide h3 {
+  color: #fff;
+  font-size: 42px;
+  font-weight: 500;
+  line-height: 50px;
+  text-shadow: 0px 2px 6px rgb(0 0 0 / 25%);
+  letter-spacing: 0.05em;
+}
+
+.ant-carousel >>> .slick-slide h4 {
+  color: #fff;
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 50px;
+  text-shadow: 0px 2px 6px rgb(0 0 0 / 25%);
+  letter-spacing: 0.05em;
+}
+
+.ant-carousel >>> .slick-slide p {
+  color: #fff;
+  font-size: 30px;
+  line-height: 40px;
+  margin-top: 10px;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+  text-shadow: 0px 2px 6px rgb(0 0 0 / 25%);
+}
+</style>
