@@ -4,7 +4,7 @@
       class="gx-table-responsive"
       :columns="columns"
       :pagination="pagination"
-      :row-key="(record) => record.id"
+      :row-key="record => record.id"
       :data-source="schedule"
       @change="handleTableChange"
     >
@@ -27,37 +27,37 @@
         <a-tag
           v-if="text === 'accept'"
           color="#27ae60"
-          style="margin-bottom: 0px"
+          style="margin-bottom: 0px; border-radius: 30px"
           >Active</a-tag
         >
         <a-tag
           v-if="text === 'invite'"
           color="#f39c12"
-          style="margin-bottom: 0px"
+          style="margin-bottom: 0px; border-radius: 30px"
           >Invite Pending</a-tag
         >
         <a-tag
           v-if="text === 'request'"
           color="#8e44ad"
-          style="margin-bottom: 0px"
+          style="margin-bottom: 0px; border-radius: 30px"
           >Has Requested to Join</a-tag
         >
         <a-tag
           v-if="text === 'cancel'"
           color="#8e44ad"
-          style="margin-bottom: 0px"
+          style="margin-bottom: 0px; border-radius: 30px"
           >No Longer a Member</a-tag
         >
         <a-tag
           v-if="text === 'archive'"
           color="#d35400"
-          style="margin-bottom: 0px"
+          style="margin-bottom: 0px; border-radius: 30px"
           >Archived</a-tag
         >
         <a-tag
           v-if="text === 'decline'"
           color="#c0392b"
-          style="margin-bottom: 0px"
+          style="margin-bottom: 0px; border-radius: 30px"
           >Declined Invitation</a-tag
         >
       </div>
@@ -119,10 +119,10 @@
         <a-button
           v-if="
             record.status !== 'accept' &&
-            record.status !== 'invite' &&
-            record.status !== 'decline' &&
-            record.status !== 'request' &&
-            record.status !== 'cancel'
+              record.status !== 'invite' &&
+              record.status !== 'decline' &&
+              record.status !== 'request' &&
+              record.status !== 'cancel'
           "
           size="small"
           class="gx-btn-cyan"
@@ -181,14 +181,14 @@ const columns = [
         return 1;
       }
       return 0;
-    },
+    }
   },
   {
     title: "Email",
     dataIndex: "work_email",
     key: "work_email",
     scopedSlots: {
-      customRender: "work_email",
+      customRender: "work_email"
     },
     sorter: (a, b) => {
       if (a.work_email < b.work_email) {
@@ -198,31 +198,32 @@ const columns = [
         return 1;
       }
       return 0;
-    },
+    }
   },
   {
     title: "Phone",
     dataIndex: "phone",
     key: "phone",
     scopedSlots: {
-      customRender: "phone",
-    },
+      customRender: "phone"
+    }
   },
   {
     title: "Status",
     dataIndex: "status",
     key: "status",
     scopedSlots: {
-      customRender: "status",
-    },
+      customRender: "status"
+    }
   },
   {
+    title: "Actions",
     dataIndex: "handlers",
     key: "handlers",
     scopedSlots: {
-      customRender: "handlers",
-    },
-  },
+      customRender: "handlers"
+    }
+  }
 ];
 
 import { memberService } from "@/common/api/api.service";
@@ -231,21 +232,21 @@ import Toaster from "@/common/sweetToast.js";
 export default {
   name: "ClubMemberTable",
   components: {
-    SearchTeamModal,
+    SearchTeamModal
   },
   mixins: [nTime, nCurrency],
   props: {
     clubId: {
       default: null,
-      type: [Number, String],
+      type: [Number, String]
     },
     filters: {
       required: false,
       type: Object,
-      default: function () {
+      default: function() {
         return {};
-      },
-    },
+      }
+    }
   },
   data() {
     return {
@@ -253,31 +254,31 @@ export default {
       schedule: [],
       pagination: {
         current: 1,
-        pageSize: 10,
+        pageSize: 10
       },
       searchTeamModal: false,
-      selectMemberId: "",
+      selectMemberId: ""
     };
   },
   computed: {
-    ...mapGetters(["AUTH_USER"]),
+    ...mapGetters(["AUTH_USER"])
   },
   watch: {
     filters: {
-      handler: function () {
+      handler: function() {
         this.fetch({
           results: this.pagination.pageSize,
-          page: 1,
+          page: 1
         });
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
   mounted() {
     //  this.getClubMembers();
     this.fetch({
       results: this.pagination.pageSize,
-      page: this.pagination.current,
+      page: this.pagination.current
     });
   },
   methods: {
@@ -290,7 +291,7 @@ export default {
         page: pagination.current,
         sortField: sorter.field,
         sortOrder: sorter.order,
-        ...filters,
+        ...filters
       });
     },
     fetch(params = {}) {
@@ -306,9 +307,9 @@ export default {
       }
       memberService
         .query({
-          ...params,
+          ...params
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success) {
             const pagination = { ...this.pagination };
             pagination.total = resp.data.totalCount;
@@ -323,13 +324,13 @@ export default {
         .updateClubMember(memberId, {
           status: status,
           role: this.AUTH_USER.select_role,
-          url: window.location.origin,
+          url: window.location.origin
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success) {
             this.fetch({
               results: this.pagination.pageSize,
-              page: this.pagination.current,
+              page: this.pagination.current
             });
           } else {
             notifications.warn(resp.data.message);
@@ -338,18 +339,18 @@ export default {
     },
     deleteClubMember(memberId) {
       console.log("memberId => ", memberId);
-      Toaster.confirmation().then((resp) => {
+      Toaster.confirmation().then(resp => {
         if (resp.isConfirmed) {
           memberService
             .deleteClubMember({
-              memberId: memberId,
+              memberId: memberId
             })
-            .then((resp) => {
+            .then(resp => {
               if (resp.data.success) {
                 notifications.success(resp.data.message);
                 this.fetch({
                   results: this.pagination.pageSize,
-                  page: this.pagination.current,
+                  page: this.pagination.current
                 });
               } else {
                 notifications.warn(resp.data.message);
@@ -365,7 +366,7 @@ export default {
     },
     getClubMembers() {
       let data = {
-        role: this.AUTH_USER.select_role,
+        role: this.AUTH_USER.select_role
       };
       if (this.filters) {
         if (this.filters.keyword) {
@@ -376,13 +377,13 @@ export default {
         }
       }
 
-      memberService.query(data).then((resp) => {
+      memberService.query(data).then(resp => {
         if (resp.data.success) {
           this.schedule = resp.data.result;
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

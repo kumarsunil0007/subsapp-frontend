@@ -5,7 +5,7 @@
     :data-source="clubs"
     :loading="teamsLoading"
   >
-    <div slot="operations" slot-scope="text, row" class="gx-text-right">
+    <div slot="operations" slot-scope="text, row" class="gx-text-left">
       <router-link :to="'/club/' + row.id">
         <a-button
           type="primary"
@@ -28,24 +28,24 @@ const columns = [
   {
     title: "Club Name",
     dataIndex: "club_name",
-    key: "club_name",
+    key: "club_name"
   },
   {
     title: "Club Email",
     dataIndex: "email",
-    key: "email",
+    key: "email"
   },
   {
     title: "Contact Number",
     dataIndex: "contact_number",
-    key: "contact_number",
+    key: "contact_number"
   },
   {
-    title: "",
+    title: "Actions",
     scopedSlots: {
-      customRender: "operations",
-    },
-  },
+      customRender: "operations"
+    }
+  }
 ];
 
 export default {
@@ -56,7 +56,7 @@ export default {
       columns,
       teams: [],
       clubs: [],
-      teamsLoading: true,
+      teamsLoading: true
     };
   },
   mounted() {
@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     getClubs() {
-      clubService.getMyAllClub().then((resp) => {
+      clubService.getMyAllClub().then(resp => {
         if (resp.data.success) {
           this.clubs = resp.data.result;
           console.log("this.clubs => ", this.clubs);
@@ -72,8 +72,8 @@ export default {
         }
         this.teamsLoading = false;
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -10,7 +10,7 @@
           @change="number = $event.complete"
         />
       </a-col>
-      <a-col :span="12">
+      <a-col :span="12" class="gx-mt-3">
         <card-expiry
           ref="cardExpiry"
           class="stripe-element card-expiry"
@@ -19,7 +19,7 @@
           @change="expiry = $event.complete"
         />
       </a-col>
-      <a-col :span="12">
+      <a-col :span="12" class="gx-mt-3">
         <card-cvc
           ref="cardCvc"
           class="stripe-element card-cvc"
@@ -28,11 +28,13 @@
           @change="cvc = $event.complete"
         />
       </a-col>
-      <a-col :span="24" v-if="isStripeError" class="stripe-error">
-        {{isStripeErrorMessage}}
+      <a-col v-if="isStripeError" :span="24" class="stripe-error">
+        {{ isStripeErrorMessage }}
       </a-col>
-      <a-col :span="24">
-        <a-button block type="primary" @click="getToken">Save</a-button>
+      <a-col :span="24" class="gx-text-center gx-mt-3">
+        <a-button type="primary" class="gx-mb-0" @click="getToken"
+          >Save</a-button
+        >
       </a-col>
     </a-row>
   </div>
@@ -58,7 +60,8 @@ export default {
             fontSize: "16px",
             color: "#32325d"
           }
-        }
+        },
+        showIcon: true
       },
       complete: false,
       number: false,
@@ -82,14 +85,12 @@ export default {
   methods: {
     getToken() {
       createToken().then(resp => {
-        if(resp.error) {
-          this.isStripeErrorMessage = resp.error.message
-          this.isStripeError = true
-        }
-        else {
+        if (resp.error) {
+          this.isStripeErrorMessage = resp.error.message;
+          this.isStripeError = true;
+        } else {
           this.$emit("token", resp.token);
         }
-        
       });
     },
     update() {
@@ -149,7 +150,7 @@ export default {
   border: 2px solid green;
 }
 .stripe-error {
-  color:red;
-  padding:10px;
+  color: red;
+  padding: 10px;
 }
 </style>

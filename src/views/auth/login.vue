@@ -82,7 +82,7 @@
 import {
   AUTH_MESSAGE,
   AUTH_REQUEST,
-  AUTH_STATUS,
+  AUTH_STATUS
 } from "@/store/modules/auth/auth-actions";
 import { mapGetters } from "vuex";
 import store from "@/store/index";
@@ -92,14 +92,14 @@ export default {
     return {
       username: "",
       password: "",
-      loginLoading: false,
+      loginLoading: false
     };
   },
   computed: {
     ...mapGetters({
       status: AUTH_STATUS,
-      message: AUTH_MESSAGE,
-    }),
+      message: AUTH_MESSAGE
+    })
   },
   methods: {
     login() {
@@ -107,9 +107,9 @@ export default {
       this.$store
         .dispatch(AUTH_REQUEST, {
           username: this.username,
-          password: this.password,
+          password: this.password
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp) {
             const no_of_cards = store.state.auth.user.no_of_cards;
             const invitation_email =
@@ -140,8 +140,8 @@ export default {
         .catch(() => {
           this.loginLoading = false;
         });
-    },
-  },
+    }
+  }
 };
 </script>
 <style>
@@ -154,8 +154,6 @@ export default {
   font-size: 20px !important;
   font-weight: 100;
 }
-</style>
-
 </style>
 <style lang="scss">
 .form-divider {

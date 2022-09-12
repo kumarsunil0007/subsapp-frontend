@@ -6,9 +6,27 @@
     :loading="dataLoading"
   >
     <div slot="status" slot-scope="text">
-      <a-tag v-if="text === 'accept'" color="#27ae60">Active </a-tag>
-      <a-tag v-if="text === 'invite'" color="#f39c12">Invite Pending</a-tag>
-      <a-tag v-if="text === 'decline'" color="#c0392b">Decline Invite</a-tag>
+      <a-tag
+        v-if="text === 'accept'"
+        color="#27ae60"
+        class="gx-mb-0"
+        style="border-radius: 30px;"
+        >Active
+      </a-tag>
+      <a-tag
+        v-if="text === 'invite'"
+        color="#f39c12"
+        class="gx-mb-0"
+        style="border-radius: 30px;"
+        >Invite Pending</a-tag
+      >
+      <a-tag
+        v-if="text === 'decline'"
+        color="#c0392b"
+        class="gx-mb-0"
+        style="border-radius: 30px;"
+        >Decline Invite</a-tag
+      >
     </div>
     <div slot="handlers" slot-scope="text, record">
       <a-button

@@ -17,7 +17,11 @@
       :options="{}"
       @token="saveCard"
     />
-    <div slot="footer" style="padding-left:8px;padding-right: 8px;">
+    <div
+      slot="footer"
+      style="padding-left:8px;padding-right: 8px;"
+      class="stripe-footer"
+    >
       <a-row>
         <a-col :xs="10" :sm="6" class="gx-text-left">
           <img src="@/assets/ssl_rapid_secured.gif" />
@@ -35,6 +39,9 @@
 }
 .hide-ok-button .ant-modal-footer .ant-btn.ant-btn-default {
   margin: 0;
+}
+.stripe-footer img{
+  width: 60px;
 }
 </style>
 <script>
@@ -60,7 +67,7 @@ export default {
     };
   },
   mounted() {
-    this.getPublicKey()
+    this.getPublicKey();
   },
   methods: {
     saveCard(tk) {
@@ -71,13 +78,13 @@ export default {
       this.$emit("close");
     },
     getPublicKey() {
-      authService
-        .init()
-        .then(resp => {
-          console.log("resp => ", resp)
-          console.log("resp 11 => ", resp.data)
-          this.stripePublicKey = resp.data.success ? resp.data.data.stripe_pk : 'pk_test_vtiw9yjBNR5blLsfDUKMA3pY'
-        });
+      authService.init().then(resp => {
+        console.log("resp => ", resp);
+        console.log("resp 11 => ", resp.data);
+        this.stripePublicKey = resp.data.success
+          ? resp.data.data.stripe_pk
+          : "pk_test_vtiw9yjBNR5blLsfDUKMA3pY";
+      });
     }
   }
 };

@@ -137,14 +137,10 @@ import {
 import { memberService } from "@/common/api/api.service";
 import moment from "moment";
 import notifications from "@/common/notifications/notification.service";
-import SubAccountsTable from "@/components/sub-accounts/sub-accounts-table/sub-accounts-table";
-import SubAccountsManageModal from "@/components/sub-accounts/sub-accounts-manage-modal/sub-accounts-manage-modal";
 
 export default {
   name: "MyProfile",
   components: {
-    SubAccountsManageModal,
-    SubAccountsTable,
     NPage
   },
   data() {
