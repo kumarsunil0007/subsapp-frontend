@@ -81,3 +81,46 @@ Version        : 1.0
 @import "pages/index";
 @import "dark-theme";
 
+@background_color_1: #38d0f9;
+
+.welcome-modal {
+	.ant-modal {
+		.ant-modal-content {
+			padding: 20px 30px 20px;            
+			background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(../assets//images/modal-bg.svg);
+			background-color:#38d0f9;
+            button.ant-modal-close{
+                display: none;
+            }
+		}
+	}
+	.ant-modal-body {
+		padding: 0;
+	}
+    .ant-modal-footer{
+        display: none;
+    }
+}
+.ant-carousel {
+    .slick-dots{
+        li {
+            button {
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+            }
+        }
+       li.slick-active {
+            border: 1px solid #fff;
+            padding: 2px;
+            border-radius: 50%;
+            margin-top: -3px;
+            button{
+                width: 16px;
+            }
+        }
+    }
+    .slick-dots.slick-dots-bottom {
+        bottom: 22px;
+    }
+}
