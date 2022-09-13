@@ -29,93 +29,95 @@
       </a-col>
     </a-row>
     <div class="member-welcome-modal">
-      <a-modal v-model="visible" class="welcome-modal" width="800px">
+      <a-modal v-model="visible" class="welcome-modal" >
         <a-carousel :after-change="onMemberModalChange" arrows>
           <div>
             <a-row type="flex" align="middle" class="gx-pt-5">
-              <a-col :lg="14">
+              <a-col :lg="14" :md="24">
                 <h1>WELCOME</h1>
                 <h2>To SubsAPP.</h2>
                 <p>You have successfully logged-in as a Member.</p>
               </a-col>
-              <a-col :lg="10">
+              <a-col :lg="10" :md="24">
                 <img src="../../assets/images/slide1.png" alt="slide1" />
               </a-col>
             </a-row>
           </div>
           <div>
             <a-row type="flex" align="middle" class="gx-pt-5">
-              <a-col :lg="12">
+              <a-col :lg="12" :md="24">
                 <h3>Member can check the schedule</h3>
               </a-col>
-              <a-col :lg="12">
+              <a-col :lg="12" :md="24">
                 <img src="../../assets/images/slide2.png" alt="slide2" />
               </a-col>
             </a-row>
           </div>
           <div>
             <a-row type="flex" align="middle" class="gx-pt-4">
-              <a-col :lg="12">
+              <a-col :lg="12" :md="24">
                 <h4>
                   Member can join the new club and Accept/ reject any new club
                   invitation.
                 </h4>
               </a-col>
-              <a-col :lg="12">
+              <a-col :lg="12" :md="24">
                 <img src="../../assets/images/slide3.png" alt="slide3" />
               </a-col>
             </a-row>
           </div>
           <div>
             <a-row type="flex" align="middle" class="gx-pb-5">
-              <a-col :lg="12">
+              <a-col :lg="12" :md="24">
                 <h3>Subs APP helps the Member to check the Team Status</h3>
               </a-col>
-              <a-col :lg="12">
+              <a-col :lg="12" :md="24">
                 <img src="../../assets/images/slider4.png" alt="slide4" />
               </a-col>
             </a-row>
           </div>
           <div>
             <a-row type="flex" align="middle">
-              <a-col :lg="12">
+              <a-col :lg="12" :md="24">
                 <p>
                   SubsAPP Sign Stripe for secured payment system. Member can
                   manage his billing details from this portal
                 </p>
               </a-col>
-              <a-col :lg="12">
+              <a-col :lg="12" :md="24">
                 <img src="../../assets/images/slider5.png" alt="slide5" />
               </a-col>
             </a-row>
           </div>
           <div>
             <a-row type="flex" align="middle" class="gx-pt-5">
-              <a-col :lg="12">
+              <a-col :lg="12" :md="24">
                 <h2>Enter your</h2>
                 <p>card details and become a member</p>
               </a-col>
-              <a-col :lg="12">
+              <a-col :lg="12" :md="24">
                 <img src="../../assets/images/slider6.png" alt="slide6" />
               </a-col>
-              <a-col :lg="24" class="gx-text-right">
-                  <div class="click-btn">
-                    <div
-                class="custom-slick-arrow"
-                @click="updateIsloggedIn"
-                v-if="!displayMemberNextBtn"
+              <a-col :span="24" class="gx-text-right">
+                <div class="click-btn">
+                  <div
+                    v-if="!displayMemberNextBtn"
+                    class="custom-slick-arrow"
+                    @click="updateIsloggedIn"
+                  >
+                    Click next
+                  </div>
+                </div></a-col
               >
-                Click next
-              </div>
-                  </div></a-col
-                >
             </a-row>
           </div>
-          <template #prevArrow v-if="displayMemberPreviousBtn">
-            <div class="custom-slick-arrow" style="z-index: 1;left:8px">Previous</div>
+          <template v-if="displayMemberPreviousBtn" #prevArrow>
+            <div class="custom-slick-arrow" style="z-index: 1;left:8px">
+              Previous
+            </div>
           </template>
-          <template #nextArrow v-if="displayMemberNextBtn">
-            <div class="custom-slick-arrow"  style="right:8px">Next</div>
+          <template v-if="displayMemberNextBtn" #nextArrow>
+            <div class="custom-slick-arrow" style="right:8px">Next</div>
           </template>
         </a-carousel>
       </a-modal>
@@ -161,7 +163,7 @@ export default {
     StripeNewCardModal,
     MemberBillingHistoryTable,
     BankCardPreview,
-    NPage,
+    NPage
   },
   data() {
     return {
@@ -169,13 +171,13 @@ export default {
       cards: [],
       visible: true,
       displayMemberPreviousBtn: false,
-      displayMemberNextBtn: true,
+      displayMemberNextBtn: true
     };
   },
   computed: {
     ...mapGetters({
-      user: AUTH_USER,
-    }),
+      user: AUTH_USER
+    })
   },
   mounted() {
     this.listCards();
@@ -196,7 +198,7 @@ export default {
       this.newCardModalVisible = false;
     },
     fetchRoles() {
-      clubService.fetchRoles().then((resp) => {
+      clubService.fetchRoles().then(resp => {
         if (resp.data.success) {
           let userData = JSON.parse(localStorage.getItem("authUserData"));
           userData.user_type = resp.data.result;
@@ -210,9 +212,9 @@ export default {
         .removeCard({
           auth: {
             id: this.user.user.user_id,
-            type: "user",
+            type: "user"
           },
-          tk: tk,
+          tk: tk
         })
         .then(() => {
           this.listCards();
@@ -223,11 +225,11 @@ export default {
         .setDefaultCard({
           auth: {
             id: this.user.user.user_id,
-            type: "user",
+            type: "user"
           },
-          tk: tk,
+          tk: tk
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success) {
             notifications.success("Awesome! Your default card was updated");
           } else {
@@ -243,11 +245,11 @@ export default {
         .saveCard({
           auth: {
             id: this.user.user.user_id,
-            type: "user",
+            type: "user"
           },
-          tk: token,
+          tk: token
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success) {
             notifications.success("Awesome! Your card was added successfully");
           } else {
@@ -266,10 +268,10 @@ export default {
         .redirectStripe({
           auth: {
             id: this.user.user.user_id,
-            type: "club",
-          },
+            type: "club"
+          }
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success) {
             window.open(resp.data.data, "_blank");
           }
@@ -281,10 +283,10 @@ export default {
         .listCards({
           auth: {
             id: this.user.user.user_id,
-            type: "user",
-          },
+            type: "user"
+          }
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success) {
             this.cards = resp.data.result;
             this.user.user.no_of_cards = resp.data.no_of_cards;
@@ -297,10 +299,10 @@ export default {
         .listBankDetails({
           auth: {
             id: this.user.user.user_id,
-            type: "club",
-          },
+            type: "club"
+          }
         })
-        .then((resp) => {
+        .then(resp => {
           this.bankLoading = false;
           if (resp.data.success) {
             this.bank = resp.data.data;
@@ -321,8 +323,8 @@ export default {
         window.localStorage.setItem("authUserData", JSON.stringify(userData));
         this.visible = false;
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -427,10 +429,10 @@ export default {
 }
 .ant-carousel .click-btn {
   position: absolute;
-    right: 0;
-    bottom: -164px;
+  right: 0;
+  bottom: -164px;
 }
-.ant-carousel .click-btn .custom-slick-arrow{
-cursor:pointer
+.ant-carousel .click-btn .custom-slick-arrow {
+  cursor: pointer;
 }
 </style>

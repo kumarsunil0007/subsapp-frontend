@@ -85,6 +85,8 @@ Version        : 1.0
 
 .welcome-modal {
 	.ant-modal {
+        width: 800px !important;
+
 		.ant-modal-content {
 			padding: 20px 30px 20px;            
 			background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),url(../assets//images/modal-bg.svg);
@@ -123,4 +125,97 @@ Version        : 1.0
     .slick-dots.slick-dots-bottom {
         bottom: 22px;
     }
+}
+@media (min-width:768px) and (max-width:1024px)
+{.welcome-modal {
+	.ant-modal {
+        width: 600px !important;
+		.ant-modal-content {
+			padding: 16px ;    
+            .ant-carousel {
+                .slick-slide {
+                    line-height: 60px;
+                    padding: 28px 0;
+                    h1 {
+                        line-height: 50px;
+                        font-size: 50px;
+                        text-align: center;
+                    }
+                    h2 {
+                        font-size: 40px;
+                        line-height: 50px;
+                        text-align: center;
+                    }
+                    h3,h4{
+                        text-align: center;
+                    }
+                    p {
+                        font-size: 24px;
+                        line-height: 30px;
+                        text-align: center;
+                    }
+                    img{
+                        width:auto;
+                        margin: 0 auto;
+                    }
+                } 
+                .custom-slick-arrow {
+                    width: 83px;
+                    height: 30px;
+                    font-size: 14px;
+                    line-height: 30px;
+                    top: 96%;
+                }
+                .click-btn {
+                    bottom: -236px;
+                }
+            }
+		}
+	}
+}
+
+}
+@media (max-width:767px){
+    
+.welcome-modal {
+	.ant-modal {
+		.ant-modal-content {
+			padding: 16px ;    
+            .ant-carousel {
+                .slick-slide {
+                    line-height: 60px;
+                    padding: 28px 0;
+                    h1 {
+                        line-height: 50px;
+                        font-size: 50px;
+                    }
+                    h2 {
+                        font-size: 40px;
+                        line-height: 50px;
+                    }
+                    p {
+                        font-size: 24px;
+                        line-height: 30px;
+                    }
+                } 
+                .custom-slick-arrow {
+                    width: 83px;
+                    height: 30px;
+                    font-size: 14px;
+                    line-height: 30px;
+                    top: 96%;
+                }
+                .click-btn {
+                    bottom: -236px;
+                }
+            }
+		}
+	}
+	.ant-modal-body {
+		padding: 0;
+	}
+    .ant-modal-footer{
+        display: none;
+    }
+}
 }

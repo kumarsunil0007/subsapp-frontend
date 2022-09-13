@@ -35,16 +35,16 @@
     </div>
     <div v-else>
       <div class="coach-welcome-modal">
-        <a-modal v-model="visible" class="welcome-modal" width="800px">
+        <a-modal v-model="visible" class="welcome-modal" >
           <a-carousel :after-change="onChange" arrows class="coach-slides">
             <div>
               <a-row type="flex" align="middle" class="gx-pt-5">
-                <a-col :lg="14">
+                <a-col :lg="14" :md="24">
                   <h1>WELCOME</h1>
                   <h2>To SubsAPP.</h2>
                   <p>You have successfully logged-in as a Coach.</p>
                 </a-col>
-                <a-col :lg="10">
+                <a-col :lg="10" :md="24">
                   <img
                     src="../../assets/images/coach-slide1.png"
                     alt="slide1"
@@ -54,12 +54,12 @@
             </div>
             <div>
               <a-row type="flex" align="middle" class="gx-pb-5">
-                <a-col :lg="12">
+                <a-col :lg="12" :md="24">
                   <h3>
                     Coach can check the Events and can manage his team Schedule
                   </h3>
                 </a-col>
-                <a-col :lg="12">
+                <a-col :lg="12" :md="24">
                   <img
                     src="../../assets/images/coach-slide2.png"
                     alt="slide2"
@@ -69,12 +69,12 @@
             </div>
             <div>
               <a-row type="flex" align="middle" class="gx-pb-5">
-                <a-col :lg="12">
+                <a-col :lg="12" :md="24">
                   <h3>Coach can</h3>
                   <p class="gx-mb-0">Add and Search</p>
                   <h3>Members</h3>
                 </a-col>
-                <a-col :lg="12">
+                <a-col :lg="12" :md="24">
                   <img
                     src="../../assets/images/coach-slide3.png"
                     alt="slide3"
@@ -84,12 +84,12 @@
             </div>
             <div>
               <a-row type="flex" align="middle" class="gx-pt-5">
-                <a-col :lg="14">
+                <a-col :lg="14" :md="24">
                   <h2>Coach can</h2>
                   <h4 class="gx-mb-0">manage and</h4>
                   <h3>create new team</h3>
                 </a-col>
-                <a-col :lg="10">
+                <a-col :lg="10" :md="24">
                   <img
                     src="../../assets/images/coach-slide4.png"
                     alt="slide4"
@@ -99,18 +99,18 @@
             </div>
             <div>
               <a-row type="flex" align="middle" class="gx-pt-5">
-                <a-col :lg="12">
+                <a-col :lg="12" :md="24">
                   <h2>Coach</h2>
                   <p class="gx-mb-0">can check</p>
                   <h2>the club list</h2>
                 </a-col>
-                <a-col :lg="12">
+                <a-col :lg="12" :md="24">
                   <img
                     src="../../assets/images/coach-slide5.png"
                     alt="slide5"
                   />
                 </a-col>
-                <a-col :lg="24" class="gx-text-right">
+                <a-col :span="24" class="gx-text-right">
                   <div class="click-btn">
                     <div
                       class="custom-slick-arrow"
@@ -172,7 +172,7 @@ export default {
   },
   data() {
     return {
-      visible: false,
+      visible: true,
       teams: [
         {
           teamID: 1,
