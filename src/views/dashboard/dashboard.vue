@@ -33,9 +33,15 @@
         <member-calendar />
       </a-card>
     </div>
+
     <div v-else>
+      <a-card title="Events" class="gx-card-full">
+        <ClubDashboard />
+      </a-card>
+    </div>
+    <div v-if="user.select_role === 'coach'">
       <div class="coach-welcome-modal">
-        <a-modal v-model="visible" class="welcome-modal" >
+        <a-modal v-model="visible" class="welcome-modal">
           <a-carousel :after-change="onChange" arrows class="coach-slides">
             <div>
               <a-row type="flex" align="middle" class="gx-pt-5">
@@ -124,17 +130,16 @@
               </a-row>
             </div>
             <template #prevArrow v-if="displayCoachPreviousBtn">
-              <div class="custom-slick-arrow" style="z-index: 1;left:8px">Previous</div>
+              <div class="custom-slick-arrow" style="z-index: 1; left: 8px">
+                Previous
+              </div>
             </template>
             <template #nextArrow v-if="displayCoachNextBtn">
-              <div class="custom-slick-arrow" style="right:8px">Next</div>
+              <div class="custom-slick-arrow" style="right: 8px">Next</div>
             </template>
           </a-carousel>
         </a-modal>
       </div>
-      <a-card title="Events" class="gx-card-full">
-        <ClubDashboard />
-      </a-card>
     </div>
   </n-page>
 </template>
@@ -350,11 +355,10 @@ export default {
 
 .ant-carousel .click-btn {
   position: absolute;
-    right: 0;
-    bottom: -90px;
+  right: 0;
+  bottom: -90px;
 }
-.ant-carousel .click-btn .custom-slick-arrow{
-cursor:pointer
+.ant-carousel .click-btn .custom-slick-arrow {
+  cursor: pointer;
 }
-
 </style>

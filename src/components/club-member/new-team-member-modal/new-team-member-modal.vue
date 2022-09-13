@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="isVisible" title="Add/Remove Team Members" @cancel="close">
+  <a-modal v-model="isVisible" title="Add Team Member" @cancel="close">
     <a-row type="flex" :gutter="1">
       <a-col :xs="14">
         <a-input
