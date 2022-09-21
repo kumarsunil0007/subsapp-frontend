@@ -1,6 +1,6 @@
 <template>
   <n-page>
-    <div v-if="user.user_type === 'admin'">
+    <div>
       <a-row type="flex">
         <a-col :xs="24" :sm="24" :md="6">
           <n-box to="/teams-list">
