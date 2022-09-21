@@ -17,6 +17,12 @@
           <span>Club Admins</span><LeftOutlined />
         </router-link>
       </a-menu-item>
+      <a-menu-item key="settings" @click="hideSidebar">
+        <router-link to="/admin/settings">
+          <a-icon type="solution" />
+          <span>Settings</span><LeftOutlined />
+        </router-link>
+      </a-menu-item>
       <!-- <a-menu-item key="my_profile" @click="hideSidebar">
         <router-link to="/admin/my-profile">
           <a-icon type="user" />

@@ -8,7 +8,7 @@
               <a-col :span="24" class="gx-text-center">
                 <template v-if="profilePic">
                   <div
-                    class="profile-picture gx-text-center gx-mx-auto gx-d-inline-block "
+                    class="profile-picture gx-text-center gx-mx-auto gx-d-inline-block"
                   >
                     <img
                       :src="profilePic"
@@ -55,10 +55,10 @@
                         rules: [
                           {
                             required: true,
-                            message: 'First name is required'
-                          }
-                        ]
-                      }
+                            message: 'First name is required',
+                          },
+                        ],
+                      },
                     ]"
                     type="text"
                   >
@@ -74,10 +74,10 @@
                         rules: [
                           {
                             required: true,
-                            message: 'Last name is a required field'
-                          }
-                        ]
-                      }
+                            message: 'Last name is a required field',
+                          },
+                        ],
+                      },
                     ]"
                     type="text"
                   >
@@ -93,10 +93,10 @@
                         rules: [
                           {
                             required: true,
-                            message: 'Your email is required'
-                          }
-                        ]
-                      }
+                            message: 'Your email is required',
+                          },
+                        ],
+                      },
                     ]"
                     type="text"
                   >
@@ -230,7 +230,7 @@ export default {
   components: {
     // SubAccountsManageModal,
     //SubAccountsTable,
-    NPage
+    NPage,
   },
   data() {
     return {
@@ -239,14 +239,14 @@ export default {
       selectedUserId: 0,
       dateValue: moment(),
       fields: {
-        country: null
+        country: null,
       },
       form: this.$form.createForm(this),
       action: process.env.VUE_APP_API_HOST,
       user_image: "",
       loading: false,
       uploading: false,
-      fileList: []
+      fileList: [],
     };
   },
   computed: {
@@ -254,15 +254,15 @@ export default {
       authUser: [AUTH_USER],
       userToken: [AUTH_TOKEN],
       user: "getUser",
-      userProfileLoading: "userProfileLoading"
+      userProfileLoading: "userProfileLoading",
     }),
-    profilePic: function() {
+    profilePic: function () {
       if (this.user_image) {
         return this.user_image;
       } else {
         return "https://api.subsapp.com/missing.png";
       }
-    }
+    },
   },
   watch: {
     // user: function(newData) {
@@ -335,7 +335,7 @@ export default {
       });
     },
     fetchProfile() {
-      memberService.userProfile().then(resp => {
+      memberService.userProfile().then((resp) => {
         if (resp.data.success) {
           this.form.setFieldsValue({
             first_name: resp.data.result.first_name,
@@ -349,13 +349,19 @@ export default {
             town: resp.data.result.profile.town,
             post_code: resp.data.result.profile.post_code,
             region: resp.data.result.profile.region,
-            dob: resp.data.result.profile.dob
+            dob: resp.data.result.profile.dob,
           });
           this.fields.country = resp.data.result.profile.country;
-          this.user_image = resp.data.result.profile.image;
+          this.user_image =
+            resp.data.result.profile && resp.data.result.profile.image
+              ? resp.data.result.profile.image
+              : null;
 
           let userData = JSON.parse(localStorage.getItem("authUserData"));
-          userData.user.profile.image = resp.data.result.profile.image;
+          userData.user.profile.image =
+            resp.data.result.profile && resp.data.result.profile.image
+              ? resp.data.result.profile.image
+              : null;
           userData.user.first_name = resp.data.result.first_name;
           userData.user.last_name = resp.data.result.last_name;
           userData.user.work_email = resp.data.result.work_email;
@@ -370,9 +376,9 @@ export default {
       memberService
         .updateProfile({
           ...values,
-          country: this.fields.country
+          country: this.fields.country,
         })
-        .then(resp => {
+        .then((resp) => {
           this.loading = false;
           if (resp.data.success) {
             this.fetchProfile();
@@ -397,13 +403,13 @@ export default {
     handleUpload() {
       const { fileList } = this;
       const formData = new FormData();
-      fileList.forEach(file => {
+      fileList.forEach((file) => {
         formData.append("logo", file);
       });
       this.uploading = true;
       memberService
         .uploadAvatar(formData)
-        .then(resp => {
+        .then((resp) => {
           this.uploading = false;
           if (resp.data.success === true) {
             notifications.success("upload successfully.");
@@ -431,7 +437,7 @@ export default {
     removeImage() {
       memberService
         .deleteAvatar()
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success === true) {
             notifications.success("Profile Image Remove Succesfully.");
             this.fileList = [];
@@ -443,8 +449,8 @@ export default {
         .catch(() => {
           notifications.warn("Server error");
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
