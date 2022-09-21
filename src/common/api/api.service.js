@@ -230,6 +230,12 @@ export const adminService = {
   },
   updateAdminService(){
     return ApiService.post("/club-admin/update-club-info",);
+  },
+  getSettings() {
+    return ApiService.get("/settings",);
+  },
+  updateSettings(params) {
+    return ApiService.post("/update-settings", params);
   }
   
 };
