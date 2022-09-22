@@ -41,7 +41,7 @@
     </div>
     <div v-if="user.select_role === 'coach'">
       <div class="coach-welcome-modal">
-        <a-modal v-model="visible" class="welcome-modal">
+        <a-modal v-model="visible" :mask-closable="false" class="welcome-modal">
           <a-carousel :after-change="onChange" arrows class="coach-slides">
             <div>
               <a-row type="flex" align="middle" class="gx-pt-5">
@@ -119,9 +119,9 @@
                 <a-col :span="24" class="gx-text-right">
                   <div class="click-btn">
                     <div
+                      v-if="!displayCoachNextBtn"
                       class="custom-slick-arrow"
                       @click="updateIsloggedIn"
-                      v-if="!displayCoachNextBtn"
                     >
                       Click here
                     </div>
@@ -129,12 +129,12 @@
                 >
               </a-row>
             </div>
-            <template #prevArrow v-if="displayCoachPreviousBtn">
+            <template v-if="displayCoachPreviousBtn" #prevArrow>
               <div class="custom-slick-arrow" style="z-index: 1; left: 8px">
                 Previous
               </div>
             </template>
-            <template #nextArrow v-if="displayCoachNextBtn">
+            <template v-if="displayCoachNextBtn" #nextArrow>
               <div class="custom-slick-arrow" style="right: 8px">Next</div>
             </template>
           </a-carousel>
@@ -173,7 +173,7 @@ export default {
   components: {
     NPage,
     MemberCalendar,
-    ClubDashboard,
+    ClubDashboard
   },
   data() {
     return {
@@ -183,14 +183,14 @@ export default {
           teamID: 1,
           teamName: "Avonmore FC 95 Training Sub U18",
           totalMembers: 22,
-          revenueThisWeek: 919,
+          revenueThisWeek: 919
         },
         {
           teamID: 2,
           teamName: "Terenure College Rugby Football Club U21",
           totalMembers: 22,
-          revenueThisWeek: 522,
-        },
+          revenueThisWeek: 522
+        }
       ],
       showDate: new Date(),
       items: [
@@ -198,17 +198,17 @@ export default {
           id: 1,
           startDate: moment(),
           endDate: moment().add(1, "hours"),
-          title: "heldfsdfsdfslo",
-        },
+          title: "heldfsdfsdfslo"
+        }
       ],
       displayCoachPreviousBtn: false,
-      displayCoachNextBtn: true,
+      displayCoachNextBtn: true
     };
   },
   computed: {
     ...mapGetters({
-      user: AUTH_USER,
-    }),
+      user: AUTH_USER
+    })
   },
   mounted() {
     this.fetchRoles();
@@ -238,7 +238,7 @@ export default {
     },
 
     fetchRoles() {
-      clubService.fetchRoles().then((resp) => {
+      clubService.fetchRoles().then(resp => {
         if (resp.data.success) {
           let userData = JSON.parse(localStorage.getItem("authUserData"));
           userData.user_type = resp.data.result;
@@ -254,10 +254,10 @@ export default {
     getHeader(t) {
       console.log(t);
       return {
-        value: "sdsdas",
+        value: "sdsdas"
       };
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>
