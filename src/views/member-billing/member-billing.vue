@@ -29,7 +29,7 @@
       </a-col>
     </a-row>
     <div class="member-welcome-modal">
-      <a-modal v-model="visible" class="welcome-modal" >
+      <a-modal v-model="visible" :mask-closable="false" class="welcome-modal" >
         <a-carousel :after-change="onMemberModalChange" arrows>
           <div>
             <a-row type="flex" align="middle" class="gx-pt-5">
