@@ -9,7 +9,7 @@ const ApiService = {
     Vue.use(VueAxios, axios);
     // Vue.axios.defaults.baseURL = "https://subs.api.novnik.com/api";
     // if (process.env.VUE_APP_API_HOST) {
-    Vue.axios.defaults.baseURL = process.env.VUE_APP_API_HOST;
+    Vue.axios.defaults.baseURL = process.env.VUE_APP_LIVE_API_HOST;
     // } else {
     //   Vue.axios.defaults.baseURL = "https://api.subsapp.com/api/";
     // }

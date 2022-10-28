@@ -54,7 +54,8 @@
               <div
                 class="ant-avatar gx-avatar gx-pointer ant-avatar-circle ant-avatar-image"
               >
-                <img alt="" :src="userProfileAvatar" />
+                <img alt="" :src="userProfileAvatar" v-if="userProfileAvatar" />
+                <img alt="" src="@/assets/user.png" v-else />
               </div>
               <router-link to="/my-profile" tag="div" style="cursor: pointer">
                 <div class="gx-user-nav--name">
@@ -190,7 +191,7 @@ export default {
       if (this.user.user.profile && this.user.user.profile.image) {
         return this.user.user.profile.image;
       } else {
-        return "https://api.subsapp.com/missing.png";
+        return null;
       }
     }
   },

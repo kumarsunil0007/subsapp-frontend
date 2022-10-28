@@ -128,7 +128,7 @@ export default {
   data() {
     return {
       form: this.$form.createForm(this),
-      action: process.env.VUE_APP_API_HOST,
+      action: process.env.VUE_APP_LIVE_API_HOST,
       spinning: false
     };
   },

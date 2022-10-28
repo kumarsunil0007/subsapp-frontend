@@ -4,176 +4,137 @@
       <a-col :lg="12" :md="24" :sm="24" :xs="24">
         <a-card title="My Profile Settings" class="gx-card-widget heading">
           <a-form :form="form" layout="vertical">
-            <a-row class="my-profile-card">
-              <a-col :span="24" class="gx-text-center">
-                <template v-if="profilePic">
-                  <div
-                    class="profile-picture gx-text-center gx-mx-auto gx-d-inline-block"
-                  >
-                    <img
-                      :src="profilePic"
-                      class="gx-mb-3"
-                      style="max-height: 120px; max-width: 100%"
-                      @error="defaultImage"
-                    />
-                    <a-upload
-                      :file-list="fileList"
-                      :remove="handleRemove"
-                      :before-upload="beforeUpload"
-                      :show-upload-list="true"
-                      class="upload-profile-img"
-                    >
-                      <a-button type="primary" shape="circle" class="gx-mb-0">
-                        <a-icon type="plus" />
-                      </a-button>
-                    </a-upload>
-                  </div>
-                </template>
-                <a-form-item>
-                  <a-button
-                    type="primary"
-                    :disabled="fileList.length === 0"
-                    style="margin-top: 16px"
-                    :loading="uploading"
-                    @click="handleUpload"
-                  >
-                    {{ uploading ? "Uploading" : "Upload" }}
-                  </a-button>
-                </a-form-item>
-                <a-form-item>
-                  <a-button type="primary" @click="removeImage()">
-                    <a-icon type="delete" /> Remove Image
-                  </a-button>
-                </a-form-item>
-              </a-col>
-              <a-col :lg="12" :sm="24" :md="12" :span="24">
-                <a-form-item label="First Name">
-                  <a-input
-                    v-decorator="[
-                      'first_name',
-                      {
-                        rules: [
-                          {
-                            required: true,
-                            message: 'First name is required',
-                          },
-                        ],
-                      },
-                    ]"
-                    type="text"
-                  >
-                  </a-input>
-                </a-form-item>
-              </a-col>
-              <a-col :lg="12" :sm="24" :md="12" :span="24">
-                <a-form-item label="Last Name">
-                  <a-input
-                    v-decorator="[
-                      'last_name',
-                      {
-                        rules: [
-                          {
-                            required: true,
-                            message: 'Last name is a required field',
-                          },
-                        ],
-                      },
-                    ]"
-                    type="text"
-                  >
-                  </a-input>
-                </a-form-item>
-              </a-col>
-              <a-col :lg="12" :sm="24" :md="12" :span="24">
-                <a-form-item label="Email">
-                  <a-input
-                    v-decorator="[
-                      'work_email',
-                      {
-                        rules: [
-                          {
-                            required: true,
-                            message: 'Your email is required',
-                          },
-                        ],
-                      },
-                    ]"
-                    type="text"
-                  >
-                  </a-input>
-                </a-form-item>
-              </a-col>
-              <a-col :lg="12" :sm="24" :md="12" :span="24">
-                <a-form-item label="Phone Number">
-                  <a-input v-decorator="['phone']" type="text"></a-input>
-                </a-form-item>
-              </a-col>
-              <a-col :lg="12" :sm="24" :md="12" :span="24">
-                <a-form-item label="Date of Birth">
-                  <a-date-picker
-                    v-decorator="['dob']"
-                    style="width: 100%"
-                    format="DD/MM/YYYY"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :lg="12" :sm="24" :md="12" :span="24">&nbsp;</a-col>
-              <a-col :lg="12" :sm="24" :md="12" :span="24">
-                <a-form-item label="Emergency Name">
-                  <a-input v-decorator="['emergency_name']" type="text">
-                  </a-input>
-                </a-form-item>
-              </a-col>
-              <a-col :lg="12" :sm="24" :md="12" :span="24">
-                <a-form-item label="Emergency Phone">
-                  <a-input v-decorator="['emergency_phone']" type="text">
-                  </a-input>
-                </a-form-item>
-              </a-col>
-              <a-col :lg="12" :sm="24" :md="12" :span="24">
-                <a-form-item label="Address 1">
-                  <a-input v-decorator="['address_1']" type="text"> </a-input>
-                </a-form-item>
-              </a-col>
+            <template v-if="profilePic">
+              <img
+                :src="profilePic"
+                class="gx-mb-3"
+                style="max-height: 120px; max-width: 100%;"
+                @error="defaultImage"
+              />
+            </template>
+            <a-form-item>
+              <a-upload
+                :file-list="fileList"
+                :remove="handleRemove"
+                :before-upload="beforeUpload"
+                :show-upload-list="true"
+              >
+                <a-button> <a-icon type="upload" /> Select File </a-button>
+              </a-upload>
+              <a-button
+                type="primary"
+                :disabled="fileList.length === 0"
+                style="margin-top: 16px"
+                :loading="uploading"
+                @click="handleUpload"
+              >
+                {{ uploading ? "Uploading" : "Start Upload" }}
+              </a-button>
+            </a-form-item>
 
-              <a-col :lg="12" :sm="24" :md="12" :span="24">
-                <a-form-item label="Address 2">
-                  <a-input v-decorator="['address_2']" type="text"> </a-input>
-                </a-form-item>
-              </a-col>
-              <a-col :lg="12" :sm="24" :md="12" :span="24">
-                <a-form-item label="Town">
-                  <a-input v-decorator="['town']" type="text"> </a-input>
-                </a-form-item>
-              </a-col>
-              <a-col :lg="12" :sm="24" :md="12" :span="24">
-                <a-form-item label="Region">
-                  <a-input v-decorator="['region']" type="text"> </a-input>
-                </a-form-item>
-              </a-col>
+             <a-form-item>
+              <button @click="removeImage()">Remove image</button>
+            </a-form-item>
+            <a-form-item label="First Name">
+              <a-input
+                v-decorator="[
+                  'first_name',
+                  {
+                    rules: [
+                      {
+                        required: true,
+                        message: 'First name is required'
+                      }
+                    ]
+                  }
+                ]"
+                type="text"
+              >
+              </a-input>
+            </a-form-item>
+            <a-form-item label="Last Name">
+              <a-input
+                v-decorator="[
+                  'last_name',
+                  {
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Last name is a required field'
+                      }
+                    ]
+                  }
+                ]"
+                type="text"
+              >
+              </a-input>
+            </a-form-item>
 
-              <a-col :lg="12" :sm="24" :md="12" :span="24">
-                <a-form-item label="Postcode">
-                  <a-input v-decorator="['post_code']" type="text"> </a-input>
-                </a-form-item>
-              </a-col>
-              <a-col :lg="12" :sm="24" :md="12" :span="24">
-                <div class="ant-row ant-form-item">
-                  <div class="ant-form-item-label">
-                    <label for="region" title="Region" class="">Country</label>
-                  </div>
-                  <div class="ant-form-item-control-wrapper">
-                    <country-select
-                      v-model="fields.country"
-                      :country="fields.country"
-                      top-country="IE"
-                      class-name="ant-input"
-                    />
-                  </div>
-                </div>
-              </a-col>
-            </a-row>
+            <a-form-item label="Email">
+              <a-input
+                v-decorator="[
+                  'work_email',
+                  {
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Your email is required'
+                      }
+                    ]
+                  }
+                ]"
+                type="text"
+              >
+              </a-input>
+            </a-form-item>
+            <a-form-item label="Phone Number">
+              <a-input v-decorator="['phone']" type="text"></a-input>
+            </a-form-item>
+            <a-form-item label="Date of Birth">
+              <a-date-picker
+                v-decorator="['dob']"
+                style="width:100%"
+                format="DD/MM/YYYY"
+              />
+            </a-form-item>
 
+              <a-form-item label="Emergency Name">
+              <a-input v-decorator="['emergency_name']" type="text"> </a-input>
+            </a-form-item>
+            <a-form-item label="Emergency Phone">
+              <a-input v-decorator="['emergency_phone']" type="text"> </a-input>
+            </a-form-item>
+
+            <a-form-item label="Address 1">
+              <a-input v-decorator="['address_1']" type="text"> </a-input>
+            </a-form-item>
+            <a-form-item label="Address 2">
+              <a-input v-decorator="['address_2']" type="text"> </a-input>
+            </a-form-item>
+
+            <a-form-item label="Town">
+              <a-input v-decorator="['town']" type="text"> </a-input>
+            </a-form-item>
+            <a-form-item label="Region">
+              <a-input v-decorator="['region']" type="text"> </a-input>
+            </a-form-item>
+            <a-form-item label="Postcode">
+              <a-input v-decorator="['post_code']" type="text"> </a-input>
+            </a-form-item>
+
+            <div class="ant-row ant-form-item">
+              <div class="ant-form-item-label">
+                <label for="region" title="Region" class="">Country</label>
+              </div>
+              <div class="ant-form-item-control-wrapper">
+                <country-select
+                  v-model="fields.country"
+                  :country="fields.country"
+                  top-country="IE"
+                  class-name="ant-input"
+                />
+              </div>
+            </div>
             <a-form-item class="gx-text-right">
               <a-button
                 type="primary"
@@ -219,7 +180,6 @@ import { mapGetters } from "vuex";
 import NPage from "@/components/ui/n-page/n-page";
 import notifications from "@/common/notifications/notification.service";
 import MissingPng from "@/assets/missing-profile-photo.png";
-
 import { AUTH_USER, AUTH_TOKEN } from "@/store/modules/auth/auth-actions";
 import { memberService } from "@/common/api/api.service";
 import moment from "moment";
@@ -230,7 +190,7 @@ export default {
   components: {
     // SubAccountsManageModal,
     //SubAccountsTable,
-    NPage,
+    NPage
   },
   data() {
     return {
@@ -239,14 +199,14 @@ export default {
       selectedUserId: 0,
       dateValue: moment(),
       fields: {
-        country: null,
+        country: null
       },
       form: this.$form.createForm(this),
       action: process.env.VUE_APP_API_HOST,
       user_image: "",
       loading: false,
       uploading: false,
-      fileList: [],
+      fileList: []
     };
   },
   computed: {
@@ -254,15 +214,15 @@ export default {
       authUser: [AUTH_USER],
       userToken: [AUTH_TOKEN],
       user: "getUser",
-      userProfileLoading: "userProfileLoading",
+      userProfileLoading: "userProfileLoading"
     }),
-    profilePic: function () {
+    profilePic: function() {
       if (this.user_image) {
         return this.user_image;
       } else {
         return "https://api.subsapp.com/missing.png";
       }
-    },
+    }
   },
   watch: {
     // user: function(newData) {
@@ -301,7 +261,6 @@ export default {
     forceRerender() {
       // Remove my-component from the DOM
       this.renderComponent = false;
-
       this.$nextTick(() => {
         // Add the component back in
         this.renderComponent = true;
@@ -319,7 +278,6 @@ export default {
       this.selectedUserId = 0;
     },
     uploadImage({ file }) {
-      console.log(file);
       //this.fetchProfile();
     },
     defaultImage(e) {
@@ -335,7 +293,7 @@ export default {
       });
     },
     fetchProfile() {
-      memberService.userProfile().then((resp) => {
+      memberService.userProfile().then(resp => {
         if (resp.data.success) {
           this.form.setFieldsValue({
             first_name: resp.data.result.first_name,
@@ -349,19 +307,12 @@ export default {
             town: resp.data.result.profile.town,
             post_code: resp.data.result.profile.post_code,
             region: resp.data.result.profile.region,
-            dob: resp.data.result.profile.dob,
+            dob: resp.data.result.profile.dob
           });
           this.fields.country = resp.data.result.profile.country;
-          this.user_image =
-            resp.data.result.profile && resp.data.result.profile.image
-              ? resp.data.result.profile.image
-              : null;
-
+          this.user_image = resp.data.result.profile.image;
           let userData = JSON.parse(localStorage.getItem("authUserData"));
-          userData.user.profile.image =
-            resp.data.result.profile && resp.data.result.profile.image
-              ? resp.data.result.profile.image
-              : null;
+          userData.user.profile.image = resp.data.result.profile.image;
           userData.user.first_name = resp.data.result.first_name;
           userData.user.last_name = resp.data.result.last_name;
           userData.user.work_email = resp.data.result.work_email;
@@ -376,9 +327,9 @@ export default {
       memberService
         .updateProfile({
           ...values,
-          country: this.fields.country,
+          country: this.fields.country
         })
-        .then((resp) => {
+        .then(resp => {
           this.loading = false;
           if (resp.data.success) {
             this.fetchProfile();
@@ -403,13 +354,13 @@ export default {
     handleUpload() {
       const { fileList } = this;
       const formData = new FormData();
-      fileList.forEach((file) => {
+      fileList.forEach(file => {
         formData.append("logo", file);
       });
       this.uploading = true;
       memberService
         .uploadAvatar(formData)
-        .then((resp) => {
+        .then(resp => {
           this.uploading = false;
           if (resp.data.success === true) {
             notifications.success("upload successfully.");
@@ -434,10 +385,10 @@ export default {
       newFileList.splice(index, 1);
       this.fileList = newFileList;
     },
-    removeImage() {
+    removeImage () {
       memberService
         .deleteAvatar()
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success === true) {
             notifications.success("Profile Image Remove Succesfully.");
             this.fileList = [];
@@ -450,25 +401,7 @@ export default {
           notifications.warn("Server error");
         });
     },
-  },
+  }
+  
 };
 </script>
-<style scoped>
-.my-profile-card {
-  flex-direction: row;
-}
-.profile-picture {
-  position: relative;
-}
-.profile-picture span.upload-profile-img {
-  position: absolute;
-  right: -13px;
-  bottom: 10px;
-}
-.profile-picture span.upload-profile-img button.ant-btn {
-  font-size: 16px;
-  min-width: 25px;
-  height: 25px;
-  line-height: 22px;
-}
-</style>
