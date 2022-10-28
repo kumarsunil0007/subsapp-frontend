@@ -1,28 +1,27 @@
-
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 // Toast config
 const Toaster = {
   success(message, variant) {
     Swal.fire({
       toast: true,
-      position: 'top-end',
+      position: "top-end",
       icon: variant,
       title: message,
       showConfirmButton: true,
       timerProgressBar: true,
       timer: 5000
-    })
+    });
   },
   error(message, variant) {
     Swal.fire({
       toast: true,
-      position: 'top-end',
+      position: "top-end",
       icon: variant,
       title: message,
       showConfirmButton: false,
       timerProgressBar: true,
       timer: 5000
-    })
+    });
   },
   confirmation() {
     return Swal.fire({
@@ -31,8 +30,8 @@ const Toaster = {
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
-      confirmButtonText: "Yes, Delete it!",
-    })
+      confirmButtonText: "Yes, Delete it!"
+    });
   },
   cancelButtonConfirmation() {
     return Swal.fire({
@@ -41,8 +40,8 @@ const Toaster = {
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
-      confirmButtonText: "Yes, Cancel it!",
-    })
+      confirmButtonText: "Yes, Cancel it!"
+    });
   },
   provideAgentServiceConfirmation() {
     return Swal.fire({
@@ -51,8 +50,8 @@ const Toaster = {
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
-      confirmButtonText: "Yes",
-    })
+      confirmButtonText: "Yes"
+    });
   },
   unmergeButtonConfirmation() {
     return Swal.fire({
@@ -61,19 +60,18 @@ const Toaster = {
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
-      confirmButtonText: "Yes, Unlink it!",
-    })
+      confirmButtonText: "Yes, Unlink it!"
+    });
   },
   customConfirmation(message, variant) {
     return Swal.fire({
-      title: "<h3 style='font-weight: 600'>" + message +" </h3>",
+      title: "<h3 style='font-weight: 600'>" + message + " </h3>",
       showCancelButton: true,
       icon: variant,
       confirmButtonColor: "#3085d6",
-      confirmButtonText: "Continue",
-    })
+      confirmButtonText: "Continue"
+    });
   }
-}
-
+};
 
 export default Toaster;

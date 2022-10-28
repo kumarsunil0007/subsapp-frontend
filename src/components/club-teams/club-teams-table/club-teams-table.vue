@@ -66,19 +66,19 @@ const columns = [
   {
     title: "Team Name",
     dataIndex: "team_name",
-    key: "team_name",
+    key: "team_name"
   },
   {
     title: "Club Name",
     dataIndex: "club.club_name",
-    key: "club.club_name",
+    key: "club.club_name"
   },
   {
     title: "",
     scopedSlots: {
-      customRender: "operations",
-    },
-  },
+      customRender: "operations"
+    }
+  }
 ];
 
 export default {
@@ -88,22 +88,22 @@ export default {
     return {
       columns,
       teams: [],
-      teamsLoading: true,
+      teamsLoading: true
     };
   },
   mounted() {
     this.getTeams();
   },
   computed: {
-    ...mapGetters(["AUTH_USER"]),
+    ...mapGetters(["AUTH_USER"])
   },
   methods: {
     archiveTeam(teamId) {
       teamService
         .update(teamId, {
-          status: "archived",
+          status: "archived"
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success) {
             this.getTeams();
             notifications.success("Team archived successfully");
@@ -121,9 +121,9 @@ export default {
     activateTeam(teamId) {
       teamService
         .update(teamId, {
-          status: "active",
+          status: "active"
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success) {
             this.getTeams();
             notifications.success("Team activated successfully");
@@ -140,9 +140,9 @@ export default {
     },
     getTeams() {
       let data = {
-        role: this.AUTH_USER.select_role,
+        role: this.AUTH_USER.select_role
       };
-      teamService.query(data).then((resp) => {
+      teamService.query(data).then(resp => {
         if (resp.data.success) {
           this.teams = resp.data.result;
           // alert(JSON.stringify(this.teams));
@@ -155,13 +155,13 @@ export default {
     },
     deleteTeam(teamId) {
       console.log("teamId => ", teamId);
-      Toaster.confirmation().then((resp) => {
+      Toaster.confirmation().then(resp => {
         if (resp.isConfirmed) {
           teamService
             .deleteTeam({
               teamId: teamId
             })
-            .then((resp) => {
+            .then(resp => {
               if (resp.data.success) {
                 notifications.success(resp.data.message);
                 this.getTeams();
@@ -171,8 +171,8 @@ export default {
             });
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -44,7 +44,7 @@ export default {
       action: process.env.VUE_APP_LIVE_API_HOST,
       spinning: false,
       clubId: null,
-      clubData: {},
+      clubData: {}
     };
   },
   computed: {},
@@ -54,15 +54,15 @@ export default {
   },
   methods: {
     ClubInfo() {
-      clubService.get(this.clubId).then((resp) => {
+      clubService.get(this.clubId).then(resp => {
         if (resp.data.success) {
           this.clubData = resp.data.result;
           console.log("this.clubs => ", this.clubs);
         }
         this.teamsLoading = false;
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

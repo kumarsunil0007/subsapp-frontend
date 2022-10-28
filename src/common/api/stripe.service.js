@@ -1,7 +1,7 @@
 import Vue from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
-import Router from "@/router"
+import Router from "@/router";
 
 const ApiService = {
   init() {
@@ -44,14 +44,13 @@ const ApiService = {
     return Vue.axios.get(`${resource}/${slug}`).catch(error => {
       throw new Error(`[RWV] ApiService ${error}`);
     });
-  },
+  }
 };
 
-
-export const listPlans= {
-    listPlans() {
+export const listPlans = {
+  listPlans() {
     return ApiService.get("v1/plans?limit=3");
-  },
+  }
 };
 
 export default ApiService;

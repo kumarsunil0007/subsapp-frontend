@@ -58,7 +58,7 @@ export default {
       this.currentAdmin = null;
       this.clubAdminModal = false;
       this.forceRerender();
-    },
+    }
   }
 };
 </script>

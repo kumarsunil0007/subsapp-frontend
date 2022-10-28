@@ -247,7 +247,7 @@ export default {
       this.getTeamSchedule();
     },
     async createNewSchedule(row) {
-      console.log(this.sessionStart, moment())
+      console.log(this.sessionStart, moment());
       if (moment(this.sessionStart).isBefore(moment())) {
         notifications.warn(
           "Your event has passed2.You can't mark absent or present now."

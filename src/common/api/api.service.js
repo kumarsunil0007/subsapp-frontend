@@ -42,17 +42,15 @@ const ApiService = {
 
   get(resource, slug = "") {
     ApiService.setHeader();
-    if(slug != "") {
+    if (slug != "") {
       return Vue.axios.get(`${resource}/${slug}`).catch(error => {
         throw new Error(`[RWV] ApiService ${error}`);
       });
-    }
-    else {
+    } else {
       return Vue.axios.get(`${resource}`).catch(error => {
         throw new Error(`[RWV] ApiService ${error}`);
       });
     }
-    
   },
 
   post(resource, params) {
@@ -93,7 +91,7 @@ export const authService = {
   login(params) {
     return ApiService.post("/auth/login", params);
   },
-  init(){
+  init() {
     return ApiService.get("/init");
   },
   logout() {
@@ -119,7 +117,7 @@ export const authService = {
   },
   updateUserLoggedIn() {
     return ApiService.get("/update-user-loggedin");
-  },
+  }
 };
 export const subAccountsService = {
   query(params) {
@@ -219,26 +217,24 @@ export const memberService = {
   deleteAvatar(data) {
     return ApiService.post("member/remove-avatar");
   },
-  updateCommission(commission){ 
-    return ApiService.post("club-admin/update-commision",commission);
-
-  },
+  updateCommission(commission) {
+    return ApiService.post("club-admin/update-commision", commission);
+  }
 };
 
 export const adminService = {
   query(params) {
     return ApiService.query("/club-admin/query", { params: params });
   },
-  updateAdminService(){
-    return ApiService.post("/club-admin/update-club-info",);
+  updateAdminService() {
+    return ApiService.post("/club-admin/update-club-info");
   },
   getSettings() {
-    return ApiService.get("/settings",);
+    return ApiService.get("/settings");
   },
   updateSettings(params) {
     return ApiService.post("/update-settings", params);
   }
-  
 };
 export const memberBillingService = {
   query(params) {
@@ -285,7 +281,7 @@ export const teamService = {
   },
   deleteTeam(data) {
     return ApiService.post("/team/delete", data);
-  },
+  }
 };
 export const clubAdminsService = {
   query(params) {
@@ -395,14 +391,13 @@ export const billingService = {
   cancelSubscription() {
     return ApiService.post("/billing/cancel-subscription");
   },
-  redirectStripe(){
+  redirectStripe() {
     return ApiService.post("/stripe-create-account");
   },
- 
-  listBankDetails(){
-      return ApiService.post('/account-list');
-  }
 
+  listBankDetails() {
+    return ApiService.post("/account-list");
+  }
 };
 
 export default ApiService;

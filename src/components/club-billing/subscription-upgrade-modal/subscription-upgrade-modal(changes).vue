@@ -8,14 +8,25 @@
   >
     <a-spin :spinning="spinning">
       <a-row type="flex" :gutter="10">
-        <a-col :xs="24" :sm="24" :md="8" :lg="8" v-for="fd2 in firebasedata" :key="fd2.id">
+        <a-col
+          v-for="fd2 in firebasedata"
+          :key="fd2.id"
+          :xs="24"
+          :sm="24"
+          :md="8"
+          :lg="8"
+        >
           <div class="gx-package">
             <div class="gx-package-header gx-bg-cyan gx-text-white">
-              <h2 class="gx-price"><i class="icon icon-halfstar"></i>{{fd2.name}}</h2>
+              <h2 class="gx-price">
+                <i class="icon icon-halfstar"></i>{{ fd2.name }}
+              </h2>
               <p
                 class="gx-letter-spacing-base gx-text-white gx-text-uppercase gx-mb-0"
               >
-                <span v-if="!!fd2.metadata.total_amount">€{{parseFloat(fd2.metadata.total_amount).toFixed(2)}}</span>
+                <span v-if="!!fd2.metadata.total_amount"
+                  >€{{ parseFloat(fd2.metadata.total_amount).toFixed(2) }}</span
+                >
                 <span v-else>Contact Us!</span>
               </p>
             </div>
@@ -23,32 +34,27 @@
               <ul class="gx-package-items">
                 <li>
                   <a-icon type="user" />
-                  {{fd2.metadata.club_members}}
+                  {{ fd2.metadata.club_members }}
                 </li>
                 <li>
                   <a-icon type="team" />
-                    {{fd2.metadata.club_coach}}
+                  {{ fd2.metadata.club_coach }}
                 </li>
                 <li>
                   <a-icon type="euro" />
-                  {{fd2.metadata.transaction_processing_rate}}
-                  
+                  {{ fd2.metadata.transaction_processing_rate }}
                 </li>
                 <li>
                   <a-icon type="safety-certificate" />
-                  {{fd2.metadata.payouts}}
+                  {{ fd2.metadata.payouts }}
                 </li>
               </ul>
               <div class="gx-package-footer">
                 <span>
-                <a-button
-                  class="gx-btn-cyan"
-                  @click="attemptUpgrade(fd2.id)"
-                >
-                  Select Plan
-                </a-button>
+                  <a-button class="gx-btn-cyan" @click="attemptUpgrade(fd2.id)">
+                    Select Plan
+                  </a-button>
                 </span>
-
               </div>
             </div>
           </div>
@@ -75,10 +81,8 @@ export default {
       required: true,
       type: Boolean
     }
-
-    
   },
-  
+
   data() {
     return {
       spinning: false,
@@ -122,19 +126,19 @@ export default {
           );
         });
     },
-    listPlans(){
-       fetch("https://api.stripe.com/v1/plans?limit=3", {
-          method: "GET",
-            headers: {
-              Authorization: "Bearer sk_test_VbvVoI0XEzjpzgvvHogLGql2"
-           }
+    listPlans() {
+      fetch("https://api.stripe.com/v1/plans?limit=3", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer sk_test_VbvVoI0XEzjpzgvvHogLGql2"
+        }
       })
-    .then(res => res.json())
+        .then(res => res.json())
         .then(response => {
           this.firebasedata = response.data;
           console.log(JSON.stringify(this.firebasedata));
-        // console.log(response.data);
-    });
+          // console.log(response.data);
+        });
     },
 
     contactForm() {
@@ -143,7 +147,7 @@ export default {
     },
     close() {
       this.$emit("close");
-    },
+    }
   }
 };
 </script>

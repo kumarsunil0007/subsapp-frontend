@@ -91,14 +91,14 @@ export default {
   props: {
     member: {
       required: true,
-      type: Object,
-    },
+      type: Object
+    }
   },
   methods: {
     makeCoach() {
       const payload = {
         memberId: this.member.id
-      }
+      };
       memberService
         .makeCoach(payload)
         .then(resp => {
@@ -118,15 +118,15 @@ export default {
         .catch(() => {
           this.loading = false;
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss">
 .member-details {
   & img {
-    width: 36px
+    width: 36px;
   }
   & .ant-row {
     margin-bottom: 12px;
