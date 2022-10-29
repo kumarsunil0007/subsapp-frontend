@@ -6,18 +6,18 @@
       :visible="subManagerVisible"
       @close="closeSubAccountModal"
     /> -->
-    <a-card class="gx-card-widget heading">
-      <h3 class="gx-px-3 gx-mb-4">My Profile Settings</h3>
-      <a-form :form="form" layout="vertical">
-        <a-row style="flex-direction: row">
-          <a-col
-            :xl="6"
-            :lg="8"
-            :md="8"
-            :sm="8"
-            :xs="24"
-            class="gx-text-center"
-          >
+    <a-form :form="form" layout="vertical">
+      <a-row style="flex-direction: row">
+        <a-col
+          :xl="6"
+          :lg="10"
+          :md="10"
+          :sm="10"
+          :xs="24"
+          class="gx-text-center"
+        >
+          <a-card class="gx-card-widget heading">
+            <h2 class="gx-text-left">Edit Profile Picture</h2>
             <div class="profile-pic-upload">
               <a-row>
                 <a-col :lg="24">
@@ -35,7 +35,7 @@
                       <!-- <a-icon type="delete" @click="removeImage()" /> -->
                       <a-popconfirm
                         placement="bottom"
-                        title="Are you sure delete this image?"
+                        title="Are you sure to delete this image?"
                         ok-text="Yes"
                         cancel-text="No"
                         class="delete-popup"
@@ -71,10 +71,15 @@
                 >
               </a-row>
             </div>
-          </a-col>
-          <a-col :xl="18" :lg="16" :md="16" :sm="16" :xs="24" class="gx-pl-0">
+          </a-card>
+        </a-col>
+        <a-col :xl="18" :lg="14" :md="14" :sm="14" :xs="24">
+          <a-card class="gx-card-widget heading information-card">
             <a-row style="flex-direction: row">
-              <a-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
+              <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+                <h2>Personal Information</h2>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="First Name">
                   <a-input
                     v-decorator="[
@@ -93,7 +98,7 @@
                   </a-input>
                 </a-form-item>
               </a-col>
-              <a-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Last Name">
                   <a-input
                     v-decorator="[
@@ -112,7 +117,7 @@
                   </a-input>
                 </a-form-item>
               </a-col>
-              <a-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Email">
                   <a-input
                     v-decorator="[
@@ -130,14 +135,14 @@
                   >
                   </a-input> </a-form-item
               ></a-col>
-              <a-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Phone Number">
                   <a-input
                     v-decorator="['phone']"
                     type="text"
                   ></a-input> </a-form-item
               ></a-col>
-              <a-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Date of Birth">
                   <a-date-picker
                     v-decorator="['dob']"
@@ -145,44 +150,50 @@
                     format="DD/MM/YYYY"
                   /> </a-form-item
               ></a-col>
-              <a-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
+              <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+                <hr />
+              </a-col>
+              <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+                <h2>Other Information</h2>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Emergency Name">
                   <a-input v-decorator="['emergency_name']" type="text">
                   </a-input>
                 </a-form-item>
               </a-col>
-              <a-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Emergency Phone">
                   <a-input v-decorator="['emergency_phone']" type="text">
                   </a-input>
                 </a-form-item>
               </a-col>
-              <a-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Address 1">
                   <a-input v-decorator="['address_1']" type="text"> </a-input>
                 </a-form-item>
               </a-col>
-              <a-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Address 2">
                   <a-input v-decorator="['address_2']" type="text"> </a-input>
                 </a-form-item>
               </a-col>
-              <a-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Town">
                   <a-input v-decorator="['town']" type="text"> </a-input>
                 </a-form-item>
               </a-col>
-              <a-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Region">
                   <a-input v-decorator="['region']" type="text"> </a-input>
                 </a-form-item>
               </a-col>
-              <a-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Postcode">
                   <a-input v-decorator="['post_code']" type="text"> </a-input>
                 </a-form-item>
               </a-col>
-              <a-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <div class="ant-row ant-form-item">
                   <div class="ant-form-item-label">
                     <label for="region" title="Region" class="">Country</label>
@@ -197,7 +208,7 @@
                   </div>
                 </div>
               </a-col>
-              <a-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item class="gx-text-left gx-mt-4">
                   <a-button
                     type="primary"
@@ -209,11 +220,11 @@
                   </a-button>
                 </a-form-item>
               </a-col>
-            </a-row></a-col
-          >
-        </a-row>
-      </a-form>
-    </a-card>
+            </a-row>
+          </a-card></a-col
+        >
+      </a-row>
+    </a-form>
   </n-page>
 </template>
 
@@ -370,7 +381,7 @@ export default {
         .deleteAvatar()
         .then(resp => {
           if (resp.data.success === true) {
-            notifications.success("Profile Image Remove Succesfully.");
+            notifications.success("Profile picture removed succesfully.");
             this.fileList = [];
             this.fetchProfile();
           } else {
@@ -425,7 +436,7 @@ export default {
         .then(resp => {
           this.uploading = false;
           if (resp.data.success === true) {
-            notifications.success("upload successfully.");
+            notifications.success("Profile picture uploaded successfully.");
             this.fileList = [];
             this.fetchProfile();
           } else {
@@ -452,7 +463,7 @@ export default {
         .deleteAvatar()
         .then(resp => {
           if (resp.data.success === true) {
-            notifications.success("Profile Image Remove Succesfully.");
+            notifications.success("Profile picture removed succesfully.");
             this.fileList = [];
             this.fetchProfile();
           } else {

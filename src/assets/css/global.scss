@@ -15,7 +15,7 @@ span.edit-profile .ant-upload.ant-upload-select {
   }
   .edit-profile-btn{
     position: absolute;
-    right: 70px;
+    right: 54px;
     bottom: -14px;
     background: orange;
     border-radius: 50%;
@@ -55,6 +55,7 @@ span.edit-profile .ant-upload.ant-upload-select {
     margin: 0 auto;
     overflow: hidden;
     border-radius: 4%;
+    border: 1px solid #dddd;
 }
 .profile-pic-upload .profile-img img{
     width:100%;
@@ -68,6 +69,11 @@ span.edit-profile .ant-upload.ant-upload-select {
 }
 .profile-pic-upload .ant-upload-list-item-name{
     text-align: left;
+}
+.information-card{
+    .ant-card-body{
+        padding: 24px 12px;
+    }
 }
 @media(min-width:768px) and (max-width:991px){
     .edit-profile-btn {
