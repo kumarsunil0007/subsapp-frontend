@@ -13,10 +13,10 @@
                       rules: [
                         {
                           required: true,
-                          message: 'This field is a required field',
-                        },
-                      ],
-                    },
+                          message: 'This field is a required field'
+                        }
+                      ]
+                    }
                   ]"
                   type="text"
                 >
@@ -30,10 +30,10 @@
                       rules: [
                         {
                           required: true,
-                          message: 'This field is a required field',
-                        },
-                      ],
-                    },
+                          message: 'This field is a required field'
+                        }
+                      ]
+                    }
                   ]"
                   type="text"
                 >
@@ -47,10 +47,10 @@
                       rules: [
                         {
                           required: true,
-                          message: 'This field is a required field',
-                        },
-                      ],
-                    },
+                          message: 'This field is a required field'
+                        }
+                      ]
+                    }
                   ]"
                   type="text"
                 >
@@ -64,10 +64,10 @@
                       rules: [
                         {
                           required: true,
-                          message: 'This field is a required field',
-                        },
-                      ],
-                    },
+                          message: 'This field is a required field'
+                        }
+                      ]
+                    }
                   ]"
                   type="text"
                 >
@@ -106,7 +106,7 @@ import notifications from "@/common/notifications/notification.service";
 export default {
   name: "MyProfile",
   components: {
-    NPage,
+    NPage
   },
   data() {
     return {
@@ -115,10 +115,10 @@ export default {
       subManagerVisible: false,
       selectedUserId: 0,
       fields: {
-        country: null,
+        country: null
       },
       form: this.$form.createForm(this),
-      stripe_mode: 0,
+      stripe_mode: 0
     };
   },
   computed: {
@@ -126,8 +126,8 @@ export default {
       authUser: [AUTH_USER],
       userToken: [AUTH_TOKEN],
       user: "getUser",
-      userProfileLoading: "userProfileLoading",
-    }),
+      userProfileLoading: "userProfileLoading"
+    })
   },
   mounted() {
     // this.$store.dispatch(GET_USER, this.authUser.user.user_id);
@@ -135,7 +135,7 @@ export default {
   },
   methods: {
     fetchSettings() {
-      adminService.getSettings().then((resp) => {
+      adminService.getSettings().then(resp => {
         if (resp.data.success) {
           this.form.setFieldsValue({
             stripe_sandbox_private_key:
@@ -143,9 +143,10 @@ export default {
             stripe_sandbox_secret_key:
               resp.data.result.stripe_sandbox_secret_key,
             stripe_live_private_key: resp.data.result.stripe_live_private_key,
-            stripe_live_secret_key: resp.data.result.stripe_live_secret_key,
+            stripe_live_secret_key: resp.data.result.stripe_live_secret_key
           });
-          this.stripe_mode = resp.data.result.stripe_mode == 0 ? 'sandbox' : 'live';
+          this.stripe_mode =
+            resp.data.result.stripe_mode == 0 ? "sandbox" : "live";
         }
       });
     },
@@ -162,9 +163,9 @@ export default {
       adminService
         .updateSettings({
           ...values,
-          stripe_mode: this.stripe_mode == "sandbox" ? 0 : 1,
+          stripe_mode: this.stripe_mode == "sandbox" ? 0 : 1
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success) {
             this.fetchSettings;
             notifications.success("Great! Settings updated");
@@ -178,8 +179,8 @@ export default {
             }
           }
         });
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>
@@ -201,5 +202,4 @@ export default {
   font-weight: 600;
   font-size: 15px !important;
 }
-
 </style>

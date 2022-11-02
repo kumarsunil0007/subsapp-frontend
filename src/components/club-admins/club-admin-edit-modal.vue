@@ -111,7 +111,7 @@ export default {
             ]
           }
         ],
-      address_1: [
+        address_1: [
           "address_1",
           {
             rules: [
@@ -121,7 +121,7 @@ export default {
               }
             ]
           }
-        ],
+        ]
       }
     };
   },

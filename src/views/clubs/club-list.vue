@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       renderComponent: true,
-      newTeamModalVisible: false,
+      newTeamModalVisible: false
     };
   },
   created() {
@@ -40,7 +40,7 @@ export default {
         this.renderComponent = true;
       });
     }
-  },
+  }
 };
 </script>
 <style scoped></style>

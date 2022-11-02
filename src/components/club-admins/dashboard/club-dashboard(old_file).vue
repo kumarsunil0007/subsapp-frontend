@@ -14,9 +14,9 @@
       :time-step="20"
       today-button
       :on-event-click="onEventClick"
-      @view-change="logEvents($event)"
       :min-date="minDate"
       :max-date="maxDate"
+      @view-change="logEvents($event)"
     >
     </vue-cal>
     <a-modal v-model="showDialog">
@@ -62,7 +62,6 @@
       </ul>
     </a-modal>
 
-
     <a-modal v-model="showDialog123">
       <template slot="footer">
         <a-button key="submit" type="primary" @click="showDialog123 = false">
@@ -72,12 +71,23 @@
       <h2>Select Option</h2>
       <a-divider />
       <div id="app">
-        <select class="form-control" @change="changeJobTitle($event)" ref="selectedEl">
+        <select
+          ref="selectedEl"
+          class="form-control"
+          @change="changeJobTitle($event)"
+        >
           <option :value="undefined" selected disabled>Choose</option>
-          <option v-for="jobTitle in jobTitles"  class="details_scheduler" ref='dropdownObj' :value="jobTitle.id" :key="jobTitle.id">{{ jobTitle.name }}</option>
+          <option
+            v-for="jobTitle in jobTitles"
+            ref="dropdownObj"
+            :key="jobTitle.id"
+            class="details_scheduler"
+            :value="jobTitle.id"
+            >{{ jobTitle.name }}</option
+          >
         </select>
         <!-- <p><span>Selected job title: {{ selectedJobTitle  }}</span></p> -->
-</div>
+      </div>
     </a-modal>
     <!-- <a-row type="flex">
     <a-col :xs="24" :sm="24" :md="8">
@@ -161,7 +171,7 @@ import "vue-cal/dist/vuecal.css";
 import { clubService } from "@/common/api/api.service";
 import { mapGetters } from "vuex";
 import moment from "moment";
-let st,ed,team_id;
+let st, ed, team_id;
 export default {
   components: { VueCal },
   data() {
@@ -174,14 +184,11 @@ export default {
       selectedEvent: {},
       events: [],
       jobTitles: [
-            { name: "Details", id: 1 },
-            { name: "Scheduler", id: 2 },
-            
-        ],
-      selected:undefined, 
+        { name: "Details", id: 1 },
+        { name: "Scheduler", id: 2 }
+      ],
+      selected: undefined
     };
-
-    
   },
   computed: {
     ...mapGetters(["AUTH_USER"])
@@ -201,16 +208,15 @@ export default {
       //       var st = moment()
       //           .startOf("month")
       //           .format("YYYY-MM-DD");
-            
+
       //   }
 
       // if (typeof ed === "undefined") {
       //   var ed = moment()
       //         .endOf("month")
-      //         .format("YYYY-MM-DD");   
+      //         .format("YYYY-MM-DD");
       //   }
 
-      
       // if(st=="undefinded"){
       //       let st = moment()
       //               .startOf("month")
@@ -232,7 +238,7 @@ export default {
           this.events = [];
           if (resp.data.success) {
             const result = resp.data.result;
-           // console.log(JSON.stringify(resp.data.result));
+            // console.log(JSON.stringify(resp.data.result));
             let events = [];
             for (let event of result) {
               events.push({
@@ -269,27 +275,26 @@ export default {
         moment(e.endDate).format("YYYY-MM-DD")
       );
     },
-    changeJobTitle (event1) {
-      this.selectedJobTitle = event1.target.options[event1.target.options.selectedIndex].text
+    changeJobTitle(event1) {
+      this.selectedJobTitle =
+        event1.target.options[event1.target.options.selectedIndex].text;
       //alert(this.selectedJobTitle);
-      if(this.selectedJobTitle=="Details"){
-     //    $(".details_scheduler").empty(); 
-    
+      if (this.selectedJobTitle == "Details") {
+        //    $(".details_scheduler").empty();
+
         let st = moment()
-              .startOf("month")
-              .format("YYYY-MM-DD");
+          .startOf("month")
+          .format("YYYY-MM-DD");
         let ed = moment()
           .endOf("month")
           .format("YYYY-MM-DD");
-          this.clubDashboad(st, ed);
-          this.showDialog123 = false;
-          this.showDialog = true;
-      }
-      if(this.selectedJobTitle=="Scheduler"){
+        this.clubDashboad(st, ed);
         this.showDialog123 = false;
-        this.$router.push('/teams/' +
-                    team_id );
-      
+        this.showDialog = true;
+      }
+      if (this.selectedJobTitle == "Scheduler") {
+        this.showDialog123 = false;
+        this.$router.push("/teams/" + team_id);
       }
     }
   }

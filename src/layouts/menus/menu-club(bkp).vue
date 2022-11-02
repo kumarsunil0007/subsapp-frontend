@@ -1,26 +1,38 @@
 <template>
   <a-menu theme="dark" mode="inline">
     <a-menu-item-group key="g2" class="gx-menu-group">
-      <a-menu-item key="dashboard" v-if="user.user.no_of_cards >0" @click="hideSidebar">
+      <a-menu-item
+        v-if="user.user.no_of_cards > 0"
+        key="dashboard"
+        @click="hideSidebar"
+      >
         <router-link to="/dashboard">
           <a-icon type="home" />
           <span>My Events</span>
         </router-link>
       </a-menu-item>
-      <a-menu-item key="teams" v-if="user.user.no_of_cards >0" @click="hideSidebar">
+      <a-menu-item
+        v-if="user.user.no_of_cards > 0"
+        key="teams"
+        @click="hideSidebar"
+      >
         <router-link to="/teams-list">
           <a-icon type="team" />
           <span>Teams</span>
         </router-link>
       </a-menu-item>
-      <a-menu-item key="members"  v-if="user.user.no_of_cards >0" @click="hideSidebar">
+      <a-menu-item
+        v-if="user.user.no_of_cards > 0"
+        key="members"
+        @click="hideSidebar"
+      >
         <router-link to="/members">
           <a-icon type="smile" />
           <span>Members</span>
         </router-link>
       </a-menu-item>
       <a-menu-item
-        v-if="user.select_role === 'club_admin' && user.user.no_of_cards >0" 
+        v-if="user.select_role === 'club_admin' && user.user.no_of_cards > 0"
         key="admins"
         @click="hideSidebar"
       >
@@ -30,7 +42,7 @@
         </router-link>
       </a-menu-item>
       <a-menu-item
-        v-if="user.select_role === 'club_admin'"   
+        v-if="user.select_role === 'club_admin'"
         key="club-billing"
         @click="hideSidebar"
       >
@@ -40,9 +52,9 @@
         </router-link>
       </a-menu-item>
       <a-menu-item
-        v-if="user.select_role === 'club_admin' && user.user.no_of_cards >0"
-        key="subscription" 
-        @click="hideSidebar" 
+        v-if="user.select_role === 'club_admin' && user.user.no_of_cards > 0"
+        key="subscription"
+        @click="hideSidebar"
       >
         <router-link to="/subscription">
           <a-icon type="euro" />
@@ -55,13 +67,17 @@
           <span>Club Managers</span>
         </router-link>
       </a-menu-item> -->
-      <a-menu-item v-if="user.user.no_of_cards >0" key="club_config" @click="hideSidebar">
+      <a-menu-item
+        v-if="user.user.no_of_cards > 0"
+        key="club_config"
+        @click="hideSidebar"
+      >
         <router-link to="/club/settings/my-club">
           <a-icon type="setting" />
           <span>Club Details</span>
         </router-link>
       </a-menu-item>
-      <a-menu-item  key="my_profile" @click="hideSidebar">
+      <a-menu-item key="my_profile" @click="hideSidebar">
         <router-link to="/my-profile">
           <a-icon type="user" />
           <span>My Profile</span>

@@ -64,7 +64,7 @@
       </div>
     </a-modal>
 
-    <a-modal title="Select Team" v-model="showDialog2">
+    <a-modal v-model="showDialog2" title="Select Team">
       <template slot="footer">
         <a-button key="submit" type="primary" @click="showDialog2 = false">
           Close
@@ -98,14 +98,14 @@ export default {
       showDialog: false,
       showDialog2: false,
       selectedEvent: {},
-      events: [],
+      events: []
     };
   },
   computed: {
     ...mapGetters(["AUTH_USER"]),
     minDate() {
       return new Date();
-    },
+    }
   },
   mounted() {
     let st = moment()
@@ -121,11 +121,11 @@ export default {
       const data = {
         role: this.AUTH_USER.select_role,
         startDate: st,
-        endDate: ed,
+        endDate: ed
       };
       clubService
         .clubDashboad({ params: data })
-        .then((resp) => {
+        .then(resp => {
           this.events = [];
           if (resp.data.success) {
             const result = resp.data.result;
@@ -142,7 +142,7 @@ export default {
                 class: event.AttendanceID ? "health" : "leisure",
                 members: event.users,
                 team_id: event.team_id,
-                id: event.id,
+                id: event.id
               });
             }
             this.events = events;
@@ -171,8 +171,8 @@ export default {
         moment(e.startDate).format("YYYY-MM-DD"),
         moment(e.endDate).format("YYYY-MM-DD")
       );
-    },
-  },
+    }
+  }
 };
 </script>
 

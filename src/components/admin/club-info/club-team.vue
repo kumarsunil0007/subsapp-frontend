@@ -8,9 +8,12 @@
     :pagination="pagination"
     @change="handleTableChange"
   >
-    <div slot="operations" slot-scope="text, row" class="gx-text-right">  
-     <a-button @click.prevent="$router.push('/admin/member-listing/'+row.id)"> View Memeber
-     </a-button> 
+    <div slot="operations" slot-scope="text, row" class="gx-text-right">
+      <a-button
+        @click.prevent="$router.push('/admin/member-listing/' + row.id)"
+      >
+        View Memeber
+      </a-button>
       <!-- <router-link :to="'/teams/' + row.id" @click.native="ManageTeam(row.id)">
         <a-button type="primary" size="small">
           View members
@@ -82,7 +85,7 @@ export default {
         }
         this.teamsLoading = false;
       });
-    },
+    }
     // ManageTeam(id) {
     //   //this.$store.commit("SET_TEAM_ZERO");
     //   alert();

@@ -1,6 +1,9 @@
 <template>
-    <div class="dropdown">
-      <a-card title="Select Team For Manage" class="gx-card-table-full text-center">
+  <div class="dropdown">
+    <a-card
+      title="Select Team For Manage"
+      class="gx-card-table-full text-center"
+    >
       <!-- <select v-model="selectedTeamId" @change="onChangeTeam">
         <option
           v-for="(team, index) in teams"
@@ -10,19 +13,29 @@
         {{team.team_name}}
         </option>
       </select> -->
-    <a-select style="width: 150px;margin-bottom:10px;margin-right:10px;" v-model="selectedTeamId" @change="onChangeTeam">
-      <a-select-option  disabled hidden value="">Select One</a-select-option>>
-      <a-select-option  v-for="(team, index) in teams"
+      <a-select
+        v-model="selectedTeamId"
+        style="width: 150px;margin-bottom:10px;margin-right:10px;"
+        @change="onChangeTeam"
+      >
+        <a-select-option disabled hidden value="">Select One</a-select-option>>
+        <a-select-option
+          v-for="(team, index) in teams"
+          :key="index"
           :value="team.id"
-          :key="index">
-        {{team.team_name}}
-      </a-select-option>
-    </a-select>
-     <a-button type="primary" @click="manageTeamRedirect" :disabled='!selectedTeamId'>
-      Manage Team
-    </a-button>
-      </a-card>
-    </div>
+        >
+          {{ team.team_name }}
+        </a-select-option>
+      </a-select>
+      <a-button
+        type="primary"
+        :disabled="!selectedTeamId"
+        @click="manageTeamRedirect"
+      >
+        Manage Team
+      </a-button>
+    </a-card>
+  </div>
 </template>
 
 <script>
@@ -54,7 +67,7 @@ export default {
       teams: [],
       teamsLoading: true,
       selected: "",
-      selectedTeamId:""
+      selectedTeamId: ""
     };
   },
   mounted() {
@@ -109,32 +122,30 @@ export default {
         this.teamsLoading = false;
       });
     },
-     manageTeamRedirect:function(){
-          var team_id = this.selectedTeamId;
-          this.$router.push('/teams/' +
-                    team_id);  
-     },
+    manageTeamRedirect: function() {
+      var team_id = this.selectedTeamId;
+      this.$router.push("/teams/" + team_id);
+    },
 
-     ManageEvent2:function(event){
-               var team_id =    event.target.value;
-               this.$router.push('/teams/' +
-                    team_id );  
-     },
+    ManageEvent2: function(event) {
+      var team_id = event.target.value;
+      this.$router.push("/teams/" + team_id);
+    },
     ManageTeam() {
       this.$store.commit("SET_TEAM_ZERO");
     },
-      displaynumbers : function(event) {
-          alert("test");
+    displaynumbers: function(event) {
+      alert("test");
     }
   }
 };
 </script>
 
 <style scoped>
-.ant-card{
-  margin-bottom:0;
+.ant-card {
+  margin-bottom: 0;
 }
 button.ant-btn.ant-btn-primary {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 </style>

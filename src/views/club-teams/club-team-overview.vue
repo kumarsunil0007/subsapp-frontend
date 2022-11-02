@@ -17,9 +17,7 @@
                 New Session
               </a-button>
             </div>
-            <team-schedule-table 
-            ref="schedule_list" 
-            :club-id="team.id">
+            <team-schedule-table ref="schedule_list" :club-id="team.id">
             </team-schedule-table>
           </a-card>
         </a-col>
@@ -83,6 +81,12 @@ export default {
       addMemberModalVisible: false
     };
   },
+  computed: {
+    ...mapGetters({
+      team: "getTeam",
+      teamLoading: "getTeamLoadingStatus"
+    })
+  },
   beforeCreate() {
     this.$store.dispatch(GET_TEAM, this.$route.params.teamId);
   },
@@ -106,12 +110,6 @@ export default {
       this.$refs.members_list.getMembers();
       this.addMemberModalVisible = false;
     }
-  },
-  computed: {
-    ...mapGetters({
-      team: "getTeam",
-      teamLoading: "getTeamLoadingStatus"
-    })
   }
 };
 </script>

@@ -40,7 +40,7 @@
 .hide-ok-button .ant-modal-footer .ant-btn.ant-btn-default {
   margin: 0;
 }
-.stripe-footer img{
+.stripe-footer img {
   width: 60px;
 }
 </style>

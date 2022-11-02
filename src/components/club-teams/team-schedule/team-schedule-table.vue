@@ -94,7 +94,7 @@ export default {
           .then(resp => {
             if (resp.data.success) {
               this.schedule = resp.data.result;
-           //   console.log(resp.data.result);
+              //   console.log(resp.data.result);
               this.dataLoading = false;
             }
           });

@@ -1,54 +1,52 @@
 import Vue from "vue";
 import App from "./App.vue";
-import VueCookies from 'vue-cookies';
+import VueCookies from "vue-cookies";
 require("dotenv").config();
 import router from "./router";
 import store from "./store/index";
 import "./registerServiceWorker";
 import api from "@/common/api/api.service";
 
-
-
 import {
-    Button,
-    Layout,
-    Row,
-    TimePicker,
-    Checkbox,
-    DatePicker,
-    Col,
-    Carousel,
-    Upload,
-    Breadcrumb,
-    Table,
-    Menu,
-    Tooltip,
-    Modal,
-    Form,
-    Input,
-    Collapse,
-    Icon,
-    Alert,
-    Drawer,
-    Card,
-    Select,
-    Dropdown,
-    Statistic,
-    Tag,
-    Divider,
-    Popconfirm,
-    Radio
+  Button,
+  Layout,
+  Row,
+  TimePicker,
+  Checkbox,
+  DatePicker,
+  Col,
+  Carousel,
+  Upload,
+  Breadcrumb,
+  Table,
+  Menu,
+  Tooltip,
+  Modal,
+  Form,
+  Input,
+  Collapse,
+  Icon,
+  Alert,
+  Drawer,
+  Card,
+  Select,
+  Dropdown,
+  Statistic,
+  Tag,
+  Divider,
+  Popconfirm,
+  Radio
 } from "ant-design-vue";
 import "./styles/wieldy.less";
 import "./assets/style";
+import "./assets/css/global.scss";
 import VueRouterBackButton from "vue-router-back-button";
 import vueCountryRegionSelect from "vue-country-region-select";
 import Notifications from "vue-notification";
 import { Spin } from "ant-design-vue";
-import VueSweetalert2 from 'vue-sweetalert2';
+import VueSweetalert2 from "vue-sweetalert2";
 
-
-import 'sweetalert2/dist/sweetalert2.min.css';
+import "sweetalert2/dist/sweetalert2.min.css";
 Vue.use(VueSweetalert2);
 Vue.use(Notifications);
 Vue.use(VueCookies);
@@ -87,14 +85,13 @@ Vue.use(Divider);
 Vue.use(Popconfirm);
 Vue.use(Radio);
 
-
 Vue.config.productionTip = false;
 
 Vue.use(vueCountryRegionSelect);
 //Vue.prototype.$datetime;
 
 new Vue({
-    router,
-    store,
-    render: h => h(App)
+  router,
+  store,
+  render: h => h(App)
 }).$mount("#app");

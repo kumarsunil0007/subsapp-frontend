@@ -8,7 +8,7 @@
     <a-row>
       <a-col :lg="24" :md="24" :sm="24" :xs="24">
         <a-form :form="form" @submit="addMember">
-        <a-form-item>
+          <a-form-item>
             <a-row
               type="flex"
               align="middle"
@@ -25,7 +25,7 @@
                     'club_name',
                     {
                       rules: [
-                        { required: text, message: 'Club name is required' },
+                        { required: text, message: 'Club name is required' }
                       ]
                     }
                   ]"

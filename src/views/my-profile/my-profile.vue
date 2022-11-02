@@ -1,177 +1,230 @@
 <template>
   <n-page>
-    <a-row>
-      <a-col :lg="12" :md="24" :sm="24" :xs="24">
-        <a-card title="My Profile Settings" class="gx-card-widget heading">
-          <a-form :form="form" layout="vertical">
-            <template v-if="profilePic">
-              <img
-                :src="profilePic"
-                class="gx-mb-3"
-                style="max-height: 120px; max-width: 100%;"
-                @error="defaultImage"
-              />
-            </template>
-            <a-form-item>
-              <a-upload
-                :file-list="fileList"
-                :remove="handleRemove"
-                :before-upload="beforeUpload"
-                :show-upload-list="true"
-              >
-                <a-button> <a-icon type="upload" /> Select File </a-button>
-              </a-upload>
-              <a-button
-                type="primary"
-                :disabled="fileList.length === 0"
-                style="margin-top: 16px"
-                :loading="uploading"
-                @click="handleUpload"
-              >
-                {{ uploading ? "Uploading" : "Start Upload" }}
-              </a-button>
-            </a-form-item>
-
-             <a-form-item>
-              <button @click="removeImage()">Remove image</button>
-            </a-form-item>
-            <a-form-item label="First Name">
-              <a-input
-                v-decorator="[
-                  'first_name',
-                  {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'First name is required'
-                      }
-                    ]
-                  }
-                ]"
-                type="text"
-              >
-              </a-input>
-            </a-form-item>
-            <a-form-item label="Last Name">
-              <a-input
-                v-decorator="[
-                  'last_name',
-                  {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Last name is a required field'
-                      }
-                    ]
-                  }
-                ]"
-                type="text"
-              >
-              </a-input>
-            </a-form-item>
-
-            <a-form-item label="Email">
-              <a-input
-                v-decorator="[
-                  'work_email',
-                  {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Your email is required'
-                      }
-                    ]
-                  }
-                ]"
-                type="text"
-              >
-              </a-input>
-            </a-form-item>
-            <a-form-item label="Phone Number">
-              <a-input v-decorator="['phone']" type="text"></a-input>
-            </a-form-item>
-            <a-form-item label="Date of Birth">
-              <a-date-picker
-                v-decorator="['dob']"
-                style="width:100%"
-                format="DD/MM/YYYY"
-              />
-            </a-form-item>
-
-              <a-form-item label="Emergency Name">
-              <a-input v-decorator="['emergency_name']" type="text"> </a-input>
-            </a-form-item>
-            <a-form-item label="Emergency Phone">
-              <a-input v-decorator="['emergency_phone']" type="text"> </a-input>
-            </a-form-item>
-
-            <a-form-item label="Address 1">
-              <a-input v-decorator="['address_1']" type="text"> </a-input>
-            </a-form-item>
-            <a-form-item label="Address 2">
-              <a-input v-decorator="['address_2']" type="text"> </a-input>
-            </a-form-item>
-
-            <a-form-item label="Town">
-              <a-input v-decorator="['town']" type="text"> </a-input>
-            </a-form-item>
-            <a-form-item label="Region">
-              <a-input v-decorator="['region']" type="text"> </a-input>
-            </a-form-item>
-            <a-form-item label="Postcode">
-              <a-input v-decorator="['post_code']" type="text"> </a-input>
-            </a-form-item>
-
-            <div class="ant-row ant-form-item">
-              <div class="ant-form-item-label">
-                <label for="region" title="Region" class="">Country</label>
-              </div>
-              <div class="ant-form-item-control-wrapper">
-                <country-select
-                  v-model="fields.country"
-                  :country="fields.country"
-                  top-country="IE"
-                  class-name="ant-input"
-                />
-              </div>
-            </div>
-            <a-form-item class="gx-text-right">
-              <a-button
-                type="primary"
-                html-type="submit"
-                :loading="loading"
-                @click="handleForm"
-              >
-                Save Details
-              </a-button>
-            </a-form-item>
-          </a-form>
-        </a-card>
-      </a-col>
-      <!-- <a-col :lg="12" :md="24" :sm="24" :xs="24">
-        <a-card title="Child Account (Under 16)" class="gx-card-widget">
-          <div slot="extra">
-            <a-button
-              type="primary"
-              size="small"
-              @click="openSubAccountModal(null)"
-            >
-              New Sub Account
-            </a-button>
-          </div>
-          <sub-accounts-table
-            v-if="renderComponent"
-            @manage="openSubAccountModal"
-          />
-        </a-card>
-      </a-col> -->
-    </a-row>
     <!-- <sub-accounts-manage-modal
       v-if="subManagerVisible"
       :user-id="selectedUserId"
       :visible="subManagerVisible"
       @close="closeSubAccountModal"
     /> -->
+    <a-form :form="form" layout="vertical">
+      <a-row style="flex-direction: row">
+        <a-col
+          :xl="6"
+          :lg="10"
+          :md="10"
+          :sm="10"
+          :xs="24"
+          class="gx-text-center"
+        >
+          <a-card class="gx-card-widget heading">
+            <h2 class="gx-text-left">Edit Profile Picture</h2>
+            <div class="profile-pic-upload">
+              <a-row>
+                <a-col :lg="24">
+                  <div style="position:relative">
+                    <template v-if="profilePic">
+                      <div class="profile-img">
+                        <img
+                          :src="profilePic"
+                          class="gx-mb-3"
+                          @error="defaultImage"
+                        />
+                      </div>
+                    </template>
+                    <button class="edit-profile-btn">
+                      <!-- <a-icon type="delete" @click="removeImage()" /> -->
+                      <a-popconfirm
+                        placement="bottom"
+                        title="Are you sure to delete this image?"
+                        ok-text="Yes"
+                        cancel-text="No"
+                        class="delete-popup"
+                        @confirm="confirm"
+                        @cancel="cancel"
+                      >
+                        <a href="#"><a-icon type="delete"/></a>
+                      </a-popconfirm>
+                    </button>
+                  </div>
+                </a-col>
+                <a-col :lg="24" class="gx-mt-4">
+                  <a-upload
+                    :file-list="fileList"
+                    :remove="handleRemove"
+                    :before-upload="beforeUpload"
+                    :show-upload-list="true"
+                    :multiple="false"
+                  >
+                    <a-button class="gx-mb-0">
+                      <a-icon type="upload" /> Select File
+                    </a-button>
+                  </a-upload>
+                  <a-button
+                    type="primary"
+                    :disabled="fileList.length === 0"
+                    style="margin-top: 16px"
+                    :loading="uploading"
+                    @click="handleUpload"
+                  >
+                    {{ uploading ? "Uploading" : "Start Upload" }}
+                  </a-button></a-col
+                >
+              </a-row>
+            </div>
+          </a-card>
+        </a-col>
+        <a-col :xl="18" :lg="14" :md="14" :sm="14" :xs="24">
+          <a-card class="gx-card-widget heading information-card">
+            <a-row style="flex-direction: row">
+              <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+                <h2>Personal Information</h2>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item label="First Name">
+                  <a-input
+                    v-decorator="[
+                      'first_name',
+                      {
+                        rules: [
+                          {
+                            required: true,
+                            message: 'First name is required'
+                          }
+                        ]
+                      }
+                    ]"
+                    type="text"
+                  >
+                  </a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item label="Last Name">
+                  <a-input
+                    v-decorator="[
+                      'last_name',
+                      {
+                        rules: [
+                          {
+                            required: true,
+                            message: 'Last name is a required field'
+                          }
+                        ]
+                      }
+                    ]"
+                    type="text"
+                  >
+                  </a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item label="Email">
+                  <a-input
+                    v-decorator="[
+                      'work_email',
+                      {
+                        rules: [
+                          {
+                            required: true,
+                            message: 'Your email is required'
+                          }
+                        ]
+                      }
+                    ]"
+                    type="text"
+                  >
+                  </a-input> </a-form-item
+              ></a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item label="Phone Number">
+                  <a-input
+                    v-decorator="['phone']"
+                    type="text"
+                  ></a-input> </a-form-item
+              ></a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item label="Date of Birth">
+                  <a-date-picker
+                    v-decorator="['dob']"
+                    style="width: 100%"
+                    format="DD/MM/YYYY"
+                  /> </a-form-item
+              ></a-col>
+              <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+                <hr />
+              </a-col>
+              <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+                <h2>Other Information</h2>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item label="Emergency Name">
+                  <a-input v-decorator="['emergency_name']" type="text">
+                  </a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item label="Emergency Phone">
+                  <a-input v-decorator="['emergency_phone']" type="text">
+                  </a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item label="Address 1">
+                  <a-input v-decorator="['address_1']" type="text"> </a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item label="Address 2">
+                  <a-input v-decorator="['address_2']" type="text"> </a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item label="Town">
+                  <a-input v-decorator="['town']" type="text"> </a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item label="Region">
+                  <a-input v-decorator="['region']" type="text"> </a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item label="Postcode">
+                  <a-input v-decorator="['post_code']" type="text"> </a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <div class="ant-row ant-form-item">
+                  <div class="ant-form-item-label">
+                    <label for="region" title="Region" class="">Country</label>
+                  </div>
+                  <div class="ant-form-item-control-wrapper">
+                    <country-select
+                      v-model="fields.country"
+                      :country="fields.country"
+                      top-country="IE"
+                      class-name="ant-input"
+                    />
+                  </div>
+                </div>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item class="gx-text-left gx-mt-4">
+                  <a-button
+                    type="primary"
+                    html-type="submit"
+                    :loading="loading"
+                    @click="handleForm"
+                  >
+                    Save Details
+                  </a-button>
+                </a-form-item>
+              </a-col>
+            </a-row>
+          </a-card></a-col
+        >
+      </a-row>
+    </a-form>
   </n-page>
 </template>
 
@@ -194,6 +247,7 @@ export default {
   },
   data() {
     return {
+      visible: false,
       renderComponent: true,
       subManagerVisible: false,
       selectedUserId: 0,
@@ -322,6 +376,25 @@ export default {
         }
       });
     },
+    confirm() {
+      memberService
+        .deleteAvatar()
+        .then(resp => {
+          if (resp.data.success === true) {
+            notifications.success("Profile picture removed succesfully.");
+            this.fileList = [];
+            this.fetchProfile();
+          } else {
+            notifications.warn(resp.data.message);
+          }
+        })
+        .catch(() => {
+          notifications.warn("Server error");
+        });
+    },
+    cancel(e) {
+      console.log(e);
+    },
     handleFormSubmit(values) {
       this.loading = true;
       memberService
@@ -363,7 +436,7 @@ export default {
         .then(resp => {
           this.uploading = false;
           if (resp.data.success === true) {
-            notifications.success("upload successfully.");
+            notifications.success("Profile picture uploaded successfully.");
             this.fileList = [];
             this.fetchProfile();
           } else {
@@ -385,12 +458,12 @@ export default {
       newFileList.splice(index, 1);
       this.fileList = newFileList;
     },
-    removeImage () {
+    removeImage() {
       memberService
         .deleteAvatar()
         .then(resp => {
           if (resp.data.success === true) {
-            notifications.success("Profile Image Remove Succesfully.");
+            notifications.success("Profile picture removed succesfully.");
             this.fileList = [];
             this.fetchProfile();
           } else {
@@ -400,8 +473,7 @@ export default {
         .catch(() => {
           notifications.warn("Server error");
         });
-    },
+    }
   }
-  
 };
 </script>

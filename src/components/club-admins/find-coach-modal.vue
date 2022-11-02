@@ -64,8 +64,8 @@ export default {
     visible: {
       default: false,
       required: true,
-      type: Boolean,
-    },
+      type: Boolean
+    }
   },
   data() {
     return {
@@ -74,7 +74,7 @@ export default {
       error_msg: false,
       loader: false,
       selectedId: "",
-      members: [],
+      members: []
     };
   },
   computed: {
@@ -84,9 +84,9 @@ export default {
       },
       set() {
         return false;
-      },
+      }
     },
-    ...mapGetters(["AUTH_USER"]),
+    ...mapGetters(["AUTH_USER"])
   },
   methods: {
     addCoach(memberId) {
@@ -94,11 +94,11 @@ export default {
       this.loader = true;
       const param = {
         memberId: memberId,
-        url: window.location.origin,
+        url: window.location.origin
       };
       clubAdminsService
         .addCoach(param)
-        .then((resp) => {
+        .then(resp => {
           this.loader = false;
           if (resp.data.success) {
             this.searchEmails();
@@ -117,9 +117,9 @@ export default {
       this.error_msg = false;
       clubAdminsService
         .searchCoach({
-          keyword: this.keyword,
+          keyword: this.keyword
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success) {
             this.members = resp.data.result;
             this.error_msg = true;
@@ -133,8 +133,8 @@ export default {
       this.members = [];
       this.error_msg = false;
       this.$emit("close");
-    },
-  },
+    }
+  }
 };
 </script>
 <style>

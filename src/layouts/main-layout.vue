@@ -54,8 +54,8 @@
               <div
                 class="ant-avatar gx-avatar gx-pointer ant-avatar-circle ant-avatar-image"
               >
-                <img alt="" :src="userProfileAvatar" v-if="userProfileAvatar" />
-                <img alt="" src="@/assets/user.png" v-else />
+                <img v-if="userProfileAvatar" alt="" :src="userProfileAvatar" />
+                <img v-else alt="" src="@/assets/user.png" />
               </div>
               <router-link to="/my-profile" tag="div" style="cursor: pointer">
                 <div class="gx-user-nav--name">
@@ -244,7 +244,7 @@ export default {
       this.$store.commit(UITypes.mutations.HIDE_SIDEBAR);
     },
     setRole(role) {
-      console.log("role => ", role)
+      console.log("role => ", role);
       if (role === "club_admin") {
         //   this.$swal('You are selected as Club Admin');
         this.UserName = "Club Admin";
@@ -263,7 +263,7 @@ export default {
       const roles = this.user.user_type;
       if (roles.indexOf(role) !== -1) {
         let userData = JSON.parse(localStorage.getItem("authUserData"));
-        console.log("userData => ", userData)
+        console.log("userData => ", userData);
         userData.select_role = role;
         window.localStorage.setItem("authUserData", JSON.stringify(userData));
         this.$store.commit("AUTH_STATE");

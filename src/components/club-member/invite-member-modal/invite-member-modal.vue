@@ -59,23 +59,23 @@
               >Already a Member</template
             >
           </a-button>
-         <a-button
-          v-if="member.status === 'invite'"
-          size="small"
-          class="gx-btn-red gx-fs-sm"
-          type="primary"
-          style="margin-bottom:5px;margin-right:8px"
-          @click="updateClubMember(member.id, 'inviteModal')"
-          >Resend Invite</a-button
-        >
-        <a-button
-          v-if="member.status === 'invite'"
-          size="small"
-          class="gx-btn-red gx-fs-sm"
-          style="margin-bottom:5px;"
-          @click="updateClubMember(member.id, 'cancelModal')"
-          >Cancel Invite</a-button
-        >
+          <a-button
+            v-if="member.status === 'invite'"
+            size="small"
+            class="gx-btn-red gx-fs-sm"
+            type="primary"
+            style="margin-bottom:5px;margin-right:8px"
+            @click="updateClubMember(member.id, 'inviteModal')"
+            >Resend Invite</a-button
+          >
+          <a-button
+            v-if="member.status === 'invite'"
+            size="small"
+            class="gx-btn-red gx-fs-sm"
+            style="margin-bottom:5px;"
+            @click="updateClubMember(member.id, 'cancelModal')"
+            >Cancel Invite</a-button
+          >
         </a-col>
       </a-row>
     </div>
@@ -90,7 +90,7 @@
 <script>
 import notifications from "@/common/notifications/notification.service";
 import { memberService } from "@/common/api/api.service";
-import VueInstantLoadingSpinner from 'vue-instant-loading-spinner/src/components/VueInstantLoadingSpinner.vue'
+import VueInstantLoadingSpinner from "vue-instant-loading-spinner/src/components/VueInstantLoadingSpinner.vue";
 import { mapGetters } from "vuex";
 
 export default {
@@ -151,11 +151,14 @@ export default {
         });
     },
 
-   updateClubMember(memberId, status) {
+    updateClubMember(memberId, status) {
       this.$refs.Spinner.show();
-          setTimeout(function () {
+      setTimeout(
+        function() {
           this.$refs.Spinner.hide();
-          }.bind(this), 4000);
+        }.bind(this),
+        4000
+      );
       memberService
         .updateClubMember(memberId, {
           status: status,
@@ -164,12 +167,10 @@ export default {
         })
         .then(resp => {
           if (resp.data.success) {
-            if(status == "cancelModal"){
+            if (status == "cancelModal") {
               notifications.warn("Member Invitation Cancel Successfully");
               this.close();
-            }
-            else if(status == "inviteModal")
-            {
+            } else if (status == "inviteModal") {
               notifications.warn("Member Invitation Resend Successfully");
               this.close();
             }

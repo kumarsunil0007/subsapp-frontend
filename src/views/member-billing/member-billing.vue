@@ -29,7 +29,7 @@
       </a-col>
     </a-row>
     <div class="member-welcome-modal">
-      <a-modal v-model="visible" :mask-closable="false" class="welcome-modal" >
+      <a-modal v-model="visible" :mask-closable="false" class="welcome-modal">
         <a-carousel :after-change="onMemberModalChange" arrows>
           <div>
             <a-row type="flex" align="middle" class="gx-pt-5">
@@ -153,7 +153,7 @@ import { billingService, authService } from "@/common/api/api.service";
 import MemberBillingHistoryTable from "@/components/member-billing/member-billing-history-table/member-billing-history-table";
 import StripeNewCardModal from "@/components/billing/stripe-new-card-modal/stripe-new-card-modal";
 import StripeCardPreview from "@/components/billing/stripe-card-preview/stripe-card-preview";
-import BankCardPreview from "@/components/billing/bank-card-preview/bank-card-preview";
+// import BankCardPreview from "@/components/billing/bank-card-preview/bank-card-preview";
 import notifications from "@/common/notifications/notification.service";
 import { clubService } from "@/common/api/api.service";
 export default {
@@ -162,7 +162,7 @@ export default {
     StripeCardPreview,
     StripeNewCardModal,
     MemberBillingHistoryTable,
-    BankCardPreview,
+    // BankCardPreview,
     NPage
   },
   data() {
@@ -171,7 +171,8 @@ export default {
       cards: [],
       visible: true,
       displayMemberPreviousBtn: false,
-      displayMemberNextBtn: true
+      displayMemberNextBtn: true,
+      error_msg: false
     };
   },
   computed: {

@@ -69,7 +69,6 @@ import StripeBillingHistoryTable from "@/components/billing/stripe-billing-histo
 import ClubSubscriptionOverview from "@/components/club-billing/club-subscription-overview/club-subscription-overview";
 import NSectionLoading from "@/components/ui/n-section-loading/n-section-loading";
 
-
 export default {
   name: "SubscriptionOverview",
   components: {
