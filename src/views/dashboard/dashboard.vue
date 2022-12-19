@@ -47,8 +47,8 @@
               <a-row type="flex" align="middle" class="gx-pt-5">
                 <a-col :lg="14" :md="24">
                   <h1>WELCOME</h1>
-                  <h2>To SubsAPP.</h2>
-                  <p>You have successfully logged-in as a Coach.</p>
+                  <h2>To Subsapp.com</h2>
+                  <p>You have successfully logged in as a Coach.</p>
                 </a-col>
                 <a-col :lg="10" :md="24">
                   <img

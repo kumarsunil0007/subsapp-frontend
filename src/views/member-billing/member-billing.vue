@@ -35,8 +35,8 @@
             <a-row type="flex" align="middle" class="gx-pt-5">
               <a-col :lg="14" :md="24">
                 <h1>WELCOME</h1>
-                <h2>To SubsAPP.</h2>
-                <p>You have successfully logged-in as a Member.</p>
+                <h2>To Subsapp.com</h2>
+                <p>You have successfully logged in as a Member.</p>
               </a-col>
               <a-col :lg="10" :md="24">
                 <img src="../../assets/images/slide1.png" alt="slide1" />
@@ -46,7 +46,7 @@
           <div>
             <a-row type="flex" align="middle" class="gx-pt-5">
               <a-col :lg="12" :md="24">
-                <h3>Member can check the schedule</h3>
+                <h3>As a member you can check your schedule.</h3>
               </a-col>
               <a-col :lg="12" :md="24">
                 <img src="../../assets/images/slide2.png" alt="slide2" />
@@ -57,8 +57,8 @@
             <a-row type="flex" align="middle" class="gx-pt-4">
               <a-col :lg="12" :md="24">
                 <h4>
-                  Member can join the new club and Accept/ reject any new club
-                  invitation.
+                  As a member you may join the new club and Accept/Reject any
+                  new club or event invitation.
                 </h4>
               </a-col>
               <a-col :lg="12" :md="24">
@@ -69,7 +69,7 @@
           <div>
             <a-row type="flex" align="middle" class="gx-pb-5">
               <a-col :lg="12" :md="24">
-                <h3>Subs APP helps the Member to check the Team Status</h3>
+                <h3>Subsapp.com helps the Member to check the Team Status.</h3>
               </a-col>
               <a-col :lg="12" :md="24">
                 <img src="../../assets/images/slider4.png" alt="slide4" />
@@ -80,8 +80,8 @@
             <a-row type="flex" align="middle">
               <a-col :lg="12" :md="24">
                 <p>
-                  SubsAPP Sign Stripe for secured payment system. Member can
-                  manage his billing details from this portal
+                  Subsapp.com uses Stripe for payment system security. Members
+                  can manage their payments easily with safety.
                 </p>
               </a-col>
               <a-col :lg="12" :md="24">
@@ -112,12 +112,12 @@
             </a-row>
           </div>
           <template v-if="displayMemberPreviousBtn" #prevArrow>
-            <div class="custom-slick-arrow" style="z-index: 1;left:8px">
+            <div class="custom-slick-arrow" style="z-index: 1; left: 8px">
               Previous
             </div>
           </template>
           <template v-if="displayMemberNextBtn" #nextArrow>
-            <div class="custom-slick-arrow" style="right:8px">Next</div>
+            <div class="custom-slick-arrow" style="right: 8px">Next</div>
           </template>
         </a-carousel>
       </a-modal>
@@ -386,7 +386,7 @@ export default {
 
 .ant-carousel >>> .slick-slide h2 {
   color: #fff;
-  font-size: 54px;
+  font-size: 45px;
   font-weight: 500;
   line-height: 60px;
   text-shadow: 0px 2px 6px rgb(0 0 0 / 25%);

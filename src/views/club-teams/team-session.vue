@@ -20,7 +20,14 @@
       <a-row :gutter="16">
         <a-col :lg="12" :xs="24">
           <a-card
-            class="gx-card-widget gx-card-full gx-card-tabs gx-card-tabs-right gx-card-profile ant-card-bordered"
+            class="
+              gx-card-widget
+              gx-card-full
+              gx-card-tabs
+              gx-card-tabs-right
+              gx-card-profile
+              ant-card-bordered
+            "
             title="Member Attendance"
           >
             <session-member-attendance-table
@@ -35,7 +42,15 @@
           <a-row :gutters="12">
             <a-col :lg="8" :xs="24">
               <a-card
-                class="gx-card-widget gx-card-widget gx-card-full gx-p-3 gx-bg-cyan gx-text-white ant-card-bordered"
+                class="
+                  gx-card-widget
+                  gx-card-widget
+                  gx-card-full
+                  gx-p-3
+                  gx-bg-cyan
+                  gx-text-white
+                  ant-card-bordered
+                "
               >
                 <div class="">
                   <div class="gx-mr-2 gx-mr-xxl-3">
@@ -43,7 +58,9 @@
                   </div>
                   <div class="gx-media-body">
                     <h1
-                      class="gx-fs-xxl gx-font-weight-semi-bold gx-mb-1 gx-text-white"
+                      class="
+                        gx-fs-xxl gx-font-weight-semi-bold gx-mb-1 gx-text-white
+                      "
                     >
                       €{{ parseFloat(getTotalInvoiceValue).toFixed(2) }}
                     </h1>
@@ -54,7 +71,15 @@
             </a-col>
             <a-col :lg="8" :xs="24">
               <a-card
-                class="gx-card-widget gx-card-widget gx-card-full gx-p-3 gx-bg-teal gx-text-white ant-card-bordered"
+                class="
+                  gx-card-widget
+                  gx-card-widget
+                  gx-card-full
+                  gx-p-3
+                  gx-bg-teal
+                  gx-text-white
+                  ant-card-bordered
+                "
               >
                 <div class="">
                   <div class="gx-mr-2 gx-mr-xxl-3">
@@ -62,7 +87,9 @@
                   </div>
                   <div class="gx-media-body">
                     <h1
-                      class="gx-fs-xxl gx-font-weight-semi-bold gx-mb-1 gx-text-white"
+                      class="
+                        gx-fs-xxl gx-font-weight-semi-bold gx-mb-1 gx-text-white
+                      "
                     >
                       {{ getMembersAttending }}
                     </h1>
@@ -73,7 +100,15 @@
             </a-col>
             <a-col :lg="8" :xs="24">
               <a-card
-                class="gx-card-widget gx-card-widget gx-card-full gx-p-3 gx-bg-orange gx-text-white ant-card-bordered"
+                class="
+                  gx-card-widget
+                  gx-card-widget
+                  gx-card-full
+                  gx-p-3
+                  gx-bg-orange
+                  gx-text-white
+                  ant-card-bordered
+                "
               >
                 <div class="">
                   <div class="gx-mr-2 gx-mr-xxl-3">
@@ -81,7 +116,9 @@
                   </div>
                   <div class="gx-media-body">
                     <h1
-                      class="gx-fs-xxl gx-font-weight-semi-bold gx-mb-1 gx-text-white"
+                      class="
+                        gx-fs-xxl gx-font-weight-semi-bold gx-mb-1 gx-text-white
+                      "
                     >
                       {{ getMembersNotAttending }}
                     </h1>
@@ -129,6 +166,13 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapGetters([
+      "getMembersAttending",
+      "getMembersNotAttending",
+      "getTotalInvoiceValue"
+    ])
+  },
   created() {
     this.getSchedule();
   },
@@ -144,13 +188,6 @@ export default {
         });
       }
     }
-  },
-  computed: {
-    ...mapGetters([
-      "getMembersAttending",
-      "getMembersNotAttending",
-      "getTotalInvoiceValue"
-    ])
   }
 };
 </script>
