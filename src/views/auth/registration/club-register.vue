@@ -1,6 +1,9 @@
 <template>
   <a-layout>
-    <div class="gx-custom-registration gx-main-content-wrapper">
+    <a-button id="scroll-to-bottom" @click="goToBottom">
+      <a-icon type="arrow-down" />
+    </a-button>
+    <div id="content" class="gx-custom-registration gx-main-content-wrapper">
       <div class="gx-login-container">
         <div class="gx-login-content">
           <div class="gx-login-header gx-text-center">
@@ -72,6 +75,7 @@
         </div>
       </div>
     </div>
+    <div id="page-bottom"></div>
   </a-layout>
 </template>
 
@@ -96,10 +100,10 @@ export default {
             rules: [
               {
                 required: true,
-                message: "The club name is required"
-              }
-            ]
-          }
+                message: "The club name is required",
+              },
+            ],
+          },
         ],
         first_name: [
           "first_name",
@@ -107,10 +111,10 @@ export default {
             rules: [
               {
                 required: true,
-                message: "Your first name is required"
-              }
-            ]
-          }
+                message: "Your first name is required",
+              },
+            ],
+          },
         ],
         last_name: [
           "last_name",
@@ -118,10 +122,10 @@ export default {
             rules: [
               {
                 required: true,
-                message: "Your last name is required"
-              }
-            ]
-          }
+                message: "Your last name is required",
+              },
+            ],
+          },
         ],
         email: [
           "work_email",
@@ -129,10 +133,10 @@ export default {
             rules: [
               {
                 required: true,
-                validator: this.validateEmail
-              }
-            ]
-          }
+                validator: this.validateEmail,
+              },
+            ],
+          },
         ],
         password: [
           "password",
@@ -140,13 +144,13 @@ export default {
             rules: [
               {
                 required: true,
-                message: "Please input your password!"
+                message: "Please input your password!",
               },
               {
-                validator: this.validateToNextPassword
-              }
-            ]
-          }
+                validator: this.validateToNextPassword,
+              },
+            ],
+          },
         ],
         c_password: [
           "c_password",
@@ -154,18 +158,22 @@ export default {
             rules: [
               {
                 required: true,
-                message: "Please confirm your password!"
+                message: "Please confirm your password!",
               },
               {
-                validator: this.compareToFirstPassword
-              }
-            ]
-          }
-        ]
-      }
+                validator: this.compareToFirstPassword,
+              },
+            ],
+          },
+        ],
+      },
     };
   },
   methods: {
+    goToBottom() {
+      let pageBottom = document.querySelector("#page-bottom");
+      pageBottom.scrollIntoView();
+    },
     handleForm() {
       this.form.validateFields((err, values) => {
         this.message = null;
@@ -173,7 +181,7 @@ export default {
           if (values.password === values.c_password) {
             this.handleFormSubmit({
               ...values,
-              teamId: this.teamId
+              teamId: this.teamId,
             });
           } else {
             this.message = "Passwords do not match";
@@ -186,15 +194,15 @@ export default {
       this.validationMsg = [];
       authService
         .clubRegister(values)
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success) {
             notifications.success("Registration complete. Welcome to SubsApp");
             this.$store
               .dispatch(AUTH_REQUEST, {
                 username: values.work_email,
-                password: values.password
+                password: values.password,
               })
-              .then(resp => {
+              .then((resp) => {
                 if (resp) {
                   this.$router.push("/dashboard");
                 }
@@ -215,7 +223,7 @@ export default {
             }
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.loginLoading = false;
           if (error.response.status === 422) {
             let errors = Object.values(error.response.data.errors);
@@ -243,21 +251,44 @@ export default {
     },
     validateEmail(rule, value, callback) {
       const form = this.form;
-      const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
+      const emailRegex =
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
       if (!emailRegex.test(form.getFieldValue("work_email"))) {
         callback("Please enter a valid email");
       } else {
         callback();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss">
+#scroll-to-bottom {
+  position: fixed;
+  bottom: 20px;
+  right: 0px;
+  z-index: 1;
+  display: none;
+  background: #f18805;
+  color: #fff;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  padding: 0;
+  line-height: 42px;
+  i {
+    font-size: 18px;
+  }
+}
+
 @media screen and (min-width: 0px) and (max-width: 991px) {
+  #scroll-to-bottom {
+    display: block;
+  }
   .gx-custom-registration {
-    padding: 0 !important;
+    padding: 30px 10px 10px;
     & .ant-input {
       line-height: 2;
       padding: 12px 18px !important;
