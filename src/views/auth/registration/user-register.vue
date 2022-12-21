@@ -7,6 +7,13 @@
     <div id="content" class="gx-custom-registration gx-main-content-wrapper">
       <div class="gx-login-container">
         <div class="gx-login-content">
+          <div class="login-brand gx-text-center">
+            <img
+              style="max-height: 80px"
+              alt="SubsApp"
+              src="@/assets/regular-logo.png"
+            />
+          </div>
           <div class="gx-login-header gx-text-center">
             <h1 class="gx-login-title">Register with SubsApp</h1>
           </div>
@@ -169,7 +176,7 @@ export default {
               teamId: this.teamId,
             });
           } else {
-            this.message = "Passwords do not match";
+            this.message = "Passwords do not match.";
           }
         }
       });
@@ -222,7 +229,7 @@ export default {
     compareToFirstPassword(rule, value, callback) {
       const form = this.form;
       if (value && value !== form.getFieldValue("password")) {
-        callback("Passwords do not match");
+        callback("Passwords do not match.");
       } else {
         callback();
       }
@@ -268,10 +275,10 @@ export default {
   }
 }
 
-#content {
-  // min-height: 100vh;
-  background-color: coral;
-}
+// #content {
+//   min-height: 100vh;
+//   background-color: coral;
+// }
 
 @media screen and (min-width: 0px) and (max-width: 991px) {
   #scroll-to-bottom,
