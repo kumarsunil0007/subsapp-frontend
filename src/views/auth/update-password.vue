@@ -58,7 +58,7 @@
 <script>
 import { authService } from "@/common/api/api.service";
 import notifications from "@/common/notifications/notification.service";
-import { AUTH_REQUEST } from "@/store/modules/auth/auth-actions";
+import axios from "axios";
 import store from "@/store/index";
 
 export default {
@@ -129,9 +129,9 @@ export default {
         email: store.state.auth.user.user.work_email,
         password: password
       }
-      authService
-        .updatePassword(params)
-        .then((resp) => {
+      axios
+        .post("/auth/check_password_code/null", params)
+        .then(resp => {
           if (resp.data.success) {
             notifications.success("Password updated.");
             const no_of_cards = store.state.auth.user.no_of_cards;
@@ -163,16 +163,6 @@ export default {
                 "Something went wrong, please contact support"
               );
             }
-          }
-        })
-        .catch((error) => {
-          this.loginLoading = false;
-          if (error.response.status === 422) {
-            let errors = Object.values(error.response.data.errors);
-            this.validationMsg = errors.flat();
-            console.log(this.validationMsg);
-          } else {
-            notifications.warn("Something went wrong, please try again later");
           }
         });
     },
