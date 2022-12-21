@@ -169,7 +169,7 @@ export default {
               teamId: this.teamId,
             });
           } else {
-            this.message = "Passwords do not match";
+            this.message = "Passwords do not match.";
           }
         }
       });
@@ -222,7 +222,7 @@ export default {
     compareToFirstPassword(rule, value, callback) {
       const form = this.form;
       if (value && value !== form.getFieldValue("password")) {
-        callback("Passwords do not match");
+        callback("Passwords do not match.");
       } else {
         callback();
       }
@@ -268,10 +268,10 @@ export default {
   }
 }
 
-#content {
-  // min-height: 100vh;
-  background-color: coral;
-}
+// #content {
+//   min-height: 100vh;
+//   background-color: coral;
+// }
 
 @media screen and (min-width: 0px) and (max-width: 991px) {
   #scroll-to-bottom,

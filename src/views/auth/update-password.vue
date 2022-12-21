@@ -11,39 +11,19 @@
             <h1 class="gx-login-title">Update Password</h1>
           </div>
           <div v-if="validationMsg && validationMsg.length">
-            <a-alert
-              v-for="(item, index) in validationMsg"
-              :key="index"
-              type="error"
-              :message="item"
-              banner
-            />
+            <a-alert v-for="(item, index) in validationMsg" :key="index" type="error" :message="item" banner />
           </div>
           <a-form :form="form" class="gx-login-form gx-form-row0">
             <a-form-item label="Password" class="gx-m-0">
-              <a-input
-                v-decorator="fields.password"
-                placeholder="Password"
-                type="password"
-              >
+              <a-input v-decorator="fields.password" placeholder="Password" type="password">
               </a-input>
             </a-form-item>
             <a-form-item label="Confirm Password">
-              <a-input
-                v-decorator="fields.c_password"
-                placeholder="Confirm Password"
-                type="password"
-              >
+              <a-input v-decorator="fields.c_password" placeholder="Confirm Password" type="password">
               </a-input>
             </a-form-item>
             <a-form-item class="gx-text-center">
-              <a-button
-                type="primary"
-                block
-                html-type="submit"
-                :loading="loginLoading"
-                @click="handleForm"
-              >
+              <a-button type="primary" block html-type="submit" :loading="loginLoading" @click="handleForm">
                 Update
               </a-button>
             </a-form-item>
@@ -115,7 +95,7 @@ export default {
           if (values.password === values.c_password) {
             this.handleFormSubmit(values.password);
           } else {
-            this.message = "Passwords do not match";
+            this.message = "Passwords do not match.";
           }
         }
       });
@@ -179,7 +159,7 @@ export default {
     compareToFirstPassword(rule, value, callback) {
       const form = this.form;
       if (value && value !== form.getFieldValue("password")) {
-        callback("Passwords do not match");
+        callback("Passwords do not match.");
       } else {
         callback();
       }
@@ -210,23 +190,27 @@ export default {
   text-align: center;
   padding: 0;
   line-height: 42px;
+
   i {
     font-size: 18px;
   }
 }
 
-#content {
-  // min-height: 100vh;
-  background-color: coral;
-}
+// #content {
+//   // min-height: 100vh;
+//   background-color: coral;
+// }
 
 @media screen and (min-width: 0px) and (max-width: 991px) {
+
   #scroll-to-bottom,
   #scroll-to-top {
     display: block;
   }
+
   .gx-custom-registration {
     padding: 30px 10px 10px;
+
     & .ant-input {
       line-height: 2;
       padding: 12px 18px !important;
@@ -238,7 +222,7 @@ export default {
       margin-bottom: 8px;
     }
 
-    & .ant-form-item-label > label {
+    & .ant-form-item-label>label {
       font-size: 18px;
     }
 
@@ -246,6 +230,16 @@ export default {
       padding: 16px 42px !important;
       line-height: 2;
       width: 100%;
+    }
+  }
+}
+
+@media screen and (min-width: 575px) {
+  .gx-custom-registration {
+    .gx-login-content {
+      .gx-login-header {
+        margin-bottom: 15px;
+      }
     }
   }
 }
