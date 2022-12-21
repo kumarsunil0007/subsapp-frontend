@@ -6,65 +6,43 @@
     <div id="content" class="gx-custom-registration gx-main-content-wrapper">
       <div class="gx-login-container">
         <div class="gx-login-content">
+          <div class="login-brand gx-text-center">
+            <img
+              style="max-height: 80px"
+              alt="SubsApp"
+              src="@/assets/regular-logo.png"
+            />
+          </div>
           <div class="gx-login-header gx-text-center">
             <h1 class="gx-login-title">Register your club with SubsApp</h1>
           </div>
           <div v-if="validationMsg && validationMsg.length">
-            <a-alert
-              v-for="(item, index) in validationMsg"
-              :key="index"
-              type="error"
-              :message="item"
-              banner
-            />
+            <a-alert v-for="(item, index) in validationMsg" :key="index" type="error" :message="item" banner />
           </div>
           <a-form :form="form" class="gx-login-form gx-form-row0">
             <a-form-item label="Club Name" class="gx-m-0">
-              <a-input
-                v-decorator="fields.club_name"
-                placeholder="The name of your club"
-              />
+              <a-input v-decorator="fields.club_name" placeholder="The name of your club" />
             </a-form-item>
             <a-form-item label="First Name" class="gx-m-0">
-              <a-input
-                v-decorator="fields.first_name"
-                placeholder="Your first name"
-              />
+              <a-input v-decorator="fields.first_name" placeholder="Your first name" />
             </a-form-item>
             <a-form-item label="Last Name" class="gx-m-0">
-              <a-input
-                v-decorator="fields.last_name"
-                placeholder="Your last name"
-              />
+              <a-input v-decorator="fields.last_name" placeholder="Your last name" />
             </a-form-item>
             <a-form-item label="Email" class="gx-m-0">
               <a-input v-decorator="fields.email" placeholder="Email">
               </a-input>
             </a-form-item>
             <a-form-item label="Password" class="gx-m-0">
-              <a-input
-                v-decorator="fields.password"
-                placeholder="Password"
-                type="password"
-              >
+              <a-input v-decorator="fields.password" placeholder="Password" type="password">
               </a-input>
             </a-form-item>
             <a-form-item label="Confirm Password">
-              <a-input
-                v-decorator="fields.c_password"
-                placeholder="Confirm Password"
-                type="password"
-              >
+              <a-input v-decorator="fields.c_password" placeholder="Confirm Password" type="password">
               </a-input>
             </a-form-item>
             <a-form-item class="gx-text-center">
-              <a-button
-                type="primary"
-                block
-                html-type="submit"
-                :loading="loginLoading"
-                @click="handleForm"
-              >
+              <a-button type="primary" block html-type="submit" :loading="loginLoading" @click="handleForm">
                 Register
               </a-button>
             </a-form-item>
@@ -278,6 +256,7 @@ export default {
   text-align: center;
   padding: 0;
   line-height: 42px;
+
   i {
     font-size: 18px;
   }
@@ -287,20 +266,25 @@ export default {
   #scroll-to-bottom {
     display: block;
   }
+
   .gx-custom-registration {
     padding: 30px 10px 10px;
+
     & .ant-input {
       line-height: 2;
       padding: 12px 18px !important;
       font-size: 18px;
       margin-bottom: 18px;
     }
+
     & .ant-form-item-label {
       margin-bottom: 8px;
     }
-    & .ant-form-item-label > label {
+
+    & .ant-form-item-label>label {
       font-size: 18px;
     }
+
     & .ant-btn {
       padding: 16px 42px !important;
       line-height: 2;

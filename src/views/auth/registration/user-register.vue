@@ -7,6 +7,13 @@
     <div id="content" class="gx-custom-registration gx-main-content-wrapper">
       <div class="gx-login-container">
         <div class="gx-login-content">
+          <div class="login-brand gx-text-center">
+            <img
+              style="max-height: 80px"
+              alt="SubsApp"
+              src="@/assets/regular-logo.png"
+            />
+          </div>
           <div class="gx-login-header gx-text-center">
             <h1 class="gx-login-title">Register with SubsApp</h1>
           </div>

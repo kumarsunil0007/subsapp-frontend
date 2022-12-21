@@ -7,6 +7,13 @@
     <div id="content" class="gx-custom-registration gx-main-content-wrapper">
       <div class="gx-login-container">
         <div class="gx-login-content">
+          <div class="login-brand gx-text-center">
+            <img
+              style="max-height: 80px"
+              alt="SubsApp"
+              src="@/assets/regular-logo.png"
+            />
+          </div>
           <div class="gx-login-header gx-text-center">
             <h1 class="gx-login-title">Update Password</h1>
           </div>
@@ -230,16 +237,6 @@ export default {
       padding: 16px 42px !important;
       line-height: 2;
       width: 100%;
-    }
-  }
-}
-
-@media screen and (min-width: 575px) {
-  .gx-custom-registration {
-    .gx-login-content {
-      .gx-login-header {
-        margin-bottom: 15px;
-      }
     }
   }
 }

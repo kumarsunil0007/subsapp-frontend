@@ -3,15 +3,15 @@
     <div class="gx-main-content-wrapper gx-custom-login-form">
       <div class="gx-login-container">
         <div class="gx-login-content">
-          <div class="gx-login-header gx-text-center">
-            <h1 class="gx-login-title">Sign In To SubsApp</h1>
-          </div>
-          <div class="login-brand">
+          <div class="login-brand gx-text-center">
             <img
               style="max-height: 80px"
               alt="SubsApp"
               src="@/assets/regular-logo.png"
             />
+          </div>
+          <div class="gx-login-header gx-text-center">
+            <h1 class="gx-login-title">Sign In To SubsApp</h1>
           </div>
           <a-alert
             v-if="status === 'error'"
@@ -178,11 +178,7 @@ export default {
 
 .gx-custom-login-form {
   & .gx-login-header {
-    margin-bottom: 6px;
-  }
-  & .login-brand {
-    text-align: center;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
   }
   & .ant-btn.register-button {
     background: #4d65cd;

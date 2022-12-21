@@ -1,9 +1,16 @@
 <template>
   <a-layout>
-    <div class="gx-main-content-wrapper">
+    <div class="gx-main-content-wrapper gx-custom-login-form">
       <div class="gx-login-container">
         <div class="gx-login-content">
           <div class="gx-login-header gx-text-center">
+            <div class="login-brand gx-text-center">
+            <img
+              style="max-height: 80px"
+              alt="SubsApp"
+              src="@/assets/regular-logo.png"
+            />
+          </div>
             <h1 class="gx-login-title">Forgotten Password</h1>
             <p>Simply enter your email address below to reset it.</p>
           </div>
