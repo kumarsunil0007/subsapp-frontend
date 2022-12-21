@@ -3,7 +3,8 @@ span.edit-profile .ant-upload.ant-upload-select {
     right: 8px;
     top: 40px;
 }
-  span.edit-profile button.ant-btn {
+
+span.edit-profile button.ant-btn {
     background: #f18805;
     border: 1px solid #fff;
     color: #fff;
@@ -12,8 +13,9 @@ span.edit-profile .ant-upload.ant-upload-select {
     padding: 0;
     height: 36px;
     font-size: 18px;
-  }
-  .edit-profile-btn{
+}
+
+.edit-profile-btn {
     position: absolute;
     right: 54px;
     bottom: -14px;
@@ -25,11 +27,13 @@ span.edit-profile .ant-upload.ant-upload-select {
     border: 1px solid #fff;
     padding: 0;
     font-size: 16px;
-  }
-  .edit-profile-btn a{
+}
+
+.edit-profile-btn a {
     color: #fff;
-  }
-  .profile-image-selection button.action-btn {
+}
+
+.profile-image-selection button.action-btn {
     background: transparent;
     border: 0;
     box-shadow: none;
@@ -40,6 +44,7 @@ span.edit-profile .ant-upload.ant-upload-select {
     justify-content: center;
     line-height: 30px;
 }
+
 .profile-image-selection button.action-btn i.anticon {
     background: #003366;
     border-radius: 50%;
@@ -49,6 +54,7 @@ span.edit-profile .ant-upload.ant-upload-select {
     color: #Fff;
     line-height: 40px;
 }
+
 .profile-pic-upload .profile-img {
     width: 140px;
     height: 140px;
@@ -57,31 +63,53 @@ span.edit-profile .ant-upload.ant-upload-select {
     border-radius: 4%;
     border: 1px solid #dddd;
 }
-.profile-pic-upload .profile-img img{
-    width:100%;
-    height:100%;
+
+.profile-pic-upload .profile-img img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
+
 .profile-pic-upload {
     padding: 30px 0px;
     border: 1px solid #f4f4f7;
     background: #fafafb;
 }
-.profile-pic-upload .ant-upload-list-item-name{
+
+.profile-pic-upload .ant-upload-list-item-name {
     text-align: left;
 }
-.information-card{
-    .ant-card-body{
+
+.information-card {
+    .ant-card-body {
         padding: 24px 12px;
     }
 }
-@media(min-width:768px) and (max-width:991px){
+
+.gx-custom-login-form, .gx-custom-registration {
+    & .login-brand {
+        margin-bottom: 12px;
+    }
+}
+
+@media(min-width:768px) and (max-width:991px) {
     .edit-profile-btn {
         right: 0px;
     }
 }
-@media (max-width:767px){
+
+@media (max-width:767px) {
     .edit-profile-btn {
         right: 20px;
+    }
+}
+
+@media screen and (min-width: 575px) {
+    .gx-custom-registration, .gx-custom-login-form {
+        .gx-login-content {
+            .gx-login-header {
+                margin-bottom: 15px;
+            }
+        }
     }
 }
