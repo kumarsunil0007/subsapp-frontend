@@ -377,6 +377,15 @@ export default new Router({
       component: () => import("./views/auth/login.vue")
     },
     {
+      path: "/update-password",
+      name: "auth-update-password",
+      meta: {
+        permission: "member"
+      },
+      beforeEnter: authGuard,
+      component: () => import("./views/auth/update-password.vue")
+    },
+    {
       path: "/auth/forgot-password",
       name: "auth-fw-pw",
       component: () => import("./views/auth/forgot-password.vue")

@@ -111,30 +111,31 @@ export default {
         })
         .then(resp => {
           if (resp) {
-            const no_of_cards = store.state.auth.user.no_of_cards;
-            const isFirstTimeLoggedIn = store.state.auth.user.is_logged_in;
-            const invitation_email =
-              store.state.auth.user.user.invitation_email;
-            const role = store.state.auth.user.select_role;
-            if (role === "admin") {
-              this.$router.replace("/admin");
-            } else if (
-              role === "club_admin" &&
-              window.localStorage.getItem("isSubscribed") == "false"
-            ) {
-              this.$router.replace("/subscription");
-            } else if (
-              role === "member" &&
-              no_of_cards == "0" &&
-              invitation_email == "1"
-            ) {
-              this.$router.replace("/my-billing");
-              // this.$swal(
-              //   " Welcome to your new Club, please fill in your card details to view your upcoming events."
-              // );
-            } else {
-              this.$router.replace("/dashboard");
+            if(store.state.auth.user.user.is_password_reset == 0 && store.state.auth.user.user.invitation_email == "1") {
+              this.$router.replace("/update-password");
             }
+            else {
+              const no_of_cards = store.state.auth.user.no_of_cards;
+              const invitation_email =
+                store.state.auth.user.user.invitation_email;
+              const role = store.state.auth.user.select_role;
+              if (role === "admin") {
+                this.$router.replace("/admin");
+              } else if (
+                role === "club_admin" &&
+                window.localStorage.getItem("isSubscribed") == "false"
+              ) {
+                this.$router.replace("/subscription");
+              } else if (
+                role === "member" &&
+                no_of_cards == "0" &&
+                invitation_email == "1"
+              ) {
+                this.$router.replace("/my-billing");
+              } else {
+                this.$router.replace("/dashboard");
+              }
+            } 
           }
           this.loginLoading = false;
         })

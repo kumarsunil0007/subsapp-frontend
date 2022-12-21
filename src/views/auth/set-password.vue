@@ -69,6 +69,7 @@ export default {
     };
   },
   methods: {
+    
     checkHash: function() {
       axios
         .post("/auth/check_password_code/" + this.$route.params.hash)
