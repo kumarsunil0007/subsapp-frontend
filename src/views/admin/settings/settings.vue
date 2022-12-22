@@ -13,7 +13,7 @@
                       rules: [
                         {
                           required: true,
-                          message: 'This field is a required field'
+                          message: 'This field is a required field.'
                         }
                       ]
                     }
@@ -30,7 +30,7 @@
                       rules: [
                         {
                           required: true,
-                          message: 'This field is a required field'
+                          message: 'This field is a required field.'
                         }
                       ]
                     }
@@ -47,7 +47,7 @@
                       rules: [
                         {
                           required: true,
-                          message: 'This field is a required field'
+                          message: 'This field is a required field.'
                         }
                       ]
                     }
@@ -64,7 +64,7 @@
                       rules: [
                         {
                           required: true,
-                          message: 'This field is a required field'
+                          message: 'This field is a required field.'
                         }
                       ]
                     }

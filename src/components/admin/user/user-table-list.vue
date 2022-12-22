@@ -175,7 +175,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "Commission is required"
+                message: "Commission is required."
               }
             ]
           }

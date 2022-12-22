@@ -50,7 +50,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "Your first name is required"
+                message: "Your first name is required."
               }
             ]
           }
@@ -61,7 +61,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "Your last name is required"
+                message: "Your last name is required."
               }
             ]
           }

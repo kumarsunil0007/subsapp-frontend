@@ -25,8 +25,8 @@
                     'work_email',
                     {
                       rules: [
-                        { required: true, message: 'Email is required' },
-                        { type: 'email', message: 'Email is invalid' }
+                        { required: true, message: 'Email is required.' },
+                        { type: 'email', message: 'Email is invalid.' }
                       ]
                     }
                   ]"
@@ -52,15 +52,15 @@
                     'first_name',
                     {
                       rules: [
-                        { required: true, message: 'First name is required' },
+                        { required: true, message: 'First name is required.' },
                         {
                           min: 3,
                           message:
-                            'First name should contain at least 3 Characters'
+                            'First name should contain at least 3 Characters.'
                         },
                         {
                           max: 20,
-                          message: 'Sorry You are Exceeding the Limit'
+                          message: 'Sorry You are Exceeding the Limit.'
                         }
                       ]
                     }
@@ -87,15 +87,15 @@
                     'last_name',
                     {
                       rules: [
-                        { required: true, message: 'Last name is required' },
+                        { required: true, message: 'Last name is required.' },
                         {
                           min: 3,
                           message:
-                            'Last name should contain at least 3 Characters '
+                            'Last name should contain at least 3 Characters.'
                         },
                         {
                           max: 20,
-                          message: 'Sorry You are Exceeding the Limit'
+                          message: 'Sorry You are Exceeding the Limit.'
                         }
                       ]
                     }
@@ -122,10 +122,10 @@
                     'phone_no',
                     {
                       rules: [
-                        { required: true, message: 'Phone is required' },
+                        { required: true, message: 'Phone is required.' },
                         {
                           max: 10,
-                          message: 'Please use a 10 digit phone number'
+                          message: 'Please use a 10 digit phone number.'
                         }
                       ]
                     }
@@ -154,7 +154,7 @@
                     'address_1',
                     {
                       rules: [
-                        { required: true, message: 'Address is required' }
+                        { required: true, message: 'Address is required.' }
                       ]
                     }
                   ]"

@@ -27,7 +27,7 @@
               rules: [
                 {
                   required: true,
-                  message: 'The title of this event is required'
+                  message: 'The title of this event is required.'
                 }
               ]
             }
@@ -43,7 +43,7 @@
               rules: [
                 {
                   required: true,
-                  message: 'The location of this event is required'
+                  message: 'The location of this event is required.'
                 }
               ]
             }
@@ -62,7 +62,7 @@
                     {
                       required: true,
                       message:
-                        'Please enter the entry cost to this event, use 0 if none'
+                        'Please enter the entry cost to this event, use 0 if none.'
                     },
                     {
                       validator: validateCost
@@ -89,7 +89,7 @@
                   rules: [
                     {
                       required: true,
-                      message: 'Please specify the duration of this session'
+                      message: 'Please specify the duration of this session.'
                     }
                   ]
                 }
@@ -114,7 +114,7 @@
                 {
                   required: true,
                   message:
-                    'Please enter the schedule date and time for this event'
+                    'Please enter the schedule date and time for this event.'
                 }
               ]
             }
@@ -153,7 +153,7 @@
               rules: [
                 {
                   required: true,
-                  message: 'Please select the recurring event end date'
+                  message: 'Please select the recurring event end date.'
                 },
                 {
                   validator: validateRecurringDate
@@ -176,7 +176,7 @@
               rules: [
                 {
                   required: true,
-                  message: 'Please select event recurring type'
+                  message: 'Please select event recurring type.'
                 }
               ]
             }
@@ -201,7 +201,7 @@
               rules: [
                 {
                   required: true,
-                  message: 'Please select the payment'
+                  message: 'Please select the payment.'
                 }
               ]
             }
