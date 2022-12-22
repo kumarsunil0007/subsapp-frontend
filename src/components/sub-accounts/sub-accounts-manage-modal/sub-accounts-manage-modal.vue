@@ -15,7 +15,7 @@
                 rules: [
                   {
                     required: true,
-                    message: 'First name is required'
+                    message: 'First name is required.'
                   }
                 ]
               }
@@ -32,7 +32,7 @@
                 rules: [
                   {
                     required: true,
-                    message: 'Last name is a required field'
+                    message: 'Last name is a required field.'
                   }
                 ]
               }

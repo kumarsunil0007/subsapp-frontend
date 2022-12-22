@@ -4,72 +4,40 @@
       <div class="gx-login-container">
         <div class="gx-login-content">
           <div class="login-brand gx-text-center">
-            <img
-              style="max-height: 80px"
-              alt="SubsApp"
-              src="@/assets/regular-logo.png"
-            />
+            <img style="max-height: 80px" alt="SubsApp" src="@/assets/regular-logo.png" />
           </div>
           <div class="gx-login-header gx-text-center">
             <h1 class="gx-login-title">Sign In To SubsApp</h1>
           </div>
-          <a-alert
-            v-if="status === 'error'"
-            class="gx-mb-4"
-            type="error"
-            :message="message"
-            banner
-          />
+          <a-alert v-if="status === 'error'" class="gx-mb-4" type="error" :message="message" banner />
           <a-form class="gx-login-form gx-form-row0" @submit.prevent="login">
             <a-form-item>
-              <a-input
-                ref="userNameInput"
-                v-model="username"
-                placeholder="Email"
-              >
+              <a-input ref="userNameInput" v-model="username" placeholder="Email">
                 <a-icon slot="prefix" type="user" />
               </a-input>
             </a-form-item>
             <a-form-item>
-              <a-input
-                ref="passwordInput"
-                v-model="password"
-                placeholder="Password"
-                type="password"
-              >
+              <a-input ref="passwordInput" v-model="password" placeholder="Password" type="password">
                 <a-icon slot="prefix" type="key" />
               </a-input>
             </a-form-item>
             <a-form-item class="gx-text-center">
-              <a-button
-                class="gx-mb-0"
-                type="primary"
-                html-type="submit"
-                :loading="loginLoading"
-              >
-                LOGIN
+              <a-button class="gx-mb-0" type="primary" html-type="submit" :loading="loginLoading">
+                Login
               </a-button>
             </a-form-item>
           </a-form>
           <div class="gx-text-center">
-            <router-link
-              :to="{ path: '/auth/forgot-password' }"
-              class="gx-login-form-forgot"
-            >
+            <router-link :to="{ path: '/auth/forgot-password' }" class="gx-login-form-forgot">
               Forgot Password
             </router-link>
           </div>
           <div class="form-divider"></div>
-          <a-button
-            class="register-button register-button--member"
-            @click="$router.replace({ path: '/register-user' })"
-          >
+          <a-button class="register-button register-button--member"
+            @click="$router.replace({ path: '/register-user' })">
             Become a Member
           </a-button>
-          <a-button
-            class="register-button register-button--club"
-            @click="$router.replace({ path: '/register-club' })"
-          >
+          <a-button class="register-button register-button--club" @click="$router.replace({ path: '/register-club' })">
             Register a Club
           </a-button>
         </div>
@@ -111,7 +79,7 @@ export default {
         })
         .then(resp => {
           if (resp) {
-            if(store.state.auth.user.user.is_password_reset == 0 && store.state.auth.user.user.invitation_email == "1") {
+            if (store.state.auth.user.user.is_password_reset == 0 && store.state.auth.user.user.invitation_email == "1") {
               this.$router.replace("/update-password");
             }
             else {
@@ -135,7 +103,7 @@ export default {
               } else {
                 this.$router.replace("/dashboard");
               }
-            } 
+            }
           }
           this.loginLoading = false;
         })
@@ -164,6 +132,7 @@ export default {
   height: 0;
   margin: 2.5rem 0;
   border-top: 1px dashed #e5e8eb;
+
   &:after {
     position: absolute;
     top: -14px;
@@ -180,19 +149,27 @@ export default {
   & .gx-login-header {
     margin-bottom: 15px;
   }
+
   & .ant-btn.register-button {
     background: #4d65cd;
     color: white;
     padding: 0.4rem 1.5rem !important;
   }
 }
+
 .gx-custom-login-form {
   padding: 0 !important;
-  & .ant-input {
-    line-height: 2;
-    padding: 12px 42px !important;
-    font-size: 18px;
+
+  .gx-login-content {
+    .ant-input-affix-wrapper {
+      & .ant-input {
+        line-height: 2;
+        padding: 12px 42px;
+        font-size: 18px;
+      }
+    }
   }
+
   & .ant-btn {
     padding: 16px 42px !important;
     line-height: 2;

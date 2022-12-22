@@ -44,7 +44,7 @@
                     rules: [
                       {
                         required: true,
-                        message: 'Please enter the name of your club'
+                        message: 'Please enter the name of your club.'
                       }
                     ]
                   }
@@ -61,7 +61,7 @@
                     rules: [
                       {
                         required: true,
-                        message: 'Club email is required'
+                        message: 'Club email is required.'
                       }
                     ]
                   }

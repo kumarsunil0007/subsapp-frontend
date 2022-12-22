@@ -5,35 +5,14 @@
         <div class="gx-login-content">
           <div class="gx-login-header gx-text-center">
             <div class="login-brand gx-text-center">
-            <img
-              style="max-height: 80px"
-              alt="SubsApp"
-              src="@/assets/regular-logo.png"
-            />
-          </div>
+              <img style="max-height: 80px" alt="SubsApp" src="@/assets/regular-logo.png" />
+            </div>
             <h1 class="gx-login-title">Forgotten Password</h1>
             <p>Simply enter your email address below to reset it.</p>
           </div>
-          <a-alert
-            v-if="status === 'error'"
-            class="gx-mb-3"
-            type="error"
-            :message="message"
-            banner
-          />
-          <a-input
-            v-model="email"
-            type="email"
-            placeholder="Email Address"
-            class="gx-mb-3"
-          ></a-input>
-          <a-button
-            type="primary"
-            block
-            :loading="isLoading"
-            @click="resetPassword"
-            >Reset</a-button
-          >
+          <a-alert v-if="status === 'error'" class="gx-mb-3" type="error" :message="message" banner />
+          <a-input v-model="email" type="email" placeholder="Email Address" class="gx-mb-3"></a-input>
+          <a-button type="primary" block :loading="isLoading" @click="resetPassword">Reset</a-button>
           <div class="gx-text-center">
             <router-link to="/">Go back</router-link>
           </div>
@@ -43,12 +22,20 @@
   </a-layout>
 </template>
 
-<style>
+<style lang="scss">
 .login {
   display: flex;
   flex-direction: column;
   width: 300px;
   padding: 10px;
+}
+
+.gx-custom-login-form {
+  .gx-login-content {
+    .ant-input {
+      padding: 12px;
+    }
+  }
 }
 </style>
 
@@ -67,7 +54,7 @@ export default {
     };
   },
   methods: {
-    resetPassword: function() {
+    resetPassword: function () {
       this.isLoading = true;
       this.message = "";
       this.status = "";
