@@ -30,7 +30,7 @@
       <strong>{{ nFormat(selectedEvent.startDate) }}</strong>
       <strong>Event details:</strong>
       <ul>
-        <li>Location: {{ selectedEvent.location.toUpperCase() }}</li>
+        <li>Location: {{ selectedEvent.location }}</li>
         <li>Event starts at: {{ selectedEvent.startTime }}</li>
         <li>Event ends at: {{ selectedEvent.endTime }}</li>
         <li>Cost: €{{ selectedEvent.cost }}</li>
