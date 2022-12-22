@@ -30,9 +30,10 @@
       <strong>{{ nFormat(selectedEvent.startDate) }}</strong>
       <strong>Event details:</strong>
       <ul>
-        <li>Location: {{ selectedEvent.location }}</li>
+        <li>Location: {{ selectedEvent.location.toUpperCase() }}</li>
         <li>Event starts at: {{ selectedEvent.startTime }}</li>
         <li>Event ends at: {{ selectedEvent.endTime }}</li>
+        <li>Cost: €{{ selectedEvent.cost }}</li>
       </ul>
       <div>
         <h4 class="joined-member-heading"><strong>Joined Members</strong></h4>
@@ -129,6 +130,7 @@ export default {
           this.events = [];
           if (resp.data.success) {
             const result = resp.data.result;
+            console.log("result => ", result);
             let events = [];
             for (let event of result) {
               events.push({
@@ -137,6 +139,7 @@ export default {
                   .add(event.length, "minutes")
                   .format("YYYY-MM-DD HH:mm"),
                 title: event.title,
+                cost: event.cost,
                 location: event.location,
                 content: event.users.length + " " + "members",
                 class: event.AttendanceID ? "health" : "leisure",

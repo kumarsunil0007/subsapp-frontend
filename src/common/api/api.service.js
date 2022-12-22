@@ -116,7 +116,7 @@ export const authService = {
     return ApiService.post("/auth/password-reset", params);
   },
   updatePassword(params) {
-    return ApiService.post(`/auth/update-password/null/${params.email}`, params);
+    return ApiService.post(`/auth/check_password_code/null/${params.email}`, params);
   },
   updateUserLoggedIn() {
     return ApiService.get("/update-user-loggedin");
