@@ -17,18 +17,33 @@
       :on-event-click="onEventClick"
       @cell-click="onEventClick2"
       @view-change="logEvents($event)"
+      class="lg-calendar"
     >
     </vue-cal>
-    <a-modal v-model="showDialog">
-      <template slot="footer">
-        <a-button key="submit" type="primary" @click="showDialog = false">
-          Close
-        </a-button>
-      </template>
-      <h2>{{ selectedEvent.title }}</h2>
-      <a-divider />
-      <strong>{{ nFormat(selectedEvent.startDate) }}</strong>
-      <strong>Event details:</strong>
+
+    <!-- for mobile device -->
+    <vue-cal
+      xsmall
+      :time-from="1 * 60"
+      :time-to="24 * 60"
+      :time="false"
+      click-to-navigate
+      default-view="month"
+      :disable-views="['years', 'year', 'week']"
+      :events="events"
+      :on-event-click="onEventClick"
+      @view-change="logEvents($event)"
+      class="sm-calendar"
+    >
+    </vue-cal>
+
+    <a-modal v-model="showDialog" :title="selectedEvent.title">
+      <!-- <h2>{{ selectedEvent.title }}</h2> -->
+      <!-- <a-divider /> -->
+      <span>
+        <strong>{{ nFormat(selectedEvent.startDate) }}</strong>
+        <strong> Event details:</strong>
+      </span>
       <ul>
         <li>Location: {{ selectedEvent.location }}</li>
         <li>Event starts at: {{ selectedEvent.startTime }}</li>
@@ -63,6 +78,11 @@
           </li>
         </ul>
       </div>
+      <template slot="footer">
+        <a-button key="submit" type="primary" @click="showDialog = false">
+          Close
+        </a-button>
+      </template>
     </a-modal>
 
     <a-modal v-model="showDialog2" title="Select Team">
@@ -257,12 +277,12 @@ i {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.vuecal__event.leisure {
+/* .vuecal__event.leisure {
   margin: 4px;
   border-radius: 4px;
   color: white;
   background: #4b7bec !important;
-}
+} */
 
 .vuecal__event.health {
   margin: 4px;
@@ -298,5 +318,34 @@ ul.joined-members li h5 {
 .joined-member-heading {
   margin-bottom: 10px;
   color: #545454;
+}
+.ant-modal-close:focus,
+.ant-modal-close:hover {
+  color: #fff;
+}
+@media (max-width: 767px) {
+  .lg-calendar {
+    display: none;
+  }
+  .sm-calendar {
+    display: block;
+  }
+  .vuecal__cell--has-events {
+    background-color: #fffacd;
+  }
+  .vuecal__cell-events-count {
+    display: none;
+  }
+  .vuecal--month-view .vuecal__cell-content {
+    height: 48px;
+  }
+}
+@media (min-width: 767px) {
+  .sm-calendar {
+    display: none;
+  }
+  .ant-modal {
+    margin: auto;
+  }
 }
 </style>
