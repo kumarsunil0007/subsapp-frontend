@@ -30,6 +30,7 @@
             <li>Location: {{ selectedEvent.location }}</li>
             <li>Event starts at: {{ selectedEvent.startTime }}</li>
             <li>Event ends at: {{ selectedEvent.endTime }}</li>
+            <li>Cost: €{{ selectedEvent.cost }}</li>
           </ul>
         </a-modal>
       </a-card>
@@ -121,6 +122,7 @@ export default {
                 .format("YYYY-MM-DD HH:mm"),
               title: event.title,
               location: event.location,
+              cost: event.cost,
               class: "leisure"
             });
           }
