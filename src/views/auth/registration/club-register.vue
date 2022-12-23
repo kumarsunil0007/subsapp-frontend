@@ -7,11 +7,7 @@
       <div class="gx-login-container">
         <div class="gx-login-content">
           <div class="login-brand gx-text-center">
-            <img
-              style="max-height: 80px"
-              alt="SubsApp"
-              src="@/assets/regular-logo.png"
-            />
+            <img style="max-height: 80px" alt="SubsApp" src="@/assets/regular-logo.png" />
           </div>
           <div class="gx-login-header gx-text-center">
             <h1 class="gx-login-title">Register your club with SubsApp</h1>
@@ -270,11 +266,17 @@ export default {
   .gx-custom-registration {
     padding: 30px 10px 10px;
 
-    & .ant-input {
-      line-height: 2;
-      padding: 12px 18px !important;
-      font-size: 18px;
-      margin-bottom: 18px;
+    .ant-form-item-control {
+      &.has-error {
+        margin-bottom: 12px;
+      }
+
+      & .ant-input {
+        line-height: 2;
+        padding: 12px 18px !important;
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
     }
 
     & .ant-form-item-label {
