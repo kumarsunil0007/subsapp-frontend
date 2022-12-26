@@ -428,7 +428,7 @@ export default {
       const { fileList } = this;
       const formData = new FormData();
       fileList.forEach(file => {
-        formData.append("logo", file);
+        formData.append("image", file);
       });
       this.uploading = true;
       memberService
