@@ -446,7 +446,7 @@ export default {
         .catch((err) => {
           this.uploading = false;
           this.fileList = []
-          notifications.warn(err.response.data.errors.logo[0] ? err.response.data.errors.logo[0] : "Server error");
+          notifications.warn(err.response.data.errors.image[0] ? err.response.data.errors.image[0] : "Server error");
         });
     },
     beforeUpload(file) {
