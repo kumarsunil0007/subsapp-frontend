@@ -276,15 +276,12 @@ export default {
   #scroll-to-bottom {
     display: block;
   }
-
   .gx-custom-registration {
     padding: 30px 10px 10px;
-
     .ant-form-item-control {
       &.has-error {
         margin-bottom: 12px;
       }
-
       & .ant-input {
         line-height: 2;
         padding: 12px 18px !important;
@@ -292,15 +289,12 @@ export default {
         margin-bottom: 8px;
       }
     }
-
     & .ant-form-item-label {
       margin-bottom: 8px;
     }
-
     & .ant-form-item-label>label {
       font-size: 18px;
     }
-
     & .ant-btn {
       padding: 16px 42px !important;
       line-height: 2;
