@@ -31,7 +31,7 @@
                         />
                       </div>
                     </template>
-                    <button class="edit-profile-btn">
+                    <button class="edit-profile-btn" v-if="user_image">
                       <!-- <a-icon type="delete" @click="removeImage()" /> -->
                       <a-popconfirm
                         placement="bottom"
@@ -443,9 +443,10 @@ export default {
             notifications.warn(resp.data.message);
           }
         })
-        .catch(() => {
+        .catch((err) => {
           this.uploading = false;
-          notifications.warn("Server error");
+          this.fileList = []
+          notifications.warn(err.response.data.errors.logo[0] ? err.response.data.errors.logo[0] : "Server error");
         });
     },
     beforeUpload(file) {
