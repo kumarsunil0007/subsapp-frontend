@@ -245,6 +245,18 @@ export default {
     font-size: 18px;
   }
 }
+.gx-custom-registration {
+  .gx-login-content {
+    .ant-input {
+      padding: 12px;
+    }
+  }
+  & .ant-btn {
+      padding: 14px 42px !important;
+      line-height: 1;
+      width: 100%;
+    }
+}
 
 // #content {
 //   min-height: 100vh;

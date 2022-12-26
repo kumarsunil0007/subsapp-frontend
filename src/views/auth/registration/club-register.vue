@@ -258,6 +258,20 @@ export default {
   }
 }
 
+.gx-custom-registration {
+  .gx-login-content {
+    .ant-input {
+      padding: 12px;
+    }
+  }
+
+  & .ant-btn {
+    padding: 14px 42px !important;
+    line-height: 1;
+    width: 100%;
+  }
+}
+
 @media screen and (min-width: 0px) and (max-width: 991px) {
   #scroll-to-bottom {
     display: block;
