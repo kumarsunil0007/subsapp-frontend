@@ -216,7 +216,7 @@
                 type="primary"
                 html-type="submit"
                 :loading="memberLoading"
-                >Add Members</a-button
+                >Add Member</a-button
               >
             </a-row>
           </a-form-item>
