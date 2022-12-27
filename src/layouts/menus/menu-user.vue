@@ -83,17 +83,17 @@ export default {
         .dispatch(AUTH_LOGOUT)
         .then(() => {
           console.log("here1");
-          localStorage.setItem("authUserData", {})
-          localStorage.setItem("isSubscribed", false)
-          localStorage.setItem("subscription", null)
-          localStorage.setItem("token", null)
+          localStorage.removeItem("authUserData")
+          localStorage.removeItem("isSubscribed")
+          localStorage.removeItem("subscription")
+          localStorage.removeItem("token")
           this.$router.replace("/login");
         })
         .catch(() => {
-          localStorage.setItem("authUserData", {})
-          localStorage.setItem("isSubscribed", false)
-          localStorage.setItem("subscription", null)
-          localStorage.setItem("token", null)
+          localStorage.removeItem("authUserData")
+          localStorage.removeItem("isSubscribed")
+          localStorage.removeItem("subscription")
+          localStorage.removeItem("token")
           this.$router.replace("/login");
         });
     }
