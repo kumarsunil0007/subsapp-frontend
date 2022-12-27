@@ -1,6 +1,6 @@
 <template>
   <n-page>
-    <!-- <div v-if="user.select_role === 'member'">
+    <div v-if="user.select_role === 'member'">
       <div style="display: flex">
         <p style="margin-right: 20px">
           <span style="
@@ -97,122 +97,12 @@
                 <a-col :lg="12" :md="24">
                   <img src="../../assets/images/coach-slide5.png" alt="slide5" />
                 </a-col>
-              </a-row>
-            </div>
-            <template v-if="displayCoachPreviousBtn" #prevArrow>
-              <div class="custom-slick-arrow" style="z-index: 1; left: 8px">
-                Previous
-              </div>
-            </template>
-            <template #nextArrow>
-              <div v-if="displayCoachNextBtn" class="custom-slick-arrow" style="right: 8px">
-                Next
-              </div>
-              <div v-if="!displayCoachNextBtn" class="custom-slick-arrow" style="right: 8px" @click="updateIsloggedIn">
-                Click here
-              </div>
-            </template>
-          </a-carousel>
-        </a-modal>
-      </div>
-    </div> -->
-
-    <div v-if="user.select_role === 'member'">
-      <div style="display: flex">
-        <p style="margin-right: 20px">
-          <span style="
-              padding: 6px;
-              height: 10px;
-              display: inline-block;
-              width: 10px;
-              border-radius: 50%;
-              background: #559f3f;
-            "></span>
-          Joined .
-        </p>
-        <p>
-          <span style="
-              padding: 6px;
-              height: 10px;
-              display: inline-block;
-              width: 10px;
-              border-radius: 50%;
-              background: #4b7bec;">
-          </span>
-          Not Joined .
-        </p>
-      </div>
-      <a-card title="Your Schedules" class="gx-card-full">
-        <member-calendar />
-      </a-card>
-    </div>
-
-    <div v-else>
-      <a-card title="Events" class="gx-card-full">
-        <ClubDashboard />
-      </a-card>
-    </div>
-    <div v-if="user.select_role === 'coach'">
-      <div class="coach-welcome-modal">
-        <a-modal v-model="visible" :mask-closable="false" class="welcome-modal">
-          <a-carousel :after-change="onChange" arrows class="coach-slides">
-            <div>
-              <a-row type="flex" align="middle" class="gx-pt-5">
-                <a-col :lg="14" :md="24">
-                  <h1>WELCOME</h1>
-                  <h2>To Subsapp.com</h2>
-                  <p>You have successfully logged in as a Coach.</p>
-                </a-col>
-                <a-col :lg="10" :md="24">
-                  <img src="../../assets/images/coach-slide1.png" alt="slide1" />
-                </a-col>
-              </a-row>
-            </div>
-            <div>
-              <a-row type="flex" align="middle" class="gx-pb-5">
-                <a-col :lg="12" :md="24">
-                  <h3>
-                    Coach can check the Events and can manage his team Schedule
-                  </h3>
-                </a-col>
-                <a-col :lg="12" :md="24">
-                  <img src="../../assets/images/coach-slide2.png" alt="slide2" />
-                </a-col>
-              </a-row>
-            </div>
-            <div>
-              <a-row type="flex" align="middle" class="gx-pb-5">
-                <a-col :lg="12" :md="24">
-                  <h3>Coach can</h3>
-                  <p class="gx-mb-0">Add and Search</p>
-                  <h3>Members</h3>
-                </a-col>
-                <a-col :lg="12" :md="24">
-                  <img src="../../assets/images/coach-slide3.png" alt="slide3" />
-                </a-col>
-              </a-row>
-            </div>
-            <div>
-              <a-row type="flex" align="middle" class="gx-pt-5">
-                <a-col :lg="14" :md="24">
-                  <h2>Coach can</h2>
-                  <h4 class="gx-mb-0">manage and</h4>
-                  <h3>create new team</h3>
-                </a-col>
-                <a-col :lg="10" :md="24">
-                  <img src="../../assets/images/coach-slide4.png" alt="slide4" />
-                </a-col>
-              </a-row>
-            </div>
-            <div>
-              <a-row type="flex" align="middle" class="gx-pt-5">
-                <a-col :lg="12" :md="24">
-                  <h2>Coach</h2>
-                  <p class="gx-mb-0">can check</p>
-                  <h2>the club list</h2>
-                </a-col>
-                <a-col :lg="12" :md="24">
-                  <img src="../../assets/images/coach-slide5.png" alt="slide5" />
+                <a-col :span="24" class="gx-text-right click-here-btn">
+                  <div class="click-btn">
+                    <div v-if="!displayCoachNextBtn" class="custom-slick-arrow" @click="updateIsloggedIn">
+                      Click here
+                    </div>
+                  </div>
                 </a-col>
               </a-row>
             </div>
@@ -221,13 +111,8 @@
                 Previous
               </div>
             </template>
-            <template #nextArrow>
-              <div v-if="displayCoachNextBtn" class="custom-slick-arrow" style="right: 8px">
-                Next
-              </div>
-              <div v-if="!displayCoachNextBtn" class="custom-slick-arrow" style="right: 8px" @click="updateIsloggedIn">
-                Click here
-              </div>
+            <template v-if="displayCoachNextBtn" #nextArrow>
+              <div class="custom-slick-arrow" style="right: 8px">Next</div>
             </template>
           </a-carousel>
         </a-modal>
@@ -447,11 +332,34 @@ export default {
 
 .ant-carousel .click-btn {
   position: absolute;
-  right: 0;
-  bottom: -90px;
+  right: 10px;
+  bottom: -132px;
 }
 
 .ant-carousel .click-btn .custom-slick-arrow {
   cursor: pointer;
 }
+
+@media(min-width:1024px) and (max-width:1920px) {
+  .welcome-modal .ant-modal .ant-modal-content .ant-carousel .click-btn {
+    bottom: -132px;
+  }
+}
+
+@media(min-width:768px) and (max-width:1023.99px) {
+  .welcome-modal .ant-modal .ant-modal-content .ant-carousel .click-btn {
+    bottom: -115px;
+  }
+}
+@media(min-width:707px) and (max-width:767.99px) {
+  .welcome-modal .ant-modal .ant-modal-content .ant-carousel .click-btn {
+    bottom: -225px;
+  }
+}
+@media (max-width:706.99px) {
+  .welcome-modal .ant-modal .ant-modal-content .ant-carousel .click-btn {
+    bottom: -85px;
+  }
+}
+
 </style>
