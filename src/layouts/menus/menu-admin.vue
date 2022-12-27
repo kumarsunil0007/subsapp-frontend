@@ -104,9 +104,18 @@ export default {
       await this.$store
         .dispatch(AUTH_LOGOUT)
         .then(() => {
+          console.log("here3");
+          localStorage.removeItem("authUserData")
+          localStorage.removeItem("isSubscribed")
+          localStorage.removeItem("subscription")
+          localStorage.removeItem("token")
           this.$router.replace("/login");
         })
         .catch(() => {
+          localStorage.removeItem("authUserData")
+          localStorage.removeItem("isSubscribed")
+          localStorage.removeItem("subscription")
+          localStorage.removeItem("token")
           this.$router.replace("/login");
         });
     }
