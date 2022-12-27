@@ -153,7 +153,7 @@ export default {
   & .ant-btn.register-button {
     background: #4d65cd;
     color: white;
-    padding: 0.4rem 1.5rem !important;
+    // padding: 0.4rem 1.5rem !important;
   }
 }
 
@@ -163,17 +163,40 @@ export default {
   .gx-login-content {
     .ant-input-affix-wrapper {
       & .ant-input {
-        line-height: 2;
+        // line-height: 2;
         padding: 12px 42px;
-        font-size: 18px;
+        // font-size: 18px;
       }
     }
   }
 
   & .ant-btn {
-    padding: 16px 42px !important;
-    line-height: 2;
+    padding: 14px 42px !important;
+    line-height: 1;
     width: 100%;
+  }
+}
+
+@media screen and (min-width: 0px) and (max-width: 991px) {
+  .gx-custom-login-form {
+
+    .gx-login-content {
+      .ant-input-affix-wrapper {
+        & .ant-input {
+          line-height: 2;
+          padding: 12px 42px;
+          font-size: 18px;
+        }
+      }
+    }
+
+    & .ant-btn {
+      padding: 16px 42px !important;
+      line-height: 2;
+    }
+    & .ant-btn.register-button {
+      padding: 0.4rem 1.5rem !important;
+    }
   }
 }
 </style>

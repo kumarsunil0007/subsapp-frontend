@@ -37,6 +37,22 @@
     }
   }
 }
+
+@media screen and (min-width: 0px) and (max-width: 991px) {
+  .gx-custom-login-form {
+    .gx-login-content {
+      & .ant-input {
+        line-height: 2;
+        font-size: 18px;
+      }
+    }
+
+    & .ant-btn {
+      padding: 16px 42px !important;
+      line-height: 2;
+    }
+  }
+}
 </style>
 
 <script>
