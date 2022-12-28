@@ -2,9 +2,10 @@
   <a-modal
     v-model="isVisible"
     title="Subscription Plans"
-    width="1200px"
+    width="100"
     @cancel="close"
     @ok="close"
+    class="customize-modal"
   >
     <a-spin :spinning="spinning">
       <a-row type="flex" :gutter="10">
@@ -56,7 +57,7 @@
             </div>
           </div>
         </a-col> -->
-        <a-col :xs="24" :sm="24" :md="8" :lg="8">
+        <a-col :xs="24" :sm="24" :md="24" :lg="8">
           <div class="gx-package">
             <div class="gx-package-header gx-bg-cyan gx-text-white">
               <h2 class="gx-price"><i class="icon icon-halfstar"></i>Silver</h2>
@@ -96,7 +97,7 @@
             </div>
           </div>
         </a-col>
-        <a-col :xs="24" :sm="24" :md="8" :lg="8">
+        <a-col :xs="24" :sm="24" :md="24" :lg="8">
           <div class="gx-package">
             <div class="gx-package-header gx-bg-cyan gx-text-white">
               <h2 class="gx-price"><i class="icon icon-halfstar"></i>Gold</h2>
@@ -136,7 +137,7 @@
             </div>
           </div>
         </a-col>
-        <a-col :xs="24" :sm="24" :md="8" :lg="8">
+        <a-col :xs="24" :sm="24" :md="24" :lg="8">
           <div class="gx-package">
             <div class="gx-package-header gx-bg-primary gx-text-white">
               <h2 class="gx-price">
