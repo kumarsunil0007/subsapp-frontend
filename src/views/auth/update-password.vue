@@ -204,8 +204,10 @@ export default {
   .gx-custom-registration {
     padding: 30px 10px 10px;
 
-    .ant-form-item-control.has-error {
-      margin-bottom: 12px;
+    .ant-form-item-control {
+      & .has-error {
+        margin-bottom: 12px;
+      }
 
       & .ant-input {
         line-height: 2;
