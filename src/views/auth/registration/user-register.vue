@@ -282,8 +282,8 @@ export default {
 
       & .ant-input {
         line-height: 2;
-        padding: 12px 18px !important;
-        font-size: 18px;
+        padding: 16px 18px;
+        // font-size: 18px;
         margin-bottom: 8px;
       }
     }

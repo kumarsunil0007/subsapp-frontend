@@ -151,6 +151,21 @@ span.edit-profile button.ant-btn {
     cursor: pointer;
 }
 
+.customize-modal .ant-modal {
+    width: 1200px;
+
+    .ant-modal-content {
+        height: 70vh;
+        overflow: auto;
+    }
+}
+
+@media (max-width: 1440px) {
+    .customize-modal .ant-modal {
+        width: 900px;
+    }
+}
+
 @media (max-width: 1024px) {
     .welcome-modal .click-btn.custom-btn {
         width: 83px;
@@ -159,6 +174,9 @@ span.edit-profile button.ant-btn {
         bottom: 18px;
         right: 25px;
         line-height: 30px;
+    }
+    .customize-modal .ant-modal {
+        width: 90%;
     }
 }
 
