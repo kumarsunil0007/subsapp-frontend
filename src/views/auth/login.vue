@@ -184,8 +184,8 @@ export default {
       .ant-input-affix-wrapper {
         & .ant-input {
           line-height: 2;
-          padding: 12px 42px;
-          font-size: 18px;
+          padding: 16px 42px;
+          // font-size: 18px;
         }
       }
     }
