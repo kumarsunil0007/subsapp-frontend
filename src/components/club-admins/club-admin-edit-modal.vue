@@ -26,7 +26,18 @@
       </a-form-item>
       <a-form-item label="Phone">
         <a-input
-          v-decorator="fields.phone"
+          v-decorator="[
+            'phone',
+            {
+              rules: [
+                { required: true, message: 'Phone is required.' },
+                {
+                  max: 10,
+                  message: 'Please use a 10 digit phone number.'
+                }
+              ]
+            }
+          ]"
           placeholder="Phone"
           type="number"
           min="0"
