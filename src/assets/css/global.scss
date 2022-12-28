@@ -55,25 +55,68 @@ span.edit-profile button.ant-btn {
     line-height: 40px;
 }
 
-.profile-pic-upload .profile-img {
-    width: 140px;
-    height: 140px;
-    margin: 0 auto;
-    overflow: hidden;
-    border-radius: 4%;
-    border: 1px solid #dddd;
-}
+// .profile-pic-upload .profile-img {
+//     width: 140px;
+//     height: 140px;
+//     margin: 0 auto;
+//     overflow: hidden;
+//     border-radius: 4%;
+//     border: 1px solid #dddd;
+// }
 
-.profile-pic-upload .profile-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+// .profile-pic-upload .profile-img img {
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+// }
+
+// .profile-pic-upload {
+//     padding: 30px 0px;
+//     border: 1px solid #f4f4f7;
+//     background: #fafafb;
+// }
 
 .profile-pic-upload {
     padding: 30px 0px;
     border: 1px solid #f4f4f7;
     background: #fafafb;
+
+    .profile-upload-parent {
+        position: relative;
+        max-width: 140px;
+        max-height: 140px;
+        margin: auto;
+
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 4%;
+            border: 1px solid #dddd;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .edit-profile-btn {
+            position: absolute;
+            right: 0px;
+            bottom: 0px;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 16px;
+            transform: translate(45%, 45%);
+
+            a {
+                color: #fff;
+            }
+        }
+    }
 }
 
 .profile-pic-upload .ant-upload-list-item-name {
@@ -86,26 +129,55 @@ span.edit-profile button.ant-btn {
     }
 }
 
-.gx-custom-login-form, .gx-custom-registration {
+.gx-custom-login-form,
+.gx-custom-registration {
     & .login-brand {
         margin-bottom: 12px;
     }
 }
 
-@media(min-width:768px) and (max-width:991px) {
-    .edit-profile-btn {
-        right: 0px;
+.welcome-modal .click-btn.custom-btn {
+    position: absolute;
+    right: 36px;
+    bottom: 22px;
+    width: 120px;
+    height: 36px;
+    font-size: 16px;
+    color: #38d0f9;
+    background-color: #fff;
+    text-align: center;
+    border-radius: 20px;
+    line-height: 36px;
+    cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+    .welcome-modal .click-btn.custom-btn {
+        width: 83px;
+        height: 30px;
+        font-size: 14px;
+        bottom: 18px;
+        right: 25px;
+        line-height: 30px;
     }
 }
 
-@media (max-width:767px) {
-    .edit-profile-btn {
-        right: 20px;
-    }
-}
+// @media(min-width:768px) and (max-width:991px) {
+//     .edit-profile-btn {
+//         right: 0px;
+//     }
+// }
+
+// @media (max-width:767px) {
+//     .edit-profile-btn {
+//         right: 20px;
+//     }
+// }
 
 @media screen and (min-width: 575px) {
-    .gx-custom-registration, .gx-custom-login-form {
+
+    .gx-custom-registration,
+    .gx-custom-login-form {
         .gx-login-content {
             .gx-login-header {
                 margin-bottom: 15px;

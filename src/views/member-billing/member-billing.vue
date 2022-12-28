@@ -9,21 +9,13 @@
         </div>
         <a-card title="Active Cards" class="gx-card-full">
           <div class="credit-cards">
-            <stripe-card-preview
-              v-for="(card, index) of cards"
-              :key="index"
-              :card="card"
-              @remove="removeCard"
-              @setDefault="setDefault"
-            />
+            <stripe-card-preview v-for="(card, index) of cards" :key="index" :card="card" @remove="removeCard"
+              @setDefault="setDefault" />
           </div>
         </a-card>
       </a-col>
       <a-col :xs="24" :sm="24" :md="12">
-        <a-card
-          title="My Billing History"
-          class="gx-card-table-full gx-table-responsive"
-        >
+        <a-card title="My Billing History" class="gx-card-table-full gx-table-responsive">
           <member-billing-history-table />
         </a-card>
       </a-col>
@@ -98,17 +90,6 @@
               <a-col :lg="12" :md="24">
                 <img src="../../assets/images/slider6.png" alt="slide6" />
               </a-col>
-              <a-col :span="24" class="gx-text-right">
-                <div class="click-btn">
-                  <div
-                    v-if="!displayMemberNextBtn"
-                    class="custom-slick-arrow"
-                    @click="updateIsloggedIn"
-                  >
-                    Click next
-                  </div>
-                </div></a-col
-              >
             </a-row>
           </div>
           <template v-if="displayMemberPreviousBtn" #prevArrow>
@@ -120,25 +101,16 @@
             <div class="custom-slick-arrow" style="right: 8px">Next</div>
           </template>
         </a-carousel>
+        <div v-if="!displayMemberNextBtn" class="custom-slick-arrow click-btn custom-btn" @click="updateIsloggedIn">
+          Click here
+        </div>
       </a-modal>
     </div>
-    <stripe-new-card-modal
-      :visible="newCardModalVisible"
-      @token="saveCard"
-      @close="closeNewCardModalVisible"
-    />
+    <stripe-new-card-modal :visible="newCardModalVisible" @token="saveCard" @close="closeNewCardModalVisible" />
     <a-row>
       <a-col :xs="24" :sm="24" :md="12">
-        <a-alert
-          v-if="error_msg"
-          message="Error"
-          description="Something went wrong, we could not add this card."
-          type="error"
-          closable
-          show-icon
-          class="margin_top"
-          @close="close_alert"
-        />
+        <a-alert v-if="error_msg" message="Error" description="Something went wrong, we could not add this card."
+          type="error" closable show-icon class="margin_top" @close="close_alert" />
         <div class="add-new-card gx-text-right"></div>
       </a-col>
     </a-row>
@@ -194,7 +166,7 @@ export default {
       this.displayMemberPreviousBtn = index === 0 ? false : true;
       this.displayMemberNextBtn = index === 5 ? false : true;
     },
-    getA: async () => {},
+    getA: async () => { },
     closeNewCardModalVisible() {
       this.newCardModalVisible = false;
     },
@@ -333,6 +305,7 @@ export default {
 .welcome-modal .ant-modal-body {
   padding: 0;
 }
+
 .welcome-modal .ant-modal .ant-modal-content {
   padding: 20px;
 }
@@ -348,7 +321,7 @@ export default {
   margin-right: auto;
 }
 
-.ant-carousel >>> .custom-slick-arrow {
+.ant-carousel>>>.custom-slick-arrow {
   width: 120px;
   height: 36px;
   font-size: 16px;
@@ -362,20 +335,20 @@ export default {
   top: 94%;
 }
 
-.ant-carousel >>> .custom-slick-arrow:before {
+.ant-carousel>>>.custom-slick-arrow:before {
   display: none;
 }
 
-.ant-carousel >>> .custom-slick-arrow:hover {
+.ant-carousel>>>.custom-slick-arrow:hover {
   opacity: 0.8;
 }
 
-.ant-carousel >>> .slick-slide {
+.ant-carousel>>>.slick-slide {
   line-height: 100px;
   padding: 50px 0;
 }
 
-.ant-carousel >>> .slick-slide h1 {
+.ant-carousel>>>.slick-slide h1 {
   color: #fff;
   letter-spacing: 0.05em;
   font-weight: 500;
@@ -384,7 +357,7 @@ export default {
   text-shadow: 0px 2px 6px rgb(0 0 0 / 25%);
 }
 
-.ant-carousel >>> .slick-slide h2 {
+.ant-carousel>>>.slick-slide h2 {
   color: #fff;
   font-size: 45px;
   font-weight: 500;
@@ -393,7 +366,7 @@ export default {
   letter-spacing: 0.05em;
 }
 
-.ant-carousel >>> .slick-slide h3 {
+.ant-carousel>>>.slick-slide h3 {
   color: #fff;
   font-size: 42px;
   font-weight: 500;
@@ -402,7 +375,7 @@ export default {
   letter-spacing: 0.05em;
 }
 
-.ant-carousel >>> .slick-slide h4 {
+.ant-carousel>>>.slick-slide h4 {
   color: #fff;
   font-size: 36px;
   font-weight: 500;
@@ -411,7 +384,7 @@ export default {
   letter-spacing: 0.05em;
 }
 
-.ant-carousel >>> .slick-slide p {
+.ant-carousel>>>.slick-slide p {
   color: #fff;
   font-size: 30px;
   line-height: 40px;
@@ -428,11 +401,7 @@ export default {
 .welcome-modal .ant-modal-body {
   padding: 0;
 }
-.ant-carousel .click-btn {
-  position: absolute;
-  right: 0;
-  bottom: -164px;
-}
+
 .ant-carousel .click-btn .custom-slick-arrow {
   cursor: pointer;
 }

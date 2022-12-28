@@ -21,7 +21,7 @@
             <div class="profile-pic-upload">
               <a-row>
                 <a-col :lg="24">
-                  <div style="position:relative">
+                  <div style="position:relative" class="profile-upload-parent">
                     <template v-if="profilePic">
                       <div class="profile-img">
                         <img

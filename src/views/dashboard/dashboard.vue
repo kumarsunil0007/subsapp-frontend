@@ -97,13 +97,6 @@
                 <a-col :lg="12" :md="24">
                   <img src="../../assets/images/coach-slide5.png" alt="slide5" />
                 </a-col>
-                <a-col :span="24" class="gx-text-right click-here-btn">
-                  <div class="click-btn">
-                    <div v-if="!displayCoachNextBtn" class="custom-slick-arrow" @click="updateIsloggedIn">
-                      Click here
-                    </div>
-                  </div>
-                </a-col>
               </a-row>
             </div>
             <template v-if="displayCoachPreviousBtn" #prevArrow>
@@ -112,9 +105,13 @@
               </div>
             </template>
             <template v-if="displayCoachNextBtn" #nextArrow>
-              <div class="custom-slick-arrow" style="right: 8px">Next</div>
+              <div class="custom-slick-arrow" style="right: 8px">
+                Next
+              </div>
             </template>
           </a-carousel>
+          <div v-if="!displayCoachNextBtn" class="custom-slick-arrow click-btn custom-btn" @click="updateIsloggedIn">Click here
+          </div>
         </a-modal>
       </div>
     </div>
@@ -330,36 +327,8 @@ export default {
   padding: 0;
 }
 
-.ant-carousel .click-btn {
-  position: absolute;
-  right: 10px;
-  bottom: -132px;
-}
-
 .ant-carousel .click-btn .custom-slick-arrow {
   cursor: pointer;
-}
-
-@media(min-width:1024px) and (max-width:1920px) {
-  .welcome-modal .ant-modal .ant-modal-content .ant-carousel .click-btn {
-    bottom: -132px;
-  }
-}
-
-@media(min-width:768px) and (max-width:1023.99px) {
-  .welcome-modal .ant-modal .ant-modal-content .ant-carousel .click-btn {
-    bottom: -115px;
-  }
-}
-@media(min-width:707px) and (max-width:767.99px) {
-  .welcome-modal .ant-modal .ant-modal-content .ant-carousel .click-btn {
-    bottom: -225px;
-  }
-}
-@media (max-width:706.99px) {
-  .welcome-modal .ant-modal .ant-modal-content .ant-carousel .click-btn {
-    bottom: -85px;
-  }
 }
 
 </style>

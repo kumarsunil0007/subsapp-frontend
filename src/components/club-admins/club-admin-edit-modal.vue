@@ -12,7 +12,7 @@
         Ok
       </a-button>
     </template>
-    <a-form :form="form" layout="vertical">
+    <a-form :form="form" layout="vertical" class="add-coach-form">
       <div class="info">
         <a-form-item label="First Name">
           <a-input v-decorator="fields.first_name" placeholder="First name" />
@@ -272,5 +272,8 @@ export default {
 }
 .ant-form-explain {
   font-size: 12px;
+}
+.add-coach-form .has-error .ant-form-explain {
+  margin-left: 5px;
 }
 </style>

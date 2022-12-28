@@ -254,6 +254,6 @@ export default {
   width: 97%;
 }
 .has-error .ant-form-explain {
-  margin-left: 50px;
+  margin-left: 5px;
 }
 </style>
