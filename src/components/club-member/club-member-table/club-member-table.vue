@@ -126,6 +126,9 @@
           "
           size="small"
           class="gx-btn-cyan"
+          style="
+            margin-bottom: 0px;
+          "
           @click="updateClubMember(record.id, 'accept')"
           >Make Active</a-button
         >
