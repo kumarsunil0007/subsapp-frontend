@@ -216,7 +216,7 @@
                 type="primary"
                 html-type="submit"
                 :loading="memberLoading"
-                >Add Member</a-button
+                >Add Members</a-button
               >
             </a-row>
           </a-form-item>
@@ -326,4 +326,5 @@ export default {
 .has-error .ant-form-explain {
   margin-left: 50px;
 }
+
 </style>
