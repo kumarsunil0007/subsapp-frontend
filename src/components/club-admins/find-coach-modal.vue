@@ -5,8 +5,8 @@
     title="Find & Add Coach"
     @cancel="close"
   >
-    <a-row type="flex" :gutter="1">
-      <a-col :xs="18">
+    <a-row type="flex" justify="space-between" :gutter="1">
+      <a-col :xs="17">
         <a-input
           v-model="keyword"
           type="email"

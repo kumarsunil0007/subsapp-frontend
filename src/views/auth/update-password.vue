@@ -189,6 +189,19 @@ export default {
   }
 }
 
+.gx-custom-registration {
+  .gx-login-content {
+    .ant-input {
+      padding: 12px;
+    }
+  }
+
+  & .ant-btn {
+    padding: 14px 42px !important;
+    line-height: 1;
+  }
+}
+
 // #content {
 //   // min-height: 100vh;
 //   background-color: coral;
@@ -211,8 +224,7 @@ export default {
 
       & .ant-input {
         line-height: 2;
-        padding: 12px 18px !important;
-        font-size: 18px;
+        padding: 16px 18px !important;
         margin-bottom: 8px;
       }
     }
