@@ -43,7 +43,6 @@
     .gx-login-content {
       & .ant-input {
         line-height: 2;
-        // font-size: 18px;
         padding: 16px 18px;
 
       }
