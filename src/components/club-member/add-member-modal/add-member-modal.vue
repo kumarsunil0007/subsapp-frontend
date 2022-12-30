@@ -196,6 +196,7 @@
               <a-col :xs="22">
                 <a-date-picker
                   v-decorator="['dob']"
+                  :disabled-date="disabledDate"
                   style="width:100%"
                   format="DD/MM/YYYY"
                   placeholder="Date of birth"
@@ -230,6 +231,7 @@
 <script>
 import notifications from "@/common/notifications/notification.service";
 import { memberService } from "@/common/api/api.service";
+import moment from "moment";
 import { mapGetters } from "vuex";
 
 export default {
@@ -260,6 +262,10 @@ export default {
     ...mapGetters(["AUTH_USER"])
   },
   methods: {
+    disabledDate(current) {
+      
+        return current && current >= moment().subtract(10, "years").endOf("day");
+    },
     inviteMember(memberId) {
       memberService.inviteMember(memberId).then(resp => {
         if (resp.data.success) {
