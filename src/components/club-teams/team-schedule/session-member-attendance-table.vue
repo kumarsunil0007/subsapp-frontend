@@ -228,7 +228,7 @@ export default {
     async removeMemberAttendance(row) {
       if (moment(this.sessionStart).isBefore(moment())) {
         notifications.warn(
-          "Your event has passed 1.You can't mark absent or present now."
+          "Your event has passed. You can't mark absent or present now."
         );
         return;
       }
@@ -250,7 +250,7 @@ export default {
       console.log(this.sessionStart, moment());
       if (moment(this.sessionStart).isBefore(moment())) {
         notifications.warn(
-          "Your event has passed2.You can't mark absent or present now."
+          "Your event has passed. You can't mark absent or present now."
         );
         return;
       }
@@ -275,7 +275,7 @@ export default {
     async refundAmount(row) {
       if (moment(this.sessionStart).isBefore(moment())) {
         notifications.warn(
-          "Your event has passed3.You can't mark absent or present now."
+          "Your event has passed. You can't mark absent or present now."
         );
         return;
       }
@@ -295,7 +295,7 @@ export default {
     async removeTeamMember(row) {
       if (moment(this.sessionStart).isBefore(moment())) {
         notifications.warn(
-          "Your event has passed4.You can't mark absent or present now."
+          "Your event has passed. You can't mark absent or present now."
         );
         return;
       }

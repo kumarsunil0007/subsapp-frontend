@@ -33,7 +33,6 @@
           >View</a-button
         >
       </div>
-
       <div slot="handlers2" slot-scope="text, record" class="gx-text-right">
         <a-button size="small" type="primary" @click="editClick(record)"
           >Update Commission</a-button
