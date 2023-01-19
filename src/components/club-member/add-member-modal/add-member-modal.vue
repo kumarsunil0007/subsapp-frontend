@@ -13,7 +13,7 @@
               type="flex"
               align="middle"
               :gutter="1"
-              style="margin-left:5px;"
+              style="margin-left: 5px"
             >
               <a-col :xs="2">
                 <a-icon type="mail" />
@@ -26,9 +26,9 @@
                     {
                       rules: [
                         { required: true, message: 'Email is required.' },
-                        { type: 'email', message: 'Email is invalid.' }
-                      ]
-                    }
+                        { type: 'email', message: 'Email is invalid.' },
+                      ],
+                    },
                   ]"
                   type="email"
                   placeholder="Enter email"
@@ -41,7 +41,7 @@
               type="flex"
               align="middle"
               :gutter="1"
-              style="margin-left:5px;"
+              style="margin-left: 5px"
             >
               <a-col :xs="2">
                 <a-icon type="user-add" />
@@ -56,14 +56,14 @@
                         {
                           min: 3,
                           message:
-                            'First name should contain at least 3 Characters.'
+                            'First name should contain at least 3 Characters.',
                         },
                         {
                           max: 20,
-                          message: 'Sorry You are Exceeding the Limit.'
-                        }
-                      ]
-                    }
+                          message: 'Sorry You are Exceeding the Limit.',
+                        },
+                      ],
+                    },
                   ]"
                   type="text"
                   placeholder="Enter first name"
@@ -76,7 +76,7 @@
               type="flex"
               align="middle"
               :gutter="1"
-              style="margin-left:5px;"
+              style="margin-left: 5px"
             >
               <a-col :xs="2">
                 <a-icon type="user-add" />
@@ -91,14 +91,14 @@
                         {
                           min: 3,
                           message:
-                            'Last name should contain at least 3 Characters.'
+                            'Last name should contain at least 3 Characters.',
                         },
                         {
                           max: 20,
-                          message: 'Sorry You are Exceeding the Limit.'
-                        }
-                      ]
-                    }
+                          message: 'Sorry You are Exceeding the Limit.',
+                        },
+                      ],
+                    },
                   ]"
                   type="text"
                   placeholder="Enter Last name"
@@ -111,7 +111,7 @@
               type="flex"
               align="middle"
               :gutter="1"
-              style="margin-left:5px;"
+              style="margin-left: 5px"
             >
               <a-col :xs="2">
                 <a-icon type="mobile" />
@@ -125,10 +125,10 @@
                         { required: true, message: 'Phone is required.' },
                         {
                           max: 10,
-                          message: 'Please use a 10 digit phone number.'
-                        }
-                      ]
-                    }
+                          message: 'Please use a 10 digit phone number.',
+                        },
+                      ],
+                    },
                   ]"
                   type="number"
                   min="0"
@@ -143,7 +143,7 @@
               type="flex"
               align="middle"
               :gutter="1"
-              style="margin-left:5px;"
+              style="margin-left: 5px"
             >
               <a-col :xs="2">
                 <a-icon type="environment" />
@@ -154,9 +154,9 @@
                     'address_1',
                     {
                       rules: [
-                        { required: true, message: 'Address is required.' }
-                      ]
-                    }
+                        { required: true, message: 'Address is required.' },
+                      ],
+                    },
                   ]"
                   type="text"
                   placeholder="Enter address"
@@ -169,7 +169,7 @@
               type="flex"
               align="middle"
               :gutter="1"
-              style="margin-left:5px;"
+              style="margin-left: 5px"
             >
               <a-col :xs="2">
                 <a-icon type="user" />
@@ -188,7 +188,7 @@
               type="flex"
               align="middle"
               :gutter="1"
-              style="margin-left:5px;"
+              style="margin-left: 5px"
             >
               <a-col :xs="2">
                 <a-icon type="calendar" />
@@ -197,7 +197,7 @@
                 <a-date-picker
                   v-decorator="['dob']"
                   :disabled-date="disabledDate"
-                  style="width:100%"
+                  style="width: 100%"
                   format="DD/MM/YYYY"
                   placeholder="Date of birth"
                 />
@@ -210,14 +210,14 @@
               type="block"
               :gutter="1"
               class="gx-text-right"
-              style="margin-top:0px;"
+              style="margin-top: 0px"
             >
               <a-button
                 inline-block
                 type="primary"
                 html-type="submit"
                 :loading="memberLoading"
-                >Add Members</a-button
+                >Add Member</a-button
               >
             </a-row>
           </a-form-item>
@@ -239,15 +239,15 @@ export default {
   props: {
     visible: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       keyword: "",
       members: [],
       form: this.$form.createForm(this),
-      memberLoading: false
+      memberLoading: false,
     };
   },
   computed: {
@@ -257,17 +257,16 @@ export default {
       },
       set() {
         return false;
-      }
+      },
     },
-    ...mapGetters(["AUTH_USER"])
+    ...mapGetters(["AUTH_USER"]),
   },
   methods: {
     disabledDate(current) {
-      
-        return current && current >= moment().subtract(10, "years").endOf("day");
+      return current && current >= moment().subtract(10, "years").endOf("day");
     },
     inviteMember(memberId) {
-      memberService.inviteMember(memberId).then(resp => {
+      memberService.inviteMember(memberId).then((resp) => {
         if (resp.data.success) {
           this.searchEmails();
           notifications.success("An invite has been sent");
@@ -285,7 +284,7 @@ export default {
           values.url = window.location.origin + "/#/login";
           memberService
             .addMember2(values)
-            .then(resp => {
+            .then((resp) => {
               this.memberLoading = false;
               if (resp.data.success) {
                 notifications.success("An invite has been sent");
@@ -297,7 +296,7 @@ export default {
                 this.$emit("close");
               }
             })
-            .catch(error => {
+            .catch((error) => {
               this.memberLoading = false;
               console.log(error);
             });
@@ -307,9 +306,9 @@ export default {
     searchEmails() {
       memberService
         .searchMembers({
-          keyword: this.keyword
+          keyword: this.keyword,
         })
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success) {
             this.members = resp.data.result;
           }
@@ -318,8 +317,8 @@ export default {
     close() {
       this.form.resetFields();
       this.$emit("close");
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
@@ -332,5 +331,4 @@ export default {
 .has-error .ant-form-explain {
   margin-left: 50px;
 }
-
 </style>

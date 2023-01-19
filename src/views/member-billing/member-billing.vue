@@ -9,13 +9,21 @@
         </div>
         <a-card title="Active Cards" class="gx-card-full">
           <div class="credit-cards">
-            <stripe-card-preview v-for="(card, index) of cards" :key="index" :card="card" @remove="removeCard"
-              @setDefault="setDefault" />
+            <stripe-card-preview
+              v-for="(card, index) of cards"
+              :key="index"
+              :card="card"
+              @remove="removeCard"
+              @setDefault="setDefault"
+            />
           </div>
         </a-card>
       </a-col>
       <a-col :xs="24" :sm="24" :md="12">
-        <a-card title="My Billing History" class="gx-card-table-full gx-table-responsive">
+        <a-card
+          title="My Billing History"
+          class="gx-card-table-full gx-table-responsive"
+        >
           <member-billing-history-table />
         </a-card>
       </a-col>
@@ -49,8 +57,8 @@
             <a-row type="flex" align="middle" class="gx-pt-4">
               <a-col :lg="12" :md="24">
                 <h4>
-                  As a member you may join the new club and Accept/Reject any
-                  new club or event invitation.
+                  As a member you may join a club and accept/decline club and
+                  event invitations.
                 </h4>
               </a-col>
               <a-col :lg="12" :md="24">
@@ -61,7 +69,7 @@
           <div>
             <a-row type="flex" align="middle" class="gx-pb-5">
               <a-col :lg="12" :md="24">
-                <h3>Subsapp.com helps the Member to check the Team Status.</h3>
+                <h3>Subsapp.com helps you check team status.</h3>
               </a-col>
               <a-col :lg="12" :md="24">
                 <img src="../../assets/images/slider4.png" alt="slide4" />
@@ -72,8 +80,8 @@
             <a-row type="flex" align="middle">
               <a-col :lg="12" :md="24">
                 <p>
-                  Subsapp.com uses Stripe for payment system security. Members
-                  can manage their payments easily with safety.
+                  Subsapp.com operates in partnership with Stripe. Meaning
+                  payments are easy and secure.
                 </p>
               </a-col>
               <a-col :lg="12" :md="24">
@@ -101,16 +109,32 @@
             <div class="custom-slick-arrow" style="right: 8px">Next</div>
           </template>
         </a-carousel>
-        <div v-if="!displayMemberNextBtn" class="custom-slick-arrow click-btn custom-btn" @click="updateIsloggedIn">
+        <div
+          v-if="!displayMemberNextBtn"
+          class="custom-slick-arrow click-btn custom-btn"
+          @click="updateIsloggedIn"
+        >
           Click here
         </div>
       </a-modal>
     </div>
-    <stripe-new-card-modal :visible="newCardModalVisible" @token="saveCard" @close="closeNewCardModalVisible" />
+    <stripe-new-card-modal
+      :visible="newCardModalVisible"
+      @token="saveCard"
+      @close="closeNewCardModalVisible"
+    />
     <a-row>
       <a-col :xs="24" :sm="24" :md="12">
-        <a-alert v-if="error_msg" message="Error" description="Something went wrong, we could not add this card."
-          type="error" closable show-icon class="margin_top" @close="close_alert" />
+        <a-alert
+          v-if="error_msg"
+          message="Error"
+          description="Something went wrong, we could not add this card."
+          type="error"
+          closable
+          show-icon
+          class="margin_top"
+          @close="close_alert"
+        />
         <div class="add-new-card gx-text-right"></div>
       </a-col>
     </a-row>
@@ -135,7 +159,7 @@ export default {
     StripeNewCardModal,
     MemberBillingHistoryTable,
     // BankCardPreview,
-    NPage
+    NPage,
   },
   data() {
     return {
@@ -144,13 +168,13 @@ export default {
       visible: true,
       displayMemberPreviousBtn: false,
       displayMemberNextBtn: true,
-      error_msg: false
+      error_msg: false,
     };
   },
   computed: {
     ...mapGetters({
-      user: AUTH_USER
-    })
+      user: AUTH_USER,
+    }),
   },
   mounted() {
     this.listCards();
@@ -166,12 +190,12 @@ export default {
       this.displayMemberPreviousBtn = index === 0 ? false : true;
       this.displayMemberNextBtn = index === 5 ? false : true;
     },
-    getA: async () => { },
+    getA: async () => {},
     closeNewCardModalVisible() {
       this.newCardModalVisible = false;
     },
     fetchRoles() {
-      clubService.fetchRoles().then(resp => {
+      clubService.fetchRoles().then((resp) => {
         if (resp.data.success) {
           let userData = JSON.parse(localStorage.getItem("authUserData"));
           userData.user_type = resp.data.result;
@@ -185,9 +209,9 @@ export default {
         .removeCard({
           auth: {
             id: this.user.user.user_id,
-            type: "user"
+            type: "user",
           },
-          tk: tk
+          tk: tk,
         })
         .then(() => {
           this.listCards();
@@ -198,11 +222,11 @@ export default {
         .setDefaultCard({
           auth: {
             id: this.user.user.user_id,
-            type: "user"
+            type: "user",
           },
-          tk: tk
+          tk: tk,
         })
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success) {
             notifications.success("Awesome! Your default card was updated");
           } else {
@@ -218,11 +242,11 @@ export default {
         .saveCard({
           auth: {
             id: this.user.user.user_id,
-            type: "user"
+            type: "user",
           },
-          tk: token
+          tk: token,
         })
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success) {
             notifications.success("Awesome! Your card was added successfully");
           } else {
@@ -241,10 +265,10 @@ export default {
         .redirectStripe({
           auth: {
             id: this.user.user.user_id,
-            type: "club"
-          }
+            type: "club",
+          },
         })
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success) {
             window.open(resp.data.data, "_blank");
           }
@@ -256,10 +280,10 @@ export default {
         .listCards({
           auth: {
             id: this.user.user.user_id,
-            type: "user"
-          }
+            type: "user",
+          },
         })
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success) {
             this.cards = resp.data.result;
             this.user.user.no_of_cards = resp.data.no_of_cards;
@@ -272,10 +296,10 @@ export default {
         .listBankDetails({
           auth: {
             id: this.user.user.user_id,
-            type: "club"
-          }
+            type: "club",
+          },
         })
-        .then(resp => {
+        .then((resp) => {
           this.bankLoading = false;
           if (resp.data.success) {
             this.bank = resp.data.data;
@@ -296,8 +320,8 @@ export default {
         window.localStorage.setItem("authUserData", JSON.stringify(userData));
         this.visible = false;
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -321,7 +345,7 @@ export default {
   margin-right: auto;
 }
 
-.ant-carousel>>>.custom-slick-arrow {
+.ant-carousel >>> .custom-slick-arrow {
   width: 120px;
   height: 36px;
   font-size: 16px;
@@ -335,20 +359,20 @@ export default {
   top: 94%;
 }
 
-.ant-carousel>>>.custom-slick-arrow:before {
+.ant-carousel >>> .custom-slick-arrow:before {
   display: none;
 }
 
-.ant-carousel>>>.custom-slick-arrow:hover {
+.ant-carousel >>> .custom-slick-arrow:hover {
   opacity: 0.8;
 }
 
-.ant-carousel>>>.slick-slide {
+.ant-carousel >>> .slick-slide {
   line-height: 100px;
   padding: 50px 0;
 }
 
-.ant-carousel>>>.slick-slide h1 {
+.ant-carousel >>> .slick-slide h1 {
   color: #fff;
   letter-spacing: 0.05em;
   font-weight: 500;
@@ -357,7 +381,7 @@ export default {
   text-shadow: 0px 2px 6px rgb(0 0 0 / 25%);
 }
 
-.ant-carousel>>>.slick-slide h2 {
+.ant-carousel >>> .slick-slide h2 {
   color: #fff;
   font-size: 45px;
   font-weight: 500;
@@ -366,7 +390,7 @@ export default {
   letter-spacing: 0.05em;
 }
 
-.ant-carousel>>>.slick-slide h3 {
+.ant-carousel >>> .slick-slide h3 {
   color: #fff;
   font-size: 42px;
   font-weight: 500;
@@ -375,7 +399,7 @@ export default {
   letter-spacing: 0.05em;
 }
 
-.ant-carousel>>>.slick-slide h4 {
+.ant-carousel >>> .slick-slide h4 {
   color: #fff;
   font-size: 36px;
   font-weight: 500;
@@ -384,7 +408,7 @@ export default {
   letter-spacing: 0.05em;
 }
 
-.ant-carousel>>>.slick-slide p {
+.ant-carousel >>> .slick-slide p {
   color: #fff;
   font-size: 30px;
   line-height: 40px;
