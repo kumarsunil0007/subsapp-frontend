@@ -20,7 +20,7 @@
         /></template>
       </div>
       <div slot="phone" slot-scope="text">
-        <template v-if="text">+353 {{ text }}</template>
+        <template v-if="text">{{ text }}</template>
         <template v-else>N/A</template>
       </div>
       <div slot="status" slot-scope="text" class="status_data">

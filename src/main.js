@@ -42,6 +42,7 @@ import "./assets/style";
 import "./assets/css/global.scss";
 import VueRouterBackButton from "vue-router-back-button";
 import vueCountryRegionSelect from "vue-country-region-select";
+import VueCountryCode from "vue-country-code-select";
 import Notifications from "vue-notification";
 import { Spin } from "ant-design-vue";
 import VueSweetalert2 from "vue-sweetalert2";
@@ -88,6 +89,7 @@ Vue.use(Radio);
 Vue.config.productionTip = false;
 
 Vue.use(vueCountryRegionSelect);
+Vue.use(VueCountryCode);
 //Vue.prototype.$datetime;
 
 new Vue({

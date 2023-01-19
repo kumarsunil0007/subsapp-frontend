@@ -117,6 +117,7 @@
                 <a-icon type="mobile" />
               </a-col>
               <a-col :xs="22">
+              <VueCountryCode class="country-dropdown" @onSelect="onCountrySelect" :enabledCountryCode="true" defaultCountry="IE" :showNameInput="true" />
                 <a-input
                   v-decorator="[
                     'phone_no',
@@ -132,7 +133,6 @@
                   ]"
                   type="number"
                   min="0"
-                  addon-before="+353"
                   placeholder="Enter phone number"
                 ></a-input>
               </a-col>
@@ -231,6 +231,7 @@
 <script>
 import notifications from "@/common/notifications/notification.service";
 import { memberService } from "@/common/api/api.service";
+import VueCountryCode from "vue-country-code-select";
 import moment from "moment";
 import { mapGetters } from "vuex";
 
@@ -242,12 +243,17 @@ export default {
       default: false,
     },
   },
+  components: {
+    VueCountryCode,
+  },
   data() {
     return {
       keyword: "",
       members: [],
       form: this.$form.createForm(this),
       memberLoading: false,
+      country_code: null,
+      iso2: null,
     };
   },
   computed: {
@@ -265,6 +271,13 @@ export default {
     disabledDate(current) {
       return current && current >= moment().subtract(10, "years").endOf("day");
     },
+    onCountrySelect(value) {
+      console.log("value => ", value);
+      if (value != undefined) {
+        this.country_code = value.dialCode;
+        this.iso2 = value.iso2;
+      }
+    },
     inviteMember(memberId) {
       memberService.inviteMember(memberId).then((resp) => {
         if (resp.data.success) {
@@ -281,6 +294,8 @@ export default {
         if (!err) {
           this.memberLoading = true;
           values.role = this.AUTH_USER.select_role;
+          values.country_code = this.country_code;
+          values.iso2 = this.iso2;
           values.url = window.location.origin + "/#/login";
           memberService
             .addMember2(values)

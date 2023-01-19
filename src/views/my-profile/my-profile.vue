@@ -136,7 +136,11 @@
                   </a-input> </a-form-item
               ></a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                
                 <a-form-item label="Phone Number">
+                  <VueCountryCode class="country-dropdown" @onSelect="onCountrySelect" :enabledCountryCode="true" :defaultCountry="
+                  iso2 ? iso2 : 'IE'
+                " :showNameInput="true" />
                   <a-input
                     v-decorator="['phone']"
                     type="text"
@@ -208,6 +212,29 @@
                   </div>
                 </div>
               </a-col>
+              <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+                <hr />
+              </a-col>
+              <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+                <h2>Update Password</h2>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item label="Current Password">
+                  <a-input v-model="current_password" type="password">
+                  </a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item label="New Password">
+                  <a-input v-model="new_password" type="password">
+                  </a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-form-item label="Confirm Password">
+                  <a-input v-model="confirm_password" type="password"></a-input>
+                </a-form-item>
+              </a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item class="gx-text-left gx-mt-4">
                   <a-button
@@ -232,17 +259,15 @@
 import { mapGetters } from "vuex";
 import NPage from "@/components/ui/n-page/n-page";
 import notifications from "@/common/notifications/notification.service";
+import VueCountryCode from "vue-country-code-select";
 import MissingPng from "@/assets/missing-profile-photo.png";
 import { AUTH_USER, AUTH_TOKEN } from "@/store/modules/auth/auth-actions";
 import { memberService } from "@/common/api/api.service";
 import moment from "moment";
-//import SubAccountsTable from "@/components/sub-accounts/sub-accounts-table/sub-accounts-table";
-//import SubAccountsManageModal from "@/components/sub-accounts/sub-accounts-manage-modal/sub-accounts-manage-modal";
 export default {
   name: "MyProfile",
   components: {
-    // SubAccountsManageModal,
-    //SubAccountsTable,
+    VueCountryCode,
     NPage
   },
   data() {
@@ -260,7 +285,12 @@ export default {
       user_image: "",
       loading: false,
       uploading: false,
-      fileList: []
+      fileList: [],
+      country_code: null,
+      iso2: null,
+      confirm_password: null,
+      current_password: null,
+      new_password: null,
     };
   },
   computed: {
@@ -278,40 +308,18 @@ export default {
       }
     }
   },
-  watch: {
-    // user: function(newData) {
-    //   if (newData.user_id) {
-    //     this.fields.country = newData.country || "IE";
-    //     this.form.setFieldsValue({
-    //       first_name: newData.first_name,
-    //       last_name: newData.last_name,
-    //       work_email: newData.work_email
-    //     });
-    //     if (newData && !newData.app) {
-    //       this.form.setFieldsValue({
-    //         phone: newData.phone,
-    //         emergency_name: newData.emergency_name,
-    //         emergency_phone: newData.emergency_phone,
-    //         address_1: newData.address_1,
-    //         address_2: newData.address_2,
-    //         town: newData.town,
-    //         post_code: newData.post_code,
-    //         region: newData.region
-    //       });
-    //       if (newData.dob) {
-    //         this.form.setFieldsValue({
-    //           dob: moment(newData.dob, "YYYY-MM-DD")
-    //         });
-    //       }
-    //     }
-    //   }
-    // }
-  },
   mounted() {
     //this.$store.dispatch(GET_USER, this.authUser.user.user_id);
     this.fetchProfile();
   },
   methods: {
+    onCountrySelect(value) {
+      console.log("value => ", value);
+      if (value != undefined) {
+        this.country_code = value.dialCode;
+        this.iso2 = value.iso2;
+      }
+    },
     forceRerender() {
       // Remove my-component from the DOM
       this.renderComponent = false;
@@ -330,9 +338,6 @@ export default {
       this.forceRerender();
       this.subManagerVisible = false;
       this.selectedUserId = 0;
-    },
-    uploadImage({ file }) {
-      //this.fetchProfile();
     },
     defaultImage(e) {
       e.target.src = MissingPng;
@@ -363,6 +368,11 @@ export default {
             region: resp.data.result.profile.region,
             dob: resp.data.result.profile.dob
           });
+          this.confirm_password = null;
+          this.current_password = null;
+          this.new_password = null;
+          this.country_code = resp.data.result.profile.dialCode;
+          this.iso2 = resp.data.result.profile.iso2;
           this.fields.country = resp.data.result.profile.country;
           this.user_image = resp.data.result.profile.image;
           let userData = JSON.parse(localStorage.getItem("authUserData"));
@@ -397,6 +407,11 @@ export default {
     },
     handleFormSubmit(values) {
       this.loading = true;
+      values.country_code = this.country_code;
+      values.iso2 = this.iso2;
+      values.confirm_password = this.confirm_password;
+      values.current_password = this.current_password;
+      values.new_password = this.new_password;
       memberService
         .updateProfile({
           ...values,
