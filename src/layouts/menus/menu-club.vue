@@ -31,16 +31,6 @@
       </a-menu-item>
       <a-menu-item
         v-if="user.select_role === 'club_admin'"
-        key="club-billing"
-        @click="hideSidebar"
-      >
-        <router-link to="/club/billing">
-          <a-icon type="file" />
-          <span>Club Billing</span>
-        </router-link>
-      </a-menu-item>
-      <a-menu-item
-        v-if="user.select_role === 'club_admin'"
         key="subscription"
         @click="hideSidebar"
       >
@@ -49,12 +39,6 @@
           <span>Subscription</span>
         </router-link>
       </a-menu-item>
-      <!-- <a-menu-item key="club_admins" @click="hideSidebar">
-        <router-link to="/club/admins">
-          <a-icon type="solution" />
-          <span>Club Managers</span>
-        </router-link>
-      </a-menu-item> -->
       <a-menu-item
         v-if="user.select_role != 'coach'"
         key="club_config"

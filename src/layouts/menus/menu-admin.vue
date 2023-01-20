@@ -23,42 +23,6 @@
           <span>Settings</span><LeftOutlined />
         </router-link>
       </a-menu-item>
-      <!-- <a-menu-item key="my_profile" @click="hideSidebar">
-        <router-link to="/admin/my-profile">
-          <a-icon type="user" />
-          <span>My Profile</span>
-        </router-link>
-      </a-menu-item> -->
-      <!-- <a-menu-item key="members" @click="hideSidebar">
-        <router-link to="/admin/members">
-          <a-icon type="smile" />
-          <span>Members</span>
-        </router-link>
-      </a-menu-item> -->
-      <!-- <a-menu-item key="club-billing" @click="hideSidebar">
-        <router-link to="/admin/club-billing">
-          <a-icon type="file" />
-          <span>Club Billing</span>
-        </router-link>
-      </a-menu-item> -->
-      <!-- <a-menu-item key="subscription" @click="hideSidebar">
-        <router-link to="/admin/subscription">
-          <a-icon type="euro" />
-          <span>Subscription</span>
-        </router-link>
-      </a-menu-item> -->
-      <!-- <a-menu-item key="club-mangers" @click="hideSidebar">
-        <router-link to="/admin/club-managers">
-          <a-icon type="solution" />
-          <span>Club Managers</span>
-        </router-link>
-      </a-menu-item> -->
-      <!-- <a-menu-item key="club-details" @click="hideSidebar">
-        <router-link to="/admin/club-details">
-          <a-icon type="setting" />
-          <span>Club Details</span>
-        </router-link>
-      </a-menu-item> -->
       <a-menu-item key="logout" @click="Logout">
         <a-icon type="logout" />
         <span>Logout</span>
