@@ -21,7 +21,7 @@
       </a-col>
       <a-col :xs="24" :sm="24" :md="12">
         <a-card
-          title="My Billing History"
+          title="Manage My Payments History"
           class="gx-card-table-full gx-table-responsive"
         >
           <member-billing-history-table />

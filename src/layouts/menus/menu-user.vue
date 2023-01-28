@@ -15,20 +15,20 @@
       <a-menu-item key="my_clubs" @click="hideSidebar">
         <router-link to="/my-clubs">
           <a-icon type="trophy" />
-          <span>My Clubs </span>
+          <span>Club Management </span>
         </router-link>
       </a-menu-item>
 
       <a-menu-item key="my_teams" @click="hideSidebar">
         <router-link to="/my-teams">
           <a-icon type="team" />
-          <span>My Teams</span>
+          <span>Team Membership</span>
         </router-link>
       </a-menu-item>
       <a-menu-item key="my_billing" @click="hideSidebar">
         <router-link to="/my-billing">
           <a-icon type="euro" />
-          <span>My Billing</span>
+          <span>Manage My Payments</span>
         </router-link>
       </a-menu-item>
       <a-menu-item key="my_profile" @click="hideSidebar">

@@ -9,7 +9,7 @@
     </a-row> -->
     <a-row type="flex">
       <a-col v-if="user && user.user" :span="24">
-        <a-card class="gx-card-table-full" title="My Teams">
+        <a-card class="gx-card-table-full" title="Team Membership">
           <my-teams-table
             ref="member_team_listing"
             :member-id="parseInt(user.user.id)"

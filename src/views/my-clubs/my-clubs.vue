@@ -9,7 +9,7 @@
     </a-row>
     <a-row type="flex">
       <a-col v-if="user && user.user" :span="24">
-        <a-card class="gx-card-table-full" title="My Clubs">
+        <a-card class="gx-card-table-full" title="Club Management">
           <my-clubs-table
             ref="member_club_listing"
             :member-id="parseInt(user.user.id)"
