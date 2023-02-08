@@ -117,24 +117,32 @@
                 <a-icon type="mobile" />
               </a-col>
               <a-col :xs="22">
-              <VueCountryCode class="country-dropdown" @onSelect="onCountrySelect" :enabledCountryCode="true" defaultCountry="IE" :showNameInput="true" />
-                <a-input
-                  v-decorator="[
-                    'phone_no',
-                    {
-                      rules: [
-                        { required: true, message: 'Phone is required.' },
-                        {
-                          max: 10,
-                          message: 'Please use a 10 digit phone number.',
-                        },
-                      ],
-                    },
-                  ]"
-                  type="number"
-                  min="0"
-                  placeholder="Enter phone number"
-                ></a-input>
+                <div class="custom-phone">
+                  <VueCountryCode
+                    class="country-dropdown"
+                    @onSelect="onCountrySelect"
+                    :enabledCountryCode="true"
+                    defaultCountry="IE"
+                    :showNameInput="true"
+                  />
+                  <a-input
+                    v-decorator="[
+                      'phone_no',
+                      {
+                        rules: [
+                          { required: true, message: 'Phone is required.' },
+                          {
+                            max: 10,
+                            message: 'Please use a 10 digit phone number.',
+                          },
+                        ],
+                      },
+                    ]"
+                    type="number"
+                    min="0"
+                    placeholder="Enter phone number"
+                  ></a-input>
+                </div>
               </a-col>
             </a-row>
           </a-form-item>
@@ -346,4 +354,5 @@ export default {
 .has-error .ant-form-explain {
   margin-left: 50px;
 }
+
 </style>

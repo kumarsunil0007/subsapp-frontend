@@ -154,6 +154,29 @@ span.edit-profile button.ant-btn {
 .customize-modal .ant-modal {
     width: 1200px;
 }
+
+.custom-phone {
+    display: flex;
+    align-items: center;
+}
+
+.custom-phone .vue-country-select.country-dropdown {
+    height: 36px;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    border-right: 0;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    box-shadow: none;
+    min-width: 80px;
+    background-color: #f3f3f3;
+}
+
+.custom-phone input.ant-input {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
 @media (max-width: 1440px) {
     .customize-modal .ant-modal {
         width: 900px;
@@ -181,16 +204,20 @@ span.edit-profile button.ant-btn {
             padding: 12px;
             height: 88vh;
             overflow-y: scroll;
+
             .gx-package-header {
                 padding: 16px;
+
                 .gx-price {
                     font-size: 24px;
                     margin-bottom: 4px;
                 }
             }
+
             .gx-package-body {
                 padding: 30px 12px;
-                ul.gx-package-items{
+
+                ul.gx-package-items {
                     width: 100%;
                     margin-bottom: 0;
                 }

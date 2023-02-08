@@ -21,7 +21,7 @@
             <div class="profile-pic-upload">
               <a-row>
                 <a-col :lg="24">
-                  <div style="position:relative" class="profile-upload-parent">
+                  <div style="position: relative" class="profile-upload-parent">
                     <template v-if="profilePic">
                       <div class="profile-img">
                         <img
@@ -42,7 +42,7 @@
                         @confirm="confirm"
                         @cancel="cancel"
                       >
-                        <a href="#"><a-icon type="delete"/></a>
+                        <a href="#"><a-icon type="delete" /></a>
                       </a-popconfirm>
                     </button>
                   </div>
@@ -88,10 +88,10 @@
                         rules: [
                           {
                             required: true,
-                            message: 'First name is required.'
-                          }
-                        ]
-                      }
+                            message: 'First name is required.',
+                          },
+                        ],
+                      },
                     ]"
                     type="text"
                   >
@@ -107,10 +107,10 @@
                         rules: [
                           {
                             required: true,
-                            message: 'Last name is a required field.'
-                          }
-                        ]
-                      }
+                            message: 'Last name is a required field.',
+                          },
+                        ],
+                      },
                     ]"
                     type="text"
                   >
@@ -126,26 +126,31 @@
                         rules: [
                           {
                             required: true,
-                            message: 'Your email is required.'
-                          }
-                        ]
-                      }
+                            message: 'Your email is required.',
+                          },
+                        ],
+                      },
                     ]"
                     type="text"
                   >
                   </a-input> </a-form-item
               ></a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
-                
-                <a-form-item label="Phone Number">
-                  <VueCountryCode class="country-dropdown" @onSelect="onCountrySelect" :enabledCountryCode="true" :defaultCountry="
-                  iso2 ? iso2 : 'IE'
-                " :showNameInput="true" />
-                  <a-input
-                    v-decorator="['phone']"
-                    type="text"
-                  ></a-input> </a-form-item
-              ></a-col>
+                <label class="ant-form-item-label">Phone Number</label>
+                <div class="custom-phone">
+                  <VueCountryCode
+                    class="country-dropdown"
+                    @onSelect="onCountrySelect"
+                    :enabledCountryCode="true"
+                    :defaultCountry="iso2 ? iso2 : 'IE'"
+                    :showNameInput="true"
+                  />
+                  <a-input v-decorator="['phone']" type="text"></a-input>
+                </div>
+
+                <!-- <a-form-item label="Phone Number"> </a-form-item
+              > -->
+              </a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Date of Birth">
                   <a-date-picker
@@ -226,8 +231,7 @@
               </a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="New Password">
-                  <a-input v-model="new_password" type="password">
-                  </a-input>
+                  <a-input v-model="new_password" type="password"> </a-input>
                 </a-form-item>
               </a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
@@ -268,7 +272,7 @@ export default {
   name: "MyProfile",
   components: {
     VueCountryCode,
-    NPage
+    NPage,
   },
   data() {
     return {
@@ -278,7 +282,7 @@ export default {
       selectedUserId: 0,
       dateValue: moment(),
       fields: {
-        country: null
+        country: null,
       },
       form: this.$form.createForm(this),
       action: process.env.VUE_APP_API_HOST,
@@ -298,15 +302,15 @@ export default {
       authUser: [AUTH_USER],
       userToken: [AUTH_TOKEN],
       user: "getUser",
-      userProfileLoading: "userProfileLoading"
+      userProfileLoading: "userProfileLoading",
     }),
-    profilePic: function() {
+    profilePic: function () {
       if (this.user_image) {
         return this.user_image;
       } else {
         return "https://api.subsapp.com/missing.png";
       }
-    }
+    },
   },
   mounted() {
     //this.$store.dispatch(GET_USER, this.authUser.user.user_id);
@@ -352,7 +356,7 @@ export default {
       });
     },
     fetchProfile() {
-      memberService.userProfile().then(resp => {
+      memberService.userProfile().then((resp) => {
         if (resp.data.success) {
           this.form.setFieldsValue({
             first_name: resp.data.result.first_name,
@@ -366,7 +370,7 @@ export default {
             town: resp.data.result.profile.town,
             post_code: resp.data.result.profile.post_code,
             region: resp.data.result.profile.region,
-            dob: resp.data.result.profile.dob
+            dob: resp.data.result.profile.dob,
           });
           this.confirm_password = null;
           this.current_password = null;
@@ -389,7 +393,7 @@ export default {
     confirm() {
       memberService
         .deleteAvatar()
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success === true) {
             notifications.success("Profile picture removed succesfully.");
             this.fileList = [];
@@ -415,9 +419,9 @@ export default {
       memberService
         .updateProfile({
           ...values,
-          country: this.fields.country
+          country: this.fields.country,
         })
-        .then(resp => {
+        .then((resp) => {
           this.loading = false;
           if (resp.data.success) {
             this.fetchProfile();
@@ -442,13 +446,13 @@ export default {
     handleUpload() {
       const { fileList } = this;
       const formData = new FormData();
-      fileList.forEach(file => {
+      fileList.forEach((file) => {
         formData.append("image", file);
       });
       this.uploading = true;
       memberService
         .uploadAvatar(formData)
-        .then(resp => {
+        .then((resp) => {
           this.uploading = false;
           if (resp.data.success === true) {
             notifications.success("Profile picture uploaded successfully.");
@@ -460,8 +464,12 @@ export default {
         })
         .catch((err) => {
           this.uploading = false;
-          this.fileList = []
-          notifications.warn(err.response.data.errors.image[0] ? err.response.data.errors.image[0] : "Server error");
+          this.fileList = [];
+          notifications.warn(
+            err.response.data.errors.image[0]
+              ? err.response.data.errors.image[0]
+              : "Server error"
+          );
         });
     },
     beforeUpload(file) {
@@ -477,7 +485,7 @@ export default {
     removeImage() {
       memberService
         .deleteAvatar()
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success === true) {
             notifications.success("Profile picture removed succesfully.");
             this.fileList = [];
@@ -489,7 +497,7 @@ export default {
         .catch(() => {
           notifications.warn("Server error");
         });
-    }
-  }
+    },
+  },
 };
 </script>
