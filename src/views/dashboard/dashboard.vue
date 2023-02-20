@@ -6,27 +6,13 @@
           <span
             style="
               padding: 6px;
-              height: 10px;
-              display: inline-block;
-              width: 10px;
-              border-radius: 50%;
               background: #559f3f;
-            "
-          ></span>
-          Joined .
-        </p>
-        <p>
-          <span
-            style="
-              padding: 6px;
               height: 10px;
               display: inline-block;
               width: 10px;
               border-radius: 50%;
-              background: #4b7bec;
             "
           ></span>
-          Not Joined .
         </p>
       </div>
       <a-card title="Your Schedules" class="gx-card-full">
@@ -48,7 +34,7 @@
                 <a-col :lg="14" :md="24">
                   <h1>WELCOME</h1>
                   <h2>To Subsapp.com</h2>
-                  <p>You have successfully logged in as a Coach.</p>
+                  <p>You have successfully logged in as a Club.</p>
                 </a-col>
                 <a-col :lg="10" :md="24">
                   <img
@@ -137,16 +123,24 @@
         </a-modal>
       </div>
     </div>
-    <div>
+    <div v-if="user.select_role === 'club_admin'">
       <div class="coach-welcome-modal">
-        <a-modal v-model="visible" :mask-closable="false" class="welcome-modal">
-          <a-carousel :after-change="onChange" arrows class="coach-slides">
+        <a-modal
+          v-model="clubModalVisible"
+          :mask-closable="false"
+          class="welcome-modal"
+        >
+          <a-carousel :after-change="onClubChange" arrows class="coach-slides">
             <div>
-              <a-row type="flex" align="middle" class="gx-pt-5">
+              <a-row
+                type="flex"
+                align="middle"
+                class="gx-pt-1 ant-row-flex ant-row-flex-middle"
+              >
                 <a-col :lg="14" :md="24">
                   <h1>WELCOME</h1>
                   <h2>To Subsapp.com</h2>
-                  <p>You have successfully logged in as a Coach.</p>
+                  <p>You have successfully logged in as a Club admin.</p>
                 </a-col>
                 <a-col :lg="10" :md="24">
                   <img
@@ -157,28 +151,29 @@
               </a-row>
             </div>
             <div>
-              <a-row type="flex" align="middle" class="gx-pb-5">
+              <a-row type="flex" align="middle" class="gx-pt-1">
                 <a-col :lg="12" :md="24">
-                  <h3>
-                    Coach can check the Events and can manage his team Schedule
-                  </h3>
+                  <h2>Event</h2>
+                  <p class="gx-mb-0">Find what's on, where and when.</p>
                 </a-col>
                 <a-col :lg="12" :md="24">
                   <img
-                    src="../../assets/images/coach-slide2.png"
+                    src="../../assets/images/Club-slider2-Eventst.png"
                     alt="slide2"
                   />
                 </a-col>
               </a-row>
             </div>
             <div>
-              <a-row type="flex" align="middle" class="gx-pb-5">
-                <a-col :lg="12" :md="24">
-                  <h3>Coach can</h3>
-                  <p class="gx-mb-0">Add and Search</p>
+              <a-row type="flex" align="middle" class="gx-pt-0">
+                <a-col :lg="14" :md="24">
                   <h3>Members</h3>
+                  <p class="gx-mb-0">
+                    Details of club and team members at your fingertips, copy
+                    and paste the email address to quickly add to teams etc .
+                  </p>
                 </a-col>
-                <a-col :lg="12" :md="24">
+                <a-col :lg="10" :md="24">
                   <img
                     src="../../assets/images/coach-slide3.png"
                     alt="slide3"
@@ -187,50 +182,99 @@
               </a-row>
             </div>
             <div>
-              <a-row type="flex" align="middle" class="gx-pt-5">
-                <a-col :lg="14" :md="24">
-                  <h2>Coach can</h2>
-                  <h4 class="gx-mb-0">manage and</h4>
-                  <h3>create new team</h3>
+              <a-row type="flex" align="middle" class="gx-pt-0">
+                <a-col :lg="12" :md="24">
+                  <h2>Team</h2>
+                  <p class="gx-mb-0">
+                    Find out your teams or request to be added .
+                  </p>
                 </a-col>
-                <a-col :lg="10" :md="24">
+                <a-col :lg="12" :md="24">
                   <img
-                    src="../../assets/images/coach-slide4.png"
+                    src="../../assets/images/coach-slider3teamimg.png"
                     alt="slide4"
                   />
                 </a-col>
               </a-row>
             </div>
             <div>
-              <a-row type="flex" align="middle" class="gx-pt-5">
+              <a-row type="flex" align="middle" class="gx-pt-0">
                 <a-col :lg="12" :md="24">
-                  <h2>Coach</h2>
-                  <p class="gx-mb-0">can check</p>
-                  <h2>the club list</h2>
+                  <h2>Coaches</h2>
+                  <p class="gx-mb-0">
+                    Team and club coach details are found here .
+                  </p>
                 </a-col>
                 <a-col :lg="12" :md="24">
                   <img
-                    src="../../assets/images/coach-slide5.png"
+                    src="../../assets/images/Club-slider5-coatches.png"
                     alt="slide5"
                   />
                 </a-col>
               </a-row>
             </div>
-            <template v-if="displayCoachPreviousBtn" #prevArrow>
+            <div>
+              <a-row type="flex" align="middle" class="gx-pt-0">
+                <a-col :lg="12" :md="24">
+                  <h3>Subscription</h3>
+                  <p class="gx-mb-0">
+                    Choose a plan that suits your club, 1 flat monthly fee with
+                    no hidden charges. No contract .
+                  </p>
+                </a-col>
+                <a-col :lg="12" :md="24" center>
+                  <img
+                    src="../../assets/images/Club-slider6-subscriptions-amico.png"
+                    alt="slide6"
+                  />
+                </a-col>
+              </a-row>
+            </div>
+            <div>
+              <a-row type="flex" align="middle" class="gx-pt-0">
+                <a-col :lg="12" :md="24">
+                  <h2>Club Details</h2>
+                  <p class="gx-mb-0">Add your clubs logo/photo and details.</p>
+                </a-col>
+                <a-col :lg="12" :md="24">
+                  <img
+                    src="../../assets/images/Club-slider7-clubDetails.png"
+                    alt="slide7"
+                  />
+                </a-col>
+              </a-row>
+            </div>
+            <div>
+              <a-row type="flex" align="middle" class="gx-pt-0">
+                <a-col :lg="12" :md="24">
+                  <h2>My Profile</h2>
+                  <p class="gx-mb-0">
+                    Space for the big cheese of the club, contact details etc.
+                  </p>
+                </a-col>
+                <a-col :lg="12" :md="24" :sm="15">
+                  <img
+                    src="../../assets/images/coatch-slider8-profile.png"
+                    alt="slide8"
+                  />
+                </a-col>
+              </a-row>
+            </div>
+            <template v-if="displayAdminPreviousBtn" #prevArrow>
               <div class="custom-slick-arrow" style="z-index: 1; left: 8px">
                 Previous
               </div>
             </template>
-            <template v-if="displayCoachNextBtn" #nextArrow>
+            <template v-if="displayAdminNextBtn" #nextArrow>
               <div class="custom-slick-arrow" style="right: 8px">Next</div>
             </template>
           </a-carousel>
           <div
-            v-if="!displayCoachNextBtn"
+            v-if="!displayAdminNextBtn"
             class="custom-slick-arrow click-btn custom-btn"
             @click="updateIsloggedIn"
           >
-            Click here
+            Ok
           </div>
         </a-modal>
       </div>
@@ -267,24 +311,25 @@ export default {
   components: {
     NPage,
     MemberCalendar,
-    ClubDashboard,
+    ClubDashboard
   },
   data() {
     return {
       visible: true,
+      clubModalVisible: true,
       teams: [
         {
           teamID: 1,
           teamName: "Avonmore FC 95 Training Sub U18",
           totalMembers: 22,
-          revenueThisWeek: 919,
+          revenueThisWeek: 919
         },
         {
           teamID: 2,
           teamName: "Terenure College Rugby Football Club U21",
           totalMembers: 22,
-          revenueThisWeek: 522,
-        },
+          revenueThisWeek: 522
+        }
       ],
       showDate: new Date(),
       items: [
@@ -292,17 +337,19 @@ export default {
           id: 1,
           startDate: moment(),
           endDate: moment().add(1, "hours"),
-          title: "heldfsdfsdfslo",
-        },
+          title: "heldfsdfsdfslo"
+        }
       ],
       displayCoachPreviousBtn: false,
       displayCoachNextBtn: true,
+      displayAdminNextBtn: true,
+      displayAdminPreviousBtn: false
     };
   },
   computed: {
     ...mapGetters({
-      user: AUTH_USER,
-    }),
+      user: AUTH_USER
+    })
   },
   mounted() {
     this.fetchRoles();
@@ -315,11 +362,18 @@ export default {
       this.displayCoachPreviousBtn = index === 0 ? false : true;
       this.displayCoachNextBtn = index === 4 ? false : true;
     },
+    onClubChange(Clubindex) {
+      console.log(Clubindex);
+      this.displayAdminPreviousBtn = Clubindex === 0 ? false : true;
+      this.displayAdminNextBtn = Clubindex === 7 ? false : true;
+    },
 
     checkModalDisplay() {
       let userData = JSON.parse(localStorage.getItem("authUserData"));
       console.log("userData => ", userData);
       this.visible =
+        userData.is_logged_in || this.user.user.is_logged_in ? false : true;
+      this.clubModalVisible =
         userData.is_logged_in || this.user.user.is_logged_in ? false : true;
     },
     updateIsloggedIn() {
@@ -328,11 +382,12 @@ export default {
         userData.is_logged_in = 1;
         window.localStorage.setItem("authUserData", JSON.stringify(userData));
         this.visible = false;
+        this.clubModalVisible = false;
       });
     },
 
     fetchRoles() {
-      clubService.fetchRoles().then((resp) => {
+      clubService.fetchRoles().then(resp => {
         if (resp.data.success) {
           let userData = JSON.parse(localStorage.getItem("authUserData"));
           userData.user_type = resp.data.result;
@@ -348,10 +403,10 @@ export default {
     getHeader(t) {
       console.log(t);
       return {
-        value: "sdsdas",
+        value: "sdsdas"
       };
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>
@@ -450,4 +505,11 @@ export default {
 .ant-carousel .click-btn .custom-slick-arrow {
   cursor: pointer;
 }
+.mail_animation {
+  max-width: 50px;
+  margin: 5px;
+}
+/* .mail_text {
+  font-size: 8px;
+} */
 </style>
