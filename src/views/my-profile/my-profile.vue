@@ -31,7 +31,7 @@
                         />
                       </div>
                     </template>
-                    <button class="edit-profile-btn" v-if="user_image">
+                    <button v-if="user_image" class="edit-profile-btn">
                       <!-- <a-icon type="delete" @click="removeImage()" /> -->
                       <a-popconfirm
                         placement="bottom"
@@ -42,7 +42,7 @@
                         @confirm="confirm"
                         @cancel="cancel"
                       >
-                        <a href="#"><a-icon type="delete" /></a>
+                        <a href="#"><a-icon type="delete"/></a>
                       </a-popconfirm>
                     </button>
                   </div>
@@ -88,10 +88,10 @@
                         rules: [
                           {
                             required: true,
-                            message: 'First name is required.',
-                          },
-                        ],
-                      },
+                            message: 'First name is required.'
+                          }
+                        ]
+                      }
                     ]"
                     type="text"
                   >
@@ -107,10 +107,10 @@
                         rules: [
                           {
                             required: true,
-                            message: 'Last name is a required field.',
-                          },
-                        ],
-                      },
+                            message: 'Last name is a required field.'
+                          }
+                        ]
+                      }
                     ]"
                     type="text"
                   >
@@ -126,10 +126,10 @@
                         rules: [
                           {
                             required: true,
-                            message: 'Your email is required.',
-                          },
-                        ],
-                      },
+                            message: 'Your email is required.'
+                          }
+                        ]
+                      }
                     ]"
                     type="text"
                   >
@@ -140,10 +140,10 @@
                 <div class="custom-phone">
                   <VueCountryCode
                     class="country-dropdown"
+                    :enabled-country-code="true"
+                    :default-country="iso2 ? iso2 : 'IE'"
+                    :show-name-input="true"
                     @onSelect="onCountrySelect"
-                    :enabledCountryCode="true"
-                    :defaultCountry="iso2 ? iso2 : 'IE'"
-                    :showNameInput="true"
                   />
                   <a-input v-decorator="['phone']" type="text"></a-input>
                 </div>
@@ -272,7 +272,7 @@ export default {
   name: "MyProfile",
   components: {
     VueCountryCode,
-    NPage,
+    NPage
   },
   data() {
     return {
@@ -282,7 +282,7 @@ export default {
       selectedUserId: 0,
       dateValue: moment(),
       fields: {
-        country: null,
+        country: null
       },
       form: this.$form.createForm(this),
       action: process.env.VUE_APP_API_HOST,
@@ -294,7 +294,7 @@ export default {
       iso2: null,
       confirm_password: null,
       current_password: null,
-      new_password: null,
+      new_password: null
     };
   },
   computed: {
@@ -302,15 +302,15 @@ export default {
       authUser: [AUTH_USER],
       userToken: [AUTH_TOKEN],
       user: "getUser",
-      userProfileLoading: "userProfileLoading",
+      userProfileLoading: "userProfileLoading"
     }),
-    profilePic: function () {
+    profilePic: function() {
       if (this.user_image) {
         return this.user_image;
       } else {
         return "https://api.subsapp.com/missing.png";
       }
-    },
+    }
   },
   mounted() {
     //this.$store.dispatch(GET_USER, this.authUser.user.user_id);
@@ -356,7 +356,7 @@ export default {
       });
     },
     fetchProfile() {
-      memberService.userProfile().then((resp) => {
+      memberService.userProfile().then(resp => {
         if (resp.data.success) {
           this.form.setFieldsValue({
             first_name: resp.data.result.first_name,
@@ -370,7 +370,7 @@ export default {
             town: resp.data.result.profile.town,
             post_code: resp.data.result.profile.post_code,
             region: resp.data.result.profile.region,
-            dob: resp.data.result.profile.dob,
+            dob: resp.data.result.profile.dob
           });
           this.confirm_password = null;
           this.current_password = null;
@@ -393,7 +393,7 @@ export default {
     confirm() {
       memberService
         .deleteAvatar()
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success === true) {
             notifications.success("Profile picture removed succesfully.");
             this.fileList = [];
@@ -419,9 +419,9 @@ export default {
       memberService
         .updateProfile({
           ...values,
-          country: this.fields.country,
+          country: this.fields.country
         })
-        .then((resp) => {
+        .then(resp => {
           this.loading = false;
           if (resp.data.success) {
             this.fetchProfile();
@@ -446,13 +446,13 @@ export default {
     handleUpload() {
       const { fileList } = this;
       const formData = new FormData();
-      fileList.forEach((file) => {
+      fileList.forEach(file => {
         formData.append("image", file);
       });
       this.uploading = true;
       memberService
         .uploadAvatar(formData)
-        .then((resp) => {
+        .then(resp => {
           this.uploading = false;
           if (resp.data.success === true) {
             notifications.success("Profile picture uploaded successfully.");
@@ -462,7 +462,7 @@ export default {
             notifications.warn(resp.data.message);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           this.uploading = false;
           this.fileList = [];
           notifications.warn(
@@ -485,7 +485,7 @@ export default {
     removeImage() {
       memberService
         .deleteAvatar()
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success === true) {
             notifications.success("Profile picture removed succesfully.");
             this.fileList = [];
@@ -497,7 +497,7 @@ export default {
         .catch(() => {
           notifications.warn("Server error");
         });
-    },
-  },
+    }
+  }
 };
 </script>
