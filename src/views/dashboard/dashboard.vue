@@ -3,14 +3,12 @@
     <div v-if="user.select_role === 'member'">
       <div style="display: flex">
         <p style="margin-right: 20px">
-          <span style="
-              padding: 6px;
+          <span style="padding: 6px;
               height: 10px;
               display: inline-block;
               width: 10px;
               border-radius: 50%;
-              background: #559f3f;
-            "></span>
+              background: #559f3f;"></span>
           Joined .
         </p>
         <p>
@@ -44,7 +42,7 @@
                 <a-col :lg="14" :md="24">
                   <h1>WELCOME</h1>
                   <h2>To Subsapp.com</h2>
-                  <p>You have successfully logged in as a Coach.</p>
+                  <p>You have successfully logged in as a Club.</p>
                 </a-col>
                 <a-col :lg="10" :md="24">
                   <img src="../../assets/images/coach-slide1.png" alt="slide1" />
@@ -110,8 +108,142 @@
               </div>
             </template>
           </a-carousel>
-          <div v-if="!displayCoachNextBtn" class="custom-slick-arrow click-btn custom-btn" @click="updateIsloggedIn">Click here
+          <div v-if="!displayCoachNextBtn" class="custom-slick-arrow click-btn custom-btn" @click="updateIsloggedIn">
+            Click here
           </div>
+        </a-modal>
+      </div>
+    </div>
+    <div>
+      <div class="coach-welcome-modal">
+        <a-modal v-model="clubModalVisible" :mask-closable="false" class="welcome-modal">
+          <a-carousel :after-change="onClubChange" arrows class="coach-slides">
+            <div>
+              <a-row type="flex" align="middle" class="gx-pt-1 ant-row-flex ant-row-flex-middle">
+                <a-col :lg="14" :md="24">
+                  <h1>WELCOME</h1>
+                  <h2>To Subsapp.com</h2>
+                  <p>You have successfully logged in as a Coach.</p>
+                </a-col>
+                <a-col :lg="10" :md="24">
+                  <img src="../../assets/images/coach-slide1.png" alt="slide1" />
+                </a-col>
+              </a-row>
+            </div>
+            <div>
+              <a-row type="flex" align="middle" class="gx-pt-1 ">
+                <a-col :lg="12" :md="24">
+                  <h2>Event</h2>
+                  <p class="gx-mb-0">
+                    Find what's on, where and when.
+                  </p>
+                </a-col>
+                <a-col :lg="12" :md="24" >
+                  <img src="../../assets/images/Club-slider2-Eventst.png" alt="slide2" />
+                </a-col>
+              </a-row>
+            </div>
+            <div>
+              <a-row type="flex" align="middle" class="gx-pt-0 ">
+                <a-col :lg="12" :md="24">
+                  <h3>Members</h3>
+                  <p class="gx-mb-0">
+                    Details of club and team members at your fingertips, copy
+                    and paste the email address to quickly add to teams etc .
+                  </p>
+                  <!-- <a-row type="flex" align="start" class="gx-pt-2 ">
+                <a-col  align="center" >
+                  <img src="../../assets/images/Club-slider-emailcopy.png"  @click="copyTextNoInput()" alt="slide3" class="mail_animation" />
+                </a-col>
+                 <a-col  ref="mail" align="center"  >
+                  <p class="mail_text  gx-mb-0" >
+                   abcd@gmail.com
+                  </p>
+              
+                </a-col>
+              </a-row>   -->
+              
+                </a-col>
+                <a-col :lg="12" :md="24">
+                  <img src="../../assets/images/coach-slide3.png" alt="slide3"  /> 
+                </a-col>
+              </a-row>
+            </div>
+            <div>
+              <a-row type="flex" align="middle" class="gx-pt-0">
+                <a-col :lg="12" :md="24">
+                  <h2>Team</h2>
+                  <p class="gx-mb-0">Find out your teams or request to be added .</p>
+                </a-col>
+                <a-col :lg="12" :md="24">
+                  <img src="../../assets/images/coach-slider3teamimg.png" alt="slide4" />
+                </a-col>
+              </a-row>
+            </div>
+            <div>
+              <a-row type="flex" align="middle" class="gx-pt-0">
+                <a-col :lg="12" :md="24">
+                  <h2>Coaches</h2>
+                  <p class="gx-mb-0">Team and club coach details are found here .</p>
+                </a-col>
+                <a-col :lg="12" :md="24" >
+                  <img src="../../assets/images/Club-slider5-coatches.png" alt="slide5" />
+                </a-col>
+              </a-row>
+            </div>
+            <div>
+              <a-row type="flex" align="middle" class="gx-pt-0">
+                <a-col :lg="12" :md="24">
+                  <h3>Subscription</h3>
+                  <p class="gx-mb-0">
+                    Choose a plan that suits your club, 1 flat monthly fee with
+                    no hidden charges. No contract .
+                  </p>
+                </a-col>
+                <a-col :lg="12" :md="24" center >
+                  <img src="../../assets/images/Club-slider6-subscriptions-amico.png" alt="slide6" />
+                </a-col>
+              </a-row>
+            </div>
+            <div>
+              <a-row type="flex" align="middle" class="gx-pt-0">
+                <a-col :lg="12" :md="24">
+                  <h2>Club Details</h2>
+                  <p class="gx-mb-0">
+                    Add your clubs logo/photo and details.
+                  </p>
+                </a-col>
+                <a-col :lg="12" :md="24">
+                  <img src="../../assets/images/Club-slider7-clubDetails.png" alt="slide7" />
+                </a-col>
+              </a-row>
+            </div>
+            <div>
+              <a-row type="flex" align="middle" class="gx-pt-0">
+                <a-col :lg="12" :md="24">
+                  <h2>My Profile</h2>
+                  <p class="gx-mb-0">
+                    Space for the big cheese of the club, contact details etc.
+                  </p>
+                </a-col>
+                <a-col :lg="12" :md="24" :sm="15">
+                  <img src="../../assets/images/coatch-slider8-profile.png" alt="slide8" />
+                </a-col>
+              </a-row>
+            </div>
+            <template v-if="displayCoachPreviousBtn" #prevArrow>
+              <div class="custom-slick-arrow" style="z-index: 1; left: 8px">
+                Previous
+              </div>
+            </template>
+            <template v-if="displayCoachNextBtn" #nextArrow>
+              <div class="custom-slick-arrow" style="right: 8px">
+                Next
+              </div>
+            </template>
+          </a-carousel>
+          <div v-if="!displayCoachNextBtn" class="custom-slick-arrow click-btn custom-btn" @click="updateIsloggedIn">
+            Ok </div>
         </a-modal>
       </div>
     </div>
@@ -149,9 +281,10 @@ export default {
     MemberCalendar,
     ClubDashboard
   },
-  data() {
+  data( ) {
     return {
       visible: true,
+      clubModalVisible: true,
       teams: [
         {
           teamID: 1,
@@ -195,6 +328,13 @@ export default {
       this.displayCoachPreviousBtn = index === 0 ? false : true;
       this.displayCoachNextBtn = index === 4 ? false : true;
     },
+    onClubChange(Clubindex) {
+      console.log(Clubindex);
+      this.displayCoachPreviousBtn = Clubindex === 0 ? false : true;
+      this.displayCoachNextBtn = Clubindex === 7 ? false : true;
+    },
+
+
 
     checkModalDisplay() {
       let userData = JSON.parse(localStorage.getItem("authUserData"));
@@ -330,5 +470,12 @@ export default {
 .ant-carousel .click-btn .custom-slick-arrow {
   cursor: pointer;
 }
+.mail_animation {
+  max-width:50px;
+  margin:5px;
 
+}
+/* .mail_text {
+  font-size: 8px;
+} */
 </style>
