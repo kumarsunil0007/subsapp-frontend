@@ -261,21 +261,22 @@
               </a-row>
             </div>
             <template v-if="displayAdminPreviousBtn" #prevArrow>
-              <div class="custom-slick-arrow" style="z-index: 1; left: 8px">
-                Previous
-              </div>
+              <div class="custom-slick-arrow desktop-slider-icon" style="z-index: 1; left: 8px;">
+                  <span class="previous_text"> Previous </span>
+                  <a-icon class="previous_icon" type="left" />
+                </div>
             </template>
             <template v-if="displayAdminNextBtn" #nextArrow>
-              <div class="custom-slick-arrow" style="right: 8px">Next</div>
+              <div class="custom-slick-arrow desktop-slider-icon" style="right: 8px">
+                  <span class="next_text"> Next </span>
+                  <a-icon class="next_icon" type="right" />
+                </div>
             </template>
           </a-carousel>
-          <div
-            v-if="!displayAdminNextBtn"
-            class="custom-slick-arrow click-btn custom-btn"
-            @click="updateIsloggedIn"
-          >
-            Ok
-          </div>
+          <div v-if="!displayAdminNextBtn" class="custom-slick-arrow click-btn custom-btn" @click="updateIsloggedIn">
+              <span class="oK_button_text"> Ok </span>
+              <a-icon class="close_button" type="close" />
+            </div>
         </a-modal>
       </div>
     </div>
@@ -493,23 +494,66 @@ export default {
   font-weight: 400;
   text-shadow: 0px 2px 6px rgb(0 0 0 / 25%);
 }
-
 .welcome-modal .ant-modal .ant-modal-content {
-  padding: 20px;
-}
-
-.welcome-modal .ant-modal-body {
-  padding: 0;
-}
-
-.ant-carousel .click-btn .custom-slick-arrow {
-  cursor: pointer;
-}
-.mail_animation {
-  max-width: 50px;
-  margin: 5px;
-}
-/* .mail_text {
-  font-size: 8px;
-} */
+    padding: 20px;
+  }
+  
+  .welcome-modal .ant-modal-body {
+    padding: 0;
+  }
+  
+  .ant-carousel .click-btn .custom-slick-arrow {
+    cursor: pointer;
+  }
+  
+  @media (max-width: 425px) {
+    .previous_text {
+      display: none;
+    }
+  
+    .next_text {
+      display: none;
+    }
+  
+    .custom-slick-arrow.desktop-slider-icon.slick-arrow.slick-next {
+      background: transparent;
+      color: white;
+      font-size: 23px !important;
+    }
+  
+    .custom-slick-arrow.desktop-slider-icon.slick-arrow.slick-prev {
+      background: transparent;
+      color: white;
+      font-size: 23px !important;
+    }
+  
+    .custom-slick-arrow.click-btn.custom-btn {
+      bottom: 95%;
+      left: 86%;
+    }
+ 
+    .oK_button_text {
+      display: none;
+    }
+  
+    .custom-slick-arrow.click-btn.custom-btn {
+      background: transparent;
+      color: white;
+    }
+  
+  }
+  
+  @media (min-width: 425px) {
+    .previous_icon {
+      display: none;
+    }
+  
+    .next_icon {
+      display: none;
+    }
+  
+    .close_button {
+      display: none;
+    }
+  }
 </style>
