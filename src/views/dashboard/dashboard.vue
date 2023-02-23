@@ -3,16 +3,14 @@
     <div v-if="user.select_role === 'member'">
       <div style="display: flex">
         <p style="margin-right: 20px">
-          <span
-            style="
-              padding: 6px;
-              background: #559f3f;
-              height: 10px;
-              display: inline-block;
-              width: 10px;
-              border-radius: 50%;
-            "
-          ></span>
+          <span style="
+                padding: 6px;
+                background: #559f3f;
+                height: 10px;
+                display: inline-block;
+                width: 10px;
+                border-radius: 50%;
+              "></span>
         </p>
       </div>
       <a-card title="Your Schedules" class="gx-card-full">
@@ -34,13 +32,10 @@
                 <a-col :lg="14" :md="24">
                   <h1>WELCOME</h1>
                   <h2>To Subsapp.com</h2>
-                  <p>You have successfully logged in as a Club.</p>
+                  <p>You have successfully logged in as a Coach.</p>
                 </a-col>
                 <a-col :lg="10" :md="24">
-                  <img
-                    src="../../assets/images/coach-slide1.png"
-                    alt="slide1"
-                  />
+                  <img src="../../assets/images/coach-slide1.png" alt="slide1" />
                 </a-col>
               </a-row>
             </div>
@@ -48,14 +43,11 @@
               <a-row type="flex" align="middle" class="gx-pb-5">
                 <a-col :lg="12" :md="24">
                   <h3>
-                    Coach can check the Events and can manage his team Schedule
+                    Coach can check the Events and can manage his team Schedule.
                   </h3>
                 </a-col>
                 <a-col :lg="12" :md="24">
-                  <img
-                    src="../../assets/images/coach-slide2.png"
-                    alt="slide2"
-                  />
+                  <img src="../../assets/images/coach-slide2.png" alt="slide2" />
                 </a-col>
               </a-row>
             </div>
@@ -64,13 +56,10 @@
                 <a-col :lg="12" :md="24">
                   <h3>Coach can</h3>
                   <p class="gx-mb-0">Add and Search</p>
-                  <h3>Members</h3>
+                  <h3>Members. </h3>
                 </a-col>
                 <a-col :lg="12" :md="24">
-                  <img
-                    src="../../assets/images/coach-slide3.png"
-                    alt="slide3"
-                  />
+                  <img src="../../assets/images/coach-slide3.png" alt="slide3" />
                 </a-col>
               </a-row>
             </div>
@@ -79,13 +68,10 @@
                 <a-col :lg="14" :md="24">
                   <h2>Coach can</h2>
                   <h4 class="gx-mb-0">manage and</h4>
-                  <h3>create new team</h3>
+                  <h3>create new team.</h3>
                 </a-col>
                 <a-col :lg="10" :md="24">
-                  <img
-                    src="../../assets/images/coach-slide4.png"
-                    alt="slide4"
-                  />
+                  <img src="../../assets/images/coach-slide4.png" alt="slide4" />
                 </a-col>
               </a-row>
             </div>
@@ -94,13 +80,10 @@
                 <a-col :lg="12" :md="24">
                   <h2>Coach</h2>
                   <p class="gx-mb-0">can check</p>
-                  <h2>the club list</h2>
+                  <h2>the club list.</h2>
                 </a-col>
                 <a-col :lg="12" :md="24">
-                  <img
-                    src="../../assets/images/coach-slide5.png"
-                    alt="slide5"
-                  />
+                  <img src="../../assets/images/coach-slide5.png" alt="slide5" />
                 </a-col>
               </a-row>
             </div>
@@ -113,11 +96,7 @@
               <div class="custom-slick-arrow" style="right: 8px">Next</div>
             </template>
           </a-carousel>
-          <div
-            v-if="!displayCoachNextBtn"
-            class="custom-slick-arrow click-btn custom-btn"
-            @click="updateIsloggedIn"
-          >
+          <div v-if="!displayCoachNextBtn" class="custom-slick-arrow click-btn custom-btn" @click="updateIsloggedIn">
             Click here
           </div>
         </a-modal>
@@ -125,28 +104,17 @@
     </div>
     <div v-if="user.select_role === 'club_admin'">
       <div class="coach-welcome-modal">
-        <a-modal
-          v-model="clubModalVisible"
-          :mask-closable="false"
-          class="welcome-modal"
-        >
+        <a-modal v-model="clubModalVisible" :mask-closable="false" class="welcome-modal">
           <a-carousel :after-change="onClubChange" arrows class="coach-slides">
             <div>
-              <a-row
-                type="flex"
-                align="middle"
-                class="gx-pt-1 ant-row-flex ant-row-flex-middle"
-              >
+              <a-row type="flex" align="middle" class="gx-pt-1 ant-row-flex ant-row-flex-middle">
                 <a-col :lg="14" :md="24">
                   <h1>WELCOME</h1>
                   <h2>To Subsapp.com</h2>
                   <p>You have successfully logged in as a Club admin.</p>
                 </a-col>
                 <a-col :lg="10" :md="24">
-                  <img
-                    src="../../assets/images/coach-slide1.png"
-                    alt="slide1"
-                  />
+                  <img src="../../assets/images/coach-slide1.png" alt="slide1" />
                 </a-col>
               </a-row>
             </div>
@@ -157,10 +125,7 @@
                   <p class="gx-mb-0">Find what's on, where and when.</p>
                 </a-col>
                 <a-col :lg="12" :md="24">
-                  <img
-                    src="../../assets/images/Club-slider2-Eventst.png"
-                    alt="slide2"
-                  />
+                  <img src="../../assets/images/Club-slider2-Eventst.png" alt="slide2" />
                 </a-col>
               </a-row>
             </div>
@@ -170,14 +135,11 @@
                   <h3>Members</h3>
                   <p class="gx-mb-0">
                     Details of club and team members at your fingertips, copy
-                    and paste the email address to quickly add to teams etc .
+                    and paste the email address to quickly add to teams etc.
                   </p>
                 </a-col>
                 <a-col :lg="10" :md="24">
-                  <img
-                    src="../../assets/images/coach-slide3.png"
-                    alt="slide3"
-                  />
+                  <img src="../../assets/images/coach-slide3.png" alt="slide3" />
                 </a-col>
               </a-row>
             </div>
@@ -186,14 +148,11 @@
                 <a-col :lg="12" :md="24">
                   <h2>Team</h2>
                   <p class="gx-mb-0">
-                    Find out your teams or request to be added .
+                    Find out your teams or request to be added.
                   </p>
                 </a-col>
                 <a-col :lg="12" :md="24">
-                  <img
-                    src="../../assets/images/coach-slider3teamimg.png"
-                    alt="slide4"
-                  />
+                  <img src="../../assets/images/coach-slider3teamimg.png" alt="slide4" />
                 </a-col>
               </a-row>
             </div>
@@ -202,14 +161,11 @@
                 <a-col :lg="12" :md="24">
                   <h2>Coaches</h2>
                   <p class="gx-mb-0">
-                    Team and club coach details are found here .
+                    Team and club coach details are found here.
                   </p>
                 </a-col>
                 <a-col :lg="12" :md="24">
-                  <img
-                    src="../../assets/images/Club-slider5-coatches.png"
-                    alt="slide5"
-                  />
+                  <img src="../../assets/images/Club-slider5-coatches.png" alt="slide5" />
                 </a-col>
               </a-row>
             </div>
@@ -219,14 +175,11 @@
                   <h3>Subscription</h3>
                   <p class="gx-mb-0">
                     Choose a plan that suits your club, 1 flat monthly fee with
-                    no hidden charges. No contract .
+                    no hidden charges. No contract.
                   </p>
                 </a-col>
                 <a-col :lg="12" :md="24" center>
-                  <img
-                    src="../../assets/images/Club-slider6-subscriptions-amico.png"
-                    alt="slide6"
-                  />
+                  <img src="../../assets/images/Club-slider6-subscriptions-amico.png" alt="slide6" />
                 </a-col>
               </a-row>
             </div>
@@ -237,10 +190,7 @@
                   <p class="gx-mb-0">Add your clubs logo/photo and details.</p>
                 </a-col>
                 <a-col :lg="12" :md="24">
-                  <img
-                    src="../../assets/images/Club-slider7-clubDetails.png"
-                    alt="slide7"
-                  />
+                  <img src="../../assets/images/Club-slider7-clubDetails.png" alt="slide7" />
                 </a-col>
               </a-row>
             </div>
@@ -253,30 +203,27 @@
                   </p>
                 </a-col>
                 <a-col :lg="12" :md="24" :sm="15">
-                  <img
-                    src="../../assets/images/coatch-slider8-profile.png"
-                    alt="slide8"
-                  />
+                  <img src="../../assets/images/coatch-slider8-profile.png" alt="slide8" />
                 </a-col>
               </a-row>
             </div>
             <template v-if="displayAdminPreviousBtn" #prevArrow>
               <div class="custom-slick-arrow desktop-slider-icon" style="z-index: 1; left: 8px;">
-                  <span class="previous_text"> Previous </span>
-                  <a-icon class="previous_icon" type="left" />
-                </div>
+                <span class="previous_text"> Previous </span>
+                <a-icon class="previous_icon" type="left" />
+              </div>
             </template>
             <template v-if="displayAdminNextBtn" #nextArrow>
               <div class="custom-slick-arrow desktop-slider-icon" style="right: 8px">
-                  <span class="next_text"> Next </span>
-                  <a-icon class="next_icon" type="right" />
-                </div>
+                <span class="next_text"> Next </span>
+                <a-icon class="next_icon" type="right" />
+              </div>
             </template>
           </a-carousel>
           <div v-if="!displayAdminNextBtn" class="custom-slick-arrow click-btn custom-btn" @click="updateIsloggedIn">
-              <span class="oK_button_text"> Ok </span>
-              <a-icon class="close_button" type="close" />
-            </div>
+            <span class="oK_button_text"> Ok </span>
+            <a-icon class="close_button" type="close" />
+          </div>
         </a-modal>
       </div>
     </div>
@@ -422,7 +369,7 @@ export default {
   margin-right: auto;
 }
 
-.ant-carousel >>> .custom-slick-arrow {
+.ant-carousel>>>.custom-slick-arrow {
   width: 120px;
   height: 36px;
   font-size: 16px;
@@ -436,20 +383,20 @@ export default {
   top: 94%;
 }
 
-.ant-carousel >>> .custom-slick-arrow:before {
+.ant-carousel>>>.custom-slick-arrow:before {
   display: none;
 }
 
-.ant-carousel >>> .custom-slick-arrow:hover {
+.ant-carousel>>>.custom-slick-arrow:hover {
   opacity: 0.8;
 }
 
-.ant-carousel >>> .slick-slide {
+.ant-carousel>>>.slick-slide {
   line-height: 100px;
   padding: 50px 0;
 }
 
-.ant-carousel >>> .slick-slide h1 {
+.ant-carousel>>>.slick-slide h1 {
   color: #fff;
   letter-spacing: 0.05em;
   font-weight: 500;
@@ -458,7 +405,7 @@ export default {
   text-shadow: 0px 2px 6px rgb(0 0 0 / 25%);
 }
 
-.ant-carousel >>> .slick-slide h2 {
+.ant-carousel>>>.slick-slide h2 {
   color: #fff;
   font-size: 54px;
   font-weight: 500;
@@ -467,7 +414,7 @@ export default {
   letter-spacing: 0.05em;
 }
 
-.ant-carousel >>> .slick-slide h3 {
+.ant-carousel>>>.slick-slide h3 {
   color: #fff;
   font-size: 42px;
   font-weight: 500;
@@ -476,7 +423,7 @@ export default {
   letter-spacing: 0.05em;
 }
 
-.ant-carousel >>> .slick-slide h4 {
+.ant-carousel>>>.slick-slide h4 {
   color: #fff;
   font-size: 36px;
   font-weight: 500;
@@ -485,7 +432,7 @@ export default {
   letter-spacing: 0.05em;
 }
 
-.ant-carousel >>> .slick-slide p {
+.ant-carousel>>>.slick-slide p {
   color: #fff;
   font-size: 30px;
   line-height: 40px;
@@ -494,66 +441,67 @@ export default {
   font-weight: 400;
   text-shadow: 0px 2px 6px rgb(0 0 0 / 25%);
 }
+
 .welcome-modal .ant-modal .ant-modal-content {
-    padding: 20px;
+  padding: 20px;
+}
+
+.welcome-modal .ant-modal-body {
+  padding: 0;
+}
+
+.ant-carousel .click-btn .custom-slick-arrow {
+  cursor: pointer;
+}
+
+@media (max-width: 425px) {
+  .previous_text {
+    display: none;
   }
-  
-  .welcome-modal .ant-modal-body {
-    padding: 0;
+
+  .next_text {
+    display: none;
   }
-  
-  .ant-carousel .click-btn .custom-slick-arrow {
-    cursor: pointer;
+
+  .custom-slick-arrow.desktop-slider-icon.slick-arrow.slick-next {
+    background: transparent;
+    color: white;
+    font-size: 23px !important;
   }
-  
-  @media (max-width: 425px) {
-    .previous_text {
-      display: none;
-    }
-  
-    .next_text {
-      display: none;
-    }
-  
-    .custom-slick-arrow.desktop-slider-icon.slick-arrow.slick-next {
-      background: transparent;
-      color: white;
-      font-size: 23px !important;
-    }
-  
-    .custom-slick-arrow.desktop-slider-icon.slick-arrow.slick-prev {
-      background: transparent;
-      color: white;
-      font-size: 23px !important;
-    }
-  
-    .custom-slick-arrow.click-btn.custom-btn {
-      bottom: 95%;
-      left: 86%;
-    }
- 
-    .oK_button_text {
-      display: none;
-    }
-  
-    .custom-slick-arrow.click-btn.custom-btn {
-      background: transparent;
-      color: white;
-    }
-  
+
+  .custom-slick-arrow.desktop-slider-icon.slick-arrow.slick-prev {
+    background: transparent;
+    color: white;
+    font-size: 23px !important;
   }
-  
-  @media (min-width: 425px) {
-    .previous_icon {
-      display: none;
-    }
-  
-    .next_icon {
-      display: none;
-    }
-  
-    .close_button {
-      display: none;
-    }
+
+  .custom-slick-arrow.click-btn.custom-btn {
+    bottom: 94%;
+    left: 81%;
   }
+
+  .oK_button_text {
+    display: none;
+  }
+
+  .custom-slick-arrow.click-btn.custom-btn {
+    background: transparent;
+    color: white;
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 425px) {
+  .previous_icon {
+    display: none;
+  }
+
+  .next_icon {
+    display: none;
+  }
+
+  .close_button {
+    display: none;
+  }
+}
 </style>
