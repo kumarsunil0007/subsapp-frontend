@@ -136,8 +136,8 @@
                   </a-input> </a-form-item
               ></a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
-                <label class="ant-form-item-label">Phone Number</label>
-                <div class="custom-phone">
+                <a-form-item label="Phone Number">
+                  <div class="custom-phone">
                   <VueCountryCode
                     class="country-dropdown"
                     :enabled-country-code="true"
@@ -145,11 +145,20 @@
                     :show-name-input="true"
                     @onSelect="onCountrySelect"
                   />
-                  <a-input v-decorator="['phone']" type="text"></a-input>
-                </div>
-
-                <!-- <a-form-item label="Phone Number"> </a-form-item
-              > -->
+                  <a-input v-decorator="['phone',
+                      {
+                        rules: [
+                          {
+                            min: 10,
+                            message: 'Minimum 10 digits are allowed.'
+                          },
+                          {
+                            max: 10,
+                            message: 'Maximum 10 digits are allowed.'
+                          }
+                        ]
+                      }]" type="text"></a-input></div> </a-form-item
+              >
               </a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Date of Birth">
@@ -312,7 +321,7 @@ export default {
       }
     }
   },
-  mounted() {
+  beforeMount() {
     //this.$store.dispatch(GET_USER, this.authUser.user.user_id);
     this.fetchProfile();
   },
@@ -375,7 +384,7 @@ export default {
           this.confirm_password = null;
           this.current_password = null;
           this.new_password = null;
-          this.country_code = resp.data.result.profile.dialCode;
+          this.country_code = resp.data.result.profile.country_code;
           this.iso2 = resp.data.result.profile.iso2;
           this.fields.country = resp.data.result.profile.country;
           this.user_image = resp.data.result.profile.image;
@@ -387,6 +396,7 @@ export default {
           userData.user.preferred_name = resp.data.result.preferred_name;
           window.localStorage.setItem("authUserData", JSON.stringify(userData));
           this.$store.commit("AUTH_STATE");
+          console.log("this.iso2 => ",this.iso2)
         }
       });
     },
