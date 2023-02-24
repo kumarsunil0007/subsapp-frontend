@@ -143,6 +143,7 @@
                     :enabled-country-code="true"
                     :default-country="iso2 ? iso2 : 'IE'"
                     :show-name-input="true"
+                    :state="errors[0] ? false : (valid ? true : null)"
                     @onSelect="onCountrySelect"
                   />
                   <a-input v-decorator="['phone',

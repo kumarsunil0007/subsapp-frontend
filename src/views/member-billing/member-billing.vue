@@ -93,7 +93,7 @@
             <a-row type="flex" align="middle" class="gx-pt-5">
               <a-col :lg="12" :md="24">
                 <h2>Enter your</h2>
-                <p>card details and become a member</p>
+                <p>card details and become a member. </p>
               </a-col>
               <a-col :lg="12" :md="24">
                 <img src="../../assets/images/slider6.png" alt="slide6" />
@@ -112,10 +112,7 @@
         <div
           v-if="!displayMemberNextBtn"
           class="custom-slick-arrow click-btn custom-btn"
-          @click="updateIsloggedIn"
-        >
-          Click here
-        </div>
+          @click="updateIsloggedIn" >Click here </div>
       </a-modal>
     </div>
     <stripe-new-card-modal
