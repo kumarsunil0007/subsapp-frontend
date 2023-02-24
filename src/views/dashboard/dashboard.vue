@@ -38,7 +38,7 @@
                   <img src="../../assets/images/coach-slide1.png" alt="slide1" />
                 </a-col>
               </a-row>
-            </div>
+           </div> 
             <div>
               <a-row type="flex" align="middle" class="gx-pb-5">
                 <a-col :lg="12" :md="24">
