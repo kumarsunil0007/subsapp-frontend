@@ -43,6 +43,13 @@ import "./assets/css/global.scss";
 import VueRouterBackButton from "vue-router-back-button";
 import vueCountryRegionSelect from "vue-country-region-select";
 import VueCountryCode from "vue-country-code-select";
+import VuePhoneNumberInput from 'vue-phone-number-input';
+import "vue-phone-number-input/dist/vue-phone-number-input.css";
+import VueCountryIntl from 'vue-country-intl';
+import VueTelInput from 'vue-tel-input';
+import 'vue-tel-input/dist/vue-tel-input.css';
+// import css
+import 'vue-country-intl/lib/vue-country-intl.css'
 import Notifications from "vue-notification";
 import { Spin } from "ant-design-vue";
 import VueSweetalert2 from "vue-sweetalert2";
@@ -90,6 +97,10 @@ Vue.config.productionTip = false;
 
 Vue.use(vueCountryRegionSelect);
 Vue.use(VueCountryCode);
+// Vue.use(VuePhoneNumberInput);
+Vue.component('vue-phone-number-input', VuePhoneNumberInput);
+Vue.component('vue-country-intl', VueCountryIntl);
+Vue.use(VueTelInput);
 //Vue.prototype.$datetime;
 
 new Vue({

@@ -8,14 +8,7 @@
     /> -->
     <a-form :form="form" layout="vertical">
       <a-row style="flex-direction: row">
-        <a-col
-          :xl="6"
-          :lg="10"
-          :md="10"
-          :sm="10"
-          :xs="24"
-          class="gx-text-center"
-        >
+        <a-col :xl="6" :lg="10" :md="10" :sm="10" :xs="24" class="gx-text-center">
           <a-card class="gx-card-widget heading">
             <h2 class="gx-text-left">Edit Profile Picture</h2>
             <div class="profile-pic-upload">
@@ -24,11 +17,7 @@
                   <div style="position: relative" class="profile-upload-parent">
                     <template v-if="profilePic">
                       <div class="profile-img">
-                        <img
-                          :src="profilePic"
-                          class="gx-mb-3"
-                          @error="defaultImage"
-                        />
+                        <img :src="profilePic" class="gx-mb-3" @error="defaultImage" />
                       </div>
                     </template>
                     <button v-if="user_image" class="edit-profile-btn">
@@ -42,7 +31,7 @@
                         @confirm="confirm"
                         @cancel="cancel"
                       >
-                        <a href="#"><a-icon type="delete"/></a>
+                        <a href="#"><a-icon type="delete" /></a>
                       </a-popconfirm>
                     </button>
                   </div>
@@ -88,10 +77,10 @@
                         rules: [
                           {
                             required: true,
-                            message: 'First name is required.'
-                          }
-                        ]
-                      }
+                            message: 'First name is required.',
+                          },
+                        ],
+                      },
                     ]"
                     type="text"
                   >
@@ -107,10 +96,10 @@
                         rules: [
                           {
                             required: true,
-                            message: 'Last name is a required field.'
-                          }
-                        ]
-                      }
+                            message: 'Last name is a required field.',
+                          },
+                        ],
+                      },
                     ]"
                     type="text"
                   >
@@ -126,10 +115,10 @@
                         rules: [
                           {
                             required: true,
-                            message: 'Your email is required.'
-                          }
-                        ]
-                      }
+                            message: 'Your email is required.',
+                          },
+                        ],
+                      },
                     ]"
                     type="text"
                   >
@@ -138,32 +127,22 @@
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Phone Number">
                   <div class="custom-phone">
-                  <VueCountryCode
-                    class="country-dropdown"
-                    :enabled-country-code="true"
-                    :default-country="iso2 ? iso2 : 'IE'"
-                    :show-name-input="true"
-                    @onSelect="onCountrySelect"
-                  />
-                  <a-input v-decorator="['phone',
-                      {
-                        rules: [
-                          {
-                            min: 10,
-                            message: 'Minimum 10 digits are allowed.'
-                          },
-                          {
-                            max: 10,
-                            message: 'Maximum 10 digits are allowed.'
-                          }
-                        ]
-                      }]" type="text"></a-input></div> </a-form-item
-              >
+                    <vue-tel-input
+                      class="country-dropdown"
+                      v-model="phone"
+                      :showDialCode="true"
+                      defaultCountry="+91"
+                      @country-changed="onCountrySelect"
+                      mode="international"
+                    ></vue-tel-input>
+                  </div>
+                </a-form-item>
               </a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Date of Birth">
                   <a-date-picker
                     v-decorator="['dob']"
+                    :disabled-date="disabledDate"
                     style="width: 100%"
                     format="DD/MM/YYYY"
                   /> </a-form-item
@@ -176,14 +155,21 @@
               </a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Emergency Name">
-                  <a-input v-decorator="['emergency_name']" type="text">
-                  </a-input>
+                  <a-input v-decorator="['emergency_name']" type="text"> </a-input>
                 </a-form-item>
               </a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Emergency Phone">
-                  <a-input v-decorator="['emergency_phone']" type="text">
-                  </a-input>
+                  <div class="custom-phone">
+                    <vue-tel-input
+                      class="country-dropdown"
+                      v-model="emergency_phone"
+                      :showDialCode="true"
+                      defaultCountry="+91"
+                      @country-changed="onEmergencyPhoneCountrySelect"
+                      mode="international"
+                    ></vue-tel-input>
+                  </div>
                 </a-form-item>
               </a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
@@ -234,8 +220,7 @@
               </a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Current Password">
-                  <a-input v-model="current_password" type="password">
-                  </a-input>
+                  <a-input v-model="current_password" type="password"> </a-input>
                 </a-form-item>
               </a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
@@ -281,7 +266,7 @@ export default {
   name: "MyProfile",
   components: {
     VueCountryCode,
-    NPage
+    NPage,
   },
   data() {
     return {
@@ -291,7 +276,7 @@ export default {
       selectedUserId: 0,
       dateValue: moment(),
       fields: {
-        country: null
+        country: null,
       },
       form: this.$form.createForm(this),
       action: process.env.VUE_APP_API_HOST,
@@ -300,10 +285,13 @@ export default {
       uploading: false,
       fileList: [],
       country_code: null,
-      iso2: null,
       confirm_password: null,
       current_password: null,
-      new_password: null
+      new_password: null,
+      phone: null,
+      emergency_phone: null,
+      phoneIso: "IE",
+      emergencyPhoneIso: "IE",
     };
   },
   computed: {
@@ -311,26 +299,35 @@ export default {
       authUser: [AUTH_USER],
       userToken: [AUTH_TOKEN],
       user: "getUser",
-      userProfileLoading: "userProfileLoading"
+      userProfileLoading: "userProfileLoading",
     }),
-    profilePic: function() {
+    profilePic: function () {
       if (this.user_image) {
         return this.user_image;
       } else {
         return "https://api.subsapp.com/missing.png";
       }
-    }
+    },
   },
   beforeMount() {
     //this.$store.dispatch(GET_USER, this.authUser.user.user_id);
     this.fetchProfile();
   },
   methods: {
+    disabledDate(current) {
+      return current && current >= moment().subtract(10, "years").endOf("day");
+    },
     onCountrySelect(value) {
+      if (value != undefined) {
+        this.country_code = value.dialCode;
+        this.phoneIso = value.iso2;
+      }
+    },
+    onEmergencyPhoneCountrySelect(value) {
       console.log("value => ", value);
       if (value != undefined) {
         this.country_code = value.dialCode;
-        this.iso2 = value.iso2;
+        this.emergencyPhoneIso = value.iso2;
       }
     },
     forceRerender() {
@@ -365,7 +362,7 @@ export default {
       });
     },
     fetchProfile() {
-      memberService.userProfile().then(resp => {
+      memberService.userProfile().then((resp) => {
         if (resp.data.success) {
           this.form.setFieldsValue({
             first_name: resp.data.result.first_name,
@@ -373,15 +370,17 @@ export default {
             work_email: resp.data.result.work_email,
             phone: resp.data.result.profile.phone,
             emergency_name: resp.data.result.profile.emergency_name,
-            emergency_phone: resp.data.result.profile.emergency_phone,
+
             address_1: resp.data.result.profile.address_1,
             address_2: resp.data.result.profile.address_2,
             town: resp.data.result.profile.town,
             post_code: resp.data.result.profile.post_code,
             region: resp.data.result.profile.region,
-            dob: resp.data.result.profile.dob
+            dob: resp.data.result.profile.dob,
           });
-          this.confirm_password = null;
+          (this.phone = resp.data.result.profile.phone),
+            (this.emergency_phone = resp.data.result.profile.emergency_phone),
+            (this.confirm_password = null);
           this.current_password = null;
           this.new_password = null;
           this.country_code = resp.data.result.profile.country_code;
@@ -396,14 +395,15 @@ export default {
           userData.user.preferred_name = resp.data.result.preferred_name;
           window.localStorage.setItem("authUserData", JSON.stringify(userData));
           this.$store.commit("AUTH_STATE");
-          console.log("this.iso2 => ",this.iso2)
+          this.phoneIso = "IN";
+          this.emergencyPhoneIso = "IN";
         }
       });
     },
     confirm() {
       memberService
         .deleteAvatar()
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success === true) {
             notifications.success("Profile picture removed succesfully.");
             this.fileList = [];
@@ -422,6 +422,8 @@ export default {
     handleFormSubmit(values) {
       this.loading = true;
       values.country_code = this.country_code;
+      values.phone = this.phone;
+      values.emergency_phone = this.emergency_phone;
       values.iso2 = this.iso2;
       values.confirm_password = this.confirm_password;
       values.current_password = this.current_password;
@@ -429,9 +431,9 @@ export default {
       memberService
         .updateProfile({
           ...values,
-          country: this.fields.country
+          country: this.fields.country,
         })
-        .then(resp => {
+        .then((resp) => {
           this.loading = false;
           if (resp.data.success) {
             this.fetchProfile();
@@ -456,13 +458,13 @@ export default {
     handleUpload() {
       const { fileList } = this;
       const formData = new FormData();
-      fileList.forEach(file => {
+      fileList.forEach((file) => {
         formData.append("image", file);
       });
       this.uploading = true;
       memberService
         .uploadAvatar(formData)
-        .then(resp => {
+        .then((resp) => {
           this.uploading = false;
           if (resp.data.success === true) {
             notifications.success("Profile picture uploaded successfully.");
@@ -472,7 +474,7 @@ export default {
             notifications.warn(resp.data.message);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           this.uploading = false;
           this.fileList = [];
           notifications.warn(
@@ -495,7 +497,7 @@ export default {
     removeImage() {
       memberService
         .deleteAvatar()
-        .then(resp => {
+        .then((resp) => {
           if (resp.data.success === true) {
             notifications.success("Profile picture removed succesfully.");
             this.fileList = [];
@@ -507,7 +509,7 @@ export default {
         .catch(() => {
           notifications.warn("Server error");
         });
-    }
-  }
+    },
+  },
 };
 </script>
