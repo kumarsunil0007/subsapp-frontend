@@ -3,12 +3,7 @@
   <a-modal :visible="visible" title="Add Coach" @cancel="close">
     <template slot="footer">
       <a-button key="back" @click="close">Cancel</a-button>
-      <a-button
-        key="submit"
-        type="primary"
-        :loading="loading"
-        @click="handleForm"
-      >
+      <a-button key="submit" type="primary" :loading="loading" @click="handleForm">
         Ok
       </a-button>
     </template>
@@ -25,30 +20,18 @@
         <a-input v-decorator="fields.email" placeholder="Email"> </a-input>
       </a-form-item>
       <a-form-item label="Phone">
-        <a-input
-          v-decorator="[
-            'phone',
-            {
-              rules: [
-                { required: true, message: 'Phone is required.' },
-                {
-                  max: 10,
-                  message: 'Please use a 10 digit phone number.'
-                }
-              ]
-            }
-          ]"
-          placeholder="Phone"
-          type="number"
-          min="0"
-          maxlength="16"
-          addon-before="+353"
-        >
-        </a-input>
+        <div class="custom-phone">
+          <vue-tel-input
+            class="country-dropdown"
+            v-model="phone"
+            :showDialCode="true"
+            defaultCountry="+353"
+            mode="international"
+          ></vue-tel-input>
+        </div>
       </a-form-item>
       <a-form-item label="Address">
-        <a-input v-decorator="fields.address_1" placeholder="Address">
-        </a-input>
+        <a-input v-decorator="fields.address_1" placeholder="Address"> </a-input>
       </a-form-item>
     </a-form>
   </a-modal>
@@ -64,13 +47,13 @@ export default {
     visible: {
       default: false,
       required: true,
-      type: Boolean
+      type: Boolean,
     },
     adminId: {
       default: null,
       required: false,
-      type: [Number, String]
-    }
+      type: [Number, String],
+    },
   },
   data() {
     return {
@@ -84,10 +67,10 @@ export default {
             rules: [
               {
                 required: true,
-                message: "Your first name is required."
-              }
-            ]
-          }
+                message: "Your first name is required.",
+              },
+            ],
+          },
         ],
         last_name: [
           "last_name",
@@ -95,10 +78,10 @@ export default {
             rules: [
               {
                 required: true,
-                message: "Your last name is required."
-              }
-            ]
-          }
+                message: "Your last name is required.",
+              },
+            ],
+          },
         ],
         email: [
           "work_email",
@@ -106,10 +89,10 @@ export default {
             rules: [
               {
                 required: true,
-                validator: this.validateEmail
-              }
-            ]
-          }
+                validator: this.validateEmail,
+              },
+            ],
+          },
         ],
         phone: [
           "phone",
@@ -117,10 +100,10 @@ export default {
             rules: [
               {
                 required: true,
-                message: "Your phone number is required."
-              }
-            ]
-          }
+                message: "Your phone number is required.",
+              },
+            ],
+          },
         ],
         address_1: [
           "address_1",
@@ -128,18 +111,19 @@ export default {
             rules: [
               {
                 required: true,
-                message: "Your addreess is required."
-              }
-            ]
-          }
-        ]
-      }
+                message: "Your addreess is required.",
+              },
+            ],
+          },
+        ],
+      },
+      phone: null,
     };
   },
   watch: {
-    adminId: function() {
+    adminId: function () {
       this.fetchAdmin();
-    }
+    },
   },
   mounted() {
     this.fetchAdmin();
@@ -150,7 +134,7 @@ export default {
         this.dataLoading = true;
         clubAdminsService
           .get(this.adminId)
-          .then(resp => {
+          .then((resp) => {
             this.dataLoading = false;
             this.$nextTick(() => {
               this.form.getFieldDecorator("work_email");
@@ -161,7 +145,7 @@ export default {
                   first_name: data.first_name,
                   last_name: data.last_name,
                   address_1: data.profile.address_1,
-                  phone: data.profile.phone
+                  phone: data.profile.phone,
                 });
               } else {
                 notifications.warn(
@@ -170,7 +154,7 @@ export default {
               }
             });
           })
-          .catch(err => {
+          .catch((err) => {
             this.dataLoading = false;
             console.log(err);
             notifications.warn(
@@ -185,11 +169,11 @@ export default {
         if (!err) {
           if (!this.adminId) {
             this.handleFormSubmit({
-              ...values
+              ...values,
             });
           } else {
             this.handleFormUpdate({
-              ...values
+              ...values,
             });
           }
         }
@@ -197,13 +181,13 @@ export default {
     },
     handleFormSubmit(values) {
       this.loading = true;
+      values.phone = this.phone;
       clubAdminsService
-
         .put({
           ...values,
-          id: this.adminId
+          id: this.adminId,
         })
-        .then(resp => {
+        .then((resp) => {
           this.loading = false;
           if (resp.data.success) {
             notifications.success("User Added Successfully");
@@ -229,9 +213,9 @@ export default {
       this.loading = true;
       clubAdminsService
         .update(this.adminId, {
-          ...values
+          ...values,
         })
-        .then(resp => {
+        .then((resp) => {
           this.loading = false;
           if (resp.data.success) {
             notifications.success("User Updated Successfully");
@@ -266,8 +250,8 @@ export default {
     close() {
       this.form.resetFields();
       this.$emit("close");
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

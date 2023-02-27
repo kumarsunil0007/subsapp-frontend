@@ -1,20 +1,10 @@
 <template>
-  <a-modal
-    v-model="isVisible"
-    class="add-member"
-    title="Add Member"
-    @cancel="close"
-  >
+  <a-modal v-model="isVisible" class="add-member" title="Add Member" @cancel="close">
     <a-row>
       <a-col :lg="24" :md="24" :sm="24" :xs="24">
         <a-form :form="form" @submit="addMember">
           <a-form-item>
-            <a-row
-              type="flex"
-              align="middle"
-              :gutter="1"
-              style="margin-left: 5px"
-            >
+            <a-row type="flex" align="middle" :gutter="1" style="margin-left: 5px">
               <a-col :xs="2">
                 <a-icon type="mail" />
               </a-col>
@@ -37,12 +27,7 @@
             </a-row>
           </a-form-item>
           <a-form-item>
-            <a-row
-              type="flex"
-              align="middle"
-              :gutter="1"
-              style="margin-left: 5px"
-            >
+            <a-row type="flex" align="middle" :gutter="1" style="margin-left: 5px">
               <a-col :xs="2">
                 <a-icon type="user-add" />
               </a-col>
@@ -55,8 +40,7 @@
                         { required: true, message: 'First name is required.' },
                         {
                           min: 3,
-                          message:
-                            'First name should contain at least 3 Characters.',
+                          message: 'First name should contain at least 3 Characters.',
                         },
                         {
                           max: 20,
@@ -72,12 +56,7 @@
             </a-row>
           </a-form-item>
           <a-form-item>
-            <a-row
-              type="flex"
-              align="middle"
-              :gutter="1"
-              style="margin-left: 5px"
-            >
+            <a-row type="flex" align="middle" :gutter="1" style="margin-left: 5px">
               <a-col :xs="2">
                 <a-icon type="user-add" />
               </a-col>
@@ -90,8 +69,7 @@
                         { required: true, message: 'Last name is required.' },
                         {
                           min: 3,
-                          message:
-                            'Last name should contain at least 3 Characters.',
+                          message: 'Last name should contain at least 3 Characters.',
                         },
                         {
                           max: 20,
@@ -107,52 +85,25 @@
             </a-row>
           </a-form-item>
           <a-form-item>
-            <a-row
-              type="flex"
-              align="middle"
-              :gutter="1"
-              style="margin-left: 5px"
-            >
+            <a-row type="flex" align="middle" :gutter="1" style="margin-left: 5px">
               <a-col :xs="2">
                 <a-icon type="mobile" />
               </a-col>
               <a-col :xs="22">
                 <div class="custom-phone">
-                  <VueCountryCode
+                  <vue-tel-input
                     class="country-dropdown"
-                    @onSelect="onCountrySelect"
-                    :enabledCountryCode="true"
-                    defaultCountry="IE"
-                    :showNameInput="true"
-                  />
-                  <a-input
-                    v-decorator="[
-                      'phone_no',
-                      {
-                        rules: [
-                          { required: true, message: 'Phone is required.' },
-                          {
-                            max: 10,
-                            message: 'Please use a 10 digit phone number.',
-                          },
-                        ],
-                      },
-                    ]"
-                    type="number"
-                    min="0"
-                    placeholder="Enter phone number"
-                  ></a-input>
+                    v-model="phone_no"
+                    :showDialCode="true"
+                    defaultCountry="+353"
+                    mode="international"
+                  ></vue-tel-input>
                 </div>
               </a-col>
             </a-row>
           </a-form-item>
           <a-form-item>
-            <a-row
-              type="flex"
-              align="middle"
-              :gutter="1"
-              style="margin-left: 5px"
-            >
+            <a-row type="flex" align="middle" :gutter="1" style="margin-left: 5px">
               <a-col :xs="2">
                 <a-icon type="environment" />
               </a-col>
@@ -161,9 +112,7 @@
                   v-decorator="[
                     'address_1',
                     {
-                      rules: [
-                        { required: true, message: 'Address is required.' },
-                      ],
+                      rules: [{ required: true, message: 'Address is required.' }],
                     },
                   ]"
                   type="text"
@@ -173,31 +122,30 @@
             </a-row>
           </a-form-item>
           <a-form-item>
-            <a-row
-              type="flex"
-              align="middle"
-              :gutter="1"
-              style="margin-left: 5px"
-            >
+            <a-row type="flex" align="middle" :gutter="1" style="margin-left: 5px">
               <a-col :xs="2">
                 <a-icon type="user" />
               </a-col>
               <a-col :xs="22">
-                <a-input
+                <!-- <a-input
                   v-decorator="['emergency_phone']"
                   type="text"
                   placeholder="Emergency phone"
-                ></a-input>
+                ></a-input> -->
+                <div class="custom-phone">
+                  <vue-tel-input
+                    class="country-dropdown"
+                    v-model="emergency_phone"
+                    :showDialCode="true"
+                    defaultCountry="+353"
+                    mode="international"
+                  ></vue-tel-input>
+                </div>
               </a-col>
             </a-row>
           </a-form-item>
           <a-form-item>
-            <a-row
-              type="flex"
-              align="middle"
-              :gutter="1"
-              style="margin-left: 5px"
-            >
+            <a-row type="flex" align="middle" :gutter="1" style="margin-left: 5px">
               <a-col :xs="2">
                 <a-icon type="calendar" />
               </a-col>
@@ -214,12 +162,7 @@
           </a-form-item>
 
           <a-form-item>
-            <a-row
-              type="block"
-              :gutter="1"
-              class="gx-text-right"
-              style="margin-top: 0px"
-            >
+            <a-row type="block" :gutter="1" class="gx-text-right" style="margin-top: 0px">
               <a-button
                 inline-block
                 type="primary"
@@ -239,7 +182,7 @@
 <script>
 import notifications from "@/common/notifications/notification.service";
 import { memberService } from "@/common/api/api.service";
-import VueCountryCode from "vue-country-code-select";
+// import VueCountryCode from "vue-country-code-select";
 import moment from "moment";
 import { mapGetters } from "vuex";
 
@@ -252,7 +195,7 @@ export default {
     },
   },
   components: {
-    VueCountryCode,
+    // VueCountryCode,
   },
   data() {
     return {
@@ -262,6 +205,8 @@ export default {
       memberLoading: false,
       country_code: null,
       iso2: null,
+      phone_no: null,
+      emergency_phone: null,
     };
   },
   computed: {
@@ -304,6 +249,8 @@ export default {
           values.role = this.AUTH_USER.select_role;
           values.country_code = this.country_code;
           values.iso2 = this.iso2;
+          values.phone_no = this.phone_no;
+          values.emergency_phone = this.emergency_phone;
           values.url = window.location.origin + "/#/login";
           memberService
             .addMember2(values)
@@ -354,5 +301,4 @@ export default {
 .has-error .ant-form-explain {
   margin-left: 50px;
 }
-
 </style>

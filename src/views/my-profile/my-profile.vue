@@ -131,7 +131,7 @@
                       class="country-dropdown"
                       v-model="phone"
                       :showDialCode="true"
-                      defaultCountry="+91"
+                      defaultCountry="+353"
                       @country-changed="onCountrySelect"
                       mode="international"
                     ></vue-tel-input>
@@ -165,7 +165,7 @@
                       class="country-dropdown"
                       v-model="emergency_phone"
                       :showDialCode="true"
-                      defaultCountry="+91"
+                      defaultCountry="+353"
                       @country-changed="onEmergencyPhoneCountrySelect"
                       mode="international"
                     ></vue-tel-input>
