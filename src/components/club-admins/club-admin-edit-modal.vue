@@ -24,9 +24,11 @@
           <vue-tel-input
             class="country-dropdown"
             v-model="phone"
-            :showDialCode="true"
-            defaultCountry="+353"
-            mode="international"
+            mode="auto"
+            :dropdownOptions.showFlags="false"
+            :dropdownOptions.showDialCodeInSelection="true"
+            :dropdownOptions.showDialCodeInList="true"
+            :inputOptions="inputOptions"
           ></vue-tel-input>
         </div>
       </a-form-item>
@@ -60,6 +62,11 @@ export default {
       form: this.$form.createForm(this),
       dataLoading: false,
       loading: false,
+      inputOptions: {
+        maxlength: 20,
+        showDialCode: true,
+        placeholder: 'Enter phone number'
+      },
       fields: {
         first_name: [
           "first_name",

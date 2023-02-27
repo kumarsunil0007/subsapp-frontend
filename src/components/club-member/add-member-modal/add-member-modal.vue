@@ -94,9 +94,11 @@
                   <vue-tel-input
                     class="country-dropdown"
                     v-model="phone_no"
-                    :showDialCode="true"
-                    defaultCountry="+353"
-                    mode="international"
+                    mode="auto"
+                    :dropdownOptions.showFlags="false"
+                    :dropdownOptions.showDialCodeInSelection="true"
+                    :dropdownOptions.showDialCodeInList="true"
+                    :inputOptions="inputOptions"
                   ></vue-tel-input>
                 </div>
               </a-col>
@@ -136,9 +138,11 @@
                   <vue-tel-input
                     class="country-dropdown"
                     v-model="emergency_phone"
-                    :showDialCode="true"
-                    defaultCountry="+353"
-                    mode="international"
+                    mode="auto"
+                    :dropdownOptions.showFlags="false"
+                    :dropdownOptions.showDialCodeInSelection="true"
+                    :dropdownOptions.showDialCodeInList="true"
+                    :inputOptions="inputOptions"
                   ></vue-tel-input>
                 </div>
               </a-col>
@@ -207,6 +211,11 @@ export default {
       iso2: null,
       phone_no: null,
       emergency_phone: null,
+      inputOptions: {
+        maxlength: 20,
+        showDialCode: true,
+        placeholder: 'Enter phone number'
+      }
     };
   },
   computed: {
