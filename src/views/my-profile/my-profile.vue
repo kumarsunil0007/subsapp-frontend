@@ -418,15 +418,15 @@ export default {
     handleForm() {
       this.form.validateFields((err, values) => {
         if (!err) {
-          if (this.validPhone == false || !this.validEmergencyPhone == false) {
-            if (this.validPhone == false) {
-              notifications.warn("Invalid phone no.");
-            } else if (this.validEmergencyPhone) {
-              notifications.warn("Invalid emergency phone no.");
-            }
-          } else {
+          // if (this.validPhone == false || !this.validEmergencyPhone == false) {
+          //   if (this.validPhone == false) {
+          //     notifications.warn("Invalid phone no.");
+          //   } else if (this.validEmergencyPhone) {
+          //     notifications.warn("Invalid emergency phone no.");
+          //   }
+          // } else {
             this.handleFormSubmit(values);
-          }
+          // }
         } else {
           console.log(err);
         }

@@ -310,13 +310,13 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          if (this.validPhone == false || !this.validEmergencyPhone == false) {
-            if (this.validPhone == false) {
-              notifications.warn("Invalid phone no.");
-            } else if (this.validEmergencyPhone) {
-              notifications.warn("Invalid emergency phone no.");
-            }
-          } else {
+          // if (this.validPhone == false || !this.validEmergencyPhone == false) {
+          //   if (this.validPhone == false) {
+          //     notifications.warn("Invalid phone no.");
+          //   } else if (this.validEmergencyPhone) {
+          //     notifications.warn("Invalid emergency phone no.");
+          //   }
+          // } else {
             this.memberLoading = true;
             values.role = this.AUTH_USER.select_role;
             // values.country_code = this.country_code;
@@ -352,7 +352,7 @@ export default {
                 this.memberLoading = false;
                 console.log(error);
               });
-          }
+          // }
         }
       });
     },
