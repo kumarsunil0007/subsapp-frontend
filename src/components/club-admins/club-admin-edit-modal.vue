@@ -30,6 +30,7 @@
             v-model="phone"
             :default-country-code="phoneIso"
             :preferred-countries="preferredCountries"
+            :all-letters-characters="true"
             @update="onCountrySelect"
           ></vue-phone-number-input>
         </div>
