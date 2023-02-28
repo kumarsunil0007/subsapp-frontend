@@ -201,16 +201,16 @@ export default {
       phoneProps: {
         autoDefaultCountry: false,
         preferredCountries: [
-          "AT",
-          "BE",
-          "BG",
-          "CZ",
-          "DK",
-          "FR",
-          "FI",
-          "DE",
-          "GR",
-          "HU",
+          // "AT",
+          // "BE",
+          // "BG",
+          // "CZ",
+          // "DK",
+          // "FR",
+          // "FI",
+          // "DE",
+          // "GR",
+          // "HU",
           "IE",
           "US",
           "GB",
@@ -247,16 +247,16 @@ export default {
       emergencyPhoneCountryCode: "353",
       defaultCountry: "IE",
       preferredCountries: [
-        "AT",
-        "BE",
-        "BG",
-        "CZ",
-        "DK",
-        "FR",
-        "FI",
-        "DE",
-        "GR",
-        "HU",
+        // "AT",
+        // "BE",
+        // "BG",
+        // "CZ",
+        // "DK",
+        // "FR",
+        // "FI",
+        // "DE",
+        // "GR",
+        // "HU",
         "IE",
         "US",
         "GB",
@@ -317,41 +317,41 @@ export default {
           //     notifications.warn("Invalid emergency phone no.");
           //   }
           // } else {
-            this.memberLoading = true;
-            values.role = this.AUTH_USER.select_role;
-            // values.country_code = this.country_code;
-            // values.iso2 = this.iso2;
-            // values.phone_no = this.phone_no;
-            // values.emergency_phone = this.emergency_phone;
+          this.memberLoading = true;
+          values.role = this.AUTH_USER.select_role;
+          // values.country_code = this.country_code;
+          // values.iso2 = this.iso2;
+          // values.phone_no = this.phone_no;
+          // values.emergency_phone = this.emergency_phone;
 
-            values.phone_no = this.phone;
-            values.emergency_phone = this.emergency_phone;
-            values.iso2 = this.phoneIso;
-            values.country_code = this.phoneCountryCode;
-            values.emergency_phone_iso2 = this.emergencyPhoneIso;
-            values.emergency_phone_country_code = this.emergencyPhoneCountryCode;
+          values.phone_no = this.phone;
+          values.emergency_phone = this.emergency_phone;
+          values.iso2 = this.phoneIso;
+          values.country_code = this.phoneCountryCode;
+          values.emergency_phone_iso2 = this.emergencyPhoneIso;
+          values.emergency_phone_country_code = this.emergencyPhoneCountryCode;
 
-            values.url = window.location.origin + "/#/login";
-            memberService
-              .addMember2(values)
-              .then((resp) => {
-                this.memberLoading = false;
-                if (resp.data.success) {
-                  notifications.success("An invite has been sent");
-                  this.form.resetFields();
-                  this.phone_no = null;
-                  this.emergency_phone = null;
-                  this.$emit("close");
-                } else {
-                  notifications.warn(resp.data.message);
-                  this.form.resetFields();
-                  this.$emit("close");
-                }
-              })
-              .catch((error) => {
-                this.memberLoading = false;
-                console.log(error);
-              });
+          values.url = window.location.origin + "/#/login";
+          memberService
+            .addMember2(values)
+            .then((resp) => {
+              this.memberLoading = false;
+              if (resp.data.success) {
+                notifications.success("An invite has been sent");
+                this.form.resetFields();
+                this.phone_no = null;
+                this.emergency_phone = null;
+                this.$emit("close");
+              } else {
+                notifications.warn(resp.data.message);
+                this.form.resetFields();
+                this.$emit("close");
+              }
+            })
+            .catch((error) => {
+              this.memberLoading = false;
+              console.log(error);
+            });
           // }
         }
       });

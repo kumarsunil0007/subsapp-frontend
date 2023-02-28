@@ -127,12 +127,6 @@
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Phone Number">
                   <div class="custom-phone">
-                    <!-- <vue-tel-input
-                      class="country-dropdown"
-                      v-model="phone"
-                      v-bind="phoneProps"
-                      @country-changed="onCountrySelect"
-                    ></vue-tel-input> -->
                     <vue-phone-number-input
                       v-model="phone"
                       :default-country-code="phoneIso"
@@ -302,16 +296,16 @@ export default {
       emergencyPhoneCountryCode: "353",
       defaultCountry: "IE",
       preferredCountries: [
-        "AT",
-        "BE",
-        "BG",
-        "CZ",
-        "DK",
-        "FR",
-        "FI",
-        "DE",
-        "GR",
-        "HU",
+        // "AT",
+        // "BE",
+        // "BG",
+        // "CZ",
+        // "DK",
+        // "FR",
+        // "FI",
+        // "DE",
+        // "GR",
+        // "HU",
         "IE",
         "US",
         "GB",
@@ -425,7 +419,7 @@ export default {
           //     notifications.warn("Invalid emergency phone no.");
           //   }
           // } else {
-            this.handleFormSubmit(values);
+          this.handleFormSubmit(values);
           // }
         } else {
           console.log(err);
