@@ -21,15 +21,17 @@
       </a-form-item>
       <a-form-item label="Phone">
         <div class="custom-phone">
-          <vue-tel-input
+          <!-- <vue-tel-input
             class="country-dropdown"
             v-model="phone"
-            mode="auto"
-            :dropdownOptions.showFlags="false"
-            :dropdownOptions.showDialCodeInSelection="true"
-            :dropdownOptions.showDialCodeInList="true"
-            :inputOptions="inputOptions"
-          ></vue-tel-input>
+            v-bind="phoneProps"
+          ></vue-tel-input> -->
+          <vue-phone-number-input
+            v-model="phone"
+            :default-country-code="phoneIso"
+            :preferred-countries="preferredCountries"
+            @update="onCountrySelect"
+          ></vue-phone-number-input>
         </div>
       </a-form-item>
       <a-form-item label="Address">
@@ -59,14 +61,60 @@ export default {
   },
   data() {
     return {
+      phone: null,
+      phoneIso: "IE",
+      phoneCountryCode: "353",
+      preferredCountries: [
+        "AT",
+        "BE",
+        "BG",
+        "CZ",
+        "DK",
+        "FR",
+        "FI",
+        "DE",
+        "GR",
+        "HU",
+        "IE",
+        "US",
+        "GB",
+      ],
+      phoneProps: {
+        autoDefaultCountry: false,
+        preferredCountries: [
+          "AT",
+          "BE",
+          "BG",
+          "CZ",
+          "DK",
+          "FR",
+          "FI",
+          "DE",
+          "GR",
+          "HU",
+          "IE",
+          "US",
+          "GB",
+        ],
+        placeholder: "Enter your phone",
+        mode: "international",
+        inputOptions: {
+          maxlength: 20,
+          showDialCode: true,
+        },
+        dropdownOptions: {
+          showFlags: false,
+          showDialCodeInSelection: true,
+          showDialCodeInList: true,
+          showSearchBox: true,
+          width: "500px",
+        },
+        disabledFormatting: false,
+        wrapperClasses: "country-phone-input",
+      },
       form: this.$form.createForm(this),
       dataLoading: false,
       loading: false,
-      inputOptions: {
-        maxlength: 20,
-        showDialCode: true,
-        placeholder: 'Enter phone number'
-      },
       fields: {
         first_name: [
           "first_name",
@@ -124,7 +172,7 @@ export default {
           },
         ],
       },
-      phone: null,
+      validPhone: false,
     };
   },
   watch: {
@@ -136,6 +184,13 @@ export default {
     this.fetchAdmin();
   },
   methods: {
+    onCountrySelect(value) {
+      if (value != undefined) {
+        this.phoneIso = value.countryCode;
+        this.phoneCountryCode = value.countryCallingCode;
+        this.validPhone = value.isValid ? value.isValid : this.validPhone;
+      }
+    },
     fetchAdmin() {
       if (this.adminId && this.visible) {
         this.dataLoading = true;
@@ -154,6 +209,12 @@ export default {
                   address_1: data.profile.address_1,
                   phone: data.profile.phone,
                 });
+
+                this.phone = data.profile.phone;
+                this.phoneIso = data.profile.iso2 ? data.profile.iso2 : "IE";
+                this.phoneCountryCode = data.profile.country_code
+                  ? data.profile.country_code
+                  : "353";
               } else {
                 notifications.warn(
                   "We could not load this user, please try again or contact support."
@@ -189,6 +250,8 @@ export default {
     handleFormSubmit(values) {
       this.loading = true;
       values.phone = this.phone;
+      values.iso2 = this.phoneIso;
+      values.country_code = this.phoneCountryCode;
       clubAdminsService
         .put({
           ...values,

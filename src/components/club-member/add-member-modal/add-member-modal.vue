@@ -91,15 +91,17 @@
               </a-col>
               <a-col :xs="22">
                 <div class="custom-phone">
-                  <vue-tel-input
+                  <!-- <vue-tel-input
                     class="country-dropdown"
                     v-model="phone_no"
-                    mode="auto"
-                    :dropdownOptions.showFlags="false"
-                    :dropdownOptions.showDialCodeInSelection="true"
-                    :dropdownOptions.showDialCodeInList="true"
-                    :inputOptions="inputOptions"
-                  ></vue-tel-input>
+                    v-bind="phoneProps"
+                  ></vue-tel-input> -->
+                  <vue-phone-number-input
+                    v-model="phone"
+                    :default-country-code="phoneIso"
+                    :preferred-countries="preferredCountries"
+                    @update="onCountrySelect"
+                  ></vue-phone-number-input>
                 </div>
               </a-col>
             </a-row>
@@ -129,21 +131,18 @@
                 <a-icon type="user" />
               </a-col>
               <a-col :xs="22">
-                <!-- <a-input
-                  v-decorator="['emergency_phone']"
-                  type="text"
-                  placeholder="Emergency phone"
-                ></a-input> -->
                 <div class="custom-phone">
-                  <vue-tel-input
+                  <!-- <vue-tel-input
                     class="country-dropdown"
                     v-model="emergency_phone"
-                    mode="auto"
-                    :dropdownOptions.showFlags="false"
-                    :dropdownOptions.showDialCodeInSelection="true"
-                    :dropdownOptions.showDialCodeInList="true"
-                    :inputOptions="inputOptions"
-                  ></vue-tel-input>
+                    v-bind="phoneProps"
+                  ></vue-tel-input> -->
+                  <vue-phone-number-input
+                    v-model="emergency_phone"
+                    :default-country-code="emergencyPhoneIso"
+                    :preferred-countries="preferredCountries"
+                    @update="onEmergencyPhoneCountrySelect"
+                  ></vue-phone-number-input>
                 </div>
               </a-col>
             </a-row>
@@ -186,7 +185,6 @@
 <script>
 import notifications from "@/common/notifications/notification.service";
 import { memberService } from "@/common/api/api.service";
-// import VueCountryCode from "vue-country-code-select";
 import moment from "moment";
 import { mapGetters } from "vuex";
 
@@ -198,11 +196,41 @@ export default {
       default: false,
     },
   },
-  components: {
-    // VueCountryCode,
-  },
   data() {
     return {
+      phoneProps: {
+        autoDefaultCountry: false,
+        preferredCountries: [
+          "AT",
+          "BE",
+          "BG",
+          "CZ",
+          "DK",
+          "FR",
+          "FI",
+          "DE",
+          "GR",
+          "HU",
+          "IE",
+          "US",
+          "GB",
+        ],
+        placeholder: "Enter your phone",
+        mode: "international",
+        inputOptions: {
+          maxlength: 20,
+          showDialCode: true,
+        },
+        dropdownOptions: {
+          showFlags: false,
+          showDialCodeInSelection: true,
+          showDialCodeInList: true,
+          showSearchBox: true,
+          width: "500px",
+        },
+        disabledFormatting: false,
+        wrapperClasses: "country-phone-input",
+      },
       keyword: "",
       members: [],
       form: this.$form.createForm(this),
@@ -211,11 +239,30 @@ export default {
       iso2: null,
       phone_no: null,
       emergency_phone: null,
-      inputOptions: {
-        maxlength: 20,
-        showDialCode: true,
-        placeholder: 'Enter phone number'
-      }
+
+      phone: null,
+      phoneIso: "IE",
+      emergencyPhoneIso: "IE",
+      phoneCountryCode: "353",
+      emergencyPhoneCountryCode: "353",
+      defaultCountry: "IE",
+      preferredCountries: [
+        "AT",
+        "BE",
+        "BG",
+        "CZ",
+        "DK",
+        "FR",
+        "FI",
+        "DE",
+        "GR",
+        "HU",
+        "IE",
+        "US",
+        "GB",
+      ],
+      validPhone: false,
+      validEmergencyPhone: false,
     };
   },
   computed: {
@@ -234,10 +281,19 @@ export default {
       return current && current >= moment().subtract(10, "years").endOf("day");
     },
     onCountrySelect(value) {
-      console.log("value => ", value);
       if (value != undefined) {
-        this.country_code = value.dialCode;
-        this.iso2 = value.iso2;
+        this.phoneIso = value.countryCode;
+        this.phoneCountryCode = value.countryCallingCode;
+        this.validPhone = value.isValid ? value.isValid : this.validPhone;
+      }
+    },
+    onEmergencyPhoneCountrySelect(value) {
+      if (value != undefined) {
+        this.emergencyPhoneIso = value.countryCode;
+        this.emergencyPhoneCountryCode = value.countryCallingCode;
+        this.validEmergencyPhone = value.isValid
+          ? value.isValid
+          : this.validEmergencyPhone;
       }
     },
     inviteMember(memberId) {
@@ -254,31 +310,49 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.memberLoading = true;
-          values.role = this.AUTH_USER.select_role;
-          values.country_code = this.country_code;
-          values.iso2 = this.iso2;
-          values.phone_no = this.phone_no;
-          values.emergency_phone = this.emergency_phone;
-          values.url = window.location.origin + "/#/login";
-          memberService
-            .addMember2(values)
-            .then((resp) => {
-              this.memberLoading = false;
-              if (resp.data.success) {
-                notifications.success("An invite has been sent");
-                this.form.resetFields();
-                this.$emit("close");
-              } else {
-                notifications.warn(resp.data.message);
-                this.form.resetFields();
-                this.$emit("close");
-              }
-            })
-            .catch((error) => {
-              this.memberLoading = false;
-              console.log(error);
-            });
+          if (this.validPhone == false || !this.validEmergencyPhone == false) {
+            if (this.validPhone == false) {
+              notifications.warn("Invalid phone no.");
+            } else if (this.validEmergencyPhone) {
+              notifications.warn("Invalid emergency phone no.");
+            }
+          } else {
+            this.memberLoading = true;
+            values.role = this.AUTH_USER.select_role;
+            // values.country_code = this.country_code;
+            // values.iso2 = this.iso2;
+            // values.phone_no = this.phone_no;
+            // values.emergency_phone = this.emergency_phone;
+
+            values.phone_no = this.phone;
+            values.emergency_phone = this.emergency_phone;
+            values.iso2 = this.phoneIso;
+            values.country_code = this.phoneCountryCode;
+            values.emergency_phone_iso2 = this.emergencyPhoneIso;
+            values.emergency_phone_country_code = this.emergencyPhoneCountryCode;
+
+            values.url = window.location.origin + "/#/login";
+            memberService
+              .addMember2(values)
+              .then((resp) => {
+                this.memberLoading = false;
+                if (resp.data.success) {
+                  notifications.success("An invite has been sent");
+                  this.form.resetFields();
+                  this.phone_no = null;
+                  this.emergency_phone = null;
+                  this.$emit("close");
+                } else {
+                  notifications.warn(resp.data.message);
+                  this.form.resetFields();
+                  this.$emit("close");
+                }
+              })
+              .catch((error) => {
+                this.memberLoading = false;
+                console.log(error);
+              });
+          }
         }
       });
     },

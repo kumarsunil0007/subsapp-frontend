@@ -127,16 +127,18 @@
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Phone Number">
                   <div class="custom-phone">
-                    <vue-tel-input
+                    <!-- <vue-tel-input
                       class="country-dropdown"
                       v-model="phone"
-                      mode="auto"
-                      :dropdownOptions.showFlags="false"
-                      :dropdownOptions.showDialCodeInSelection="true"
-                      :dropdownOptions.showDialCodeInList="true"
-                      :inputOptions="inputOptions"
+                      v-bind="phoneProps"
                       @country-changed="onCountrySelect"
-                    ></vue-tel-input>
+                    ></vue-tel-input> -->
+                    <vue-phone-number-input
+                      v-model="phone"
+                      :default-country-code="phoneIso"
+                      :preferred-countries="preferredCountries"
+                      @update="onCountrySelect"
+                    ></vue-phone-number-input>
                   </div>
                 </a-form-item>
               </a-col>
@@ -163,16 +165,18 @@
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Emergency Phone">
                   <div class="custom-phone">
-                    <vue-tel-input
+                    <!-- <vue-tel-input
                       class="country-dropdown"
                       v-model="emergency_phone"
-                      mode="auto"
-                      :dropdownOptions.showFlags="false"
-                      :dropdownOptions.showDialCodeInSelection="true"
-                      :dropdownOptions.showDialCodeInList="true"
-                      :inputOptions="inputOptions"
+                      v-bind="phoneProps"
                       @country-changed="onEmergencyPhoneCountrySelect"
-                    ></vue-tel-input>
+                    ></vue-tel-input> -->
+                    <vue-phone-number-input
+                      v-model="emergency_phone"
+                      :default-country-code="emergencyPhoneIso"
+                      :preferred-countries="preferredCountries"
+                      @update="onEmergencyPhoneCountrySelect"
+                    ></vue-phone-number-input>
                   </div>
                 </a-form-item>
               </a-col>
@@ -261,7 +265,6 @@
 import { mapGetters } from "vuex";
 import NPage from "@/components/ui/n-page/n-page";
 import notifications from "@/common/notifications/notification.service";
-import VueCountryCode from "vue-country-code-select";
 import MissingPng from "@/assets/missing-profile-photo.png";
 import { AUTH_USER, AUTH_TOKEN } from "@/store/modules/auth/auth-actions";
 import { memberService } from "@/common/api/api.service";
@@ -269,7 +272,6 @@ import moment from "moment";
 export default {
   name: "MyProfile",
   components: {
-    VueCountryCode,
     NPage,
   },
   data() {
@@ -288,7 +290,7 @@ export default {
       loading: false,
       uploading: false,
       fileList: [],
-      country_code: null,
+      // country_code: null,
       confirm_password: null,
       current_password: null,
       new_password: null,
@@ -296,11 +298,60 @@ export default {
       emergency_phone: null,
       phoneIso: "IE",
       emergencyPhoneIso: "IE",
-      inputOptions: {
-        maxlength: 20,
-        showDialCode: true,
-        placeholder: 'Enter phone number'
-      }
+      phoneCountryCode: "353",
+      emergencyPhoneCountryCode: "353",
+      defaultCountry: "IE",
+      preferredCountries: [
+        "AT",
+        "BE",
+        "BG",
+        "CZ",
+        "DK",
+        "FR",
+        "FI",
+        "DE",
+        "GR",
+        "HU",
+        "IE",
+        "US",
+        "GB",
+      ],
+      phoneProps: {
+        autoDefaultCountry: false,
+        defaultCountry: "IE",
+        preferredCountries: [
+          "AT",
+          "BE",
+          "BG",
+          "CZ",
+          "DK",
+          "FR",
+          "FI",
+          "DE",
+          "GR",
+          "HU",
+          "IE",
+          "US",
+          "GB",
+        ],
+        placeholder: "Enter your phone",
+        mode: "international",
+        inputOptions: {
+          maxlength: 20,
+          showDialCode: true,
+        },
+        dropdownOptions: {
+          showFlags: false,
+          showDialCodeInSelection: true,
+          showDialCodeInList: true,
+          showSearchBox: true,
+          width: "400px",
+        },
+        disabledFormatting: false,
+        wrapperClasses: "country-phone-input",
+      },
+      validPhone: false,
+      validEmergencyPhone: false,
     };
   },
   computed: {
@@ -328,15 +379,18 @@ export default {
     },
     onCountrySelect(value) {
       if (value != undefined) {
-        this.country_code = value.dialCode;
-        this.phoneIso = value.iso2;
+        this.phoneIso = value.countryCode;
+        this.phoneCountryCode = value.countryCallingCode;
+        this.validPhone = value.isValid ? value.isValid : this.validPhone;
       }
     },
     onEmergencyPhoneCountrySelect(value) {
-      console.log("value => ", value);
       if (value != undefined) {
-        this.country_code = value.dialCode;
-        this.emergencyPhoneIso = value.iso2;
+        this.emergencyPhoneIso = value.countryCode;
+        this.emergencyPhoneCountryCode = value.countryCallingCode;
+        this.validEmergencyPhone = value.isValid
+          ? value.isValid
+          : this.validEmergencyPhone;
       }
     },
     forceRerender() {
@@ -364,7 +418,15 @@ export default {
     handleForm() {
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.handleFormSubmit(values);
+          if (this.validPhone == false || !this.validEmergencyPhone == false) {
+            if (this.validPhone == false) {
+              notifications.warn("Invalid phone no.");
+            } else if (this.validEmergencyPhone) {
+              notifications.warn("Invalid emergency phone no.");
+            }
+          } else {
+            this.handleFormSubmit(values);
+          }
         } else {
           console.log(err);
         }
@@ -379,7 +441,6 @@ export default {
             work_email: resp.data.result.work_email,
             phone: resp.data.result.profile.phone,
             emergency_name: resp.data.result.profile.emergency_name,
-
             address_1: resp.data.result.profile.address_1,
             address_2: resp.data.result.profile.address_2,
             town: resp.data.result.profile.town,
@@ -389,6 +450,19 @@ export default {
           });
           (this.phone = resp.data.result.profile.phone),
             (this.emergency_phone = resp.data.result.profile.emergency_phone),
+            (this.phoneIso = resp.data.result.profile.iso2
+              ? resp.data.result.profile.iso2
+              : "IE"),
+            (this.phoneCountryCode = resp.data.result.profile.country_code
+              ? resp.data.result.profile.country_code
+              : "353"),
+            (this.emergencyPhoneIso = resp.data.result.profile.emergency_phone_iso2
+              ? resp.data.result.profile.emergency_phone_iso2
+              : "IE"),
+            (this.emergencyPhoneCountryCode = resp.data.result.profile
+              .emergency_phone_country_code
+              ? resp.data.result.profile.emergency_phone_country_code
+              : "353"),
             (this.confirm_password = null);
           this.current_password = null;
           this.new_password = null;
@@ -404,8 +478,13 @@ export default {
           userData.user.preferred_name = resp.data.result.preferred_name;
           window.localStorage.setItem("authUserData", JSON.stringify(userData));
           this.$store.commit("AUTH_STATE");
-          this.phoneIso = "IN";
-          this.emergencyPhoneIso = "IN";
+          console.log(
+            " => ",
+            this.phoneCountryCode,
+            this.emergencyPhoneCountryCode,
+            this.phoneIso,
+            this.emergencyPhoneIso
+          );
         }
       });
     },
@@ -430,10 +509,12 @@ export default {
     },
     handleFormSubmit(values) {
       this.loading = true;
-      values.country_code = this.country_code;
       values.phone = this.phone;
       values.emergency_phone = this.emergency_phone;
-      values.iso2 = this.iso2;
+      values.iso2 = this.phoneIso;
+      values.country_code = this.phoneCountryCode;
+      values.emergency_phone_iso2 = this.emergencyPhoneIso;
+      values.emergency_phone_country_code = this.emergencyPhoneCountryCode;
       values.confirm_password = this.confirm_password;
       values.current_password = this.current_password;
       values.new_password = this.new_password;
