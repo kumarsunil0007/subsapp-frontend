@@ -36,10 +36,11 @@
             :all-letters-characters="true"
             @update="onCountrySelect"
           ></vue-phone-number-input>
-          <div class="has-error" v-if="!validPhone">
+          
+        </div>
+        <div class="has-error" v-if="!validPhone">
             <div class="ant-form-explain">{{ invalidPhoneMsg }}</div>
           </div>
-        </div>
       </a-form-item>
       <a-form-item label="Address">
         <a-input v-decorator="fields.address_1" placeholder="Address"> </a-input>
@@ -305,7 +306,7 @@ export default {
 .ant-form-explain {
   font-size: 12px;
 }
-.add-coach-form .has-error .ant-form-explain {
+/* .add-coach-form .has-error .ant-form-explain {
   margin-left: 5px;
-}
+} */
 </style>

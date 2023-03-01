@@ -102,10 +102,11 @@
                     :all-letters-characters="true"
                     @update="onCountrySelect"
                   ></vue-phone-number-input>
-                  <div class="has-error" v-if="!validPhone">
-                    <div class="ant-form-explain">{{ invalidPhoneMsg }}</div>
-                  </div>
+                
                 </div>
+                <div class="has-error " id="number_fld" v-if="!validPhone">
+                    <div class="ant-form-explain text-left">{{ invalidPhoneMsg }}</div>
+                  </div>
               </a-col>
             </a-row>
           </a-form-item>
@@ -146,9 +147,10 @@
                     :all-letters-characters="true"
                     @update="onEmergencyPhoneCountrySelect"
                   ></vue-phone-number-input>
-                  <div class="has-error" v-if="!validEmergencyPhone">
-                    <div class="ant-form-explain">Invalid emergency phone no.</div>
-                  </div>
+                  
+                </div>
+                <div class="has-error" id="sndnumber_fld" v-if="!validEmergencyPhone">
+                    <div class="ant-form-explain text-left">Invalid emergency phone no.</div>
                 </div>
               </a-col>
             </a-row>
@@ -327,6 +329,21 @@ export default {
   width: 97%;
 }
 .has-error .ant-form-explain {
-  margin-left: 50px;
+  margin-left: 43px;
 }
+
+
+.ant-form-item-control {
+  line-height: 1.3;
+}
+
+#number_fld.has-error .ant-form-explain {
+    margin-left:0 !important;
+    
+}
+#sndnumber_fld.has-error .ant-form-explain {
+    margin-left:0 !important;
+    
+} 
+
 </style>
