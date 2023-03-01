@@ -129,11 +129,18 @@
                   <div class="custom-phone">
                     <vue-phone-number-input
                       v-model="phone"
+                      color="#d9d9d9"
+                      valid-color="#d9d9d9"
+                      error-color="#f5222d"
+                      :error="true"
                       :default-country-code="phoneIso"
                       :preferred-countries="preferredCountries"
                       :all-letters-characters="true"
                       @update="onCountrySelect"
                     ></vue-phone-number-input>
+                    <div class="has-error" v-if="!validPhone">
+                      <div class="ant-form-explain">{{ invalidPhoneMsg }}</div>
+                    </div>
                   </div>
                 </a-form-item>
               </a-col>
@@ -160,19 +167,20 @@
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Emergency Phone">
                   <div class="custom-phone">
-                    <!-- <vue-tel-input
-                      class="country-dropdown"
-                      v-model="emergency_phone"
-                      v-bind="phoneProps"
-                      @country-changed="onEmergencyPhoneCountrySelect"
-                    ></vue-tel-input> -->
                     <vue-phone-number-input
                       v-model="emergency_phone"
+                      color="#d9d9d9"
+                      valid-color="#d9d9d9"
+                      error-color="#f5222d"
+                      :error="true"
                       :default-country-code="emergencyPhoneIso"
                       :preferred-countries="preferredCountries"
                       :all-letters-characters="true"
                       @update="onEmergencyPhoneCountrySelect"
                     ></vue-phone-number-input>
+                    <div class="has-error" v-if="!validEmergencyPhone">
+                      <div class="ant-form-explain">Invalid emergency phone no.</div>
+                    </div>
                   </div>
                 </a-form-item>
               </a-col>
@@ -286,7 +294,6 @@ export default {
       loading: false,
       uploading: false,
       fileList: [],
-      // country_code: null,
       confirm_password: null,
       current_password: null,
       new_password: null,
@@ -297,57 +304,10 @@ export default {
       phoneCountryCode: "353",
       emergencyPhoneCountryCode: "353",
       defaultCountry: "IE",
-      preferredCountries: [
-        // "AT",
-        // "BE",
-        // "BG",
-        // "CZ",
-        // "DK",
-        // "FR",
-        // "FI",
-        // "DE",
-        // "GR",
-        // "HU",
-        "IE",
-        "US",
-        "GB",
-      ],
-      phoneProps: {
-        autoDefaultCountry: false,
-        defaultCountry: "IE",
-        preferredCountries: [
-          "AT",
-          "BE",
-          "BG",
-          "CZ",
-          "DK",
-          "FR",
-          "FI",
-          "DE",
-          "GR",
-          "HU",
-          "IE",
-          "US",
-          "GB",
-        ],
-        placeholder: "Enter your phone",
-        mode: "international",
-        inputOptions: {
-          maxlength: 20,
-          showDialCode: true,
-        },
-        dropdownOptions: {
-          showFlags: false,
-          showDialCodeInSelection: true,
-          showDialCodeInList: true,
-          showSearchBox: true,
-          width: "400px",
-        },
-        disabledFormatting: false,
-        wrapperClasses: "country-phone-input",
-      },
-      validPhone: false,
-      validEmergencyPhone: false,
+      preferredCountries: ["IE", "US", "GB"],
+      validPhone: true,
+      invalidPhoneMsg: null,
+      validEmergencyPhone: true,
     };
   },
   computed: {
@@ -377,16 +337,15 @@ export default {
       if (value != undefined) {
         this.phoneIso = value.countryCode;
         this.phoneCountryCode = value.countryCallingCode;
-        this.validPhone = value.isValid ? value.isValid : this.validPhone;
+        this.validPhone = value.isValid;
+        this.invalidPhoneMsg = "Invalid phone no.";
       }
     },
     onEmergencyPhoneCountrySelect(value) {
       if (value != undefined) {
         this.emergencyPhoneIso = value.countryCode;
         this.emergencyPhoneCountryCode = value.countryCallingCode;
-        this.validEmergencyPhone = value.isValid
-          ? value.isValid
-          : this.validEmergencyPhone;
+        this.validEmergencyPhone = value.isValid;
       }
     },
     forceRerender() {
@@ -412,17 +371,13 @@ export default {
       e.target.src = MissingPng;
     },
     handleForm() {
+      if (!this.phone) {
+        this.validPhone = false;
+        this.invalidPhoneMsg = "Phone no. is required.";
+      }
       this.form.validateFields((err, values) => {
-        if (!err) {
-          // if (this.validPhone == false || !this.validEmergencyPhone == false) {
-          //   if (this.validPhone == false) {
-          //     notifications.warn("Invalid phone no.");
-          //   } else if (this.validEmergencyPhone) {
-          //     notifications.warn("Invalid emergency phone no.");
-          //   }
-          // } else {
+        if (!err && this.validPhone && this.validEmergencyPhone) {
           this.handleFormSubmit(values);
-          // }
         } else {
           console.log(err);
         }

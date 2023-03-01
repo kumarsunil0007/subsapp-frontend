@@ -1,6 +1,10 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-  <a-modal :visible="visible" title="Add Coach" @cancel="close">
+  <a-modal
+    :visible="visible"
+    :title="adminId ? 'Edit Coach' : 'Add Coach'"
+    @cancel="close"
+  >
     <template slot="footer">
       <a-button key="back" @click="close">Cancel</a-button>
       <a-button key="submit" type="primary" :loading="loading" @click="handleForm">
@@ -21,18 +25,20 @@
       </a-form-item>
       <a-form-item label="Phone">
         <div class="custom-phone">
-          <!-- <vue-tel-input
-            class="country-dropdown"
-            v-model="phone"
-            v-bind="phoneProps"
-          ></vue-tel-input> -->
           <vue-phone-number-input
             v-model="phone"
             :default-country-code="phoneIso"
+            color="#d9d9d9"
+            valid-color="#d9d9d9"
+            error-color="#f5222d"
+            :error="true"
             :preferred-countries="preferredCountries"
             :all-letters-characters="true"
             @update="onCountrySelect"
           ></vue-phone-number-input>
+          <div class="has-error" v-if="!validPhone">
+            <div class="ant-form-explain">{{ invalidPhoneMsg }}</div>
+          </div>
         </div>
       </a-form-item>
       <a-form-item label="Address">
@@ -65,54 +71,7 @@ export default {
       phone: null,
       phoneIso: "IE",
       phoneCountryCode: "353",
-      preferredCountries: [
-        // "AT",
-        // "BE",
-        // "BG",
-        // "CZ",
-        // "DK",
-        // "FR",
-        // "FI",
-        // "DE",
-        // "GR",
-        // "HU",
-        "IE",
-        "US",
-        "GB",
-      ],
-      phoneProps: {
-        autoDefaultCountry: false,
-        preferredCountries: [
-          "AT",
-          "BE",
-          "BG",
-          "CZ",
-          "DK",
-          "FR",
-          "FI",
-          "DE",
-          "GR",
-          "HU",
-          "IE",
-          "US",
-          "GB",
-        ],
-        placeholder: "Enter your phone",
-        mode: "international",
-        inputOptions: {
-          maxlength: 20,
-          showDialCode: true,
-        },
-        dropdownOptions: {
-          showFlags: false,
-          showDialCodeInSelection: true,
-          showDialCodeInList: true,
-          showSearchBox: true,
-          width: "500px",
-        },
-        disabledFormatting: false,
-        wrapperClasses: "country-phone-input",
-      },
+      preferredCountries: ["IE", "US", "GB"],
       form: this.$form.createForm(this),
       dataLoading: false,
       loading: false,
@@ -173,7 +132,8 @@ export default {
           },
         ],
       },
-      validPhone: false,
+      validPhone: true,
+      invalidPhoneMsg: null,
     };
   },
   watch: {
@@ -186,10 +146,12 @@ export default {
   },
   methods: {
     onCountrySelect(value) {
+      console.log("value => ", value);
       if (value != undefined) {
         this.phoneIso = value.countryCode;
         this.phoneCountryCode = value.countryCallingCode;
-        this.validPhone = value.isValid ? value.isValid : this.validPhone;
+        this.validPhone = value.isValid;
+        this.invalidPhoneMsg = "Invalid phone no.";
       }
     },
     fetchAdmin() {
@@ -233,9 +195,13 @@ export default {
       }
     },
     handleForm() {
+      if (!this.phone) {
+        this.validPhone = false;
+        this.invalidPhoneMsg = "Phone no. is required.";
+      }
       this.form.validateFields((err, values) => {
         values.url = window.location.origin + "/#/login";
-        if (!err) {
+        if (!err && this.validPhone === true) {
           if (!this.adminId) {
             this.handleFormSubmit({
               ...values,
