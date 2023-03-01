@@ -8,7 +8,14 @@
     /> -->
     <a-form :form="form" layout="vertical">
       <a-row style="flex-direction: row">
-        <a-col :xl="6" :lg="10" :md="10" :sm="10" :xs="24" class="gx-text-center">
+        <a-col
+          :xl="6"
+          :lg="10"
+          :md="10"
+          :sm="10"
+          :xs="24"
+          class="gx-text-center"
+        >
           <a-card class="gx-card-widget heading">
             <h2 class="gx-text-left">Edit Profile Picture</h2>
             <div class="profile-pic-upload">
@@ -17,7 +24,11 @@
                   <div style="position: relative" class="profile-upload-parent">
                     <template v-if="profilePic">
                       <div class="profile-img">
-                        <img :src="profilePic" class="gx-mb-3" @error="defaultImage" />
+                        <img
+                          :src="profilePic"
+                          class="gx-mb-3"
+                          @error="defaultImage"
+                        />
                       </div>
                     </template>
                     <button v-if="user_image" class="edit-profile-btn">
@@ -31,7 +42,7 @@
                         @confirm="confirm"
                         @cancel="cancel"
                       >
-                        <a href="#"><a-icon type="delete" /></a>
+                        <a href="#"><a-icon type="delete"/></a>
                       </a-popconfirm>
                     </button>
                   </div>
@@ -68,6 +79,7 @@
               <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
                 <h2>Personal Information</h2>
               </a-col>
+
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="First Name">
                   <a-input
@@ -77,16 +89,17 @@
                         rules: [
                           {
                             required: true,
-                            message: 'First name is required.',
-                          },
-                        ],
-                      },
+                            message: 'First name is required.'
+                          }
+                        ]
+                      }
                     ]"
                     type="text"
                   >
                   </a-input>
                 </a-form-item>
               </a-col>
+
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Last Name">
                   <a-input
@@ -96,16 +109,17 @@
                         rules: [
                           {
                             required: true,
-                            message: 'Last name is a required field.',
-                          },
-                        ],
-                      },
+                            message: 'Last name is a required field.'
+                          }
+                        ]
+                      }
                     ]"
                     type="text"
                   >
                   </a-input>
                 </a-form-item>
               </a-col>
+
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Email">
                   <a-input
@@ -115,16 +129,17 @@
                         rules: [
                           {
                             required: true,
-                            message: 'Your email is required.',
-                          },
-                        ],
-                      },
+                            message: 'Your email is required.'
+                          }
+                        ]
+                      }
                     ]"
                     type="text"
                   >
                   </a-input> </a-form-item
               ></a-col>
-              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+
+              <a-col :xl="10" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Phone Number">
                   <div class="custom-phone">
                     <!-- <vue-tel-input
@@ -135,6 +150,7 @@
                     ></vue-tel-input> -->
                     <vue-phone-number-input
                       v-model="phone"
+                      class="phone_input"
                       :default-country-code="phoneIso"
                       :preferred-countries="preferredCountries"
                       @update="onCountrySelect"
@@ -142,6 +158,7 @@
                   </div>
                 </a-form-item>
               </a-col>
+
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Date of Birth">
                   <a-date-picker
@@ -151,18 +168,20 @@
                     format="DD/MM/YYYY"
                   /> </a-form-item
               ></a-col>
-              <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <hr />
               </a-col>
-              <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+              <a-col :xl="24" :lg="24" :md="12" :sm="24" :xs="24">
                 <h2>Other Information</h2>
               </a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Emergency Name">
-                  <a-input v-decorator="['emergency_name']" type="text"> </a-input>
+                  <a-input v-decorator="['emergency_name']" type="text">
+                  </a-input>
                 </a-form-item>
               </a-col>
-              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+              <a-col  :xl="10" :lg="24" :md="24" :sm="24" :xs="24">
                 <a-form-item label="Emergency Phone">
                   <div class="custom-phone">
                     <!-- <vue-tel-input
@@ -220,15 +239,16 @@
                   </div>
                 </div>
               </a-col>
-              <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
                 <hr />
               </a-col>
               <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
                 <h2>Update Password</h2>
               </a-col>
-              <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
+              <a-col :xl="8" :lg="24" :md="12" :sm="24" :xs="24">
                 <a-form-item label="Current Password">
-                  <a-input v-model="current_password" type="password"> </a-input>
+                  <a-input v-model="current_password" type="password">
+                  </a-input>
                 </a-form-item>
               </a-col>
               <a-col :xl="8" :lg="24" :md="24" :sm="24" :xs="24">
@@ -272,7 +292,7 @@ import moment from "moment";
 export default {
   name: "MyProfile",
   components: {
-    NPage,
+    NPage
   },
   data() {
     return {
@@ -282,7 +302,7 @@ export default {
       selectedUserId: 0,
       dateValue: moment(),
       fields: {
-        country: null,
+        country: null
       },
       form: this.$form.createForm(this),
       action: process.env.VUE_APP_API_HOST,
@@ -314,7 +334,7 @@ export default {
         "HU",
         "IE",
         "US",
-        "GB",
+        "GB"
       ],
       phoneProps: {
         autoDefaultCountry: false,
@@ -332,26 +352,26 @@ export default {
           "HU",
           "IE",
           "US",
-          "GB",
+          "GB"
         ],
         placeholder: "Enter your phone",
         mode: "international",
         inputOptions: {
           maxlength: 20,
-          showDialCode: true,
+          showDialCode: true
         },
         dropdownOptions: {
           showFlags: false,
           showDialCodeInSelection: true,
           showDialCodeInList: true,
           showSearchBox: true,
-          width: "400px",
+          width: "400px"
         },
         disabledFormatting: false,
-        wrapperClasses: "country-phone-input",
+        wrapperClasses: "country-phone-input"
       },
       validPhone: false,
-      validEmergencyPhone: false,
+      validEmergencyPhone: false
     };
   },
   computed: {
@@ -359,15 +379,15 @@ export default {
       authUser: [AUTH_USER],
       userToken: [AUTH_TOKEN],
       user: "getUser",
-      userProfileLoading: "userProfileLoading",
+      userProfileLoading: "userProfileLoading"
     }),
-    profilePic: function () {
+    profilePic: function() {
       if (this.user_image) {
         return this.user_image;
       } else {
         return "https://api.subsapp.com/missing.png";
       }
-    },
+    }
   },
   beforeMount() {
     //this.$store.dispatch(GET_USER, this.authUser.user.user_id);
@@ -375,7 +395,13 @@ export default {
   },
   methods: {
     disabledDate(current) {
-      return current && current >= moment().subtract(10, "years").endOf("day");
+      return (
+        current &&
+        current >=
+          moment()
+            .subtract(10, "years")
+            .endOf("day")
+      );
     },
     onCountrySelect(value) {
       if (value != undefined) {
@@ -425,7 +451,7 @@ export default {
           //     notifications.warn("Invalid emergency phone no.");
           //   }
           // } else {
-            this.handleFormSubmit(values);
+          this.handleFormSubmit(values);
           // }
         } else {
           console.log(err);
@@ -433,7 +459,7 @@ export default {
       });
     },
     fetchProfile() {
-      memberService.userProfile().then((resp) => {
+      memberService.userProfile().then(resp => {
         if (resp.data.success) {
           this.form.setFieldsValue({
             first_name: resp.data.result.first_name,
@@ -446,7 +472,7 @@ export default {
             town: resp.data.result.profile.town,
             post_code: resp.data.result.profile.post_code,
             region: resp.data.result.profile.region,
-            dob: resp.data.result.profile.dob,
+            dob: resp.data.result.profile.dob
           });
           (this.phone = resp.data.result.profile.phone),
             (this.emergency_phone = resp.data.result.profile.emergency_phone),
@@ -456,7 +482,8 @@ export default {
             (this.phoneCountryCode = resp.data.result.profile.country_code
               ? resp.data.result.profile.country_code
               : "353"),
-            (this.emergencyPhoneIso = resp.data.result.profile.emergency_phone_iso2
+            (this.emergencyPhoneIso = resp.data.result.profile
+              .emergency_phone_iso2
               ? resp.data.result.profile.emergency_phone_iso2
               : "IE"),
             (this.emergencyPhoneCountryCode = resp.data.result.profile
@@ -491,7 +518,7 @@ export default {
     confirm() {
       memberService
         .deleteAvatar()
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success === true) {
             notifications.success("Profile picture removed succesfully.");
             this.fileList = [];
@@ -521,9 +548,9 @@ export default {
       memberService
         .updateProfile({
           ...values,
-          country: this.fields.country,
+          country: this.fields.country
         })
-        .then((resp) => {
+        .then(resp => {
           this.loading = false;
           if (resp.data.success) {
             this.fetchProfile();
@@ -548,13 +575,13 @@ export default {
     handleUpload() {
       const { fileList } = this;
       const formData = new FormData();
-      fileList.forEach((file) => {
+      fileList.forEach(file => {
         formData.append("image", file);
       });
       this.uploading = true;
       memberService
         .uploadAvatar(formData)
-        .then((resp) => {
+        .then(resp => {
           this.uploading = false;
           if (resp.data.success === true) {
             notifications.success("Profile picture uploaded successfully.");
@@ -564,7 +591,7 @@ export default {
             notifications.warn(resp.data.message);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           this.uploading = false;
           this.fileList = [];
           notifications.warn(
@@ -587,7 +614,7 @@ export default {
     removeImage() {
       memberService
         .deleteAvatar()
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.success === true) {
             notifications.success("Profile picture removed succesfully.");
             this.fileList = [];
@@ -599,7 +626,7 @@ export default {
         .catch(() => {
           notifications.warn("Server error");
         });
-    },
-  },
+    }
+  }
 };
 </script>

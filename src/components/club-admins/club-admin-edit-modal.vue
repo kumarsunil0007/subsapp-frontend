@@ -26,7 +26,7 @@
             v-model="phone"
             v-bind="phoneProps"
           ></vue-tel-input> -->
-          <vue-phone-number-input
+          <vue-phone-number-input 
             v-model="phone"
             :default-country-code="phoneIso"
             :preferred-countries="preferredCountries"
