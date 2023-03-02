@@ -95,18 +95,16 @@
                     v-model="phone"
                     color="#d9d9d9"
                     valid-color="#d9d9d9"
-                    error-color="#f5222d"
-                    :error="true"
+                    error-color="#d9d9d9"
                     :default-country-code="phoneIso"
                     :preferred-countries="preferredCountries"
                     :all-letters-characters="true"
                     @update="onCountrySelect"
                   ></vue-phone-number-input>
-                
                 </div>
-                <div class="has-error " id="number_fld" v-if="!validPhone">
-                    <div class="ant-form-explain text-left">{{ invalidPhoneMsg }}</div>
-                  </div>
+                <div class="has-error" id="number_fld" v-if="!validPhone">
+                  <div class="ant-form-explain text-left">{{ invalidPhoneMsg }}</div>
+                </div>
               </a-col>
             </a-row>
           </a-form-item>
@@ -140,17 +138,17 @@
                     v-model="emergency_phone"
                     color="#d9d9d9"
                     valid-color="#d9d9d9"
-                    error-color="#f5222d"
-                    :error="true"
+                    error-color="#d9d9d9"
                     :default-country-code="emergencyPhoneIso"
                     :preferred-countries="preferredCountries"
                     :all-letters-characters="true"
                     @update="onEmergencyPhoneCountrySelect"
                   ></vue-phone-number-input>
-                  
                 </div>
                 <div class="has-error" id="sndnumber_fld" v-if="!validEmergencyPhone">
-                    <div class="ant-form-explain text-left">Invalid emergency phone no.</div>
+                  <div class="ant-form-explain text-left">
+                    Invalid emergency phone no.
+                  </div>
                 </div>
               </a-col>
             </a-row>
@@ -332,18 +330,14 @@ export default {
   margin-left: 43px;
 }
 
-
 .ant-form-item-control {
   line-height: 1.3;
 }
 
 #number_fld.has-error .ant-form-explain {
-    margin-left:0 !important;
-    
+  margin-left: 0 !important;
 }
 #sndnumber_fld.has-error .ant-form-explain {
-    margin-left:0 !important;
-    
-} 
-
+  margin-left: 0 !important;
+}
 </style>

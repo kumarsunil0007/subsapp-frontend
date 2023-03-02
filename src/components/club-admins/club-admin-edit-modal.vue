@@ -30,17 +30,15 @@
             :default-country-code="phoneIso"
             color="#d9d9d9"
             valid-color="#d9d9d9"
-            error-color="#f5222d"
-            :error="true"
+            error-color="#d9d9d9"
             :preferred-countries="preferredCountries"
             :all-letters-characters="true"
             @update="onCountrySelect"
           ></vue-phone-number-input>
-          
         </div>
         <div class="has-error" v-if="!validPhone">
-            <div class="ant-form-explain">{{ invalidPhoneMsg }}</div>
-          </div>
+          <div class="ant-form-explain">{{ invalidPhoneMsg }}</div>
+        </div>
       </a-form-item>
       <a-form-item label="Address">
         <a-input v-decorator="fields.address_1" placeholder="Address"> </a-input>
