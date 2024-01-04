@@ -151,29 +151,33 @@ export default {
         }
       });
     },
+    
     handleFormSubmit(values) {
+      values.url = window.location.origin;
       this.loginLoading = true;
       this.validationMsg = [];
       authService
         .userRegister(values)
         .then((resp) => {
           if (resp.data.success) {
-            notifications.success("Registration complete. Welcome to SubsApp.");
-            this.$store
-              .dispatch(AUTH_REQUEST, {
-                username: values.work_email,
-                password: values.password,
-              })
-              .then((resp) => {
-                if (resp) {
-                  this.$router.push("/my-billing");
-                }
-                this.loginLoading = false;
-              })
-              .catch(() => {
-                this.loginLoading = false;
-                this.$router.push("/login");
-              });
+            notifications.success("Verification link has been sent to your email address. Please verify your account");
+            this.$router.push("/login");
+            // this.$store
+            //   .dispatch(AUTH_REQUEST, {
+            //     username: values.work_email,
+            //     password: values.password,
+            //   })
+            //   .then((resp) => {
+            //     if (resp) {
+            //       // this.$router.push("/my-billing");
+            //       this.$router.push("/login");
+            //     }
+            //     this.loginLoading = false;
+            //   })
+            //   .catch(() => {
+            //     this.loginLoading = false;
+            //     this.$router.push("/login");
+            //   });
           } else {
             this.loginLoading = false;
             if (resp.data.message) {

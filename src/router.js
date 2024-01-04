@@ -61,7 +61,7 @@ export default new Router({
     {
       path: "",
       component: () => import("./layouts/main-layout.vue"),
-      children: [
+      children: [ 
         {
           path: "/",
           beforeEnter: authGuard,
@@ -366,6 +366,14 @@ export default new Router({
       name: "user-registration",
       beforeEnter: authCheck,
       component: () => import("./views/auth/registration/user-register.vue")
+    },
+    {
+      path: "/verify-email/:id/:hash",
+      name: "email-verification",
+      meta: {
+        permission: "member"
+      },
+      component: () => import("./views/auth/registration/verify-email.vue")
     },
     {
       path: "/login",

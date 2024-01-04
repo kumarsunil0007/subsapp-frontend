@@ -13,7 +13,7 @@
             :type="collapsed ? 'menu-unfold' : 'menu-fold'"
             :class="{
               'icon-menu-unfold': collapsed,
-              'icon-menu-fold': !collapsed
+              'icon-menu-fold': !collapsed,
             }"
             @click="toggleSidebar()"
           ></i>
@@ -50,7 +50,7 @@
 
         <ul v-if="user && user.user" class="gx-header-notifications gx-ml-auto">
           <li class="gx-user-nav">
-            <a-row type="flex" style="align-items: center;">
+            <a-row type="flex" style="align-items: center">
               <div
                 class="ant-avatar gx-avatar gx-pointer ant-avatar-circle ant-avatar-image"
               >
@@ -66,7 +66,10 @@
                   :trigger="['click']"
                   class="switch-as"
                 >
-                  <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                  <a
+                    class="ant-dropdown-link"
+                    @click="(e) => e.preventDefault()"
+                  >
                     {{ this.UserName }} <a-icon type="setting" />
                   </a>
 
@@ -130,8 +133,8 @@
         <a-button
           v-if="
             $route.path !== '/' &&
-              $route.path !== '/admin' &&
-              $route.path !== '/dashboard'
+            $route.path !== '/admin' &&
+            $route.path !== '/dashboard'
           "
           block
           class="back-button gx-mb-0"
@@ -163,7 +166,7 @@
 <script>
 import {
   AUTH_USER,
-  AUTH_SUBSCRIPTION
+  AUTH_SUBSCRIPTION,
 } from "@/store/modules/auth/auth-actions";
 import { UITypes } from "@/store/modules/ui/ui-actions";
 import { mapGetters } from "vuex";
@@ -178,22 +181,22 @@ export default {
       UserName: "",
       ClubAdmin: "",
       Coach: "",
-      Member: ""
+      Member: "",
     };
   },
   computed: {
     ...mapGetters({
       user: AUTH_USER,
       sub: AUTH_SUBSCRIPTION,
-      collapsed: UITypes.getters.GET_SIDEBAR
+      collapsed: UITypes.getters.GET_SIDEBAR,
     }),
-    userProfileAvatar: function() {
+    userProfileAvatar: function () {
       if (this.user.user.profile && this.user.user.profile.image) {
         return this.user.user.profile.image;
       } else {
         return null;
       }
-    }
+    },
   },
   mounted() {
     this.selectRole = this.user.user_type[0];
@@ -274,8 +277,8 @@ export default {
           this.$router.replace("/dashboard");
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

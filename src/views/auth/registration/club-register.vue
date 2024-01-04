@@ -164,28 +164,31 @@ export default {
       });
     },
     handleFormSubmit(values) {
+      values.url = window.location.origin;
       this.loginLoading = true;
       this.validationMsg = [];
       authService
         .clubRegister(values)
         .then((resp) => {
           if (resp.data.success) {
-            notifications.success("Registration complete. Welcome to SubsApp");
-            this.$store
-              .dispatch(AUTH_REQUEST, {
-                username: values.work_email,
-                password: values.password,
-              })
-              .then((resp) => {
-                if (resp) {
-                  this.$router.push("/dashboard");
-                }
-                this.loginLoading = false;
-              })
-              .catch(() => {
-                this.$router.push("/login");
-                this.loginLoading = false;
-              });
+            notifications.success("Verification link has been sent to your email address. Please verify your account");
+            this.$router.push("/login");
+            // this.$store
+            //   .dispatch(AUTH_REQUEST, {
+            //     username: values.work_email,
+            //     password: values.password,
+            //   })
+            //   .then((resp) => {
+            //     if (resp) {
+            //       this.$router.push("/dashboard");
+                  
+            //     }
+            //     this.loginLoading = false;
+            //   })
+            //   .catch(() => {
+            //     this.$router.push("/login");
+            //     this.loginLoading = false;
+            //   });
           } else {
             this.loginLoading = false;
             if (resp.data.message) {
