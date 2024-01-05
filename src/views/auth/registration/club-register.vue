@@ -43,6 +43,11 @@
               </a-button>
             </a-form-item>
             <div class="gx-text-center">
+            <h6>Already have an account?  <router-link :to="{ path: '/login' }" class="gx-login-form">
+              Sign In
+            </router-link></h6>
+          </div>
+            <div class="gx-text-center">
               <router-link to="/"></router-link>
             </div>
           </a-form>
@@ -56,7 +61,7 @@
 <script>
 import { authService } from "@/common/api/api.service";
 import notifications from "@/common/notifications/notification.service";
-import { AUTH_REQUEST } from "@/store/modules/auth/auth-actions";
+// import { AUTH_REQUEST } from "@/store/modules/auth/auth-actions";
 
 export default {
   name: "ClubRegister",
@@ -171,7 +176,7 @@ export default {
         .clubRegister(values)
         .then((resp) => {
           if (resp.data.success) {
-            notifications.success("Verification link has been sent to your email address. Please verify your account");
+            notifications.success("Verification link has been sent to your email address. Please check your mail for further instructions.");
             this.$router.push("/login");
             // this.$store
             //   .dispatch(AUTH_REQUEST, {

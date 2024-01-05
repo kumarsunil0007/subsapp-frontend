@@ -75,7 +75,9 @@ export default {
       this.$store
         .dispatch(AUTH_REQUEST, {
           username: this.username,
-          password: this.password
+          password: this.password,
+      url : window.location.origin,
+
         })
         .then(resp => {
           if (resp) {

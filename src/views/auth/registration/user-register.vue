@@ -35,11 +35,17 @@
               <a-input v-decorator="fields.c_password" placeholder="Confirm Password" type="password">
               </a-input>
             </a-form-item>
+          
             <a-form-item class="gx-text-center">
               <a-button type="primary" block html-type="submit" :loading="loginLoading" @click="handleForm">
                 Register
               </a-button>
             </a-form-item>
+            <div class="gx-text-center">
+            <h6>Already have an account?  <router-link :to="{ path: '/login' }" class="gx-login-form">
+              Sign In
+            </router-link></h6>
+          </div>
             <div class="gx-text-center">
               <router-link to="/"></router-link>
             </div>
@@ -54,7 +60,7 @@
 <script>
 import { authService } from "@/common/api/api.service";
 import notifications from "@/common/notifications/notification.service";
-import { AUTH_REQUEST } from "@/store/modules/auth/auth-actions";
+// import { AUTH_REQUEST } from "@/store/modules/auth/auth-actions";
 
 export default {
   name: "UserRegister",
@@ -160,7 +166,7 @@ export default {
         .userRegister(values)
         .then((resp) => {
           if (resp.data.success) {
-            notifications.success("Verification link has been sent to your email address. Please verify your account");
+            notifications.success("Verification link has been sent to your email address. Please check your mail for further instructions.");
             this.$router.push("/login");
             // this.$store
             //   .dispatch(AUTH_REQUEST, {
